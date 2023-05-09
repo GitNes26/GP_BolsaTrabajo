@@ -80,7 +80,7 @@ if (isset($_GET["p"])) {
       crossorigin="anonymous" referrerpolicy="no-referrer" />
 
    <!-- MisEstilos -->
-   <link href="<?=$STYLES_PATH ?>/styles.css" rel="stylesheet" />
+   <link rel="stylesheet" href="<?=$STYLES_PATH ?>/styles.css"/>
    <link rel="stylesheet" href="<?=$STYLES_PATH?>/responsive.css">
 
 </head>
@@ -88,7 +88,7 @@ if (isset($_GET["p"])) {
 <body data-spy="scroll" data-target=".navbar" data-offset="90"
    class="particles_special_id green-version body-login <?=$dark_mode?>">
    <input type="hidden" id="url_base" value="<?=$URL_BASE?>">
-   <input type="hidden" id="join_now" value="<?=$join_now?>">
+   <!-- <input type="hidden" id="join_now" value="<?=$join_now?>"> -->
 
    <!-- start slider -->
    <section class="fadeIn example no-padding no-transition" id="home">

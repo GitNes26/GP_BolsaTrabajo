@@ -2,10 +2,11 @@
 
 //#region VARIABLES
 const
-	URL_ADMIN = "/views",
-	URL_USER_APP = "../backend/User/App.php",
-	URL_ROLE_APP = "../backend/Role/App.php",
-	URL_MENU_APP = "../backend/Menu/App.php";
+	URL_ADMIN = `/views`,
+	URL_BACKEND = `/backend`,
+	URL_USER_APP = `${URL_BACKEND}/User/App.php`,
+	URL_ROLE_APP = `${URL_BACKEND}/Role/App.php`,
+	URL_MENU_APP = `${URL_BACKEND}/Menu/App.php`;
 
 const btn_close = $(".btn-close");
 
@@ -198,9 +199,9 @@ if (btn_logout != null) {
 
 	$("#btn_logout").click((e) => {
 		e.preventDefault();
-		let datos = { op: "cerrar_sesion" };
+		let datos = { op: "logout" };
 		$.ajax({
-			url: `${URL_BACKEND}/Usuario/App.php`,
+			url: `${URL_USER_APP}`,
 			type: "POST",
 			data: datos,
 			dataType: "json",

@@ -147,16 +147,18 @@ function ajaxRequest(url,data) {
                timer: 2000
             }).then(() => {
                $("#form_login")[0].reset();
-               rol = Number(ajaxResponse.Rol)
-               return console.log("todo bien hasta aqui");
+               rol = Number(ajaxResponse.Rol);
+               console.log(location.pathname);
+               // return console.log("todo bien hasta aqui");
 
                if (location.pathname == URL_BASE || location.pathname == `${URL_BASE}/` || location.pathname == `/` ) {
                      // if (rol == 2) window.location.href = `${PATH_CLIENTE}`;
                      // else if (rol > 2) window.location.href = `${PATH_PAYMENT}`;
                      // else window.location.href = `${ADMIN_PATH}`;
-                     window.location.href = `${ADMIN_PATH}`;
+                     console.log("aqui entro", ADMIN_PATH);
+                     // window.location.href = `${ADMIN_PATH}`;
                }
-               location.reload();
+               // location.reload();
             });
          } else {
             Swal.fire({
