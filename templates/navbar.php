@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand <?php echo $bg_powerbi ?>">
+<nav class="main-header navbar navbar-expand">
    <!-- Left navbar links -->
    <ul class="navbar-nav">
       <li class="nav-item">
@@ -10,7 +10,7 @@
    <ul class="navbar-nav " id="ul_dark_theme">
       <label for="checkbox" id="label_dark_theme">
          <!-- Dark mode -->
-         <input <?= $cookie_dark_mode != "1" ? "checked" : "" ?> type="checkbox" id="checkbox" />
+         <!-- <input <?= $cookie_dark_mode != "1" ? "checked" : "" ?> type="checkbox" id="checkbox" /> -->
          <div class="toggle button"></div>
       </label>
 
@@ -24,13 +24,13 @@
          <div class='user-panel d-flex'>
             <div class='info'>
                <span class='d-block text-decoration-none text-bold'><i
-                     class=''><?php echo $_COOKIE["dpnstash_usuario"] ?></i></span>
+                     class=''><?php #echo $_COOKIE["usuario"] ?></i></span>
             </div>
          </div>
       </li>
       <!-- Btn Logout -->
       <li class='nav-item ml-3'>
-         <a href='#' id="btn_cerrar_sesion" class='btn btn-outline-danger btn_cerrar_sesion' title='Logout'><i
+         <a href='#' id="btn_logout" class='btn btn-outline-danger btn_logout' title='Cerrar sesión'><i
                class="fas fa-door-closed"></i></a>
       </li>
    </ul>

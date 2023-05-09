@@ -58,4 +58,4 @@
 <!-- IMask JS -->
 <!-- <script src="https://unpkg.com/imask"></script> -->
 
-<script src="<?=$URL_BASE?>/master.js"></script>
+<script src="<?=$SCRIPTS_PATH?>/master.js"></script>

@@ -1,7 +1,7 @@
 <?php
-include "../Templates/header.php";
-include "../Templates/nav_bar.php";
-include "../Templates/side_bar.php";
+include "../templates/header.php";
+include "../templates/navbar.php";
+include "../templates/sidebar.php";
 
 
 
@@ -33,10 +33,10 @@ $pagina_acutal = "Dashboard";
    <!-- Main content -->
    <section class="content text-center">
 
-     <h1 clas="lead fw-bold text-center">PROCESSING...</h1>
+     <h1 clas="lead fw-bold text-center">Dashboard</h1>
 
       <!-- card -->
-      <!-- <?php include "./paquetes.php"; ?> -->
+      <!-- <?php #include "./paquetes.php"; ?> -->
       <!-- /.card -->
 
    </section>
@@ -96,7 +96,7 @@ $pagina_acutal = "Dashboard";
 <!-- ./wrapper (este se abre en el Template-header) -->
 
 <?php
-include "../Templates/footer.php";
+include "../templates/footer.php";
 ?>
 
 <script>

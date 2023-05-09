@@ -1,5 +1,5 @@
 <?php
-// include_once "./config.php";
+include "../templates/validates.php"
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +62,7 @@
   <!-- Mis Estilos -->
   <link rel="stylesheet" href="<?=$STYLES_PATH?>/styles.css">
 
-  <title>Nominas</title>
+  <title>Bolsa de Trabajo</title>
 </head>
 
 <body class="layout-top-nav layout-navbar-fixed layout-footer-fixed text-sm" style="height: auto;">

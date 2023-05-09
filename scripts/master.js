@@ -1,8 +1,14 @@
 // #region FUNCIONES DE CAJON
+
+//#region VARIABLES
 const
-	URL_NOMINA_APP = "./backend/Nomina10001/App.php";
+	URL_USER_APP = "../backend/User/App.php",
+	URL_ROLE_APP = "../backend/Role/App.php",
+	URL_MENU_APP = "../backend/Menu/App.php";
 
+const btn_close = $(".btn-close");
 
+//#endregion VARIABLES
 
 
 const ajaxRequestAsync = async (
@@ -32,30 +38,29 @@ const ajaxRequestAsync = async (
 			Swal.fire({
 				icon: response.alert_icon,
 				title: response.alert_title,
-				text: response.alert_text,
+				html: response.alert_text,
 				showConfirmButton: true,
 				confirmButtonColor: "#494E53",
 			});
 		}
 
-		// if (close_modal == null) btn_close.click();
+		if (close_modal == null && btn_close != null) btn_close.click();
 		$.unblockUI();
 		return response;
 
 	} catch (error) {
-		// if (close_modal == null) btn_close.click();
+		if (close_modal == null && btn_close != null) btn_close.click();
 		$.unblockUI();
-		// console.error(error);
+		console.error(error);
 		Swal.fire({
 			icon: "error",
 			title: "Oops...!",
-			html: ` Ocurrio un error inesperado <br> ${error.responseText}.`,
+			html: ` Ocurrio un error inesperado. <br> ${error.responseText}`,
 			showConfirmButton: true,
 			confirmButtonColor: "#494E53",
 		});
 	}
 }
-
 
 function showBlockUI() {
 	const dialogoBlockUI = `
@@ -95,6 +100,107 @@ const obligatory = $(".obligatory").html(
 function mayus(e) {
 	e.value = e.value.toUpperCase();
 }
+
+$(".eye_icon").click((e) => {
+   console.log("ojito en loigin");
+   const target = $(e.target);
+   target.toggleClass("fa-solid fa-eye fa-duotone fa-eye-slash");
+   const input = $(`input#${target.attr('data-input')}`)
+   if (target.hasClass("fa-eye")) input.prop("type","text")
+   else input.prop("type","password")
+});
+
+
+//AGREGAR DATO AL ARRAY
+function addToArray(name, value, array) {
+	//array obtenido de formulario_modal.serializeArray()
+	// console.log(nombre,valor,array);
+	const new_data = { name, value };
+	array.push(new_data);
+}
+
+
+
+
+//#region MENUS
+const sidebar_menus = $("#sidebar_menus");
+const fillSidebar = async () => {
+	sidebar_menus.slideUp(1000);
+	let role_id = Number(Cookies.get("role_id"));
+	//   document.cookie.replace(
+	//     /(?:(?:^|.*;\s*)role_id\s*\=\s*([^;]*).*$)|^.*$/,
+	//     "$1"
+	//   );
+	let data = { op: "showMyMenus", role_id: role_id };
+	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP, data);
+	sidebar_menus.html("");
+	const objResponse = ajaxResponse.data;
+	let menus = "";
+	let parent_menus = objResponse.filter((menu) => menu.parent_id == 0);
+	parent_menus = parent_menus.sort().map((parent_menu) => {
+		menus += `
+        <li class="nav-item  mb-3">
+          <a href="#" class="nav-link">
+              <i class="nav-icon ${parent_menu.icon}"></i>
+              <p>
+                ${parent_menu.menu}
+                <i class="right fas fa-angle-left"></i>
+              </p>
+          </a>`;
+		let children_menus = objResponse.filter(
+			(menu) => menu.parent_id == parent_menu.id_menu
+		);
+		children_menus.sort((a, b) => a.orden - b.orden);
+		children_menus.map((child_menu) => {
+			menus += `
+              <ul class="nav nav-treeview text-sm">
+                <li class="nav-item">
+                    <a href="${URL_ADMIN}/${child_menu.file_path}" class="nav-link">
+                        <i class="nav-icon ${child_menu.icon} text-sm"></i>
+                        <p>${child_menu.menu}</p>
+                    </a>
+                </li>
+              </ul>`;
+		});
+		menus += `</li>`;
+	});
+	await sidebar_menus.append(menus);
+	sidebar_menus.slideDown(1000);
+};
+if (sidebar_menus.length > 0) fillSidebar();
+//#endregion
+
+
+//#region CERRAR SESION
+const btn_logout = document.getElementById("btn_logout");
+if (btn_logout != null) {
+	const i = btn_logout.querySelector("i");
+
+	$("#btn_logout").mouseover(function () {
+		i.classList.remove("fa-door-closed");
+		i.classList.add("fa-door-open");
+	});
+	$("#btn_logout").mouseleave(function () {
+		i.classList.remove("fa-door-open");
+		i.classList.add("fa-door-closed");
+	});
+
+	$("#btn_logout").click((e) => {
+		e.preventDefault();
+		let datos = { op: "cerrar_sesion" };
+		$.ajax({
+			url: `${URL_BACKEND}/Usuario/App.php`,
+			type: "POST",
+			data: datos,
+			dataType: "json",
+			success: (ajaxResponse) => {
+				if (ajaxResponse.Resultado) window.location.href = URL_BASE;
+			},
+		});
+	});
+} 
+//#endregion CERRAR SESION
+
 
 //#region /** FECHAS - FORMATEADO */
 function validateRangeDates(action) {
@@ -212,6 +318,41 @@ function focusSelect2(select2) {
 	});
 }
 focusSelect2($(".select2"));
+
+function resetSelect2(select2) {
+	// function resetearSelect2(select2, url, datos) {
+	select2.prop("selectedIndex", 0);
+	select2.val("-1");
+	$(`#select2-${select2[0].name}-container`).text("Selecciona una opción...");
+	$(`#select2-${select2[0].name}-container`).attr("title", "Selecciona una opción...");
+	// iconos(url, datos, -1, select2[0].name);
+}
+
+function fillSelect2(ajaxResponse, selected_id) {
+	console.log("fill Select");
+	const objResponse = ajaxResponse.data;
+	console.log("objResponse",objResponse);
+
+	input_role_id.html("");
+
+	const options = /*HTML*/ `
+      <option value="-1">Selecciona una opción...</option>
+   `;
+
+	input_role_id.append(options);
+
+	$.each(objResponse, function (i, obj) {
+		if (obj[0] == selected_id)
+			input_role_id.append(
+				`<option selected value='${obj[0]}'>${obj[1]}</option>`
+			);
+		else
+			input_role_id.append(
+				`<option value='${obj[0]}'>${obj[1]}</option>`
+			);
+	});
+}
+
 //#endregion /* Select2 */
 
 
@@ -293,7 +434,7 @@ if ($("table").length > 0) $("table").DataTable(DT_CONFIG)
 
 //#region /** MonentJS */
 moment.locale("es-mx");
-console.log(moment.locale());
+// console.log(moment.locale());
 //#endregion /** MonentJS */
 
 // // #endregion FUNCIONES DE CAJON

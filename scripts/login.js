@@ -69,7 +69,7 @@ $("#btn_login").click((e) => {
       password: password.val()
    }
    return console.log(data);
-   peticionAjax(`${BACKEND_PATH}/User/App.php`,data);
+   ajaxRequest(`${BACKEND_PATH}/User/App.php`,data);
 });
 
 $("#btn_register").click(async (e) =>{
@@ -79,7 +79,7 @@ $("#btn_register").click(async (e) =>{
    let validado = true;
 
    if (!validado) return;
-   datos = {
+   data = {
       accion: "crear_objeto",
       input_name: input_name.val(),
       input_email: input_email.val(),
@@ -87,20 +87,13 @@ $("#btn_register").click(async (e) =>{
       input_id_perfil: 4, //SUSCRIPTOR
       creado: moment().format("YYYY-MM-DD hh:mm:ss"),
    }
-   // console.log(datos);
+   // console.log(data);
    // return;
-   ajaxResponseRegister(`${BACKEND_PATH}/Usuario/App.php`,datos);
+   ajaxRequestRegister(`${BACKEND_PATH}/Usuario/App.php`,data);
 });
 
 
-$(".eye_icon").click((e) => {
-   console.log("ojito en loigin");
-   const target = $(e.target);
-   target.toggleClass("fa-solid fa-eye fa-duotone fa-eye-slash");
-   const input = $(`input#${target.attr('data-input')}`)
-   if (target.hasClass("fa-eye")) input.prop("type","text")
-   else input.prop("type","password")
-})
+
 
 async function changeLoginSignup() {
    const slide_down = Boolean(card_login.data("slide-down"));
@@ -141,25 +134,25 @@ input_confirm_password.on('input',function() {
     }
 });
 
-function peticionAjax(url,datos) {
+function ajaxRequest(url,data) {
    $.ajax({
       url,
       type: "POST",
-      data: datos,
+      data: data,
       dataType: "json",
-      success: (respuesta) => {
-         if (respuesta.Resultado) {
+      success: (ajaxResponse) => {
+         if (ajaxResponse.Resultado) {
            let rol = 1;
 
             Swal.fire({
-               icon: respuesta.Icono_alerta,
-               title: respuesta.Titulo_alerta,
-               text: `${respuesta.Texto_alerta}`,
+               icon: ajaxResponse.alert_icon,
+               title: ajaxResponse.alert_title,
+               text: `${ajaxResponse.alert_text}`,
                showConfirmButton: false,
                timer: 2000
             }).then(() => {
                $("#form_login")[0].reset();
-               rol = Number(respuesta.Rol)
+               rol = Number(ajaxResponse.Rol)
 
                if (location.pathname == URL_BASE || location.pathname == `${URL_BASE}/` || location.pathname == `/` ) {
                      if (rol == 2) window.location.href = `${PATH_CLIENTE}`;
@@ -170,13 +163,13 @@ function peticionAjax(url,datos) {
             });
          } else {
             Swal.fire({
-               icon: respuesta.Icono_alerta,
-               title: respuesta.Titulo_alerta,
-               text: `${respuesta.Texto_alerta}`,
+               icon: ajaxResponse.alert_icon,
+               title: ajaxResponse.alert_title,
+               text: `${ajaxResponse.alert_text}`,
                showConfirmButton: true,
                confirmButtonColor: '#494E53'
             }).then(() => {
-               if (respuesta.Texto_alerta == "El usuario no cuenta con los privilegios para acceder.") {
+               if (ajaxResponse.alert_text == "El usuario no cuenta con los privilegios para acceder.") {
                   $("#email").focus();
                }
             });
@@ -186,7 +179,7 @@ function peticionAjax(url,datos) {
          Swal.fire({
             icon: "error",
             title: "Opss!!",
-            text: "An ever has occurred, please verify your information.",
+            text: "Ah ocurrido un error, verifica tu información.",
             showConfirmButton: true,
             confirmButtonColor: '#494E53'
          })
@@ -194,25 +187,25 @@ function peticionAjax(url,datos) {
    })
 }
 
-function ajaxResponseRegister(url,datos) {
+function ajaxRequestRegister(url,data) {
    $.ajax({
       url,
       type: "POST",
-      data: datos,
+      data: data,
       dataType: "json",
-      success: (respuesta) => {
-         if (respuesta.Resultado) {
-         //   console.log(datos);
-           // peticionAjaxemail(datos);
+      success: (ajaxResponse) => {
+         if (ajaxResponse.Resultado) {
+         //   console.log(data);
+           // ajaxRequestEmail(data);
 
             Swal.fire({
-               icon: respuesta.Icono_alerta,
-               title: respuesta.Titulo_alerta,
-               html: `${respuesta.Texto_alerta}`,
+               icon: ajaxResponse.alert_icon,
+               title: ajaxResponse.alert_title,
+               html: `${ajaxResponse.alert_text}`,
                showConfirmButton: false,
                timer: 2500
             }).then(() => {
-               if (respuesta.Titulo_alerta.includes("unavailable!")) return;
+               if (ajaxResponse.alert_title.includes("unavailable!")) return;
 
                $("#form_register")[0].reset();
                input_password.removeClass('is-invalid is-valid');
@@ -221,18 +214,18 @@ function ajaxResponseRegister(url,datos) {
                btn_register.prop('disabled',false);
 
                changeLoginSignup();
-               email.val(datos.input_email);
+               email.val(data.input_email);
 
             });
          } else {
             Swal.fire({
-               icon: respuesta.Icono_alerta,
-               title: respuesta.Titulo_alerta,
-               text: `${respuesta.Texto_alerta}`,
+               icon: ajaxResponse.alert_icon,
+               title: ajaxResponse.alert_title,
+               text: `${ajaxResponse.alert_text}`,
                showConfirmButton: true,
                confirmButtonColor: '#494E53'
             }).then(() => {
-               if (respuesta.Texto_alerta == "El usuario no cuenta con los privilegios para acceder.") {
+               if (ajaxResponse.alert_text == "El usuario no cuenta con los privilegios para acceder.") {
                   $("#email").focus();
                }
             });
@@ -242,7 +235,7 @@ function ajaxResponseRegister(url,datos) {
          Swal.fire({
             icon: "error",
             title: "Opss!!",
-            text: "An ever has occurred, please verify your information.",
+            text: "Ah ocurrido un error, verifica tu información.",
             showConfirmButton: true,
             confirmButtonColor: '#494E53'
          })
@@ -250,29 +243,29 @@ function ajaxResponseRegister(url,datos) {
    })
 }
 
-function peticionAjaxemail(datos) {
+function ajaxRequestEmail(data) {
    $.ajax({
       url: EMAIL_REGISTER_PATH,
       type: "POST",
-      data: datos,
+      data: data,
       dataType: "json",
    });
 }
 
 
-async function peticionAjaxAsync(
+async function ajaxRequest(
    url,
-   datos,
-   funcion_complete_string,
-   cerrar_modal
+   data,
+   function_complete_string,
+   close_modal
  ) {
-   if (cerrar_modal != false) {
-     cerrar_modal = null;
+   if (close_modal != false) {
+     close_modal = null;
    }
    let response = await $.ajax({
      type: "POST",
      url: url,
-     data: datos,
+     data: data,
      dataType: "json",
      beforeSend: () => {
        //mostrar pantalla cargando
@@ -284,9 +277,9 @@ async function peticionAjaxAsync(
      success: (ajaxResponse) => {
        if (!ajaxResponse.Resultado) {
          Swal.fire({
-           icon: ajaxResponse.Icono_alerta,
-           title: ajaxResponse.Titulo_alerta,
-           text: ajaxResponse.Texto_alerta,
+           icon: ajaxResponse.alert_icon,
+           title: ajaxResponse.alert_title,
+           text: ajaxResponse.alert_text,
            showConfirmButton: true,
            confirmButtonColor: "#494E53",
          });
@@ -296,15 +289,15 @@ async function peticionAjaxAsync(
        Swal.fire({
          icon: "error",
          title: "Oops...!",
-         text: `An ever has occurred, please verify your information.`,
+         text: `Ah ocurrido un error, verifica tu información.`,
          showConfirmButton: true,
          confirmButtonColor: "#494E53",
        });
      },
      complete: () => {
        //quitar pantalla c!rgfalse
-       if (funcion_complete_string != null)
-         eval(funcion_complete_string.toString());
+       if (function_complete_string != null)
+         eval(function_complete_string.toString());
        $.unblockUI();
      },
    });

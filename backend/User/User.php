@@ -5,32 +5,51 @@ class User extends Connection
 {
    // private $response;
    // function __construct() {
-   //    $this->response = $this->DefaultResponse();
+   //    $this->response = $this->defaultResponse();
    // }
 
-   function Index() {
-      $response = $this->DefaultResponse();
-
+   function index() {
       try {
+         $response = $this->defaultResponse();
          $query = "SELECT *
          FROM users
          WHERE active=1";
          $result = $this->Select($query,true);
-         $response = $this->CorrectResponse();
+         $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
          $this->Close();
 
       } catch (Exception $e) {
          $this->Close();
-         $mensaje_error = "Error: ".$e->getMessage();
-         $response = $this->CatchResponse($mensaje_error);
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->catchResponse($error_message);
+      }
+      die(json_encode($response));
+   }
+
+   function show($id) {
+      $response = $this->defaultResponse();
+
+      try {
+         $query = "SELECT *
+         FROM users
+         WHERE active=1";
+         $result = $this->Select($query,true);
+         $response = $this->correctResponse();
+         $response["message"] = "Peticion satisfactoria | registros encontrados.";
+         $response["data"] = $result;
+         $this->Close();
+
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->catchResponse($error_message);
       }
       die(json_encode($response));
    } 
 
-
-   function Create($usuario,$correo,$contrasenia,$perfil_id,$creado, $objeto) {
+   function create($usuario,$correo,$contrasenia,$perfil_id,$creado, $objeto) {
       try {
          $respuesta = $this->respuestaDefault();
 
@@ -101,14 +120,14 @@ class User extends Connection
          );
 
       } catch (Exception $e) {
-         $mensaje_error = "Error: ".$e->getMessage();
-         $respuesta = $this->respuestaCatch($mensaje_error);
+         $error_message = "Error: ".$e->getMessage();
+         $respuesta = $this->respuestaCatch($error_message);
       }
       die(json_encode($respuesta));
 
    }
 
-   function Edit($usuario,$correo,$contrasenia,$perfil_id,$actualizado,$cambio_contrasenia,$id){
+   function edit($usuario,$correo,$contrasenia,$perfil_id,$actualizado,$cambio_contrasenia,$id){
       try {
         $respuesta = $this->respuestaDefault();
 
@@ -134,13 +153,13 @@ class User extends Connection
             "Texto_alerta" => 'User updated.',
          );
       } catch (Exception $e) {
-         $mensaje_error = "Error: ".$e->getMessage();
-         $respuesta = $this->respuestaCatch($mensaje_error);
+         $error_message = "Error: ".$e->getMessage();
+         $respuesta = $this->respuestaCatch($error_message);
       }
       die(json_encode($respuesta));
    }
 
-   function Delete($eliminado,$id) {
+   function delete($eliminado,$id) {
       try {
         $respuesta = $this->respuestaDefault();
 
@@ -154,15 +173,15 @@ class User extends Connection
             "Texto_alerta" => 'User deleted.',
          );
       } catch (Exception $e) {
-         $mensaje_error = "Error: ".$e->getMessage();
-         $respuesta = $this->respuestaCatch($mensaje_error);
+         $error_message = "Error: ".$e->getMessage();
+         $respuesta = $this->respuestaCatch($error_message);
       }
       die(json_encode($respuesta));
    }
 
 
 
-   function CheckAvailableData($table,$campo,$dato,$propiedadTitulo,$propiedadTexto){
+   function checkAvailableData($table,$campo,$dato,$propiedadTitulo,$propiedadTexto){
      $query = "SELECT count(*) as duplicado FROM $table WHERE $campo='$dato' AND activo=1";
 
      $consulta = $this->SelectOneAndContinue($query);

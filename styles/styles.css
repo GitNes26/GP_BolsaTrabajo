@@ -23,6 +23,7 @@
    top: 50%;
    right: 30px;
    transform: translateY(-50%);
+   background-color: blue;
 }
 
 .input-icon img {
