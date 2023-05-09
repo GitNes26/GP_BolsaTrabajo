@@ -1,6 +1,6 @@
-// var table;
+var table;
 console.log("el scripts de usurios.js");
-// table = $("#table").DataTable(DT_CONFIG);
+table = $("#table").DataTable(DT_CONFIG);
 
 $(document).ready(() => {
 	$("#div_new_password").hide();
@@ -40,8 +40,8 @@ init();
 function init() {
 	fillTable();
 
-	let data = { op: "index" };
-	fillSelect2(URL_ROLE_APP, data, -1, "input_role_id");
+	let data = { op: "showSelect" };
+	// fillSelect2(URL_ROLE_APP, data, -1, "input_role_id");
 }
 
 // CONFIRMAR CONTRASEÑA
@@ -112,7 +112,7 @@ btn_modal_form.click((e) => {
 });
 
 //RESETEAR FORMULARIOS
-btn_reset.click((e) => {
+btn_reset.click(async (e) => {
 	input_password.removeClass("is-invalid is-valid");
 	input_confirm_password.removeClass("is-invalid is-valid");
 	feedback_password.text("").removeClass("text-danger text-success");
@@ -123,8 +123,11 @@ btn_reset.click((e) => {
 	input_password.removeClass("not_validate");
 	input_confirm_password.removeClass("not_validate");
 
-	let data = { op: "index" };
-	resetearSelect2(input_role_id, URL_ROLE_APP, data);
+	// resetSelect2(input_role_id, URL_ROLE_APP, data);
+	await resetSelect2(input_role_id);
+	let data = { op: "showSelect" };
+	const ajaxResponse = await ajaxRequestAsync(URL_ROLE_APP, data);
+	await fillSelect2(ajaxResponse, -1, input_role_id);
 	id_modal.val("");
 	setTimeout(() => {
 		input_name.focus();
@@ -140,49 +143,46 @@ form.on("submit", async (e) => {
 
 	if (switch_new_password.is(":checked"))
 		input_new_password.removeClass("not_validate");
-	if (!validandoInputs(form)) return;
+	if (!validateInputs(form)) return;
 
 	if (id_modal.val() <= 0) {
 		//NUEVO
 		id_modal.val("");
-		op_modal.val("crear_objeto");
+		op_modal.val("create");
 	} else {
 		//EDICION
-		op_modal.val("editar_objeto");
+		op_modal.val("edit");
 	}
 
 	let data = form.serializeArray();
 	// return console.log(data);
-	let momento_actual = moment().format("YYYY-MM-DD hh:mm:ss");
+	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
 	if (id_modal.val() <= 0) {
 		//NUEVO
-		agregarDatoAlArray("creado", momento_actual, data);
+		addToArray("created_at", current_date, data);
 	} else {
 		//EDICION
-		agregarDatoAlArray("actualizado", momento_actual, data);
+		addToArray("updated_at", current_date, data);
 	}
 
-	agregarDatoAlArray("consultor_paquete_id", 2, data);
-	agregarDatoAlArray("consultor_fecha_pago", momento_actual, data);
-	agregarDatoAlArray("consultor_pagado", true, data);
-	// agregarDatoAlArray("tipo_objeto","consultor",data);
+	// addToArray("consultor_paquete_id", 2, data);
+	// addToArray("consultor_fecha_pago", current_date, data);
+	// addToArray("consultor_pagado", true, data);
+	// addToArray("tipo_objeto","consultor",data);
 
-	// agregarDatoAlArray("suscriptor_nombre_negocio",vacasCrew,data);
-	// agregarDatoAlArray("suscriptor_consultor_id",2,data);
-	// agregarDatoAlArray("suscriptor_paquete_id",2,data);
-	// agregarDatoAlArray("suscriptor_consultor_viewer",true,data);
-	// agregarDatoAlArray("suscriptor_fecha_pago",momento_actual,data);
-	// agregarDatoAlArray("suscriptor_pagado",true,data);
-	agregarDatoAlArray("tipo_objeto", "suscriptor", data);
+	// addToArray("suscriptor_nombre_negocio",vacasCrew,data);
+	// addToArray("suscriptor_consultor_id",2,data);
+	// addToArray("suscriptor_paquete_id",2,data);
+	// addToArray("suscriptor_consultor_viewer",true,data);
+	// addToArray("suscriptor_fecha_pago",current_date,data);
+	// addToArray("suscriptor_pagado",true,data);
+	// addToArray("tipo_objeto", "suscriptor", data);
 
 	console.log(data);
 	// return console.log(data);
 	// peticionRegistrarEditar(URL_USER_APP,data,fillTable);
-	const ajaxResponse = await ajaxRequestAsync(
-		URL_USER_APP,
-		data,
-		"fillTable()"
-	);
+	await ajaxRequestAsync(URL_USER_APP,data);
+	fillTable();
 	if (id_modal.val() == id_cookie) rellenarSideBar();
 });
 
@@ -200,34 +200,34 @@ async function fillTable() {
 
 	objResponse.map((obj) => {
 		//Campos
-		let campo_usuario = `${obj.usuario}`,
-			campo_correo = `${obj.correo}`,
-			campo_perfil = `${obj.perfil_nombre}`,
-			campo_creado = formatearFechaHoraNormal(obj.creado);
+		let column_name = `${obj.name} ${obj.last_name}`,
+			column_email = `${obj.email}`,
+			column_cellphone = `${obj.cellphone}`,
+			campo_creado = formatDatetime(obj.created_at, true);
 
-		let campo_botones = `<td class='align-middle'>
+		let column_buttons = `<td class='align-middle'>
             <div class='btn-group' role='group' aria-label='Basic example'>`;
-		if (permiso_cambios) {
-			campo_botones +=
+		if (permission_update) {
+			column_buttons +=
 				//html
 				`<button class='btn btn-outline-primary btn_editar' type='button' data-id='${obj.id}' title='Edit User' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-user-pen fa-lg i_editar'></i></button>`;
 		}
-		if (permiso_bajas) {
-			campo_botones +=
+		if (permission_delete) {
+			column_buttons +=
 				//html
 				`<button class='btn btn-outline-danger btn_eliminar' type='button' data-id='${obj.id}' title='Delete User' data-nombre='${obj.usuario}'><i class='fa-solid fa-trash-alt i_eliminar'></i></button>`;
 		}
-		campo_botones += `</div>
+		column_buttons += `</div>
          </td>`;
 
 		//Dibujar Tabla
 		table.row
 			.add([
-				campo_usuario,
-				campo_correo,
-				campo_perfil,
+				column_name,
+				column_email,
+				column_cellphone,
 				campo_creado,
-				campo_botones,
+				column_buttons,
 			])
 			.draw()
 			.node();
@@ -299,12 +299,7 @@ async function editarObjeto(btn_editar) {
 	input_new_password.val("");
 
 	data = { op: "index" };
-	fillSelect2(
-		URL_ROLE_APP,
-		data,
-		obj.perfil_id,
-		"input_role_id"
-	);
+	// fillSelect2(URL_ROLE_APP, data, obj.perfil_id,"input_role_id");
 	setTimeout(() => {
 		input_name.focus();
 	}, 1000);

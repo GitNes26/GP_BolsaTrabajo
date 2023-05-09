@@ -1,12 +1,101 @@
 <?php
 require_once("../Connection.php");
 
-class User extends Connection
-{
-   // private $response;
-   // function __construct() {
-   //    $this->response = $this->defaultResponse();
-   // }
+class User extends Connection {
+
+   #region SECCION DE LOGIN
+   function login($email,$password) {
+      $response = $this->defaultResponse();
+ 
+      try {
+         $query = "SELECT u.id, u.name, u.last_name, u.cellphone, u.email, u.password, u.role_id
+         FROM users as u WHERE u.email='$email' AND u.active=1 LIMIT 1";
+         $user_found = $this->Select($query,false);
+         // echo "el user_found:";
+         // var_dump($user_found);
+
+         if (sizeof($user_found) > 0) {
+            if (password_verify($password, $user_found["password"])) {
+
+               $this->setCookies($user_found["id"]);
+
+               $response = $this->correctResponse();
+               $response["message"] = "Peticion satisfactoria | registros encontrados.";
+               $response["alert_title"] = "Bienvenido!";
+               $response["alert_text"] = "$user_found[name]";
+               $response["data"] = $user_found;
+
+            } else {
+               $response["alert_text"] = "Credenciales incorrectas, verifica tus values.";
+            }
+         }
+         $this->Close();
+
+       } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->catchResponse($error_message);
+       }
+       die(json_encode($response));
+   }
+
+   function logout() {
+      $this->unsetCookies();
+
+      $response = $this->correctResponse();
+      $response["message"] = "Cerrando sesión.";
+      $response["alert_title"] = "Cerrando Sesión!";
+      $response["alert_text"] = "Cerrando Sesión!";
+
+      die(json_encode($response));
+   }
+
+   function setCookies($id) {
+      try {
+         $query = "SELECT u.id, u.name, u.email, u.password, u.role_id
+         FROM users as u WHERE u.id=$id";
+
+         $user_found = $this->Select($query,false);
+
+         if (sizeof($user_found) > 0) {
+            $cookie_time = '+30 days';
+            // if ($user_found["role_id"] == 1)
+            //   $cookie_time = '+1 day';
+
+            setcookie("user_id",$user_found["id"], strtotime($cookie_time), "/");
+            setcookie("name",$user_found["name"], strtotime($cookie_time), "/");
+            setcookie("role_id",$user_found["role_id"], strtotime($cookie_time), "/");
+            setcookie("session","active", strtotime($cookie_time), "/");
+            setcookie("tema_oscuro",false, strtotime($cookie_time), "/");
+            // setcookie("tema_oscuro",$user_found["tema_oscuro"], strtotime($cookie_time), "/");
+
+            $permissions_query = "SELECT pages_read,pages_write,pages_delete,pages_update FROM roles WHERE id=$user_found[role_id]";
+            $menus = "SELECT * FROM menus WHERE habilitado=1";
+            $permisos = $this->Select($permissions_query,false);
+            if (sizeof($user_found) > 0) {
+               setcookie("pages_read",$permisos["pages_read"], strtotime($cookie_time), "/");
+               setcookie("pages_write",$permisos["pages_write"], strtotime($cookie_time), "/");
+               setcookie("pages_delete",$permisos["pages_delete"], strtotime($cookie_time), "/");
+               setcookie("pages_update",$permisos["pages_update"], strtotime($cookie_time), "/");
+            }
+            $this->close();
+         }
+      } catch (Exception $e) {
+         error_log("Error: ".$e->getMessage());
+      }
+   }
+   function unsetCookies() {
+      if (isset($_COOKIE)) {
+         // $this->id = strpos($_COOKIE, 'user_id');
+         foreach ($_COOKIE as $name=>$value) {
+            unset($_COOKIE[$name]);
+            setcookie($name, null, -1, "/");
+         }
+      }
+   }
+   #endregion SECCION DE LOGIN
+   
+   
 
    function index() {
       try {
@@ -49,154 +138,109 @@ class User extends Connection
       die(json_encode($response));
    } 
 
-   function create($usuario,$correo,$contrasenia,$perfil_id,$creado, $objeto) {
+   function create($name,$last_name,$cellphone,$email,$password,$role_id,$created_at) {
       try {
-         $respuesta = $this->respuestaDefault();
+         $response = $this->defaultResponse();
 
-         $duplicado = $this->verificarDatoDisponible('usuario',$usuario,'Username',$usuario);
-         if ($duplicado["Resultado"] == true) die(json_encode($duplicado));
+         // VALIDACION DE DATOS REPETIDOS
+         $duplicate = $this->checkAvailableData('users','name',$name,'El nombre',$name);
+         if ($duplicate["result"] == true) die(json_encode($duplicate));
 
-         $duplicado = $this->verificarDatoDisponible('correo',$correo,'E-mail',$correo);
-         if ($duplicado["Resultado"] == true) die(json_encode($duplicado));
+         // $duplicate = $this->checkAvailableData('email',$email,'E-mail',$email);
+         // if ($duplicate["result"] == true) die(json_encode($duplicate));
+         // VALIDACION DE DATOS REPETIDOS
 
 
-         $contrasenia_hash = password_hash($contrasenia,PASSWORD_DEFAULT);
-         $query = "INSERT INTO usuarios (usuario,correo,contrasenia,perfil_id,creado) VALUES (?,?,?,?,?)";
-         $this->ExecuteQueryAndContinue($query, array($usuario,$correo,$contrasenia_hash,$perfil_id,$creado));
-         $id_insertado = (int)$this->ObtenerIdInsertado();
-         $objeto->_usuario_id = $id_insertado;
-         // VINCULAR EL USUARIO A LA TABLA USUARIOS
-         // $this->vincularUsuario($id_insertado);
+         $password_hash = password_hash($password,PASSWORD_DEFAULT);
+         $query = "INSERT INTO users (name,last_name,cellphone,email,password,role_id,created_at) VALUES (?,?,?,?,?,?,?)";
+         $this->ExecuteQuery($query, array($name,$last_name,$cellphone,$email,$password_hash,$role_id,$created_at));
+         $insert_id = (int)$this->getInsertId();
+         $objeto->_name_id = $insert_id;
 
-         if ($perfil_id == 3) { // CONSULTOR
-            // include ("../Consultor/Consultor.php");
-            // $Consultor = new Consultor();
-            // $Consultor->vincularUsuarioConsultor($id_insertado);
-            // $query = "CALL SP_VincularConsultor(
-            //    $objeto->_usuario_id,
-            //    $objeto->_paquete_id,
-            //    $objeto->_fecha_pago,
-            //    $objeto->_pagado
-            // )";
-            $query = "CALL SP_VincularConsultor($id_insertado)";
-            $this->Procedure($query);
-
-         }
-         else if ($perfil_id == 4) { // SUSCRIPTOR
-            // $consultor_id = null;
-            // if ($_COOKIE["dpnstash_perfil_id"] == "2") $consultor_id = (int)$_COOKIE["dpnstash_id_usuario"];
-
-            // include ("../Cliente/Cliente.php");
-            // $Cliente = new Cliente();
-            // $Cliente->vincularUsuarioCliente($id_insertado,$consultor_id);
-            // $query = "CALL SP_VincularSuscriptor(
-            //    $objeto->_usuario_id,
-            //    $objeto->_nombre_negocio,
-            //    $objeto->_consultor_id,
-            //    $objeto->_consultor_viewer,
-            //    $objeto->_paquete_id,
-            //    $objeto->_fecha_pago,
-            //    $objeto->_pagado
-            // )";
-            $query = "CALL SP_VincularSuscriptor($id_insertado)";
-            $this->Procedure($query);
-         }
-         else if ($perfil_id == 5) { // EMPLEADO
-            $suscriptor_id = null;
-            if ($_COOKIE["dpnstash_perfil_id"] == "3") $suscriptor_id = (int)$_COOKIE["dpnstash_id_usuario"];
-
-            // include ("../Empleado/Empleado.php");
-            // $Empleado = new Empleado();
-            // $Empleado->vincularUsuarioEmpleado($id_insertado,$suscriptor_id);
-            $query = "CALL SP_VincularEmpleado($id_insertado, $objeto)";
-            $this->Procedure($query);
-         }
-
-         $respuesta = array(
-            "Resultado" => true,
-            "Icono_alerta" => 'success',
-            "Titulo_alerta" => 'SUCCESS',
-            "Texto_alerta" => 'User registered.',
-         );
+         $response = $this->correctResponse();
+         $response["message"] = "Peticion satisfactoria | registros encontrados.";
+         $response["alert_title"] = "Usuario registrado.";
+         $this->Close();
 
       } catch (Exception $e) {
+         $this->Close();
          $error_message = "Error: ".$e->getMessage();
-         $respuesta = $this->respuestaCatch($error_message);
+         $response = $this->catchResponse($error_message);
       }
-      die(json_encode($respuesta));
+      die(json_encode($response));
 
    }
 
-   function edit($usuario,$correo,$contrasenia,$perfil_id,$actualizado,$cambio_contrasenia,$id){
+   function edit($name,$email,$password,$role_id,$actualizado,$cambio_password,$id){
       try {
-        $respuesta = $this->respuestaDefault();
+        $response = $this->defaultResponse();
 
-         if ($cambio_contrasenia) {
-            $contrasenia_hash = password_hash($contrasenia,PASSWORD_DEFAULT);
-            $query = "UPDATE usuarios SET usuario=?, correo=?, contrasenia=?, perfil_id=?, actualizado=? WHERE id=?";
-            $this->ExecuteQueryAndContinue($query,array($usuario,$correo,$contrasenia_hash,$perfil_id,$actualizado,$id));
+         if ($cambio_password) {
+            $password_hash = password_hash($password,PASSWORD_DEFAULT);
+            $query = "UPDATE users SET name=?, email=?, password=?, role_id=?, actualizado=? WHERE id=?";
+            $this->ExecuteQuery($query,array($name,$email,$password_hash,$role_id,$actualizado,$id));
          } else {
-            $query = "UPDATE usuarios SET usuario=?, correo=?, perfil_id=?, actualizado=? WHERE id=?";
-            $this->ExecuteQueryAndContinue($query,array($usuario,$correo,$perfil_id,$actualizado,$id));
+            $query = "UPDATE users SET name=?, email=?, role_id=?, actualizado=? WHERE id=?";
+            $this->ExecuteQuery($query,array($name,$email,$role_id,$actualizado,$id));
          }
 
-         $id = $_COOKIE["dpnstash_id_usuario"];
-         // $this->eliminarCookies();
-         $this->establecerCookies($id);
+         $id = $_COOKIE["user_id"];
+         // $this->unsetCookies();
+         $this->setCookies($id);
 
          $this->CerrarConexion();
 
-         $respuesta = array(
-            "Resultado" => true,
+         $response = array(
+            "result" => true,
             "Icono_alerta" => 'success',
             "Titulo_alerta" => 'SUCCESS',
             "Texto_alerta" => 'User updated.',
          );
       } catch (Exception $e) {
          $error_message = "Error: ".$e->getMessage();
-         $respuesta = $this->respuestaCatch($error_message);
+         $response = $this->responseCatch($error_message);
       }
-      die(json_encode($respuesta));
+      die(json_encode($response));
    }
 
    function delete($eliminado,$id) {
       try {
-        $respuesta = $this->respuestaDefault();
+        $response = $this->defaultResponse();
 
-         $query = "UPDATE usuarios SET activo=0, eliminado=? WHERE id=?";
+         $query = "UPDATE users SET active=0, eliminado=? WHERE id=?";
          $this->ExecuteQuery($query,array($eliminado,$id));
 
-         $respuesta = array(
-            "Resultado" => true,
+         $response = array(
+            "result" => true,
             "Icono_alerta" => 'success',
             "Titulo_alerta" => 'SUCCESS',
             "Texto_alerta" => 'User deleted.',
          );
       } catch (Exception $e) {
          $error_message = "Error: ".$e->getMessage();
-         $respuesta = $this->respuestaCatch($error_message);
+         $response = $this->responseCatch($error_message);
       }
-      die(json_encode($respuesta));
+      die(json_encode($response));
    }
 
 
 
-   function checkAvailableData($table,$campo,$dato,$propiedadTitulo,$propiedadTexto){
-     $query = "SELECT count(*) as duplicado FROM $table WHERE $campo='$dato' AND activo=1";
+   function checkAvailableData($table,$column,$value,$propTitle,$propText){
+     $query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1";
 
-     $consulta = $this->SelectOneAndContinue($query);
-     if ($consulta["duplicado"] > 0) {
-       $respuesta = array(
-          "Resultado" => true,
-          "Icono_alerta" => 'warning',
-          "Titulo_alerta" => "$propiedadTitulo unavailable!",
-          "Texto_alerta" => "<b>$propiedadTexto</b> already exists, try a different one.",
+     $consulta = $this->Select($query,false);
+     if ($consulta["duplicate"] > 0) {
+       $response = array(
+          "result" => true,
+          "alert_icon" => 'warning',
+          "alert_title" => "$propTitle no disponible!",
+          "alert_text" => "<b>$propText</b> ya existe, intenta con uno diferente.",
        );
      } else {
-       $respuesta = array(
-         "Resultado" => false,
+       $response = array(
+         "result" => false,
         );
      }
-     return $respuesta;
+     return $response;
    }
 }

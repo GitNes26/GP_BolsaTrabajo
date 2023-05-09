@@ -61,6 +61,7 @@ include "../templates/validates.php"
 
   <!-- Mis Estilos -->
   <link rel="stylesheet" href="<?=$STYLES_PATH?>/styles.css">
+  <link rel="stylesheet" href="<?=$STYLES_PATH?>/responsive.css">
 
   <title>Bolsa de Trabajo</title>
 </head>

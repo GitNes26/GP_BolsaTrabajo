@@ -1,7 +1,8 @@
 <?php
 require_once '../Connection.php';
 
-class Menu extends Conexiones {
+class Menu extends Connection {
+   
    function index() {
       try {
          $response = $this->defaultResponse();
@@ -112,7 +113,8 @@ class Menu extends Conexiones {
          $response = $this->defaultResponse();
 
          $permissions_query = "SELECT pages_read FROM roles WHERE id=$role_id";
-         $permissions = $this->SelectOneAndContinue($permissions_query);
+         $permissions = $this->Select($permissions_query,false);
+         // var_dump($permissions);
          if (sizeof($permissions) > 0) {
             $pages_read = $permissions["pages_read"];
             $query = "SELECT m.* FROM roles r INNER JOIN menus m ON m.id WHERE active=1 AND r.id=$role_id;";
@@ -121,30 +123,31 @@ class Menu extends Conexiones {
                $menu_ids = rtrim($menu_ids, ",");
                $query = "SELECT m.* FROM roles r INNER JOIN menus m ON m.id IN ($menu_ids) WHERE r.id=$role_id;";
             }
-            $consulta = $this->Select($query);
-            if (sizeof($consulta) > 0) {
-               $response = array(
-                  "Resultado" => true,
-                  "Datos" => $consulta
-               );
-            } else {
-              $response = array(
-                  "Resultado" => true,
-                  "Mensaje" => 'No registers.',
-                  "Datos" => array()
-              );
-            }
-         } else {
-           $response = array(
-               "Resultado" => true,
-               "Mensaje" => 'No registers.',
-               "Datos" => array()
-           );
+            $result = $this->Select($query,true);
+
+            $response = $this->CorrectResponse();
+            $response["message"] = "Peticion satisfactoria | registros encontrados.";
+            $response["data"] = $result;
+            $this->Close();
+
+            // if (sizeof($result) > 0) {
+            //    $response = array(
+            //       "Resultado" => true,
+            //       "Datos" => $result
+            //    );
+            // } else {
+            //   $response = array(
+            //       "Resultado" => true,
+            //       "Mensaje" => 'No registers.',
+            //       "Datos" => array()
+            //   );
+            // }
          }
 
       } catch (Exception $e) {
-         $error_message = "Error: $e->getMessage()";
-         $response = $this->catchResponse($error_message);
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }

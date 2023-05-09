@@ -1,0 +1,19 @@
+.body-login {
+   /* height: 100vh; */
+   overflow-y: hidden;
+}
+
+.login-box {
+   /* display: flex;
+   flex-direction: column; */
+   /* width: 100vw !important; */
+}
+
+   .login-box > .logo {
+       width: 100%;
+       /* width: 30rem !important; */
+
+   }
+       .login-logo > img {
+           width: 30rem !important;
+       }

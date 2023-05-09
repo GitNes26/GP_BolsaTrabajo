@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
    <!-- Brand Logo -->
    <a href="<?php echo($URL_BASE) ?>/views" class="brand-link text-md" title="Regresar a inicio">
-      <img src="<?php echo($ICONO) ?>" alt="Logo" class="brand-image" style="opacity: .8">
+      <!-- <img src="<?php echo($ICONO) ?>" alt="Logo" class="brand-image" style="opacity: .8"> -->
       <span class="ml-3 fw-bold">Bolsa de</span>
       <span class="brand-text fw-light">Trabajo <small></small></span>
    </a>

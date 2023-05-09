@@ -2,7 +2,7 @@ $("#card_register").hide();
 
 const URL_BASE = $("#url_base").val();
 const BACKEND_PATH = `${URL_BASE}/Backend`;
-const ADMIN_PATH = `${URL_BASE}/Admin`;
+const ADMIN_PATH = `${URL_BASE}/views`;
 const EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;
 
 const join_now = $("#join_now").val();
@@ -31,9 +31,9 @@ email.focus();
 // check_theme.on("change", function() {
    // $("body").toggleClass("dark-mode")
    // const dark_mode = $("body").hasClass("dark-mode") ? true : false;
-   // Cookies.set("dpnstash_tema_oscuro", dark_mode);
+   // Cookies.set("dark_mode", dark_mode);
    // check_theme.is("Cheked",dark_mode)
-      Cookies.get("dpnstash_tema_oscuro") ? $("body").addClass("dark-mode") : $("body").removeClass("dark-mode")
+      Cookies.get("dark_mode") ? $("body").addClass("dark-mode") : $("body").removeClass("dark-mode")
 
 // });
 
@@ -61,20 +61,20 @@ $("#btn_login").click((e) => {
    e.preventDefault();
    let op = $("#op");
    let password = $("#password");
-   if (!validatingInputs(form_login)) return
+   if (!validateInputs(form_login)) return
 
    const data = {
       op: op.val(),
       email: email.val(),
       password: password.val()
    }
-   return console.log(data);
+   console.log(data);
    ajaxRequest(`${BACKEND_PATH}/User/App.php`,data);
 });
 
 $("#btn_register").click(async (e) =>{
    e.preventDefault();
-   if (!validatingInputs(form_register)) return
+   if (!validateInputs(form_register)) return
 
    let validado = true;
 
@@ -108,30 +108,25 @@ async function changeLoginSignup() {
       await card_register.slideUp(450);
       await card_login.slideDown(450);
       setTimeout(() => {email.focus();},500)
-      // email.focus();
-      // setTimeout(() => {
-      //    card_login.slideDown(450);
-      //    setTimeout(() => {email.focus();},500)
-      // }, 450);
    }
 }
 
 // CONFIRMAR CONTRASEÑA
 input_confirm_password.on('input',function() {
-    var contrasena1 = input_password.val();
-    var contrasena2 = input_confirm_password.val();
+   var pwd1 = input_password.val();
+   var pwd2 = input_confirm_password.val();
 
-    if (contrasena1 === contrasena2) {
-        feedback_confirm_password.addClass('text-success').text('Las contraseñas coinciden').removeClass('text-danger');
-        input_password.addClass('is-valid').removeClass('is-invalid');
-        input_confirm_password.addClass('is-valid').removeClass('is-invalid');
-        btn_register.prop('disabled',false);
-    } else {
-        feedback_confirm_password.addClass('text-danger').text("Las contraseñas no coinciden").removeClass('text-success');
-        input_password.addClass('is-invalid').removeClass('is-valid');
-        input_confirm_password.addClass('is-invalid').removeClass('is-valid');
-        btn_register.prop('disabled',true);
-    }
+   if (pwd1 === pwd2) {
+      feedback_confirm_password.addClass('text-success').text('Las contraseñas coinciden').removeClass('text-danger');
+      input_password.addClass('is-valid').removeClass('is-invalid');
+      input_confirm_password.addClass('is-valid').removeClass('is-invalid');
+      btn_register.prop('disabled',false);
+   } else {
+      feedback_confirm_password.addClass('text-danger').text("Las contraseñas no coinciden").removeClass('text-success');
+      input_password.addClass('is-invalid').removeClass('is-valid');
+      input_confirm_password.addClass('is-invalid').removeClass('is-valid');
+      btn_register.prop('disabled',true);
+   }
 });
 
 function ajaxRequest(url,data) {
@@ -141,7 +136,7 @@ function ajaxRequest(url,data) {
       data: data,
       dataType: "json",
       success: (ajaxResponse) => {
-         if (ajaxResponse.Resultado) {
+         if (ajaxResponse.result) {
            let rol = 1;
 
             Swal.fire({
@@ -153,11 +148,13 @@ function ajaxRequest(url,data) {
             }).then(() => {
                $("#form_login")[0].reset();
                rol = Number(ajaxResponse.Rol)
+               return console.log("todo bien hasta aqui");
 
                if (location.pathname == URL_BASE || location.pathname == `${URL_BASE}/` || location.pathname == `/` ) {
-                     if (rol == 2) window.location.href = `${PATH_CLIENTE}`;
-                     else if (rol > 2) window.location.href = `${PATH_PAYMENT}`;
-                     else window.location.href = `${ADMIN_PATH}`;
+                     // if (rol == 2) window.location.href = `${PATH_CLIENTE}`;
+                     // else if (rol > 2) window.location.href = `${PATH_PAYMENT}`;
+                     // else window.location.href = `${ADMIN_PATH}`;
+                     window.location.href = `${ADMIN_PATH}`;
                }
                location.reload();
             });
@@ -194,7 +191,7 @@ function ajaxRequestRegister(url,data) {
       data: data,
       dataType: "json",
       success: (ajaxResponse) => {
-         if (ajaxResponse.Resultado) {
+         if (ajaxResponse.result) {
          //   console.log(data);
            // ajaxRequestEmail(data);
 
@@ -253,56 +250,56 @@ function ajaxRequestEmail(data) {
 }
 
 
-async function ajaxRequest(
-   url,
-   data,
-   function_complete_string,
-   close_modal
- ) {
-   if (close_modal != false) {
-     close_modal = null;
-   }
-   let response = await $.ajax({
-     type: "POST",
-     url: url,
-     data: data,
-     dataType: "json",
-     beforeSend: () => {
-       //mostrar pantalla cargando
-       $.blockUI({
-         message: dialogoBlockUI,
-         css: { backgroundColor: null, color: "#313131", border: null },
-       });
-     },
-     success: (ajaxResponse) => {
-       if (!ajaxResponse.Resultado) {
-         Swal.fire({
-           icon: ajaxResponse.alert_icon,
-           title: ajaxResponse.alert_title,
-           text: ajaxResponse.alert_text,
-           showConfirmButton: true,
-           confirmButtonColor: "#494E53",
-         });
-       }
-     },
-     error: (ajaxResponse) => {
-       Swal.fire({
-         icon: "error",
-         title: "Oops...!",
-         text: `Ah ocurrido un error, verifica tu información.`,
-         showConfirmButton: true,
-         confirmButtonColor: "#494E53",
-       });
-     },
-     complete: () => {
-       //quitar pantalla c!rgfalse
-       if (function_complete_string != null)
-         eval(function_complete_string.toString());
-       $.unblockUI();
-     },
-   });
-   return response;
-}
+// async function ajaxRequest(
+//    url,
+//    data,
+//    function_complete_string,
+//    close_modal
+//  ) {
+//    if (close_modal != false) {
+//      close_modal = null;
+//    }
+//    let response = await $.ajax({
+//      type: "POST",
+//      url: url,
+//      data: data,
+//      dataType: "json",
+//      beforeSend: () => {
+//        //mostrar pantalla cargando
+//        $.blockUI({
+//          message: dialogoBlockUI,
+//          css: { backgroundColor: null, color: "#313131", border: null },
+//        });
+//      },
+//      success: (ajaxResponse) => {
+//        if (!ajaxResponse.result) {
+//          Swal.fire({
+//            icon: ajaxResponse.alert_icon,
+//            title: ajaxResponse.alert_title,
+//            text: ajaxResponse.alert_text,
+//            showConfirmButton: true,
+//            confirmButtonColor: "#494E53",
+//          });
+//        }
+//      },
+//      error: (ajaxResponse) => {
+//        Swal.fire({
+//          icon: "error",
+//          title: "Oops...!",
+//          text: `Ah ocurrido un error, verifica tu información.`,
+//          showConfirmButton: true,
+//          confirmButtonColor: "#494E53",
+//        });
+//      },
+//      complete: () => {
+//        //quitar pantalla c!rgfalse
+//        if (function_complete_string != null)
+//          eval(function_complete_string.toString());
+//        $.unblockUI();
+//      },
+//    });
+//    return response;
+// }
 
 
 

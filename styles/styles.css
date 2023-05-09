@@ -33,3 +33,57 @@
    height: 35px;
    transform: translateY(-50%);
 }
+
+
+body {
+   font-size: 16px !important;
+}
+
+.body-login {
+   margin: 0;
+   padding: 0;
+   background-color: #F2F2F2;
+   /*background-color: rgb(203 41 41 / 0.80);*/
+   filter: blur(5);
+}
+#card_registro {
+   display: none;
+}
+
+/* --------------------------------SCROLLBAR------------------------------------------ */
+/*font-family: 'Poppins', sans-serif;*/
+*{
+   --color--scroll: #2aa549;
+   --color--bg--scroll: #343A40;
+   /* --color--bg--scroll: #D6D8D9; */
+}
+/* Works on Firefox */
+* {
+   scrollbar-width: thin;
+   scrollbar-color: var(--color--scroll) var(--color--bg--scroll);
+ }
+
+ /* Works on Chrome, Edge, and Safari */
+ *::-webkit-scrollbar {
+   width: 12px;
+ }
+
+ *::-webkit-scrollbar-track {
+   background: var(--color--bg--scroll);
+ }
+
+ *::-webkit-scrollbar-thumb {
+   background-color: var(--color--scroll);
+   border-radius: 15px;
+   /* border: solid var(--color--scroll); */
+ }
+
+
+ #div_paquetes::-webkit-scrollbar {
+  width: 5px;
+}
+ #div_paquetes::-webkit-scrollbar-thumb {
+  background-color: var(--color--scroll);
+  border-radius: 5px;
+}
+/* --------------------------------SCROLLBAR------------------------------------------ */

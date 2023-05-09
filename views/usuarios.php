@@ -34,7 +34,7 @@ $current_page = "Usuarios";
 
       <!-- card -->
       <div class="card card-outline card-dark shadow">
-         <?php if ($permission_create ?? true): ?>
+         <?php if ($permission_write ?? true): ?>
          <div class="container-fluid mt-2">
             <button id="btn_modal_form" class="float-end btn btn-success fw-bold fw-" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR USUARIO</button>
          </div>
@@ -45,8 +45,8 @@ $current_page = "Usuarios";
               <table id="table" class="table table-hover text-center" style="width:100%">
                   <thead class="thead-dark">
                      <tr>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
+                        <th>Nombre Completo</th>
+                        <th>Celular</th>
                         <th>Correo</th>
                         <th>Miembro desde</th>
                         <th>Acciones</th>
@@ -56,8 +56,8 @@ $current_page = "Usuarios";
                   </tbody>
                   <tfoot>
                      <tr class="thead-dark">
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
+                        <th>Nombre Completo</th>
+                        <th>Celular</th>
                         <th>Correo</th>
                         <th>Miembro desde</th>
                         <th>Acciones</th>

@@ -2,11 +2,19 @@
 
 //#region VARIABLES
 const
+	URL_ADMIN = "/views",
 	URL_USER_APP = "../backend/User/App.php",
 	URL_ROLE_APP = "../backend/Role/App.php",
 	URL_MENU_APP = "../backend/Menu/App.php";
 
 const btn_close = $(".btn-close");
+
+const
+	permission_read = true,
+	permission_write = true,
+	permission_update = true,
+	permission_delete = true
+;
 
 //#endregion VARIABLES
 
@@ -29,6 +37,7 @@ const ajaxRequestAsync = async (
 			async: true,
 			dataType: "json",
 		});
+		// console.log(response);
 
 		if (response.result) {
 			if (response.alert_text != undefined)
@@ -127,16 +136,18 @@ const sidebar_menus = $("#sidebar_menus");
 const fillSidebar = async () => {
 	sidebar_menus.slideUp(1000);
 	let role_id = Number(Cookies.get("role_id"));
+	role_id=1;
 	//   document.cookie.replace(
 	//     /(?:(?:^|.*;\s*)role_id\s*\=\s*([^;]*).*$)|^.*$/,
 	//     "$1"
 	//   );
 	let data = { op: "showMyMenus", role_id: role_id };
-	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP, data);
+	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP, data, false, true, false);
 	sidebar_menus.html("");
 	const objResponse = ajaxResponse.data;
+	console.log(objResponse);
 	let menus = "";
-	let parent_menus = objResponse.filter((menu) => menu.parent_id == 0);
+	let parent_menus = objResponse.filter((menu) => menu.belongs_to == 0);
 	parent_menus = parent_menus.sort().map((parent_menu) => {
 		menus += `
         <li class="nav-item  mb-3">
@@ -148,9 +159,9 @@ const fillSidebar = async () => {
               </p>
           </a>`;
 		let children_menus = objResponse.filter(
-			(menu) => menu.parent_id == parent_menu.id_menu
+			(menu) => menu.belongs_to == parent_menu.id
 		);
-		children_menus.sort((a, b) => a.orden - b.orden);
+		children_menus.sort((a, b) => a.order - b.order);
 		children_menus.map((child_menu) => {
 			menus += `
               <ul class="nav nav-treeview text-sm">
@@ -269,7 +280,7 @@ function formatDatetimeToSQL(the_date) {
 
 
 //#region /** VALIDACIONES - INPUTS - FORMULARIOS */
-function validatingInputs(form) {
+function validateInputs(form) {
 	let inputs = form.serializeArray();
 	let validated = true;
 	$.each(inputs, function (i, input_iterable) {
@@ -328,27 +339,27 @@ function resetSelect2(select2) {
 	// iconos(url, datos, -1, select2[0].name);
 }
 
-function fillSelect2(ajaxResponse, selected_id) {
+function fillSelect2(ajaxResponse, selected_id, selector) {
 	console.log("fill Select");
 	const objResponse = ajaxResponse.data;
 	console.log("objResponse",objResponse);
 
-	input_role_id.html("");
+	selector.html("");
 
 	const options = /*HTML*/ `
-      <option value="-1">Selecciona una opción...</option>
+      <option value="-1" readonly>Selecciona una opción...</option>
    `;
 
-	input_role_id.append(options);
+	selector.append(options);
 
 	$.each(objResponse, function (i, obj) {
-		if (obj[0] == selected_id)
-			input_role_id.append(
-				`<option selected value='${obj[0]}'>${obj[1]}</option>`
+		if (obj.value == selected_id)
+			selector.append(
+				`<option selected value='${obj.value}'>${obj.text}</option>`
 			);
 		else
-			input_role_id.append(
-				`<option value='${obj[0]}'>${obj[1]}</option>`
+			selector.append(
+				`<option value='${obj.value}'>${obj.text}</option>`
 			);
 	});
 }
@@ -428,7 +439,7 @@ $("table thead tr")
 			});
 };
 
-if ($("table").length > 0) $("table").DataTable(DT_CONFIG)
+// if ($("table").length > 0) $("table").DataTable(DT_CONFIG)
 //#endregion /* DataTables */
 
 

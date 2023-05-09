@@ -3,10 +3,11 @@
 class Connection{
 	private $conn;
   	// private $database;
-	function __construct($CONN_OBJ) {
+	function __construct() {
 		$ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
 
 		include "$ROOT/config.php";
+		$CONN_OBJ = $CONN_DB;
 		$this->conn = null;
 
 		$connString = "mysql:host=$CONN_OBJ[HOST_NAME];dbname=$CONN_OBJ[DB_NAME];charset=utf8mb4";
@@ -48,7 +49,7 @@ class Connection{
 		try {
 			$sth = $this->conn->prepare($query);
 			$sth->execute($parametros);
-			$this->conn = null;
+			// $this->conn = null;
 		}
 		catch(PDOException $e){
 			error_log('PDOException - ' . $e->getMessage(), 0);

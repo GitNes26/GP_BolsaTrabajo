@@ -81,7 +81,7 @@ if (isset($_GET["p"])) {
 
    <!-- MisEstilos -->
    <link href="<?=$STYLES_PATH ?>/styles.css" rel="stylesheet" />
-   <!-- <link href="<?=$DIST_PATH ?>/Css/responsivo.css" rel="stylesheet" /> -->
+   <link rel="stylesheet" href="<?=$STYLES_PATH?>/responsive.css">
 
 </head>
 
