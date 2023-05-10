@@ -21,7 +21,7 @@ $ICONO = "https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
 $LOGO = "https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
 
 $TEMPLATES_PATH = "$URL_BASE/templates";
-$VIEWS_PATH = "$URL_BASE/views";
+$PAGES_PATH = "$URL_BASE/pages";
 $SCRIPTS_PATH = "$URL_BASE/scripts";
 $BACKEND_PATH = "$URL_BASE/backend";
 $PLUGINS_PATH = "$URL_BASE/plugins";
@@ -46,7 +46,7 @@ $ADMINLTE_PATH = "$URL_BASE/plugins/AdminLTE-3.2.0";
 // define(ICONO, "$URL_BASE/favicon.ico");
 // define(LOGO, "$URL_BASE/logo.ico");
 // define(TEMPLATES_PATH, "$URL_BASE/Templates");
-// define(VIEWS_PATH, "$URL_BASE/Views");
+// define(PAGES_PATH, "$URL_BASE/Views");
 // define(SCRIPTS_PATH, "$URL_BASE/Scripts");
 // define(BACKEND_PATH, "$URL_BASE/Backend");
 // #endregion CONSTANTES RUTAS

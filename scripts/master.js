@@ -2,7 +2,7 @@
 
 //#region VARIABLES
 const
-	URL_ADMIN = `/views`,
+	URL_ADMIN = `/pages`,
 	URL_BACKEND = `/backend`,
 	URL_USER_APP = `${URL_BACKEND}/User/App.php`,
 	URL_ROLE_APP = `${URL_BACKEND}/Role/App.php`,

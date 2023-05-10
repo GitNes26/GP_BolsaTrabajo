@@ -2,7 +2,7 @@ $("#card_register").hide();
 
 const URL_BASE = $("#url_base").val();
 const BACKEND_PATH = `${URL_BASE}/Backend`;
-const ADMIN_PATH = `${URL_BASE}/views`;
+const ADMIN_PATH = `${URL_BASE}/pages`;
 const EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;
 
 const join_now = $("#join_now").val();
