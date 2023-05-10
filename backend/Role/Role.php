@@ -1,5 +1,15 @@
 <?php
-require_once("../Connection.php");
+if (file_exists("../backend/Connection.php")) {
+   require_once("../backend/Connection.php");
+} else {
+   if (file_exists("./backend/Connection.php")) {
+      require_once("./backend/Connection.php");
+   } else if (file_exists("../backend/Connection.php")) {
+      require_once("../backend/Connection.php");
+   } else if (file_exists("../../backend/Connection.php")) {
+      require_once("../../backend/Connection.php");
+   }
+}
 
 class Role extends Connection
 {
@@ -83,7 +93,7 @@ class Role extends Connection
          }
          else if ($perfil_id == 4) { // SUSCRIPTOR
             // $consultor_id = null;
-            // if ($_COOKIE["dpnstash_perfil_id"] == "2") $consultor_id = (int)$_COOKIE["dpnstash_id_usuario"];
+            // if ($_COOKIE["dpnstash_perfil_id"] == "2") $consultor_id = (int)$_COOKIE["dpnstash_user_id"];
 
             // include ("../Cliente/Cliente.php");
             // $Cliente = new Cliente();
@@ -102,7 +112,7 @@ class Role extends Connection
          }
          else if ($perfil_id == 5) { // EMPLEADO
             $suscriptor_id = null;
-            if ($_COOKIE["dpnstash_perfil_id"] == "3") $suscriptor_id = (int)$_COOKIE["dpnstash_id_usuario"];
+            if ($_COOKIE["dpnstash_perfil_id"] == "3") $suscriptor_id = (int)$_COOKIE["dpnstash_user_id"];
 
             // include ("../Empleado/Empleado.php");
             // $Empleado = new Empleado();
@@ -139,7 +149,7 @@ class Role extends Connection
             $this->ExecuteQueryAndContinue($query,array($usuario,$correo,$perfil_id,$actualizado,$id));
          }
 
-         $id = $_COOKIE["dpnstash_id_usuario"];
+         $id = $_COOKIE["dpnstash_user_id"];
          // $this->eliminarCookies();
          $this->establecerCookies($id);
 

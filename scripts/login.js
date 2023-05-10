@@ -1,9 +1,8 @@
 $("#card_register").hide();
 
-const URL_BASE = $("#url_base").val();
-const BACKEND_PATH = `${URL_BASE}/Backend`;
-const ADMIN_PATH = `${URL_BASE}/pages`;
-const EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;
+// const BACKEND_PATH = `${URL_BASE}/Backend`;
+// const PAGES_PATH = `${URL_BASE}/pages`;
+// const EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;
 
 const join_now = $("#join_now").val();
 
@@ -154,9 +153,9 @@ function ajaxRequest(url,data) {
                if (location.pathname == URL_BASE || location.pathname == `${URL_BASE}/` || location.pathname == `/` ) {
                      // if (rol == 2) window.location.href = `${PATH_CLIENTE}`;
                      // else if (rol > 2) window.location.href = `${PATH_PAYMENT}`;
-                     // else window.location.href = `${ADMIN_PATH}`;
-                     console.log("aqui entro", ADMIN_PATH);
-                     // window.location.href = `${ADMIN_PATH}`;
+                     // else window.location.href = `${PAGES_PATH}`;
+                     console.log("aqui entro", PAGES_PATH);
+                     window.location.href = `${PAGES_PATH}`;
                }
                // location.reload();
             });
@@ -178,7 +177,7 @@ function ajaxRequest(url,data) {
          Swal.fire({
             icon: "error",
             title: "Opss!!",
-            text: "Ah ocurrido un error, verifica tu información.",
+            text: "Ah ocurrido un error, verifica tu informaciónEEEEEE.",
             showConfirmButton: true,
             confirmButtonColor: '#494E53'
          })
@@ -250,101 +249,3 @@ function ajaxRequestEmail(data) {
       dataType: "json",
    });
 }
-
-
-// async function ajaxRequest(
-//    url,
-//    data,
-//    function_complete_string,
-//    close_modal
-//  ) {
-//    if (close_modal != false) {
-//      close_modal = null;
-//    }
-//    let response = await $.ajax({
-//      type: "POST",
-//      url: url,
-//      data: data,
-//      dataType: "json",
-//      beforeSend: () => {
-//        //mostrar pantalla cargando
-//        $.blockUI({
-//          message: dialogoBlockUI,
-//          css: { backgroundColor: null, color: "#313131", border: null },
-//        });
-//      },
-//      success: (ajaxResponse) => {
-//        if (!ajaxResponse.result) {
-//          Swal.fire({
-//            icon: ajaxResponse.alert_icon,
-//            title: ajaxResponse.alert_title,
-//            text: ajaxResponse.alert_text,
-//            showConfirmButton: true,
-//            confirmButtonColor: "#494E53",
-//          });
-//        }
-//      },
-//      error: (ajaxResponse) => {
-//        Swal.fire({
-//          icon: "error",
-//          title: "Oops...!",
-//          text: `Ah ocurrido un error, verifica tu información.`,
-//          showConfirmButton: true,
-//          confirmButtonColor: "#494E53",
-//        });
-//      },
-//      complete: () => {
-//        //quitar pantalla c!rgfalse
-//        if (function_complete_string != null)
-//          eval(function_complete_string.toString());
-//        $.unblockUI();
-//      },
-//    });
-//    return response;
-// }
-
-
-
-// function validandoInputs(formulario) {
-//    let inputs = formulario.serializeArray();
-//    // console.log(inputs)
-//    let validado = true;
-//    $.each(inputs, function (i, input_iterable) {
-//      if (!validado) return;
-//      let input = $(`#${input_iterable.name}`);
-//      if (!input.hasClass("excluir_validacion")) {
-//        // console.log(input)
-//        let campo_valido = validarInputs(input);
-//        if (!campo_valido) return (validado = false);
-//      }
-//      validado = true;
-//    });
-//    return validado;
-//  }
-//  function validarInputs(input) {
-//    if (input.val() == "" || input.val() == -1 || input.val() == "-1") {
-//      mostrarToast("error", `Space ${input.attr("data-nombre-campo")} empty.`);
-//      input.focus();
-//      return false;
-//    }
-//    return true;
-//  }
-
-// function mostrarToast(icono, mensaje) {
-//    const Toast = Swal.mixin({
-//        toast: true,
-//        position: 'top-end',
-//        showConfirmButton: false,
-//        timer: 2000,
-//        timerProgressBar: true,
-//        didOpen: (toast) => {
-//            toast.addEventListener('mouseenter', Swal.stopTimer)
-//            toast.addEventListener('mouseleave', Swal.resumeTimer)
-//        }
-//    })
-
-//    Toast.fire({
-//        icon: icono,
-//        title: mensaje
-//    })
-// }

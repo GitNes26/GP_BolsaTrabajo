@@ -67,4 +67,5 @@ include "../templates/validates.php"
 </head>
 
 <body class="layout-top-nav layout-navbar-fixed layout-footer-fixed text-sm" style="height: auto;">
+  <input type="hidden" id="url_base" value="<?=$URL_BASE?>">
   <div class="wrapper">

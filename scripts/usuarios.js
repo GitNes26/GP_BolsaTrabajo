@@ -1,5 +1,5 @@
+//#region VARIABLES
 var table;
-console.log("el scripts de usurios.js");
 table = $("#table").DataTable(DT_CONFIG);
 
 $(document).ready(() => {
@@ -17,7 +17,7 @@ const btn_modal_form = $("#btn_modal_form"),
 	input_name = $("#input_name"),
 	input_last_name = $("#input_last_name"),
 	input_cellphone = $("#input_cellphone"),
-	input_correo = $("#input_correo"),
+	input_email = $("#input_email"),
 	div_password = $("#div_password"),
 	input_password = $("#input_password"),
 	input_confirm_password = $("#input_confirm_password"),
@@ -30,18 +30,18 @@ const btn_modal_form = $("#btn_modal_form"),
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset");
 	
+//#endregion VARIABLES
 $(".select2").select2({ dropdownParent: $("#modal") });
 focusSelect2($(".select2"));
+
 /* --- FUNCIONES DE CAJON--- */
 // estas funciones se encuentran en index.js para no repetir código
 /* --- FUNCIONES DE CAJON--- */
 
 init();
-function init() {
+async function init() {
 	fillTable();
-
-	let data = { op: "showSelect" };
-	// fillSelect2(URL_ROLE_APP, data, -1, "input_role_id");
+	fillSelect2(URL_ROLE_APP, -1, input_role_id);
 }
 
 // CONFIRMAR CONTRASEÑA
@@ -52,7 +52,7 @@ input_confirm_password.on("input", function () {
 	if (pwd1 === pwd2) {
 		feedback_password
 			.addClass("text-success")
-			.text("Password match")
+			.text("Las contraseñas coinciden")
 			.removeClass("text-danger");
 		input_password.addClass("is-valid").removeClass("is-invalid");
 		input_confirm_password
@@ -62,7 +62,7 @@ input_confirm_password.on("input", function () {
 	} else {
 		feedback_password
 			.addClass("text-danger")
-			.text("Passwords don't match")
+			.text("Las contraseñas no coinciden")
 			.removeClass("text-success");
 		input_password.addClass("is-invalid").removeClass("is-valid");
 		input_confirm_password
@@ -85,7 +85,6 @@ switch_new_password.click(() => {
 //CLICK EN BTN ABRIR MODAL
 btn_modal_form.click((e) => {
 	e.preventDefault();
-	console.log("hola");
 	$("#div_new_password").hide();
 	$("#input_new_password").prop("readonly", true);
 
@@ -107,7 +106,7 @@ btn_modal_form.click((e) => {
 	input_confirm_password.removeClass("not_validate");
 
 	// input_name.val("nuevo");
-	// input_correo.val("nuevo@gmial.com");
+	// input_email.val("nuevo@gmial.com");
 	// input_password.val("1");
 });
 
@@ -123,11 +122,8 @@ btn_reset.click(async (e) => {
 	input_password.removeClass("not_validate");
 	input_confirm_password.removeClass("not_validate");
 
-	// resetSelect2(input_role_id, URL_ROLE_APP, data);
 	await resetSelect2(input_role_id);
-	let data = { op: "showSelect" };
-	const ajaxResponse = await ajaxRequestAsync(URL_ROLE_APP, data);
-	await fillSelect2(ajaxResponse, -1, input_role_id);
+	
 	id_modal.val("");
 	setTimeout(() => {
 		input_name.focus();
@@ -170,7 +166,7 @@ form.on("submit", async (e) => {
 	// addToArray("consultor_pagado", true, data);
 	// addToArray("tipo_objeto","consultor",data);
 
-	// addToArray("suscriptor_nombre_negocio",vacasCrew,data);
+	// addToArray("suscriptor_name_negocio",vacasCrew,data);
 	// addToArray("suscriptor_consultor_id",2,data);
 	// addToArray("suscriptor_paquete_id",2,data);
 	// addToArray("suscriptor_consultor_viewer",true,data);
@@ -178,11 +174,10 @@ form.on("submit", async (e) => {
 	// addToArray("suscriptor_pagado",true,data);
 	// addToArray("tipo_objeto", "suscriptor", data);
 
-	console.log(data);
 	// return console.log(data);
-	// peticionRegistrarEditar(URL_USER_APP,data,fillTable);
-	await ajaxRequestAsync(URL_USER_APP,data);
-	fillTable();
+	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP,data);
+	console.log(ajaxResponse.message);
+	// if (ajaxResponse.message != "duplicado") fillTable();
 	if (id_modal.val() == id_cookie) rellenarSideBar();
 });
 
@@ -194,8 +189,8 @@ async function fillTable() {
 	tbody.slideUp();
 	table.clear().draw();
 
+	const list = [];
 	let objResponse = ajaxResponse.data;
-	console.log(objResponse);
 	// return console.log(objResponse);
 
 	objResponse.map((obj) => {
@@ -203,6 +198,7 @@ async function fillTable() {
 		let column_name = `${obj.name} ${obj.last_name}`,
 			column_email = `${obj.email}`,
 			column_cellphone = `${obj.cellphone}`,
+			column_role = `${obj.role}`,
 			campo_creado = formatDatetime(obj.created_at, true);
 
 		let column_buttons = `<td class='align-middle'>
@@ -210,29 +206,30 @@ async function fillTable() {
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary btn_editar' type='button' data-id='${obj.id}' title='Edit User' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-user-pen fa-lg i_editar'></i></button>`;
+				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Usuario' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-user-pen fa-lg i_edit'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-danger btn_eliminar' type='button' data-id='${obj.id}' title='Delete User' data-nombre='${obj.usuario}'><i class='fa-solid fa-trash-alt i_eliminar'></i></button>`;
+				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Usuario' data-name='${obj.name}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
 		}
 		column_buttons += `</div>
          </td>`;
 
-		//Dibujar Tabla
-		table.row
-			.add([
-				column_name,
-				column_email,
-				column_cellphone,
-				campo_creado,
-				column_buttons,
-			])
-			.draw()
-			.node();
-		table.columns.adjust().draw();
+		list.push([
+			column_name,
+			column_email,
+			column_cellphone,
+			column_role,
+			campo_creado,
+			column_buttons,
+		]);		
 	});
+	//Dibujar Tabla
+	table.rows
+	.add(list)
+	.draw();
+	table.columns.adjust().draw();
 	tbody.slideDown("slow");
 }
 
@@ -242,39 +239,39 @@ tbody.click((e) => {
 	e.preventDefault();
 
 	//EDITAR OBJETO
-	if ($(e.target).hasClass("btn_editar") || $(e.target).hasClass("i_editar")) {
-		let btn_editar;
+	if ($(e.target).hasClass("btn_edit") || $(e.target).hasClass("i_edit")) {
+		let btn_edit;
 
-		if ($(e.target).hasClass("i_editar")) {
-			btn_editar = $(e.target).parent();
+		if ($(e.target).hasClass("i_edit")) {
+			btn_edit = $(e.target).parent();
 		} else {
-			btn_editar = $(e.target);
+			btn_edit = $(e.target);
 		}
 
 		$("#div_new_password").show();
 		$("#input_new_password").prop("readonly", true);
-		editarObjeto(btn_editar);
+		editObj(btn_edit);
 	}
 
 	//ELIMINAR OBJETO
 	if (
-		$(e.target).hasClass("btn_eliminar") ||
-		$(e.target).hasClass("i_eliminar")
+		$(e.target).hasClass("btn_delete") ||
+		$(e.target).hasClass("i_delete")
 	) {
-		let btn_eliminar;
+		let btn_delete;
 
-		if ($(e.target).hasClass("i_eliminar")) {
-			btn_eliminar = $(e.target).parent();
+		if ($(e.target).hasClass("i_delete")) {
+			btn_delete = $(e.target).parent();
 		} else {
-			btn_eliminar = $(e.target);
+			btn_delete = $(e.target);
 		}
 
-		eliminarObjeto(btn_eliminar);
+		deleteObj(btn_delete);
 	}
 });
 
 //EDITAR OBJETO
-async function editarObjeto(btn_editar) {
+async function editObj(btn_edit) {
 	modal_title.html("<i class='fa-solid fa-user-pen'></i></i>&nbsp; EDITAR USUARIO");
 	btn_submit.removeClass("btn-success");
 	btn_submit.addClass("btn-primary");
@@ -286,40 +283,40 @@ async function editarObjeto(btn_editar) {
 	input_password.addClass("not_validate");
 	input_confirm_password.addClass("not_validate");
 
-	let id_objeto = btn_editar.attr("data-id");
+	let id_objeto = btn_edit.attr("data-id");
 	let data = { id: id_objeto, op: "show" };
 	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data);
-	// peticionEditarObjeto(URL_USER_APP,data);
 
 	const obj = ajaxResponse.data;
 	//form
 	id_modal.val(Number(obj.id));
-	input_name.val(obj.usuario);
-	input_correo.val(obj.correo);
+	input_name.val(obj.name);
+	input_last_name.val(obj.last_name);
+	input_cellphone.val(obj.cellphone);
+	input_email.val(obj.email);
 	input_new_password.val("");
 
-	data = { op: "index" };
-	// fillSelect2(URL_ROLE_APP, data, obj.perfil_id,"input_role_id");
+	await fillSelect2(URL_ROLE_APP, obj.role_id, input_role_id);
 	setTimeout(() => {
 		input_name.focus();
-	}, 1000);
+	}, 500);
 }
 
 //ELIMINAR OBJETO
-async function eliminarObjeto(btn_eliminar) {
-	let titulo = "¿Are you sure you want to delete this user?";
-	let texto = `${btn_eliminar.attr("data-nombre")}`;
+async function deleteObj(btn_delete) {
+	let title = `¿Estas seguro de eliminar a <br> ${btn_delete.attr("data-name")}?`;
+	let text = ``;
 
-	let fecha_actual = moment().format("YYYY-MM-DD hh:mm:ss");
+	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
 	let data = {
-		op: "eliminar_objeto",
-		id: Number(btn_eliminar.attr("data-id")),
-		eliminado: fecha_actual,
+		op: "delete",
+		id: Number(btn_delete.attr("data-id")),
+		deleted_at: current_date,
 	};
 
-	await peticionEliminarObjetoAsync(
-		titulo,
-		texto,
+	ajaxRequestDeleteAsync(
+		title,
+		text,
 		URL_USER_APP,
 		data,
 		"fillTable()"

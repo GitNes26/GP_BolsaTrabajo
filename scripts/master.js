@@ -2,20 +2,25 @@
 
 //#region VARIABLES
 const
-	URL_ADMIN = `/pages`,
-	URL_BACKEND = `/backend`,
-	URL_USER_APP = `${URL_BACKEND}/User/App.php`,
-	URL_ROLE_APP = `${URL_BACKEND}/Role/App.php`,
-	URL_MENU_APP = `${URL_BACKEND}/Menu/App.php`;
+	URL_BASE = $("#url_base").val(),
+	BACKEND_PATH = `${URL_BASE}/backend`;
+   PAGES_PATH = `${URL_BASE}/pages`;
+   EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;
+	URL_USER_APP = `${BACKEND_PATH}/User/App.php`,
+	URL_ROLE_APP = `${BACKEND_PATH}/Role/App.php`,
+	URL_MENU_APP = `${BACKEND_PATH}/Menu/App.php`;
 
 const btn_close = $(".btn-close");
 
 const
-	permission_read = true,
-	permission_write = true,
-	permission_update = true,
-	permission_delete = true
-;
+	id_cookie = Number(Cookies.get("user_id")),
+	permission_read = Boolean(Cookies.get("permission_read")),
+	permission_write = Boolean(Cookies.get("permission_write")),
+	permission_delete = Boolean(Cookies.get("permission_delete")),
+	permission_update = Boolean(Cookies.get("permission_update")),
+	current_page = $("#current_page").val(),
+	singular_object = $("#singular_object").val()
+	plural_object = $("#plural_object").val()
 
 //#endregion VARIABLES
 
@@ -38,7 +43,12 @@ const ajaxRequestAsync = async (
 			async: true,
 			dataType: "json",
 		});
-		// console.log(response);
+		console.log(response);
+
+		if (response.message == "duplicado") {
+			showToast(response.alert_icon, response.alert_text);
+			return
+		};
 
 		if (response.result) {
 			if (response.alert_text != undefined)
@@ -70,6 +80,68 @@ const ajaxRequestAsync = async (
 			confirmButtonColor: "#494E53",
 		});
 	}
+}
+const ajaxRequestDeleteAsync = async (
+	title,
+	text,
+	url,
+	data,
+	function_complete_string
+) => {
+	Swal.fire({
+		title: title,
+		text: text,
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#B04759",
+		confirmButtonText: "Eliminar",
+		cancelButtonColor: "#9BA4B5",
+		cancelButtonText: "Cancelar",
+	}).then(async (result) => {
+		if (result.isConfirmed) {
+			await showBlockUI();
+
+			try {
+				let response = await $.ajax({
+					type: "POST",
+					url: url,
+					data: data,
+					dataType: "json",
+				});
+
+				if (response.result) {
+					if (response.alert_text != undefined)
+						showToast(response.alert_icon, response.alert_text);
+					deleted = true;
+					
+				} else {
+					Swal.fire({
+						icon: response.alert_icon,
+						title: response.alert_title,
+						text: response.alert_text,
+						showConfirmButton: true,
+						confirmButtonColor: "#494E53",
+					});
+				}
+				if (function_complete_string != null)
+					eval(function_complete_string.toString());
+				$.unblockUI();
+				return response;
+
+			} catch (error) {
+				$.unblockUI();
+
+				console.error(error);
+				Swal.fire({
+					icon: "error",
+					title: "Oops...!",
+					html: ` Ocurrio un error inesperado. <br> ${error.responseText}`,
+					showConfirmButton: true,
+					confirmButtonColor: "#494E53",
+				});
+			}
+		}
+	});
 }
 
 function showBlockUI() {
@@ -138,15 +210,11 @@ const fillSidebar = async () => {
 	sidebar_menus.slideUp(1000);
 	let role_id = Number(Cookies.get("role_id"));
 	role_id=1;
-	//   document.cookie.replace(
-	//     /(?:(?:^|.*;\s*)role_id\s*\=\s*([^;]*).*$)|^.*$/,
-	//     "$1"
-	//   );
 	let data = { op: "showMyMenus", role_id: role_id };
 	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP, data, false, true, false);
 	sidebar_menus.html("");
 	const objResponse = ajaxResponse.data;
-	console.log(objResponse);
+	// console.log(objResponse);
 	let menus = "";
 	let parent_menus = objResponse.filter((menu) => menu.belongs_to == 0);
 	parent_menus = parent_menus.sort().map((parent_menu) => {
@@ -167,7 +235,7 @@ const fillSidebar = async () => {
 			menus += `
               <ul class="nav nav-treeview text-sm">
                 <li class="nav-item">
-                    <a href="${URL_ADMIN}/${child_menu.file_path}" class="nav-link">
+                    <a href="${PAGES_PATH}/${child_menu.file_path}" class="nav-link">
                         <i class="nav-icon ${child_menu.icon} text-sm"></i>
                         <p>${child_menu.menu}</p>
                     </a>
@@ -197,18 +265,11 @@ if (btn_logout != null) {
 		i.classList.add("fa-door-closed");
 	});
 
-	$("#btn_logout").click((e) => {
+	$("#btn_logout").click(async (e) => {
 		e.preventDefault();
-		let datos = { op: "logout" };
-		$.ajax({
-			url: `${URL_USER_APP}`,
-			type: "POST",
-			data: datos,
-			dataType: "json",
-			success: (ajaxResponse) => {
-				if (ajaxResponse.Resultado) window.location.href = URL_BASE;
-			},
-		});
+		let data = { op: "logout" };
+		const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data);
+		if (ajaxResponse.result) window.location.href = `${URL_BASE}/`;
 	});
 } 
 //#endregion CERRAR SESION
@@ -332,18 +393,20 @@ function focusSelect2(select2) {
 focusSelect2($(".select2"));
 
 function resetSelect2(select2) {
-	// function resetearSelect2(select2, url, datos) {
+	// function resetearSelect2(select2, url, data) {
 	select2.prop("selectedIndex", 0);
 	select2.val("-1");
 	$(`#select2-${select2[0].name}-container`).text("Selecciona una opción...");
 	$(`#select2-${select2[0].name}-container`).attr("title", "Selecciona una opción...");
-	// iconos(url, datos, -1, select2[0].name);
+	// iconos(url, data, -1, select2[0].name);
 }
 
-function fillSelect2(ajaxResponse, selected_id, selector) {
-	console.log("fill Select");
+async function fillSelect2(url_app, selected_index, selector) {
+	const data = { op: "showSelect" };
+	const ajaxResponse = await ajaxRequestAsync(url_app, data, null, null, null);
+
 	const objResponse = ajaxResponse.data;
-	console.log("objResponse",objResponse);
+	// console.log("objResponse",objResponse);
 
 	selector.html("");
 
@@ -354,7 +417,7 @@ function fillSelect2(ajaxResponse, selected_id, selector) {
 	selector.append(options);
 
 	$.each(objResponse, function (i, obj) {
-		if (obj.value == selected_id)
+		if (obj.value == selected_index)
 			selector.append(
 				`<option selected value='${obj.value}'>${obj.text}</option>`
 			);

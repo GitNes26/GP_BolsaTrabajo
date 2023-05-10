@@ -1,12 +1,23 @@
 <?php
-require_once("../Connection.php");
+if (file_exists("../backend/Connection.php")) {
+   require_once("../backend/Connection.php");
+} else {
+   if (file_exists("./backend/Connection.php")) {
+      require_once("./backend/Connection.php");
+   } else if (file_exists("../backend/Connection.php")) {
+      require_once("../backend/Connection.php");
+   } else if (file_exists("../../backend/Connection.php")) {
+      require_once("../../backend/Connection.php");
+   }
+}
 
 class User extends Connection {
 
    #region SECCION DE LOGIN
    function login($email,$password) {
       $response = $this->defaultResponse();
- 
+      $response["alert_text"] = "Credenciales incorrectas, verifica tú información.";
+      
       try {
          $query = "SELECT u.id, u.name, u.last_name, u.cellphone, u.email, u.password, u.role_id
          FROM users as u WHERE u.email='$email' AND u.active=1 LIMIT 1";
@@ -14,7 +25,7 @@ class User extends Connection {
          // echo "el user_found:";
          // var_dump($user_found);
 
-         if (sizeof($user_found) > 0) {
+         if ($user_found != false) {
             if (password_verify($password, $user_found["password"])) {
 
                $this->setCookies($user_found["id"]);
@@ -26,16 +37,18 @@ class User extends Connection {
                $response["data"] = $user_found;
 
             } else {
-               $response["alert_text"] = "Credenciales incorrectas, verifica tus values.";
+               $response["alert_text"] = "Credenciales incorrectas, verifica tú información.";
             }
          }
          $this->Close();
 
        } catch (Exception $e) {
+         echo "el catch";
          $this->Close();
          $error_message = "Error: ".$e->getMessage();
          $response = $this->catchResponse($error_message);
-       }
+         $response["alert_title"] = "sadasdsa!";
+      }
        die(json_encode($response));
    }
 
@@ -58,7 +71,7 @@ class User extends Connection {
          $user_found = $this->Select($query,false);
 
          if (sizeof($user_found) > 0) {
-            $cookie_time = '+30 days';
+            $cookie_time = '+1 months';
             // if ($user_found["role_id"] == 1)
             //   $cookie_time = '+1 day';
 
@@ -89,7 +102,8 @@ class User extends Connection {
          // $this->id = strpos($_COOKIE, 'user_id');
          foreach ($_COOKIE as $name=>$value) {
             unset($_COOKIE[$name]);
-            setcookie($name, null, -1, "/");
+            // echo "la coockie: $name";
+            setcookie($name, "", -1, "/");
          }
       }
    }
@@ -100,9 +114,9 @@ class User extends Connection {
    function index() {
       try {
          $response = $this->defaultResponse();
-         $query = "SELECT *
-         FROM users
-         WHERE active=1";
+         $query = "SELECT u.*, r.role
+         FROM users u INNER JOIN roles r ON u.role_id=r.id 
+         WHERE u.active=1";
          $result = $this->Select($query,true);
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -121,12 +135,14 @@ class User extends Connection {
       $response = $this->defaultResponse();
 
       try {
-         $query = "SELECT *
-         FROM users
-         WHERE active=1";
-         $result = $this->Select($query,true);
+         $query = "SELECT u.*, r.id role_id, r.role
+         FROM users u INNER JOIN roles r ON u.role_id=r.id 
+         WHERE u.active=1 and u.id=$id";
+         $result = $this->Select($query,false);
          $response = $this->correctResponse();
-         $response["message"] = "Peticion satisfactoria | registros encontrados.";
+         $response["message"] = "Peticion satisfactoria | registro encontrado.";
+         $response["alert_title"] = "Usuario encontrado";
+         $response["alert_text"] = "Usuario encontrado";
          $response["data"] = $result;
          $this->Close();
 
@@ -144,6 +160,8 @@ class User extends Connection {
 
          // VALIDACION DE DATOS REPETIDOS
          $duplicate = $this->checkAvailableData('users','name',$name,'El nombre',$name);
+         // echo "que dice el duplicate:";
+         // var_dump($duplicate);
          if ($duplicate["result"] == true) die(json_encode($duplicate));
 
          // $duplicate = $this->checkAvailableData('email',$email,'E-mail',$email);
@@ -154,12 +172,13 @@ class User extends Connection {
          $password_hash = password_hash($password,PASSWORD_DEFAULT);
          $query = "INSERT INTO users (name,last_name,cellphone,email,password,role_id,created_at) VALUES (?,?,?,?,?,?,?)";
          $this->ExecuteQuery($query, array($name,$last_name,$cellphone,$email,$password_hash,$role_id,$created_at));
-         $insert_id = (int)$this->getInsertId();
-         $objeto->_name_id = $insert_id;
+         // $insert_id = (int)$this->getInsertId();
+         // $objeto->_name_id = $insert_id;
 
          $response = $this->correctResponse();
-         $response["message"] = "Peticion satisfactoria | registros encontrados.";
-         $response["alert_title"] = "Usuario registrado.";
+         $response["message"] = "Peticion satisfactoria | registro creado.";
+         $response["alert_title"] = "Usuario registrado";
+         $response["alert_text"] = "Usuario registrado";
          $this->Close();
 
       } catch (Exception $e) {
@@ -171,54 +190,55 @@ class User extends Connection {
 
    }
 
-   function edit($name,$email,$password,$role_id,$actualizado,$cambio_password,$id){
-      try {
-        $response = $this->defaultResponse();
+   function edit($name,$last_name,$cellphone,$email,$password,$role_id,$updated_at,$change_password,$id) {
+      // function edit($name,$email,$password,$role_id,$updated_at,$change_password,$id){
+      try {         
+         $response = $this->defaultResponse();
 
-         if ($cambio_password) {
+         if ($change_password) {
             $password_hash = password_hash($password,PASSWORD_DEFAULT);
-            $query = "UPDATE users SET name=?, email=?, password=?, role_id=?, actualizado=? WHERE id=?";
-            $this->ExecuteQuery($query,array($name,$email,$password_hash,$role_id,$actualizado,$id));
+            $query = "UPDATE users SET name=?, last_name=?, cellphone=?, email=?, password=?, role_id=?, updated_at=? WHERE id=?";
+            $this->ExecuteQuery($query,array($name,$last_name,$cellphone,$email,$password_hash,$role_id,$updated_at,$id));
          } else {
-            $query = "UPDATE users SET name=?, email=?, role_id=?, actualizado=? WHERE id=?";
-            $this->ExecuteQuery($query,array($name,$email,$role_id,$actualizado,$id));
+            $query = "UPDATE users SET name=?, last_name=?, cellphone=?, email=?, role_id=?, updated_at=? WHERE id=?";
+            $this->ExecuteQuery($query,array($name,$last_name,$cellphone,$email,$role_id,$updated_at,$id));
          }
 
          $id = $_COOKIE["user_id"];
          // $this->unsetCookies();
          $this->setCookies($id);
 
-         $this->CerrarConexion();
+         $response = $this->correctResponse();
+         $response["message"] = "Peticion satisfactoria | registro actualizado.";
+         $response["alert_title"] = "Usuario actualizado";
+         $response["alert_text"] = "Usuario actualizado";
+         $this->Close();
 
-         $response = array(
-            "result" => true,
-            "Icono_alerta" => 'success',
-            "Titulo_alerta" => 'SUCCESS',
-            "Texto_alerta" => 'User updated.',
-         );
       } catch (Exception $e) {
+         $this->Close();
          $error_message = "Error: ".$e->getMessage();
-         $response = $this->responseCatch($error_message);
+         $response = $this->catchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function delete($eliminado,$id) {
+   function delete($deleted_at,$id) {
       try {
         $response = $this->defaultResponse();
 
-         $query = "UPDATE users SET active=0, eliminado=? WHERE id=?";
-         $this->ExecuteQuery($query,array($eliminado,$id));
+         $query = "UPDATE users SET active=0, deleted_at=? WHERE id=?";
+         $this->ExecuteQuery($query,array($deleted_at,$id));
 
-         $response = array(
-            "result" => true,
-            "Icono_alerta" => 'success',
-            "Titulo_alerta" => 'SUCCESS',
-            "Texto_alerta" => 'User deleted.',
-         );
+         $response = $this->correctResponse();
+         $response["message"] = "Peticion satisfactoria | registro eliminado.";
+         $response["alert_title"] = "Usuario eliminado";
+         $response["alert_text"] = "Usuario eliminado";
+         $this->Close();
+
       } catch (Exception $e) {
+         $this->Close();
          $error_message = "Error: ".$e->getMessage();
-         $response = $this->responseCatch($error_message);
+         $response = $this->catchResponse($error_message);
       }
       die(json_encode($response));
    }
@@ -231,11 +251,12 @@ class User extends Connection {
      $consulta = $this->Select($query,false);
      if ($consulta["duplicate"] > 0) {
        $response = array(
-          "result" => true,
-          "alert_icon" => 'warning',
-          "alert_title" => "$propTitle no disponible!",
-          "alert_text" => "<b>$propText</b> ya existe, intenta con uno diferente.",
-       );
+         "result" => true,
+         "alert_icon" => 'warning',
+         "alert_title" => "$propTitle no esta disponible!",
+         "alert_text" => "<b>$propText</b> ya existe, intenta con uno diferente.",
+         "message" => "duplicado",
+   );
      } else {
        $response = array(
          "result" => false,

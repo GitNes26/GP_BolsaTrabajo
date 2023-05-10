@@ -1,12 +1,12 @@
 <?php
 require_once "config.php";
-// if (isset($_COOKIE["session"])) {
-//    if ($_COOKIE["session"] == "active") {
-//       if ($_COOKIE["profile_id"] == 2)
-//          die(header("location:$CUSTOMER_PATH"));
-//       die(header("location:$ADMIN_PATH"));
-//    }
-// }
+if (isset($_COOKIE["session"])) {
+   if ($_COOKIE["session"] == "active") {
+      // if ($_COOKIE["profile_id"] == 2)
+         // die(header("location:$CUSTOMER_PATH"));
+      die(header("location:$PAGES_PATH"));
+   }
+}
 // $join_now = '0';
 // if (isset($_GET["join_now"])) {
 //   $join_now = $_GET["join_now"];

@@ -14,6 +14,7 @@ if ($op == 'logout') { $User->logout(); }
 //SECCION DE LOGIN
 
 
+if(isset($_POST['id'])) $id = $_POST['id'];
 if(isset($_POST['input_name'])) $name = $_POST['input_name'];
 if(isset($_POST['input_last_name'])) $last_name = $_POST['input_last_name'];
 if(isset($_POST['input_cellphone'])) $cellphone = $_POST['input_cellphone']; else $input_cellphone = 'null';
@@ -43,6 +44,6 @@ elseif ($op == 'edit') {
   $User->edit($name,$last_name,$cellphone,$email,$password,$role_id,$updated_at,$change_password,$id);
 }
 
-elseif ($op == "delete") $User->delete($id);
+elseif ($op == "delete") $User->delete($deleted_at,$id);
 // #endregion PETICIONES
 

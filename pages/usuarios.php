@@ -45,11 +45,12 @@ $current_page = "Usuarios";
               <table id="table" class="table table-hover text-center" style="width:100%">
                   <thead class="thead-dark">
                      <tr>
-                        <th>Nombre Completo</th>
-                        <th>Celular</th>
-                        <th>Correo</th>
-                        <th>Miembro desde</th>
-                        <th>Acciones</th>
+                        <th scope="col">Nombre Completo</th>
+                        <th scope="col">Celular</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Rol</th>
+                        <th scope="col">Miembro desde</th>
+                        <th scope="col">Acciones</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -59,6 +60,7 @@ $current_page = "Usuarios";
                         <th>Nombre Completo</th>
                         <th>Celular</th>
                         <th>Correo</th>
+                        <th>Rol</th>
                         <th>Miembro desde</th>
                         <th>Acciones</th>
                      </tr>
@@ -110,23 +112,23 @@ $current_page = "Usuarios";
                      <label for="input_password" class="form-label">Contraseña: <span class="obligatory"></span></label>
                      <div class="input-icon">
                         <input type="password" class="form-control" id="input_password" name="input_password" data-input-name="CONTRASEÑA">
-                        <i class="fa-duotone fa-eye-slash eye-icon" data-input="input_password"></i>
+                        <i class="fa-duotone fa-eye-slash eye_icon" data-input="input_password"></i>
                      </div>
                   </div>
                   <div class="col">
                      <label for="input_confirm_password" class="form-label">Confirmar Contraseña: <span class="obligatory"></span></label>
                      <div class="input-icon">
                         <input type="password" class="form-control" id="input_confirm_password" name="input_confirm_password" data-input-name="CONFIRMAR CONTRASEÑA">
-                        <i class="fa-duotone fa-eye-slash eye-icon" data-input="input_confirm_password"></i>
+                        <i class="fa-duotone fa-eye-slash eye_icon" data-input="input_confirm_password"></i>
                      </div>
-                     <span class="fst-italic" id="feedback_passwoord"></span>
+                     <span class="fst-italic" id="feedback_password"></span>
                   </div>
                </div>
                <div class="mb-3" id="div_new_password">
                   <label for="input_new_password" class="form-label">Nueva Contraseña:</label>
                   <div class="input-icon">
                      <input type="password" class="form-control" id="input_new_password" name="input_new_password">
-                     <i class="fa-duotone fa-eye-slash eye-icon" data-input="input_new_password"></i>
+                     <i class="fa-duotone fa-eye-slash eye_icon" data-input="input_new_password"></i>
                   </div>
                   <span class="custom-control custom-switch">
                      <input type="checkbox" class="custom-control-input" id="switch_new_password" data-input-name="NUEVA CONTRASEÑA">

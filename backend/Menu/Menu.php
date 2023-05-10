@@ -1,5 +1,16 @@
 <?php
-require_once '../Connection.php';
+if (file_exists("../backend/Connection.php")) {
+   require_once("../backend/Connection.php");
+} else {
+   if (file_exists("./backend/Connection.php")) {
+      require_once("./backend/Connection.php");
+   } else if (file_exists("../backend/Connection.php")) {
+      require_once("../backend/Connection.php");
+   } else if (file_exists("../../backend/Connection.php")) {
+      require_once("../../backend/Connection.php");
+   }
+}
+
 
 class Menu extends Connection {
    
@@ -230,29 +241,36 @@ class Menu extends Connection {
    }
 
 
-   function obtenerIdPorPath($path) {
+   function getIdForPath($path) {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT id FROM menus WHERE path_archivo='$path'";
-         $resultado = $this->SelectOnlyOne($query);
-         if (!empty($resultado)) {
-            $response = array(
-               "Resultado" => true,
-               "Datos" => $resultado['id']
-            );
-         } else {
-            $response = array(
-               "Resultado" => true,
-               "Mensaje" => 'No registers.',
-               // "Mensaje" => 'Sin registros.',
-               "Datos" => array()
-            );
-         }
+         $query = "SELECT id FROM menus WHERE file_path='$path'";
+         $result = $this->Select($query,false);
+         $response = $this->CorrectResponse();
+         $response["message"] = "Peticion satisfactoria | página encontrada.";
+         $response["data"] = $result;
+         $this->Close();
+
+         // $resultado = $this->SelectOnlyOne($query);
+         // if (!empty($resultado)) {
+         //    $response = array(
+         //       "Resultado" => true,
+         //       "Datos" => $resultado['id']
+         //    );
+         // } else {
+         //    $response = array(
+         //       "Resultado" => true,
+         //       "Mensaje" => 'No registers.',
+         //       // "Mensaje" => 'Sin registros.',
+         //       "Datos" => array()
+         //    );
+         // }
    
       } catch (Exception $e) {
+         $this->Close();
          $error_message = "Error: ".$e->getMessage();
-         $response = $this->catchResponse($error_message);
+         $response = $this->CatchResponse($error_message);
       }
       return $response;
    }

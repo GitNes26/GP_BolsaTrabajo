@@ -2,31 +2,31 @@
 include_once "../config.php";
 
 
-// VERIFICAR SESION ACTIVA
-// if (isset($_COOKIE["sesion"])) {
-//    if ($_COOKIE["sesion"] != "activa") {
-//       header("location:$URL_BASE");
-//       die();
-//    }
-// } else {
-//    header("location:$URL_BASE");
-//    die();
-// }
+// #VERIFICAR SESION ACTIVA
+if (isset($_COOKIE["session"])) {
+   if ($_COOKIE["session"] != "active") {
+      header("location:$URL_BASE/");
+      die();
+   }
+} else {
+   header("location:$URL_BASE/");
+   die();
+}
 
 
-// VERIFICAR QUE NO SEA UN USUARIO TIPO CLIENTE
+// #VERIFICAR QUE NO SEA UN USUARIO TIPO CLIENTE
 $role_id = 0; //$_COOKIE["role_id"];
 // if ($role_id == 2) {
-//   header("location:$URL_BASE");
+//   header("location:$URL_BASE/");
 //   die();
 // }
 
 
-// VERIFICAR QUE SU MENSUALIDAD ESTE PAGADA
+// #VERIFICAR QUE SU MENSUALIDAD ESTE PAGADA
 // if ($role_id == 3 || $role_id == 4) {
 //    include("../Backend/Usuario/Usuario.php");
 //    $ValidarPagoUsuario = new Usuario();
-//    $pago_vencido = $ValidarPagoUsuario->validarSuscripcionPagada($_COOKIE["id_usuario"])["pago_vencido"];
+//    $pago_vencido = $ValidarPagoUsuario->validarSuscripcionPagada($_COOKIE["user_id"])["pago_vencido"];
 //    echo $pago_vencido;
 //    // $pago_vencido = 1;
 //    if ($pago_vencido) die(header("location:$SUBSCRIBE_PAGE"));
@@ -41,83 +41,78 @@ if (isset($Role)) {
    $role = "Admin";
 }
 
-if ($role_id == 0) $role = "SuperAdmin";
-else if ($role_id == 1) $role = "Admin";
-else if ($role_id == 2) $role = "Trabajador";
-else if ($role_id == 3) $role = "Usuario";
-else $role = "SuperAdmin";
+if ($role_id == 1) $role = "SuperAdmin";
+else if ($role_id == 2) $role = "Admin";
+else if ($role_id == 3) $role = "Empresa";
+else if ($role_id == 4) $role = "Usuario";
+// else $role = "SuperAdmin";
 // echo "perfil: $role_id - $role ";
 
 
-// VALIDAR QUE TENGA ACCESOS A ESTA PAGINA
+// #VALIDAR QUE TENGA access A ESTA PAGINA
 $URL_SERVER =  $_SERVER['REQUEST_URI'];
 $url_ptr = explode("/", $URL_SERVER);
 $path = end($url_ptr);
-// include ('../Backend/Menu/Menu.php');
-// $menu = new Menu();
-// $respuesta = $menu->getIdForPath($path);
-// $id=0;
-// $acceso = true;
-// if ($path != "perfil.php") {
-//    if (!$respuesta['result']) {
-//       header("location:$URL_BASE");
-//       die();
-//    }
-//    $id = $respuesta['data'];
-//    // echo "id_menu: $id<br>";
-//    // $acceso = true;
-//    if ($_COOKIE["permisos_lectura"] != "todos") {
-//       $accesos = explode(",", $_COOKIE["permisos_lectura"]);
-//       // echo "accesos: ".print_r($accesos)."<br>";
+include_once ("../backend/Menu/Menu.php");
+$menu = new Menu();
+$menu_id = $menu->getIdForPath($path);
+$id=0;
+$access = true;
+if ($path != "perfil.php") {
+   if (!$menu_id['result']) {
+      header("location:$URL_BASE/");
+      die();
+   }
+   $id = $menu_id['data'];
+   // echo "id_menu: $id<br>";
+   // $access = true;
+   if ($_COOKIE["pages_read"] != "todas") {
+      $access = explode(",", $_COOKIE["pages_read"]);
+      // echo "access: ".print_r($access)."<br>";
 
-//       if (!in_array($id,$accesos)) $acceso = false;
-//       // echo "acceso: $acceso<br>";
-//    }
-//    if (!$acceso && $URL_SERVER != "$ADMIN_PATH/") {
-//       // echo "ESTOY SIN ACCESO... CREO";
-//       header("location:$URL_BASE");
-//       die();
-//    }
-// }
+      if (!in_array($id,$access)) $access = false;
+      // echo "access: $access<br>";
+   }
+   if (!$access && $URL_SERVER != "$ADMIN_PATH/") {
+      // echo "ESTOY SIN access... CREO";
+      header("location:$URL_BASE/");
+      die();
+   }
+}
 
 
 // MOSTRAR EL REPORTE DEFAULT EN CASO DE QUE SE VAYA A LA VENTANA DE CUSTOMERS
 $reporte_id_default = 0;
 
-// CONOCER PERMISOS
-// if (!isset($_COOKIE["permisos_lectura"])) {
-//    include("../Backend/Usuario/Usuario.php");
-//    $PermisosUsuario = new Usuario();
-//    $PermisosUsuario->establecerCookies($_COOKIE["id_usuario"]);
-// }
+// #CONOCER PERMISOS
+if (!isset($_COOKIE["pages_read"])) {
+   include("../Backend/Usuario/Usuario.php");
+   $UserPermissions = new Usuario();
+   $UserPermissions->setCookies($_COOKIE["user_id"]);
+}
 
-// $permiso_altas = $_COOKIE["permisos_altas"] == null ? false : true;
-// if ($_COOKIE["permisos_altas"] != "todos") {
-//    $accesos = explode(",", $_COOKIE["permisos_altas"]);
-//    if (!in_array($id,$accesos)) $permiso_altas = false;
-// }
-// $permiso_bajas = $_COOKIE["permisos_bajas"] == null ? false : true;
-// if ($_COOKIE["permisos_bajas"] != "todos") {
-//    $accesos = explode(",", $_COOKIE["permisos_bajas"]);
-//    if (!in_array($id,$accesos)) $permiso_bajas = false;
-// }
-// $permiso_cambios = $_COOKIE["permisos_cambios"] == null ? false : true;
-// if ($_COOKIE["permisos_cambios"] != "todos") {
-//    $accesos = explode(",", $_COOKIE["permisos_cambios"]);
-//    if (!in_array($id,$accesos)) $permiso_cambios = false;
-// }
-// $permiso_especiales = $_COOKIE["permisos_especiales"] == null ? false : true;
-// if ($_COOKIE["permisos_especiales"] != "todos") {
-//    $accesos = explode(",", $_COOKIE["permisos_especiales"]);
-//    if (!in_array($id,$accesos)) $permiso_especiales = false;
-// }
+$permission_write = $_COOKIE["pages_write"] == null ? false : true;
+if ($_COOKIE["pages_write"] != "todas") {
+   $access = explode(",", $_COOKIE["pages_write"]);
+   if (!in_array($id,$access)) $permission_write = false;
+}
+$permission_delete = $_COOKIE["pages_delete"] == null ? false : true;
+if ($_COOKIE["pages_delete"] != "todas") {
+   $access = explode(",", $_COOKIE["pages_delete"]);
+   if (!in_array($id,$access)) $permission_delete = false;
+}
+$permission_update = $_COOKIE["pages_update"] == null ? false : true;
+if ($_COOKIE["pages_update"] != "todas") {
+   $access = explode(",", $_COOKIE["pages_update"]);
+   if (!in_array($id,$access)) $permission_update = false;
+}
 
-$tiempo_coockies = '+30 minutes';
-// setcookie("permiso_lectura",$acceso,strtotime($tiempo_coockies), "/");
-// setcookie("permiso_altas",$permiso_altas,strtotime($tiempo_coockies), "/");
-// setcookie("permiso_bajas",$permiso_bajas,strtotime($tiempo_coockies), "/");
-// setcookie("permiso_cambios",$permiso_cambios,strtotime($tiempo_coockies), "/");
-// setcookie("permiso_especiales",$permiso_especiales,strtotime($tiempo_coockies), "/");
+
+$tiempo_coockies = '+1 months';
+setcookie("permission_read",$access,strtotime($tiempo_coockies), "/");
+setcookie("permission_write",$permission_write,strtotime($tiempo_coockies), "/");
+setcookie("permission_delete",$permission_delete,strtotime($tiempo_coockies), "/");
+setcookie("permission_update",$permission_update,strtotime($tiempo_coockies), "/");
 
 
 // $bg_powerbi = "navbar-white navbar-light";
