@@ -100,6 +100,7 @@ class Connection{
 		$response = array(
 		"result" => null,
 		"message" => "mensaje para mostrar en consola, solo informativo",
+		"toast" => true,
 		"alert_icon" => 'warning',
 		"alert_title" => 'Oh oh',
 		"alert_text" => 'No se encontraron registros.',
@@ -112,6 +113,7 @@ class Connection{
 		$response = array(
 		"result" => true,
 		"message" => "mensaje para mostrar en consola, solo informativo",
+		"toast" => true,
 		"alert_icon" => 'success',
 		"alert_title" => 'Exito',
 		"alert_text" => 'Registros cargados.',
@@ -125,6 +127,7 @@ class Connection{
 		$response = array(
 		"result" => false,
 		"message" => "Peticion fallida | $error_message",
+		"toast" => false,
 		"alert_icon" => 'error',
 		"alert_title" => 'Opps...!',
 		"alert_text" => "Ha ocurrido un error, verifica tus datos.\n $error_message",

@@ -6,6 +6,7 @@ const
 	BACKEND_PATH = `${URL_BASE}/backend`;
    PAGES_PATH = `${URL_BASE}/pages`;
    EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;
+	
 	URL_USER_APP = `${BACKEND_PATH}/User/App.php`,
 	URL_ROLE_APP = `${BACKEND_PATH}/Role/App.php`,
 	URL_MENU_APP = `${BACKEND_PATH}/Menu/App.php`;
@@ -51,7 +52,7 @@ const ajaxRequestAsync = async (
 		};
 
 		if (response.result) {
-			if (response.alert_text != undefined)
+			if (response.toast)
 				if (show_toast)
 					showToast(response.alert_icon, response.alert_text);
 		} else {

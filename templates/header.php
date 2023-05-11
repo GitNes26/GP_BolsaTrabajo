@@ -66,6 +66,6 @@ include "../templates/validates.php"
   <title>Bolsa de Trabajo</title>
 </head>
 
-<body class="layout-top-nav layout-navbar-fixed layout-footer-fixed text-sm" style="height: auto;">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm" style="height: auto;">
   <input type="hidden" id="url_base" value="<?=$URL_BASE?>">
   <div class="wrapper">

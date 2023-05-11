@@ -16,7 +16,7 @@ $pagina_acutal = "Dashboard";
             <div class="col-sm-6">
                <h1 class="fw-bolder text-uppercase">
                   <i class="fas fa-tachometer-alt"></i>&nbsp; <?= $pagina_acutal ?>
-                  <em class="fw-ligth text-muted lead text-sm">| Reporte de clientes</em>
+                  <em class="fw-ligth text-muted lead text-sm"></em>
                </h1>
             </div>
             <div class="col-sm-6">

@@ -1,13 +1,13 @@
-<footer class="main-footer text-sm">
+<!-- <footer class="main-footer text-sm">
 
   <div class="float-right d-none d-sm-inline">
     2023
   </div>
 
   <strong><a href="#">Presidencia Goméz Palacio</a></strong>.
-</footer>
+</footer> -->
 
-</div>
+<!-- </div> -->
 
 
 

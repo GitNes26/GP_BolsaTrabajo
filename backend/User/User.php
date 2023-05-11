@@ -159,13 +159,13 @@ class User extends Connection {
          $response = $this->defaultResponse();
 
          // VALIDACION DE DATOS REPETIDOS
-         $duplicate = $this->checkAvailableData('users','name',$name,'El nombre',$name);
+         $duplicate = $this->checkAvailableData('users','name',$name,'El nombre');
          // echo "que dice el duplicate:";
          // var_dump($duplicate);
          if ($duplicate["result"] == true) die(json_encode($duplicate));
 
-         // $duplicate = $this->checkAvailableData('email',$email,'E-mail',$email);
-         // if ($duplicate["result"] == true) die(json_encode($duplicate));
+         $duplicate = $this->checkAvailableData('users','email',$email,'El correo');
+         if ($duplicate["result"] == true) die(json_encode($duplicate));
          // VALIDACION DE DATOS REPETIDOS
 
 
@@ -245,7 +245,7 @@ class User extends Connection {
 
 
 
-   function checkAvailableData($table,$column,$value,$propTitle,$propText){
+   function checkAvailableData($table,$column,$value,$propTitle){
      $query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1";
 
      $consulta = $this->Select($query,false);
@@ -254,7 +254,7 @@ class User extends Connection {
          "result" => true,
          "alert_icon" => 'warning',
          "alert_title" => "$propTitle no esta disponible!",
-         "alert_text" => "<b>$propText</b> ya existe, intenta con uno diferente.",
+         "alert_text" => "<b>$value</b> ya existe, intenta con uno diferente.",
          "message" => "duplicado",
    );
      } else {

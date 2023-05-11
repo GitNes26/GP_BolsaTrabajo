@@ -7,15 +7,14 @@
       </li>
    </ul>
 
-   <ul class="navbar-nav " id="ul_dark_theme">
+   <!-- <ul class="navbar-nav " id="ul_dark_theme">
       <label for="checkbox" id="label_dark_theme">
-         <!-- Dark mode -->
-         <!-- <input <?= $cookie_dark_mode != "1" ? "checked" : "" ?> type="checkbox" id="checkbox" /> -->
+         Dark mode
+         <input <?= $cookie_dark_mode != "1" ? "checked" : "" ?> type="checkbox" id="checkbox" />
          <div class="toggle button"></div>
       </label>
 
-   </ul>
-
+   </ul> -->
 
    <!-- Right navbar links -->
    <ul class="navbar-nav ml-auto">
@@ -24,7 +23,7 @@
          <div class='user-panel d-flex'>
             <div class='info'>
                <span class='d-block text-decoration-none text-bold'><i
-                     class=''><?php #echo $_COOKIE["usuario"] ?></i></span>
+                     class=''><?= $_COOKIE["name"] ?></i></span>
             </div>
          </div>
       </li>
@@ -34,8 +33,6 @@
                class="fas fa-door-closed"></i></a>
       </li>
    </ul>
-
-
 
 </nav>
 <!-- /.navbar -->

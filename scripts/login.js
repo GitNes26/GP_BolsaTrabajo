@@ -150,14 +150,14 @@ function ajaxRequest(url,data) {
                console.log(location.pathname);
                // return console.log("todo bien hasta aqui");
 
-               if (location.pathname == URL_BASE || location.pathname == `${URL_BASE}/` || location.pathname == `/` ) {
+               if (location.pathname == URL_BASE || location.pathname == `${URL_BASE}/` || location.pathname == `/` || location.pathname == `/index.php` ) {
                      // if (rol == 2) window.location.href = `${PATH_CLIENTE}`;
                      // else if (rol > 2) window.location.href = `${PATH_PAYMENT}`;
                      // else window.location.href = `${PAGES_PATH}`;
                      console.log("aqui entro", PAGES_PATH);
                      window.location.href = `${PAGES_PATH}`;
                }
-               // location.reload();
+               location.reload();
             });
          } else {
             Swal.fire({

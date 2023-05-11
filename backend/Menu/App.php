@@ -23,34 +23,32 @@ if (isset($_POST['deleted_at'])) { $deleted_at = $_POST['deleted_at']; }
 if (isset($_POST['role_id'])) { $role_id = $_POST['role_id']; }
 
 
-if (isset($_POST['menu'])) { $menu = $_POST['menu']; }
+elseif (isset($_POST['menu'])) { $menu = $_POST['menu']; }
 
 
-if ($op == "showMyMenus") {
-   $Menu->showMyMenus($role_id);
-}
-if ($op == "index") {
-   $Menu->index();
-}
-if ($op == "show") {
+elseif ($op == "showMyMenus") $Menu->showMyMenus($role_id);
+elseif ($op == 'showSelect') $Menu->showSelect();
+
+elseif ($op == "index") $Menu->index();
+elseif ($op == "show") {
    $Menu->show($id);
 }
-if ($op == "create") {
+elseif ($op == "create") {
    $Menu->create($menu, $tag, $belongs_to, $active, $file_path, $icon, $order);
 }
-if ($op == "edit") {
+elseif ($op == "edit") {
    $Menu->edit($menu, $tag, $belongs_to, $active, $file_path, $icon, $order, $id);
 }
-if ($op == "activeDesactive") {
+elseif ($op == "activeDesactive") {
    $Menu->activeDesactive($active,$id);
 }
-// if ($op == "delete") {
+// elseif ($op == "delete") {
 //    $Menu->delete($id);
 // }
 
-if ($op == "showParentMenus") {
+elseif ($op == "showParentMenus") {
    $Menu->showParentMenus();
 }
-if ($op == "showChildrenMenus") {
+elseif ($op == "showChildrenMenus") {
    $Menu->showChildrenMenus();
 }
