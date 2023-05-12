@@ -20,13 +20,15 @@ const
 	input_file_path = $("#input_file_path"),
 	input_icon = $("#input_icon"),
 	input_active = $("#input_active"),
-	
+	label_module_enable = $("#label_module_enable"),
+
 	btn_submit = $("#btn_submit"),
-	btn_reset = $("#btn_reset");
+	btn_reset = $("#btn_reset"),
+	btn_cancel = $("#btn_cancel");
 	
 //#endregion VARIABLES
-// $(".select2").select2({ dropdownParent: $("#modal") });
-// focusSelect2($(".select2"));
+$(".select2").select2();
+focusSelect2($(".select2"));
 
 /* --- FUNCIONES DE CAJON--- */
 // estas funciones se encuentran en index.js para no repetir código
@@ -36,103 +38,51 @@ init();
 async function init() {
 	fillTable();
 	fillSelect2(URL_MENU_APP, -1, input_belongs_to);
+	setTimeout(() => {
+      input_menu.focus();
+   }, 500);
 }
 
-// CONFIRMAR CONTRASEÑA
-input_confirm_password.on("input", function () {
-	var pwd1 = input_password.val();
-	var pwd2 = input_confirm_password.val();
 
-	if (pwd1 === pwd2) {
-		feedback_password
-			.addClass("text-success")
-			.text("Las contraseñas coinciden")
-			.removeClass("text-danger");
-		input_password.addClass("is-valid").removeClass("is-invalid");
-		input_confirm_password
-			.addClass("is-valid")
-			.removeClass("is-invalid");
-		btn_submit.prop("disabled", false);
-	} else {
-		feedback_password
-			.addClass("text-danger")
-			.text("Las contraseñas no coinciden")
-			.removeClass("text-success");
-		input_password.addClass("is-invalid").removeClass("is-valid");
-		input_confirm_password
-			.addClass("is-invalid")
-			.removeClass("is-valid");
-		btn_submit.prop("disabled", true);
-	}
-});
 
-//CAMBIAR CONTRASEÑA - SWITCH
-switch_new_password.click(() => {
-	if (switch_new_password.is(":checked")) {
-		input_new_password.prop("readonly", false);
-	} else {
-		input_new_password.val("");
-		input_new_password.prop("readonly", true);
-	}
-});
-
-//CLICK EN BTN ABRIR MODAL
-btn_modal_form.click((e) => {
+//CLICK EN BTN CANCELAR PARA CREAR UNO NUEVO
+ btn_cancel.click((e) => {
 	e.preventDefault();
-	$("#div_new_password").hide();
-	$("#input_new_password").prop("readonly", true);
-
-	modal_title.html(
-		"<i class='fa-solid fa-user-pen'></i></i>&nbsp; REGISTRAR USUARIO"
-	);
+	// modal_title.html(
+	// 	"<i class='fa-solid fa-user-pen'></i></i>&nbsp; REGISTRAR USUARIO"
+	// );
 	btn_submit.removeClass("btn-primary");
 	btn_submit.addClass("btn-success");
 	btn_submit.text("AGREGAR");
-	div_new_password.hide();
-	div_password.show();
 
 	//Resetear form
 	btn_reset.click();
-
-	//EXCLUIR INPUTS PARA VALIDAR
-	input_new_password.addClass("not_validate");
-	input_password.removeClass("not_validate");
-	input_confirm_password.removeClass("not_validate");
-
-	// input_menu.val("nuevo");
-	// input_belongs_to.val("nuevo@gmial.com");
-	// input_password.val("1");
 });
 
 //RESETEAR FORMULARIOS
 btn_reset.click(async (e) => {
-	input_password.removeClass("is-invalid is-valid");
-	input_confirm_password.removeClass("is-invalid is-valid");
-	feedback_password.text("").removeClass("text-danger text-success");
-	btn_submit.prop("disabled", false);
-
-	//EXCLUIR INPUTS PARA VALIDAR
-	input_new_password.addClass("not_validate");
-	input_password.removeClass("not_validate");
-	input_confirm_password.removeClass("not_validate");
-
-	await resetSelect2(input_role_id);
-	
+	label_module_enable.text("Activo")
+	await resetSelect2(input_belongs_to);
 	id_modal.val("");
 	setTimeout(() => {
 		input_menu.focus();
 	}, 500);
 });
 
+// SWITCH HABILITADO/DESAHBILITADO
+function switchEnabled(status) {
+   if (status) input_active.is(":checked") ? null : input_active.click()
+   else input_active.is(":checked") ? input_active.click() : null 
+}
+input_active.change(() => input_active.is(":checked") ? label_module_enable.text("Enabled") : label_module_enable.text("Disabled"))
+
+
 // REGISTRAR O EDITAR OBJETO
 form.on("submit", async (e) => {
 	e.preventDefault();
 	id_modal.addClass("not_validate");
 	op_modal.addClass("not_validate");
-	input_new_password.addClass("not_validate");
 
-	if (switch_new_password.is(":checked"))
-		input_new_password.removeClass("not_validate");
 	if (!validateInputs(form)) return;
 
 	if (id_modal.val() <= 0) {
@@ -155,29 +105,17 @@ form.on("submit", async (e) => {
 		addToArray("updated_at", current_date, data);
 	}
 
-	// addToArray("consultor_paquete_id", 2, data);
-	// addToArray("consultor_fecha_pago", current_date, data);
-	// addToArray("consultor_pagado", true, data);
-	// addToArray("tipo_objeto","consultor",data);
-
-	// addToArray("suscriptor_name_negocio",vacasCrew,data);
-	// addToArray("suscriptor_consultor_id",2,data);
-	// addToArray("suscriptor_paquete_id",2,data);
-	// addToArray("suscriptor_consultor_viewer",true,data);
-	// addToArray("suscriptor_fecha_pago",current_date,data);
-	// addToArray("suscriptor_pagado",true,data);
-	// addToArray("tipo_objeto", "suscriptor", data);
-
 	// return console.log(data);
-	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP,data);
+	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP,data);
 	console.log(ajaxResponse.message);
 	// if (ajaxResponse.message != "duplicado") fillTable();
-	if (id_modal.val() == id_cookie) rellenarSideBar();
+	fillTable();
+	fillSidebar();
 });
 
 async function fillTable() {
 	let data = { op: "index" };
-	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data);
+	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP, data);
 
 	//Limpiar table
 	tbody.slideUp();
@@ -185,37 +123,72 @@ async function fillTable() {
 
 	const list = [];
 	let objResponse = ajaxResponse.data;
-	// return console.log(objResponse);
+	console.log(objResponse);
 
 	objResponse.map((obj) => {
+		let active_icon = "fa-light fa-circle-check";
+      let icon_color = "green";
+      let switch_enabled = {
+         color: "secondary",
+         title: "No Activo",
+         icon: "fa-light fa-toggle-off"
+      }
+
+		if(!Boolean(Number(obj.active))) {
+         active_icon="fa-light fa-circle-xmark"; icon_color="red"
+         switch_enabled.color="success"
+         switch_enabled.title="Activo"
+         switch_enabled.icon="fa-solid fa-toggle-on"
+      }
+
 		//Campos
-		let column_name = `${obj.name} ${obj.last_name}`,
-			column_email = `${obj.email}`,
-			column_cellphone = `${obj.cellphone}`,
-			column_role = `${obj.role}`,
-			campo_creado = formatDatetime(obj.created_at, true);
+		let 
+			column_icon = `
+			<td class='align-middle align-middle'>
+				<i class="${obj.icon} fa-2x icono"></i><br>
+				<i>${obj.icon}</i>
+			</td>
+			`,
+			column_module = `
+			<b>${obj.menu}</b><br>
+			<i>tag: ${obj.tag}</i>
+			`,
+			column_info = `
+			<td class="text-center">
+				<p class="">
+					belongs to: <b>${!obj.belongs_to ? "-" : obj.parent_menu}</b><br>
+					Order: <b>${obj.order}</b><br>
+					File Path: <b>${!obj.file_path ? "-" : obj.file_path}</b>
+				</p>
+			</td>
+			`,
+			column_active = `
+			<div class="text-center align-middle">
+				<i class="${active_icon} fa-2x icono" style="color:${icon_color}"></i>
+			</div>
+			`;
 
 		let column_buttons = `<td class='align-middle'>
             <div class='btn-group' role='group' aria-label='Basic example'>`;
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Usuario' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-user-pen fa-lg i_edit'></i></button>`;
+				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Módulo' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Usuario' data-name='${obj.name}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
+				`<button class='btn btn-outline-${switch_enabled.color} btn_delete' type='button' data-id='${obj.id}' title='${switch_enabled.title}' data-active='${obj.active}'><i class='${switch_enabled.icon} fa-2x i_delete'></i></button>`;
+     
 		}
 		column_buttons += `</div>
          </td>`;
 
 		list.push([
-			column_name,
-			column_email,
-			column_cellphone,
-			column_role,
-			campo_creado,
+			column_icon,
+			column_module,
+			column_info,
+			column_active,
 			column_buttons,
 		]);		
 	});
@@ -225,6 +198,7 @@ async function fillTable() {
 	.draw();
 	table.columns.adjust().draw();
 	tbody.slideDown("slow");
+	btn_reset.click();
 }
 
 //ACCIONES EN BOTONES DE LA TABLA
@@ -242,8 +216,6 @@ tbody.click((e) => {
 			btn_edit = $(e.target);
 		}
 
-		$("#div_new_password").show();
-		$("#input_new_password").prop("readonly", true);
 		editObj(btn_edit);
 	}
 
@@ -266,31 +238,29 @@ tbody.click((e) => {
 
 //EDITAR OBJETO
 async function editObj(btn_edit) {
-	modal_title.html("<i class='fa-solid fa-user-pen'></i></i>&nbsp; EDITAR USUARIO");
+	// modal_title.html("<i class='fa-solid fa-user-pen'></i></i>&nbsp; EDITAR USUARIO");
 	btn_submit.removeClass("btn-success");
 	btn_submit.addClass("btn-primary");
 	btn_submit.text("GUARDAR");
-	div_password.hide();
-	div_new_password.show();
 
-	//EXCLUIR INPUTS PARA VALIDAR
-	input_password.addClass("not_validate");
-	input_confirm_password.addClass("not_validate");
+	btn_reset.click();
 
-	let id_objeto = btn_edit.attr("data-id");
-	let data = { id: id_objeto, op: "show" };
-	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data);
+	let id_obj = btn_edit.attr("data-id");
+	let data = { id: id_obj, op: "show" };
+	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP, data);
 
 	const obj = ajaxResponse.data;
 	//form
 	id_modal.val(Number(obj.id));
-	input_menu.val(obj.name);
-	input_description.val(obj.last_name);
-	input_tag.val(obj.cellphone);
-	input_belongs_to.val(obj.email);
-	input_new_password.val("");
+	input_menu.val(obj.menu);
+	input_description.val(obj.description);
+	input_tag.val(obj.tag);
+	input_file_path.val(obj.file_path);
+	input_icon.val(obj.icon);
+	// await (URL_MENU_APP, obj.belongs_to, input_belongs_to);
+	switchEnabled(Boolean(Number(obj.active)))
+	label_module_enable.text("Activo");
 
-	await fillSelect2(URL_ROLE_APP, obj.role_id, input_role_id);
 	setTimeout(() => {
 		input_menu.focus();
 	}, 500);

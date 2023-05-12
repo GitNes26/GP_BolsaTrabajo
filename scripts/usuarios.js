@@ -283,8 +283,8 @@ async function editObj(btn_edit) {
 	input_password.addClass("not_validate");
 	input_confirm_password.addClass("not_validate");
 
-	let id_objeto = btn_edit.attr("data-id");
-	let data = { id: id_objeto, op: "show" };
+	let id_obj = btn_edit.attr("data-id");
+	let data = { id: id_obj, op: "show" };
 	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data);
 
 	const obj = ajaxResponse.data;

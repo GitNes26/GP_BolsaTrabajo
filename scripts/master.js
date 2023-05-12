@@ -44,7 +44,7 @@ const ajaxRequestAsync = async (
 			async: true,
 			dataType: "json",
 		});
-		console.log(response);
+		// console.log(response);
 
 		if (response.message == "duplicado") {
 			showToast(response.alert_icon, response.alert_text);
@@ -374,7 +374,7 @@ function validateInput(input) {
 
 //#region /* Select2 */
 if ($(".select2").length > 0) {
-	$(".select2").select2(); //(/* { dropdownParent: $("#modal") } */);
+	// $(".select2").select2(); //(/* { dropdownParent: $("#modal") } */);
 	$.fn.select2.defaults.set("language", "es");
 }
 function focusSelect2(select2) {

@@ -18,7 +18,7 @@ class Menu extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT m.*, mp.id parent_id,mp.menu parent_menu FROM menus m LEFT JOIN menus mp ON m.id_padre=mp.id;";
+         $query = "SELECT m.*, pm.id parent_id, pm.menu parent_menu FROM menus m LEFT JOIN menus pm ON m.belongs_to=pm.id;";
          $result = $this->Select($query,true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -41,43 +41,57 @@ class Menu extends Connection {
       }
       die(json_encode($response));
    }
-   function mostrarMenu($id) {
+
+   function showSelect() {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT m.*, mp.id parent_id, mp.menu parent_menu FROM menus m LEFT JOIN menus mp ON m.id_padre=mp.id WHERE m.id=$id;";
-         $resultado = $this->SelectOnlyOne($query);
-         if (sizeof($resultado) > 0) {
-           $response = array(
-               "Resultado" => true,
-               "Datos" => $resultado
-           );
-         } else {
-            $response = array(
-               "Resultado" => true,
-               "Mensaje" => 'No registers.',
-               // "Mensaje" => 'Sin registros.',
-               "Datos" => array()
-            );
-         }
+         #me traigo todos los menus que son padres
+         $query = "SELECT id value, menu text FROM menus m where belongs_to=0;";
+         $result = $this->Select($query,true);
+         $response = $this->CorrectResponse();
+         $response["message"] = "Peticion satisfactoria | registros encontrados.";
+         $response["data"] = $result;
+         $this->Close();
    
       } catch (Exception $e) {
+         $this->Close();
          $error_message = "Error: ".$e->getMessage();
-         $response = $this->catchResponse($error_message);
+         $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function agregarMenu($menu, $tag, $id_padre, $active, $path_archivo, $icono, $orden) {
+   function show($id) {
+      try {
+         $response = $this->defaultResponse();
+   
+         $query = "SELECT m.*, pm.id parent_id, pm.menu parent_menu FROM menus m LEFT JOIN menus pm ON m.belongs_to=pm.id WHERE m.id=$id;";
+         $result = $this->Select($query, false);
+
+         $response = $this->CorrectResponse();
+         $response["message"] = "Peticion satisfactoria | registros encontrados.";
+         $response["data"] = $result;
+         $this->Close();
+   
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->CatchResponse($error_message);
+      }
+      die(json_encode($response));
+   }
+
+   function agregarMenu($menu, $tag, $belongs_to, $active, $path_archivo, $icono, $orden) {
       try {
          $response = $this->defaultResponse();
 
-         if(empty($icono))
-            $id_padre == 0 ? $icono="fa-solid fa-folder-tree" : $icono="far fa-circle";
-         $id_padre == 0 ? $tiene_hijos=true : $tiene_hijos=false;
+         if(epmty($icono))
+            $belongs_to == 0 ? $icono="fa-solid fa-folder-tree" : $icono="far fa-circle";
+         $belongs_to == 0 ? $tiene_hijos=true : $tiene_hijos=false;
 
-         $query = "INSERT INTO menus(menu, tag, id_padre, active, path_archivo, icono, orden, tiene_hijos) VALUES(?,?,?,?,?,?,?,?)";
-         $this->ExecuteQueryAndContinue($query, array($menu,$tag,$id_padre,$active,$path_archivo,$icono,$orden,$tiene_hijos));
+         $query = "INSERT INTO menus(menu, tag, belongs_to, active, path_archivo, icono, orden, tiene_hijos) VALUES(?,?,?,?,?,?,?,?)";
+         $this->ExecuteQueryAndContinue($query, array($menu,$tag,$belongs_to,$active,$path_archivo,$icono,$orden,$tiene_hijos));
          
          $response = array(
             "Resultado" => true,
@@ -93,16 +107,16 @@ class Menu extends Connection {
       die(json_encode($response));
    }
 
-   function editarMenu($menu, $tag, $id_padre, $active, $path_archivo, $icono, $orden, $id) {
+   function editarMenu($menu, $tag, $belongs_to, $active, $path_archivo, $icono, $orden, $id) {
       try {
          $response = $this->defaultResponse();
 
-         if(empty($icono))
-            $id_padre == 0 ? $icono="fa-solid fa-folder-tree" : $icono="far fa-circle";
-         $id_padre == 0 ? $tiene_hijos=true : $tiene_hijos=false;
+         if(epmty($icono))
+            $belongs_to == 0 ? $icono="fa-solid fa-folder-tree" : $icono="far fa-circle";
+         $belongs_to == 0 ? $tiene_hijos=true : $tiene_hijos=false;
 
-         $query = "UPDATE menus SET menu=?, tag=?, id_padre=?, active=?, path_archivo=?, icono=?, orden=?, tiene_hijos=? WHERE id=?";
-         $this->ExecuteQueryAndContinue($query, array($menu,$tag,$id_padre,$active,$path_archivo,$icono,$orden,$tiene_hijos, $id));
+         $query = "UPDATE menus SET menu=?, tag=?, belongs_to=?, active=?, path_archivo=?, icono=?, orden=?, tiene_hijos=? WHERE id=?";
+         $this->ExecuteQueryAndContinue($query, array($menu,$tag,$belongs_to,$active,$path_archivo,$icono,$orden,$tiene_hijos, $id));
          
          $response = array(
             "Resultado" => true,
@@ -125,7 +139,7 @@ class Menu extends Connection {
 
          $permissions_query = "SELECT pages_read FROM roles WHERE id=$role_id";
          $permissions = $this->Select($permissions_query,false);
-         // var_dump($permissions);
+         // var_dupm($permissions);
          if (sizeof($permissions) > 0) {
             $pages_read = $permissions["pages_read"];
             $query = "SELECT m.* FROM roles r INNER JOIN menus m ON m.id WHERE active=1 AND r.id=$role_id;";
@@ -167,7 +181,7 @@ class Menu extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT * FROM menus WHERE id_padre=0 OR tiene_hijos=true AND active=1 ORDER BY orden ASC";
+         $query = "SELECT * FROM menus WHERE belongs_to=0 OR tiene_hijos=true AND active=1 ORDER BY orden ASC";
          $resultado = $this->SelectAndContinue($query);
          if (sizeof($resultado) > 0) {
            $response = array(
@@ -191,11 +205,11 @@ class Menu extends Connection {
    
    }
 
-   function mostrarMenusHijos($id_padre) {
+   function mostrarMenusHijos($belongs_to) {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT * FROM menus WHERE id_padre=$id_padre AND active=1 ORDER BY orden ASC";
+         $query = "SELECT * FROM menus WHERE belongs_to=$belongs_to AND active=1 ORDER BY orden ASC";
          $resultado = $this->SelectAndContinue($query);
          if (sizeof($resultado) > 0) {
            $response = array(
@@ -253,7 +267,7 @@ class Menu extends Connection {
          $this->Close();
 
          // $resultado = $this->SelectOnlyOne($query);
-         // if (!empty($resultado)) {
+         // if (!epmty($resultado)) {
          //    $response = array(
          //       "Resultado" => true,
          //       "Datos" => $resultado['id']
