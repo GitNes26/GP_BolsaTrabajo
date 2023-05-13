@@ -33,7 +33,7 @@ $current_page = "Módulos";
    <section class="content">
 
       <div class="row">
-         <div class="col-md-4">
+         <div class="col-md-3">
             <!-- card Formulario-->
             <form id="form" enctype="multipart/form-data" class="card card-outline card-dark shadow sticky-top">
                <div class="card-header">
@@ -49,29 +49,29 @@ $current_page = "Módulos";
                   <input type="hidden" id="id" name="id" value="" class="not_validate">
                   <div class="mb-3">
                      <label for="input_menu" class="form-label">Nombre del menú: <span class="obligatory"></span></label>
-                     <input type="text" class="form-control" id="input_menu" name="input_menu" data-nombre-campo="NOMBRE DEL MÓDULO">
+                     <input type="text" class="form-control" id="input_menu" name="input_menu" data-input-name="NOMBRE DEL MÓDULO">
                   </div>
                   <div class="mb-3">
                      <label for="input_tag" class="form-label">Tag: <span class="obligatory"></span></label>
-                     <input type="text" class="form-control" id="input_tag" name="input_tag" data-nombre-campo="TAG">
+                     <input type="text" class="form-control" id="input_tag" name="input_tag" data-input-name="TAG">
                   </div>
                   <div class="mb-3">
                      <label for="input_belongs_to" class="form-label">Pertence a: <span class="obligatory"></span></label>
-                     <select class="select2 form-control" style="width:100%" id="input_belongs_to" name="input_belongs_to" data-nombre-campo="PERTENECE A">
+                     <select class="select2 form-control" style="width:100%" id="input_belongs_to" name="input_belongs_to" data-input-name="PERTENECE A">
                         <option value="-1">Selecciona una opción...</option>
                      </select>
                   </div>
                   <div class="mb-3">
                      <label for="input_file_path" class="form-label">Archivo (php): <span class="obligatory"></span></label>
-                     <input type="text" class="form-control" id="input_file_path" name="input_file_path" data-nombre-campo="ARCHIVO">
+                     <input type="text" class="form-control" id="input_file_path" name="input_file_path" data-input-name="ARCHIVO">
                   </div>
                   <div class="mb-3">
                      <label for="input_icon" class="form-label">Ícono:</label>
-                     <input type="text" class="form-control not_validate" id="input_icon" name="input_icon" data-nombre-campo="ÍCONO">
+                     <input type="text" class="form-control not_validate" id="input_icon" name="input_icon" data-input-name="ÍCONO">
                   </div>
                   <!-- <div class="mb-3">
                      <label for="input_order" class="form-label">Orden: <span class="obligatory"></span></label>
-                     <input type="number" step="1" class="form-control" id="input_order" name="input_order" data-nombre-campo="ORDEN">
+                     <input type="number" step="1" class="form-control" id="input_order" name="input_order" data-input-name="ORDEN">
                   </div> -->
                   <div class="form-group">
                      <div class="custom-control custom-switch">
@@ -91,7 +91,7 @@ $current_page = "Módulos";
             </form>
             <!-- /.card -->
          </div>
-         <div class="col-md-8">
+         <div class="col-md-9">
             <!-- card Tabla-->
             <div class="card card-outline card-dark shadow">
                <div class="card-body">
