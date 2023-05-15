@@ -12,7 +12,7 @@ if (file_exists("../backend/Connection.php")) {
 }
 
 
-class Menu extends Connection {
+class Giro extends Connection {
    
    function index() {
       try {
@@ -132,7 +132,7 @@ class Menu extends Connection {
    }
 
 
-   function showMyMenus($role_id) {
+   function showMyGiros($role_id) {
       try {
          $response = $this->defaultResponse();
 
@@ -163,7 +163,7 @@ class Menu extends Connection {
       die(json_encode($response));
    }
 
-   function mostrarMenusPadres() {
+   function mostrarGirosPadres() {
       try {
          $response = $this->defaultResponse();
    
@@ -191,7 +191,7 @@ class Menu extends Connection {
    
    }
 
-   function mostrarMenusHijos($belongs_to) {
+   function mostrarGirosHijos($belongs_to) {
       try {
          $response = $this->defaultResponse();
    

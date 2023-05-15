@@ -37,7 +37,7 @@ focusSelect2($(".select2"));
 init();
 async function init() {
 	fillTable();
-	fillSelect2(URL_MENU_APP, -1, input_belongs_to, true);
+	fillSelect2(URL_MENU_APP, -1, input_belongs_to);
 	setTimeout(() => {
       input_menu.focus();
    }, 500);
@@ -84,6 +84,7 @@ input_active.change(() => input_active.is(":checked") ? label_module_enable.text
 // REGISTRAR O EDITAR OBJETO
 form.on("submit", async (e) => {
 	e.preventDefault();
+	console.log(form.serializeArray());
 	id_modal.addClass("not_validate");
 	op_modal.addClass("not_validate");
 
@@ -246,7 +247,7 @@ async function editObj(btn_edit) {
 	btn_submit.text("GUARDAR");
 
 	btn_cancel.removeClass("btn-danger");
-	btn_cancel.addClass("btn-secondary");
+	btn_cancel.addClass("btn-success");
 	btn_cancel.text("NUEVO");
 
 	btn_reset.click();
@@ -263,7 +264,7 @@ async function editObj(btn_edit) {
 	input_tag.val(obj.tag);
 	input_file_path.val(obj.file_path);
 	input_icon.val(obj.icon);
-	await fillSelect2(URL_MENU_APP, obj.belongs_to, input_belongs_to, true);
+	await fillSelect2(URL_MENU_APP, obj.belongs_to, input_belongs_to);
 	switchEnabled(Boolean(Number(obj.active)))
 	label_module_enable.text(obj.active==1 ? "Activo" : "No Activo");
 

@@ -3,7 +3,7 @@ include "../templates/header.php";
 include "../templates/navbar.php";
 include "../templates/sidebar.php";
 
-$current_page = "Módulos";
+$current_page = "Giros";
 
 ?>
 <!-- Content Wrapper. Contenido de la pagina -->
@@ -15,7 +15,7 @@ $current_page = "Módulos";
             <div class="col-sm-6">
                <h1 class="fw-bolder text-uppercase">
                   <i class="fa-solid fa-kaaba"></i>&nbsp; <?= $current_page ?>
-                  <em class="fw-ligth text-muted lead text-sm">| Gestión de menús</em>
+                  <em class="fw-ligth text-muted lead text-sm">| Gestión de giros de empresa</em>
                </h1>
             </div>
             <div class="col-sm-6">
@@ -37,7 +37,7 @@ $current_page = "Módulos";
             <!-- card Formulario-->
             <form id="form" enctype="multipart/form-data" class="card card-outline card-dark shadow sticky-top">
                <div class="card-header">
-                  <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-light fa-circle-info"></i>&nbsp; INFO DEL MÓDULO</span>
+                  <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-light fa-circle-info"></i>&nbsp; AGREGAR GIRO</span>
                   <div class="card-tools">
                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
                      <i class="fas fa-minus"></i>

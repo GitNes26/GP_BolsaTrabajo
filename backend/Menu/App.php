@@ -2,6 +2,7 @@
 include ('Menu.php');
 $Menu = new Menu();
 
+
 if (isset($_POST['op'])) { $op = $_POST['op']; }
 
 if (isset($_POST['id'])) { $id = $_POST['id']; }
@@ -12,7 +13,8 @@ if (isset($_POST['input_belongs_to'])) { $belongs_to = $_POST['input_belongs_to'
 if (isset($_POST['input_file_path'])) { $file_path = $_POST['input_file_path']; }
 if (isset($_POST['input_icon'])) { $icon = $_POST['input_icon']; }
 if (isset($_POST['input_order'])) { $order = $_POST['input_order']; }
-if (isset($_POST['input_active'])) { $active = $_POST['input_active'] == 'on' ? true  : (bool)$_POST['input_active']; } else { (bool)$active = false; }
+if (isset($_POST['input_active'])) { $active = $_POST['input_active'] == 'on' ? "1"  : $_POST['input_active']; } else { $active = "0"; }
+if (isset($_POST['switch_active'])) { $active = $_POST['switch_active']; }
 
 if (isset($_POST['created_at'])) { $created_at = $_POST['created_at']; }
 if (isset($_POST['updated_at'])) { $updated_at = $_POST['updated_at']; }
@@ -33,11 +35,12 @@ elseif ($op == "showMyMenus") $Menu->showMyMenus($role_id);
 elseif ($op == 'showSelect') $Menu->showSelect();
 elseif ($op == "show") $Menu->show($id);
 
-elseif ($op == "create") $Menu->create($menu, $tag, $belongs_to, $active, $file_path, $icon, $order);
+elseif ($op == "create") $Menu->create($menu, $tag, $belongs_to, $active, $file_path, $icon, $created_at);
 
-elseif ($op == "edit") $Menu->edit($menu, $tag, $belongs_to, $active, $file_path, $icon, $order, $id);
+elseif ($op == "edit") $Menu->edit($menu, $tag, $belongs_to, $active, $file_path, $icon, $id, $updated_at);
 
 elseif ($op == "activeDesactive") $Menu->activeDesactive($active,$id);
+
 // elseif ($op == "delete") {
 //    $Menu->delete($id);
 // }

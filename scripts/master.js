@@ -207,12 +207,12 @@ function addToArray(name, value, array) {
 
 //#region MENUS
 const sidebar_menus = $("#sidebar_menus");
-const fillSidebar = async () => {
+const fillSidebar = async (show_toast=false) => {
 	sidebar_menus.slideUp(1000);
 	let role_id = Number(Cookies.get("role_id"));
-	role_id=1;
+	// role_id=1;
 	let data = { op: "showMyMenus", role_id: role_id };
-	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP, data, false, true, false);
+	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP, data, false, true, show_toast);
 	sidebar_menus.html("");
 	const objResponse = ajaxResponse.data;
 	// console.log(objResponse);
@@ -393,16 +393,17 @@ function focusSelect2(select2) {
 }
 focusSelect2($(".select2"));
 
-function resetSelect2(select2) {
-	// function resetearSelect2(select2, url, data) {
-	select2.prop("selectedIndex", 0);
-	select2.val("-1");
-	$(`#select2-${select2[0].name}-container`).text("Selecciona una opción...");
-	$(`#select2-${select2[0].name}-container`).attr("title", "Selecciona una opción...");
+function resetSelect2(selector,) {
+	// function resetearSelect2(selector, url, data) {
+	selector.prop("selectedIndex", 0);
+	selector.val("-1");
+	$(`#select2-${selector[0].name}-container`).text("Selecciona una opción...");
+	$(`#select2-${selector[0].name}-container`).attr("title", "Selecciona una opción...");
+
 	// iconos(url, data, -1, select2[0].name);
 }
 
-async function fillSelect2(url_app, selected_index, selector) {
+async function fillSelect2(url_app, selected_index, selector, select_modules=false) {
 	const data = { op: "showSelect" };
 	const ajaxResponse = await ajaxRequestAsync(url_app, data, null, null, null);
 
@@ -411,9 +412,14 @@ async function fillSelect2(url_app, selected_index, selector) {
 
 	selector.html("");
 
-	const options = /*HTML*/ `
+	let options = /*HTML*/ `
       <option value="-1" readonly>Selecciona una opción...</option>
    `;
+	if(select_modules) {
+		options += /*HTML*/ `
+      	<option value="0" selected>***** Soy Módulo Padre *****</option>
+		`;
+	}
 
 	selector.append(options);
 

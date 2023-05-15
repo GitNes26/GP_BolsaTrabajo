@@ -58,18 +58,18 @@ class Connection{
 			return $e->getMessage();
 		}
 	}
-   function ExecuteQueryAndContinue($query, $parametros){
-		try {
-			$sth = $this->conn->prepare($query);
-			$sth->execute($parametros);
-		}
-		catch(PDOException $e){
-			error_log('PDOException - ' . $e->getMessage(), 0);
-			http_response_code(500);
-			die($e->getMessage());
-			return $e->getMessage();
-	    }
-	}
+   // function ExecuteQueryAndContinue($query, $parametros){
+	// 	try {
+	// 		$sth = $this->conn->prepare($query);
+	// 		$sth->execute($parametros);
+	// 	}
+	// 	catch(PDOException $e){
+	// 		error_log('PDOException - ' . $e->getMessage(), 0);
+	// 		http_response_code(500);
+	// 		die($e->getMessage());
+	// 		return $e->getMessage();
+	//     }
+	// }
 	function GetInsertedId() {
 		try {
          return $this->conn->lastInsertId();
