@@ -81,6 +81,7 @@ $current_page = "Clasificaciones de Empresa";
                      <thead class="thead-dark">
                         <tr>
                            <th scope="col">Clasificación</th>
+                           <th scope="col">Descripción</th>
                            <th scope="col">Acciones</th>
                         </tr>
                      </thead>
@@ -89,6 +90,7 @@ $current_page = "Clasificaciones de Empresa";
                      <tfoot>
                         <tr class="thead-dark">
                            <th scope="col">Clasificación</th>
+                           <th scope="col">Descripción</th>
                            <th scope="col">Acciones</th>
                         </tr>
                      </tfoot>

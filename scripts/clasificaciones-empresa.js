@@ -5,7 +5,7 @@ table = $("#table").DataTable(DT_CONFIG);
 $(document).ready(() => {
 });
 
-limit=15;
+limit=150;
 // btn_modal_form = $("#btn_modal_form"),
 const 
 	tbody = $("#table tbody"),
@@ -238,7 +238,5 @@ async function deleteObj(btn_delete) {
 }
 
 input_description.on("input", function() {
-	const letters = this.value.length;
-	if (letters > limit) return this.value = this.value.slice(0,limit); 
-	countLetter(this, counter_description, letters, limit)
+	countLetter(this, counter_description, this.value.length, limit)
 });

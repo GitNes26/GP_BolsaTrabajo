@@ -6,6 +6,7 @@ const
 	BACKEND_PATH = `${URL_BASE}/backend`,
 	PAGES_PATH = `${URL_BASE}/pages`,
 	EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`,
+	URL_API_COUNTRIES = `https://www.universal-tutorial.com/api`,
 	
 	URL_USER_APP = `${BACKEND_PATH}/User/App.php`,
 	URL_ROLE_APP = `${BACKEND_PATH}/Role/App.php`,
@@ -29,7 +30,17 @@ const
 	plural_object = $("#plural_object").val()
 
 let limit=150;
+let auth_token;
 //#endregion VARIABLES
+
+// console.log("Cookies",Cookies.get());
+let needCookies = true;
+if (location.pathname == '/') needCookies = false;
+else if (location.pathname == '/index.php') needCookies = false;
+else if (location.pathname == '/registro-perfil.php') needCookies = false;
+
+if (!Cookies.get("session") && needCookies) location.reload();
+
 
 
 const ajaxRequestAsync = async (
@@ -186,19 +197,19 @@ $(".eye_icon").click((e) => {
 });
 
 function countLetter(input, counter, letters, limit) {
-	if (letters > limit) input.value = input.value.slice(0,limit); 
-	else counter.text(`${letters}/${limit}`);
+	counter.text(`${letters}/${limit}`);
 
 	if (letters > limit) {
+		input.value = input.value.slice(0,limit); 
 		counter.removeClass("text-muted");
 		counter.addClass("text-danger");
-		counter.text(`Máximo de caracteres alcanzado ${letters}/${limit}`);
-		$(input).addClass("is-invalid");
+		counter.text(`Máximo de caracteres alcanzado ${limit}/${limit}`);
+		// $(input).addClass("is-invalid");
 		return;
 	}
 	counter.removeClass("text-danger");
 	counter.addClass("text-muted");
-	$(input).removeClass("is-invalid");
+	// $(input).removeClass("is-invalid");
 }
 
 //AGREGAR DATO AL ARRAY
@@ -527,4 +538,62 @@ moment.locale("es-mx");
 //#endregion /** MonentJS */
 
 // // #endregion FUNCIONES DE CAJON
+
+
+async function showStates() {
+	console.log("generar token");
+
+	const requestToken = await $.ajax({
+		async: true,
+		crossDomain: true,
+		url: `${URL_API_COUNTRIES}/getaccesstoken`,
+		method: "GET",
+		headers: {
+			Accept: "application/json",
+			"api-token":
+				"7-XEHwLCLzq7iaJRWwnkSI5GFfL4A8VCIczHNsc2mXrvlUO3VDUGu7ZIBY7dauhz-qA",
+			"user-email": "182310211@itslerdo.edu.mx",
+		}
+	});
+
+	auth_token = requestToken.auth_token;
+	console.log(auth_token);
+
+	// await estados_ciudades(output_estado.text(), output_ciudad.text());
+	await estados_ciudades();
+	console.log("ESTADOS_CIUDADES");
+	async function estados_ciudades(estado = null, ciudad = null) {
+		const states = await $.ajax({
+			url: `${URL_API_COUNTRIES}/states/United States`,
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${auth_token}`,
+				Accept: "application/json",
+			}
+		});
+		console.log(states);
+		let comboStates = "<option value=''>Seleccionar una opción...</option>";
+		states.forEach((element) => {
+			let seleccionar_estado = "";
+			if (estado != null) {
+				if (estado == element[`state_name`]) {
+					seleccionar_estado = "selected";
+				}
+			}
+			// console.log(estado);
+			// $("#item-details-stateValue").click()
+			comboStates +=
+				'<option value="' +
+				element["state_name"] +
+				'" ' +
+				seleccionar_estado +
+				">" +
+				element["state_name"] +
+				"</option>";
+		});
+		$("#item-details-stateValue").html(comboStates);
+	}
+	// await estados_ciudades2(output_estado.text(), output_ciudad.text());
+}
+// showStates()
 

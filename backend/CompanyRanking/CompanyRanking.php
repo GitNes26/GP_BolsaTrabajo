@@ -78,7 +78,7 @@ class CompanyRanking extends Connection {
 
          $this->validateAvailableData($company_ranking, $description, null);
 
-         $query = "INSERT INTO company_rankings(company_ranking, description, created_at) VALUES(?,?)";
+         $query = "INSERT INTO company_rankings(company_ranking, description, created_at) VALUES(?,?,?)";
          $this->ExecuteQuery($query, array($company_ranking, $description, $created_at));
          
          $response = $this->CorrectResponse();
