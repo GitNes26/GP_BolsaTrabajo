@@ -12,27 +12,18 @@ if (file_exists("../backend/Connection.php")) {
 }
 
 
-class BusinessLine extends Connection {
+class Area extends Connection {
    
    function index() {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT * FROM business_lines WHERE active=1;";
+         $query = "SELECT * FROM areas WHERE active=1;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
          $this->Close();
-
-         // if (sizeof($resultado) > 0) {
-         //    $response = $this->CorrectResponse();
-         //    $response["message"] = "Peticion satisfactoria | registros encontrados.";
-         //    $response["data"] = $result;
-         //    $this->Close();
-         // } else {
-         //    $response = $this->CorrectResponse();
-         // }
    
       } catch (Exception $e) {
          $this->Close();
@@ -46,7 +37,7 @@ class BusinessLine extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT id value, business_line text FROM business_lines WHERE active=1;";
+         $query = "SELECT id value, area text FROM areas WHERE active=1;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -65,7 +56,7 @@ class BusinessLine extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT * FROM business_lines WHERE id=$id;";
+         $query = "SELECT * FROM areas WHERE id=$id;";
          $result = $this->Select($query, false);
 
          $response = $this->CorrectResponse();
@@ -81,19 +72,19 @@ class BusinessLine extends Connection {
       die(json_encode($response));
    }
 
-   function create($business_line, $created_at) {
+   function create($area, $created_at) {
       try {
          $response = $this->defaultResponse();
 
-         $this->validateAvailableData($business_line, null);
+         $this->validateAvailableData($area, null);
 
-         $query = "INSERT INTO business_lines(business_line, created_at) VALUES(?,?)";
-         $this->ExecuteQuery($query, array($business_line, $created_at));
+         $query = "INSERT INTO areas(area, created_at) VALUES(?,?)";
+         $this->ExecuteQuery($query, array($area, $created_at));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
-         $response["alert_title"] = "Giro registrado";
-         $response["alert_text"] = "Giro registrado";
+         $response["alert_title"] = "Área registrada";
+         $response["alert_text"] = "Área registrada";
          $this->Close();
    
       } catch (Exception $e) {
@@ -104,19 +95,19 @@ class BusinessLine extends Connection {
       die(json_encode($response));
    }
 
-   function edit($business_line, $id, $updated_at) {
+   function edit($area, $id, $updated_at) {
       try {
          $response = $this->defaultResponse();
 
-         $this->validateAvailableData($business_line, $id);
+         $this->validateAvailableData($area, $id);
 
-         $query = "UPDATE business_lines SET business_line=?, updated_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($business_line, $updated_at, $id));
+         $query = "UPDATE areas SET area=?, updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($area, $updated_at, $id));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
-         $response["alert_title"] = "Giro actualizado";
-         $response["alert_text"] = "Giro actualizado";
+         $response["alert_title"] = "Área actualizado";
+         $response["alert_text"] = "Área actualizado";
          $this->Close();
    
       } catch (Exception $e) {
@@ -131,13 +122,13 @@ class BusinessLine extends Connection {
       try {
         $response = $this->defaultResponse();
 
-         $query = "UPDATE business_lines SET active=0, deleted_at=? WHERE id=?";
+         $query = "UPDATE areas SET active=0, deleted_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($deleted_at, $id));
 
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registro eliminado.";
-         $response["alert_title"] = "Giro eliminado";
-         $response["alert_text"] = "Giro eliminado";
+         $response["alert_title"] = "Área eliminada";
+         $response["alert_text"] = "Área eliminada";
          $this->Close();
 
       } catch (Exception $e) {
@@ -149,9 +140,9 @@ class BusinessLine extends Connection {
    }
 
 
-   function validateAvailableData($business_line, $id) {
+   function validateAvailableData($area, $id) {
       // #VALIDACION DE DATOS REPETIDOS
-      $duplicate = $this->checkAvailableData('business_lines', 'business_line', $business_line, 'El giro', 'input_busines_line', $id);
+      $duplicate = $this->checkAvailableData('areas', 'area', $area, 'El área', 'input_area', $id);
       if ($duplicate["result"] == true) die(json_encode($duplicate));
    }
 }

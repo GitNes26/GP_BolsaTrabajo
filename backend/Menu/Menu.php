@@ -18,8 +18,8 @@ class Menu extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT m.*, pm.id parent_id, pm.menu parent_menu FROM menus m LEFT JOIN menus pm ON m.belongs_to=pm.id AND m.active=1;";
-         $result = $this->Select($query,true);
+         $query = "SELECT m.*, pm.id parent_id, pm.menu parent_menu FROM menus m LEFT JOIN menus pm ON m.belongs_to=pm.id AND m.active=1 ORDER BY id;";
+         $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
@@ -48,7 +48,7 @@ class Menu extends Connection {
    
          #me traigo todos los menus que son padres
          $query = "SELECT id value, menu text FROM menus WHERE belongs_to=0 AND active=1;";
-         $result = $this->Select($query,true);
+         $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
@@ -147,7 +147,7 @@ class Menu extends Connection {
                $menu_ids = rtrim($menu_ids, ",");
                $query = "SELECT m.* FROM roles r INNER JOIN menus m ON m.id IN ($menu_ids) WHERE r.id=$role_id;";
             }
-            $result = $this->Select($query,true);
+            $result = $this->Select($query, true);
 
             $response = $this->CorrectResponse();
             $response["message"] = "Peticion satisfactoria | registros encontrados.";

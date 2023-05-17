@@ -44,6 +44,6 @@ elseif ($op == 'edit') {
   $User->edit($name,$last_name,$cellphone,$email,$password,$role_id,$updated_at,$change_password,$id);
 }
 
-elseif ($op == "delete") $User->delete($deleted_at,$id);
+elseif ($op == "delete") $User->delete($deleted_at, $id);
 // #endregion PETICIONES
 

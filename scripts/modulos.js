@@ -110,7 +110,7 @@ form.on("submit", async (e) => {
 	}
 
 	// return console.log(data);
-	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP,data);
+	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP, data);
 	// if (ajaxResponse.message != "duplicado") fillTable();
 	await fillTable();
 	await fillSidebar();
@@ -159,9 +159,9 @@ async function fillTable(show_toas=true) {
 			column_info = `
 			<td class="text-center">
 				<p class="">
-					belongs to: <b>${!obj.belongs_to ? "-" : obj.parent_menu}</b><br>
-					Order: <b>${obj.order}</b><br>
-					File Path: <b>${!obj.file_path ? "-" : obj.file_path}</b>
+					pertenece a: <b>${!obj.belongs_to ? "-" : obj.parent_menu}</b><br>
+					Orden: <b>${obj.order}</b><br>
+					archivo: <b>${!obj.file_path ? "-" : obj.file_path}</b>
 				</p>
 			</td>
 			`,
@@ -280,7 +280,7 @@ async function deleteObj(btn_delete) {
       id: Number(btn_delete.attr("data-id")),
       switch_active: status
    }
-   await ajaxRequestAsync(URL_MENU_APP,data);
+   await ajaxRequestAsync(URL_MENU_APP, data);
    fillSidebar(false);
    fillTable(false);
 }

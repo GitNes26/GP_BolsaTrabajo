@@ -67,7 +67,6 @@ $("#btn_login").click((e) => {
       email: email.val(),
       password: password.val()
    }
-   console.log(data);
    ajaxRequest(`${BACKEND_PATH}/User/App.php`,data);
 });
 

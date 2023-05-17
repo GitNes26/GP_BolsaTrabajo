@@ -24,4 +24,4 @@ elseif ($op == "create") $BusinessLine->create($business_line, $created_at);
 
 elseif ($op == "edit") $BusinessLine->edit($business_line, $id, $updated_at);
 
-elseif ($op == "delete") $BusinessLine->delete($deleted_at,$id);
+elseif ($op == "delete") $BusinessLine->delete($deleted_at, $id);

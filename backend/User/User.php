@@ -117,7 +117,7 @@ class User extends Connection {
          $query = "SELECT u.*, r.role
          FROM users u INNER JOIN roles r ON u.role_id=r.id 
          WHERE u.active=1";
-         $result = $this->Select($query,true);
+         $result = $this->Select($query, true);
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
@@ -217,12 +217,12 @@ class User extends Connection {
       die(json_encode($response));
    }
 
-   function delete($deleted_at,$id) {
+   function delete($deleted_at, $id) {
       try {
         $response = $this->defaultResponse();
 
          $query = "UPDATE users SET active=0, deleted_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($deleted_at,$id));
+         $this->ExecuteQuery($query, array($deleted_at, $id));
 
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registro eliminado.";

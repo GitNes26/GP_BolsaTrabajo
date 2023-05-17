@@ -5,6 +5,7 @@ table = $("#table").DataTable(DT_CONFIG);
 $(document).ready(() => {
 });
 
+limit=15;
 // btn_modal_form = $("#btn_modal_form"),
 const 
 	tbody = $("#table tbody"),
@@ -13,7 +14,10 @@ const
 	modal_title = $(".modal-title"),
 	id_modal = $("#id"),
 	op_modal = $("#op"),
-	input_business_line = $("#input_business_line"),
+	input_company_ranking = $("#input_company_ranking"),
+	input_description = $("#input_description"),
+	counter_description = $("#counter_description"),
+	
 
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset"),
@@ -31,7 +35,7 @@ init();
 async function init() {
 	fillTable();
 	setTimeout(() => {
-      input_business_line.focus();
+      input_company_ranking.focus();
    }, 500);
 }
 
@@ -41,7 +45,7 @@ async function init() {
  btn_cancel.click((e) => {
 	e.preventDefault();
 	modal_title.html(
-		"<i class='fa-regular fa-circle-plus'></i>&nbsp; REGISTRAR GIRO"
+		"<i class='fa-regular fa-circle-plus'></i>&nbsp; REGISTRAR CLASIFICACIÓN"
 	);
 	btn_submit.removeClass("btn-primary");
 	btn_submit.addClass("btn-success");
@@ -59,7 +63,7 @@ async function init() {
 btn_reset.click(async (e) => {
 	id_modal.val("");
 	// setTimeout(() => {
-	// 	input_business_line.focus();
+	// 	input_company_ranking.focus();
 	// }, 500);
 });
 
@@ -94,7 +98,7 @@ form.on("submit", async (e) => {
 	}
 
 	// return console.log(data);
-	const ajaxResponse = await ajaxRequestAsync(URL_BUSINESS_LINE_APP, data);
+	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_RANKING_APP, data);
 	if (ajaxResponse.message == "duplicado") return
 	btn_cancel.click();
 	await fillTable();
@@ -102,7 +106,7 @@ form.on("submit", async (e) => {
 
 async function fillTable(show_toas=true) {
 	let data = { op: "index" };
-	const ajaxResponse = await ajaxRequestAsync(URL_BUSINESS_LINE_APP, data, null, true, show_toas);
+	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_RANKING_APP, data, null, true, show_toas);
 
 	//Limpiar table
 	tbody.slideUp();
@@ -115,25 +119,27 @@ async function fillTable(show_toas=true) {
 	objResponse.map((obj) => {
 		//Campos
 		let 
-			column_business_line = `${obj.business_line}`;
+			column_company_ranking = `${obj.company_ranking}`;
+			column_description = `${obj.description}`;
 
 		let column_buttons = `<td class='align-middle'>
             <div class='btn-group' role='group'>`;
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Giro' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
+				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Clasificación' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Giro' data-name='${obj.business_line}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
+				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Clasificación' data-name='${obj.company_ranking}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
 		}
 		column_buttons += `</div>
 					</td>`;
 
 		list.push([
-			column_business_line,
+			column_company_ranking,
+			column_description,
 			column_buttons,
 		]);		
 	});
@@ -183,7 +189,7 @@ tbody.click((e) => {
 
 //EDITAR OBJETO
 async function editObj(btn_edit) {
-	modal_title.html("<i class='fa-light fa-pen-to-square'></i>&nbsp; EDITAR GIRO");
+	modal_title.html("<i class='fa-light fa-pen-to-square'></i>&nbsp; EDITAR CLASIFICACIÓN");
 	btn_submit.removeClass("btn-success");
 	btn_submit.addClass("btn-primary");
 	btn_submit.text("GUARDAR");
@@ -196,21 +202,23 @@ async function editObj(btn_edit) {
 
 	let id_obj = btn_edit.attr("data-id");
 	let data = { id: id_obj, op: "show" };
-	const ajaxResponse = await ajaxRequestAsync(URL_BUSINESS_LINE_APP, data);
+	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_RANKING_APP, data);
 
 	const obj = ajaxResponse.data;
 	//form
 	id_modal.val(Number(obj.id));
-	input_business_line.val(obj.business_line);
+	input_company_ranking.val(obj.company_ranking);
+	input_description.val(obj.description);
+	
 
 	setTimeout(() => {
-		input_business_line.focus();
+		input_company_ranking.focus();
 	}, 500);
 }
 
 //ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
 async function deleteObj(btn_delete) {
-	let title = `¿Estas seguro de eliminar el giro <br> ${btn_delete.attr("data-name")}?`;
+	let title = `¿Estas seguro de eliminar la clasificación <br> ${btn_delete.attr("data-name")}?`;
 	let text = ``;
 
 	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
@@ -223,8 +231,14 @@ async function deleteObj(btn_delete) {
 	ajaxRequestDeleteAsync(
 		title,
 		text,
-		URL_BUSINESS_LINE_APP,
+		URL_COMPANY_RANKING_APP,
 		data,
 		"fillTable()"
 	);
 }
+
+input_description.on("input", function() {
+	const letters = this.value.length;
+	if (letters > limit) return this.value = this.value.slice(0,limit); 
+	countLetter(this, counter_description, letters, limit)
+});

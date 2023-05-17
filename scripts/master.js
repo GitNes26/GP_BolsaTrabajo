@@ -3,14 +3,18 @@
 //#region VARIABLES
 const
 	URL_BASE = $("#url_base").val(),
-	BACKEND_PATH = `${URL_BASE}/backend`;
-   PAGES_PATH = `${URL_BASE}/pages`;
-   EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;
+	BACKEND_PATH = `${URL_BASE}/backend`,
+	PAGES_PATH = `${URL_BASE}/pages`,
+	EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`,
 	
 	URL_USER_APP = `${BACKEND_PATH}/User/App.php`,
 	URL_ROLE_APP = `${BACKEND_PATH}/Role/App.php`,
-	URL_MENU_APP = `${BACKEND_PATH}/Menu/App.php`;
-	URL_BUSINESS_LINE_APP = `${BACKEND_PATH}/BusinessLine/App.php`;
+	URL_MENU_APP = `${BACKEND_PATH}/Menu/App.php`,
+	URL_BUSINESS_LINE_APP = `${BACKEND_PATH}/BusinessLine/App.php`,
+	URL_TAG_APP = `${BACKEND_PATH}/Tag/App.php`,
+	URL_AREA_APP = `${BACKEND_PATH}/Area/App.php`,
+	URL_COMPANY_RANKING_APP = `${BACKEND_PATH}/CompanyRanking/App.php`
+	;
 
 const btn_close = $(".btn-close");
 
@@ -21,9 +25,10 @@ const
 	permission_delete = Boolean(Cookies.get("permission_delete")),
 	permission_update = Boolean(Cookies.get("permission_update")),
 	current_page = $("#current_page").val(),
-	singular_object = $("#singular_object").val()
+	singular_object = $("#singular_object").val(),
 	plural_object = $("#plural_object").val()
 
+let limit=150;
 //#endregion VARIABLES
 
 
@@ -180,6 +185,21 @@ $(".eye_icon").click((e) => {
    else input.prop("type","password")
 });
 
+function countLetter(input, counter, letters, limit) {
+	if (letters > limit) input.value = input.value.slice(0,limit); 
+	else counter.text(`${letters}/${limit}`);
+
+	if (letters > limit) {
+		counter.removeClass("text-muted");
+		counter.addClass("text-danger");
+		counter.text(`Máximo de caracteres alcanzado ${letters}/${limit}`);
+		$(input).addClass("is-invalid");
+		return;
+	}
+	counter.removeClass("text-danger");
+	counter.addClass("text-muted");
+	$(input).removeClass("is-invalid");
+}
 
 //AGREGAR DATO AL ARRAY
 function addToArray(name, value, array) {
@@ -218,7 +238,7 @@ const fillSidebar = async (show_toast=false) => {
 		let children_menus = objResponse.filter(
 			(menu) => menu.belongs_to == parent_menu.id
 		);
-		children_menus.sort((a, b) => a.order - b.order);
+		children_menus.sort((a, b) => b.order - a.order);
 		children_menus.map((child_menu) => {
 			menus += `
               <ul class="nav nav-treeview text-sm">

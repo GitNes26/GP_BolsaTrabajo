@@ -23,7 +23,7 @@ class Role extends Connection
          $response = $this->defaultResponse();
          $query = "SELECT p.id as perfil_id, p.perfil as perfil_nombre
          FROM perfiles as p WHERE p.estatus=1 ORDER BY perfil_nombre ASC";
-         $result = $this->Select($query,true);
+         $result = $this->Select($query, true);
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
@@ -44,7 +44,7 @@ class Role extends Connection
          $query = "SELECT *
          FROM users
          WHERE active=1";
-         $result = $this->Select($query,true);
+         $result = $this->Select($query, true);
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
@@ -195,7 +195,7 @@ class Role extends Connection
          $query = "SELECT id 'value', role 'text'
          FROM roles
          WHERE active=1";
-         $result = $this->Select($query,true);
+         $result = $this->Select($query, true);
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;

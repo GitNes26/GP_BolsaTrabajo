@@ -175,7 +175,7 @@ form.on("submit", async (e) => {
 	// addToArray("tipo_objeto", "suscriptor", data);
 
 	// return console.log(data);
-	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP,data);
+	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data);
 	if (ajaxResponse.message == "duplicado") return;
 	if (id_modal.val() == id_cookie) fillSidebar();
 	fillTable();
