@@ -112,12 +112,12 @@ if (isset($_GET["p"])) {
 
 
                   <!-- Card Login -->
-                  <div class="card rounded-3 card-outline card-primary shadow" id="card_login" data-slide-down="1">
+                  <div class="card rounded-3 card-outline card-primary shadow" id="card_role" data-slide-down="1">
                      <div class="card-body login-card-body">
                         <div class="text-center mb-4">
                            <label class="form-control">Soy: &nbsp;&nbsp;&nbsp;&nbsp;
                               <div class="form-check form-check-inline">
-                                 <input class="form-check-input" type="radio" name="input_role" id="input_role_company" value="3">
+                                 <input class="form-check-input" type="radio" name="input_role" id="input_role_company" value="3" checked>
                                  <label class="form-check-label" for="input_role_company">Empresa</label>
                               </div>
                               <div class="form-check form-check-inline">
@@ -153,14 +153,12 @@ if (isset($_GET["p"])) {
                                     <label for="input_business_line_id" class="form-label">Giro: <span class="obligatory"></span></label>
                                     <select class="select2 form-control" style="width:100%"
                                     id="input_business_line_id" name="input_business_line_id" data-input-name="GIRO">
-                                       <option selected value="-1">Selecciona una opción...</option>
                                     </select>
                                  </div>
                                  <div class="mb-3 col">
                                     <label for="input_company_ranking_id" class="form-label">Clasificacón: <span class="obligatory"></span></label>
                                     <select class="select2 form-control" style="width:100%"
                                     id="input_company_ranking_id" name="input_company_ranking_id" data-input-name="ACERCA DE">
-                                       <option selected value="-1">Selecciona una opción...</option>
                                     </select>
                                  </div>
                               </div>
@@ -168,18 +166,16 @@ if (isset($_GET["p"])) {
                                  <label class="text-center">UBICACIÓN</label>
                                  <div class="mb-3 col">
                                     <label for="input_state" class="form-label">Estado: <span class="obligatory"></span></label>
-                                    <select class="select2 form-control" style="width:100%"
+                                    <select class="select2 form-control" style="width:100%; line-height:10px"
                                     id="item-details-stateValue" name="item-details-stateValue"
                                     data-input-name="ESTADO">
-                                       <option selected value="-1">Selecciona una opción...</option>
                                     </select>
                                  </div>
                                  <div class="mb-3 col">
-                                    <label for="input_municiplay" class="form-label">Municipio: <span class="obligatory"></span></label>
-                                    <select class="select2 form-control" style="width:100%"
+                                    <label for="input_municipality" class="form-label">Municipio: <span class="obligatory"></span></label>
+                                    <select class="select2 form-control" style="width:100%; line-height:20px"
                                     id="item-details-cityValue" name="item-details-cityValue"
                                     data-input-name="MUNICIPIO">
-                                       <option selected value="-1">Selecciona una opción...</option>
                                     </select>
                                  </div>
                               </div>
@@ -200,7 +196,7 @@ if (isset($_GET["p"])) {
                               </div>
                            </div>
 
-                           <div id="div_candidate" class=d-none>
+                           <div id="div_candidate" class="">
                               <div class="row">
                                  <div class="col-4">
                                     <img src="" alt="">
@@ -287,7 +283,7 @@ if (isset($_GET["p"])) {
    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 
    <script src="<?=$SCRIPTS_PATH ?>/master.js"></script>
-   <script src="<?=$SCRIPTS_PATH ?>/login.js"></script>
+   <script src="<?=$SCRIPTS_PATH ?>/registro-perfil.js"></script>
 </body>
 
 </html>

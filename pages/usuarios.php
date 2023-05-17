@@ -138,7 +138,6 @@ $current_page = "Usuarios";
                <div class="mb-3">
                   <label for="input_role_id" class="form-label">Rol: <span class="obligatory"></span></label>
                   <select class="select2 form-control" style="width:100%" aria-label="Default select example" id="input_role_id" name="input_role_id" data-input-name="ROL">
-                     <option selected value="-1">Selecciona una opción....</option>
                   </select>
                </div>
             </div>

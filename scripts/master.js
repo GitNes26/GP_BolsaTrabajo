@@ -72,14 +72,14 @@ const ajaxRequestAsync = async (
 
 		if (response.result) {
 			if (response.toast)
-				if (show_toast)
+				if (show_toast) 
 					showToast(response.alert_icon, response.alert_text);
 		} else {
 			showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
 		}
 
 		if (close_modal == null && btn_close != null) btn_close.click();
-		$.unblockUI();
+		if (show_blockUI) $.unblockUI();
 		return response;
 
 	} catch (error) {
@@ -428,7 +428,7 @@ async function fillSelect2(url_app, selected_index, selector, select_modules=fal
 	const objResponse = ajaxResponse.data;
 	// console.log("objResponse",objResponse);
 
-	selector.html("");
+	selector.html(`<option value="-1" readonly>Cargando...</option>`);
 
 	let options = /*HTML*/ `
       <option value="-1" readonly>Selecciona una opción...</option>
@@ -439,6 +439,7 @@ async function fillSelect2(url_app, selected_index, selector, select_modules=fal
 		`;
 	}
 
+	selector.html("")
 	selector.append(options);
 
 	$.each(objResponse, function (i, obj) {
@@ -543,6 +544,9 @@ moment.locale("es-mx");
 async function showStates() {
 	console.log("generar token");
 
+	$("#item-details-stateValue").html("<option value=''>Cargando...</option>");
+
+
 	const requestToken = await $.ajax({
 		async: true,
 		crossDomain: true,
@@ -591,9 +595,44 @@ async function showStates() {
 				element["state_name"] +
 				"</option>";
 		});
+
 		$("#item-details-stateValue").html(comboStates);
 	}
 	// await estados_ciudades2(output_estado.text(), output_ciudad.text());
 }
-// showStates()
+showStates()
+$("#item-details-stateValue").on("change", async function () {
+	var state = this.value;
+	// console.log(output_estado.text());
+	console.log(state);
+	$("#item-details-cityValue").html("<option value=''>Cargando...</option>");
+
+
+	const cities = await $.ajax({
+		url: `${URL_API_COUNTRIES}/cities/${state}`,
+		method: "GET",
+		headers: {
+			Authorization: `Bearer ${auth_token}`,
+			Accept: "application/json",
+		}
+	});
+	var comboCities = "<option value=''>Selecciona una opción...</option>";
+	cities.forEach((element) => {
+		let seleccionar_ciudad = "";
+		// if (ciudad != null) {
+		// 	if (estado == element[`state_name`]) {
+		// 		seleccionar_ciudad = "selected";
+		// 	}
+		// }
+		comboCities +=
+			'<option value="' +
+			element["city_name"] +
+			'" ' +
+			seleccionar_ciudad +
+			">" +
+			element["city_name"] +
+			"</option>";
+	});
+	$("#item-details-cityValue").html(comboCities);
+});
 

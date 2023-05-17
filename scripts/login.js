@@ -42,7 +42,6 @@ init();
 function init() {
   if (join_now == '1') {
     changeLoginSignup();
-   //  changeLoginSignup("I'm new here");
   }
 };
 

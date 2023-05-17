@@ -58,7 +58,6 @@ $current_page = "Módulos";
                   <div class="mb-3">
                      <label for="input_belongs_to" class="form-label">Pertence a: <span class="obligatory"></span></label>
                      <select class="select2 form-control" style="width:100%" id="input_belongs_to" name="input_belongs_to" data-input-name="PERTENECE A">
-                        <option value="-1">Selecciona una opción...</option>
                      </select>
                   </div>
                   <div class="mb-3">
