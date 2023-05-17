@@ -176,9 +176,9 @@ form.on("submit", async (e) => {
 
 	// return console.log(data);
 	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP,data);
-	console.log(ajaxResponse.message);
-	// if (ajaxResponse.message != "duplicado") fillTable();
-	if (id_modal.val() == id_cookie) rellenarSideBar();
+	if (ajaxResponse.message == "duplicado") return;
+	if (id_modal.val() == id_cookie) fillSidebar();
+	fillTable();
 });
 
 async function fillTable() {
@@ -196,8 +196,8 @@ async function fillTable() {
 	objResponse.map((obj) => {
 		//Campos
 		let column_name = `${obj.name} ${obj.last_name}`,
-			column_email = `${obj.email}`,
 			column_cellphone = `${obj.cellphone}`,
+			column_email = `${obj.email}`,
 			column_role = `${obj.role}`,
 			campo_creado = formatDatetime(obj.created_at, true);
 
@@ -218,8 +218,8 @@ async function fillTable() {
 
 		list.push([
 			column_name,
-			column_email,
 			column_cellphone,
+			column_email,
 			column_role,
 			campo_creado,
 			column_buttons,

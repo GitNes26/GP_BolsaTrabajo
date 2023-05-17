@@ -31,7 +31,7 @@ class User extends Connection {
                $this->setCookies($user_found["id"]);
 
                $response = $this->correctResponse();
-               $response["message"] = "Peticion satisfactoria | registros encontrados.";
+               $response["message"] = "Peticion satisfactoria | sesion inciada.";
                $response["alert_title"] = "Bienvenido!";
                $response["alert_text"] = "$user_found[name]";
                $response["data"] = $user_found;
@@ -56,7 +56,7 @@ class User extends Connection {
       $this->unsetCookies();
 
       $response = $this->correctResponse();
-      $response["message"] = "Cerrando sesión.";
+      $response["message"] = "Peticion satisfactoria | Cerrando sesión.";
       $response["alert_title"] = "Cerrando Sesión!";
       $response["alert_text"] = "Cerrando Sesión!";
 
@@ -154,24 +154,16 @@ class User extends Connection {
       die(json_encode($response));
    } 
 
-   function create($name,$last_name,$cellphone,$email,$password,$role_id,$created_at) {
+   function create($name, $last_name, $cellphone, $email, $password, $role_id, $created_at) {
       try {
          $response = $this->defaultResponse();
 
-         // VALIDACION DE DATOS REPETIDOS
-         $duplicate = $this->checkAvailableData('users','name',$name,'El nombre');
-         // echo "que dice el duplicate:";
-         // var_dump($duplicate);
-         if ($duplicate["result"] == true) die(json_encode($duplicate));
-
-         $duplicate = $this->checkAvailableData('users','email',$email,'El correo');
-         if ($duplicate["result"] == true) die(json_encode($duplicate));
-         // VALIDACION DE DATOS REPETIDOS
-
+         // #VALIDACION DE DATOS REPETIDOS
+         $this->validateAvailableData($cellphone, $email, null);
 
          $password_hash = password_hash($password,PASSWORD_DEFAULT);
          $query = "INSERT INTO users (name,last_name,cellphone,email,password,role_id,created_at) VALUES (?,?,?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($name,$last_name,$cellphone,$email,$password_hash,$role_id,$created_at));
+         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $email, $password_hash, $role_id, $created_at) );
          // $insert_id = (int)$this->getInsertId();
          // $objeto->_name_id = $insert_id;
 
@@ -190,18 +182,21 @@ class User extends Connection {
 
    }
 
-   function edit($name,$last_name,$cellphone,$email,$password,$role_id,$updated_at,$change_password,$id) {
+   function edit($name, $last_name, $cellphone, $email, $password, $role_id, $updated_at, $change_password, $id) {
       // function edit($name,$email,$password,$role_id,$updated_at,$change_password,$id){
       try {         
          $response = $this->defaultResponse();
 
+         // #VALIDACION DE DATOS REPETIDOS
+         $this->validateAvailableData($cellphone, $email, $id);
+
          if ($change_password) {
             $password_hash = password_hash($password,PASSWORD_DEFAULT);
             $query = "UPDATE users SET name=?, last_name=?, cellphone=?, email=?, password=?, role_id=?, updated_at=? WHERE id=?";
-            $this->ExecuteQuery($query,array($name,$last_name,$cellphone,$email,$password_hash,$role_id,$updated_at,$id));
+            $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $email, $password_hash, $role_id, $updated_at, $id));
          } else {
             $query = "UPDATE users SET name=?, last_name=?, cellphone=?, email=?, role_id=?, updated_at=? WHERE id=?";
-            $this->ExecuteQuery($query,array($name,$last_name,$cellphone,$email,$role_id,$updated_at,$id));
+            $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $email, $role_id, $updated_at, $id));
          }
 
          $id = $_COOKIE["user_id"];
@@ -227,7 +222,7 @@ class User extends Connection {
         $response = $this->defaultResponse();
 
          $query = "UPDATE users SET active=0, deleted_at=? WHERE id=?";
-         $this->ExecuteQuery($query,array($deleted_at,$id));
+         $this->ExecuteQuery($query, array($deleted_at,$id));
 
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registro eliminado.";
@@ -243,25 +238,11 @@ class User extends Connection {
       die(json_encode($response));
    }
 
+   function validateAvailableData($cellphone, $email, $id) {
+      $duplicate = $this->checkAvailableData('users', 'cellphone', $cellphone, 'El número celular', 'input_cellphone', $id);
+      if ($duplicate["result"] == true) die(json_encode($duplicate));
 
-
-   function checkAvailableData($table,$column,$value,$propTitle){
-     $query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1";
-
-     $consulta = $this->Select($query,false);
-     if ($consulta["duplicate"] > 0) {
-       $response = array(
-         "result" => true,
-         "alert_icon" => 'warning',
-         "alert_title" => "$propTitle no esta disponible!",
-         "alert_text" => "<b>$value</b> ya existe, intenta con uno diferente.",
-         "message" => "duplicado",
-   );
-     } else {
-       $response = array(
-         "result" => false,
-        );
-     }
-     return $response;
+      $duplicate = $this->checkAvailableData('users', 'email', $email, 'El correo', 'input_email', $id);
+      if ($duplicate["result"] == true) die(json_encode($duplicate));
    }
 }

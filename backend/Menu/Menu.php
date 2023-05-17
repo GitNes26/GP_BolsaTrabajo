@@ -18,7 +18,7 @@ class Menu extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT m.*, pm.id parent_id, pm.menu parent_menu FROM menus m LEFT JOIN menus pm ON m.belongs_to=pm.id;";
+         $query = "SELECT m.*, pm.id parent_id, pm.menu parent_menu FROM menus m LEFT JOIN menus pm ON m.belongs_to=pm.id AND m.active=1;";
          $result = $this->Select($query,true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -47,7 +47,7 @@ class Menu extends Connection {
          $response = $this->defaultResponse();
    
          #me traigo todos los menus que son padres
-         $query = "SELECT id value, menu text FROM menus m where belongs_to=0;";
+         $query = "SELECT id value, menu text FROM menus WHERE belongs_to=0 AND active=1;";
          $result = $this->Select($query,true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -118,7 +118,7 @@ class Menu extends Connection {
          $this->ExecuteQuery($query, array($menu,$tag,$belongs_to,$active,$file_path,$icon,$updated_at, $id));
          
          $response = $this->CorrectResponse();
-         $response["message"] = "Peticion satisfactoria | registro creado.";
+         $response["message"] = "Peticion satisfactoria | registro actualizado.";
          $response["alert_title"] = "Módulo actualizado";
          $response["alert_text"] = "Módulo actualizado";
          $this->Close();
@@ -163,60 +163,60 @@ class Menu extends Connection {
       die(json_encode($response));
    }
 
-   function mostrarMenusPadres() {
-      try {
-         $response = $this->defaultResponse();
+   // function mostrarMenusPadres() {
+   //    try {
+   //       $response = $this->defaultResponse();
    
-         $query = "SELECT * FROM menus WHERE belongs_to=0 OR tiene_hijos=true AND active=1 ORDER BY orden ASC";
-         $resultado = $this->SelectAndContinue($query);
-         if (sizeof($resultado) > 0) {
-           $response = array(
-               "Resultado" => true,
-               "Datos" => $resultado
-           );
-         } else {
-            $response = array(
-               "Resultado" => true,
-               "Mensaje" => 'No registers.',
-               // "Mensaje" => 'Sin registros.',
-               "Datos" => array()
-            );
-         }
+   //       $query = "SELECT * FROM menus WHERE belongs_to=0 OR tiene_hijos=true AND active=1 ORDER BY orden ASC";
+   //       $resultado = $this->SelectAndContinue($query);
+   //       if (sizeof($resultado) > 0) {
+   //         $response = array(
+   //             "Resultado" => true,
+   //             "Datos" => $resultado
+   //         );
+   //       } else {
+   //          $response = array(
+   //             "Resultado" => true,
+   //             "Mensaje" => 'No registers.',
+   //             // "Mensaje" => 'Sin registros.',
+   //             "Datos" => array()
+   //          );
+   //       }
    
-      } catch (Exception $e) {
-         $error_message = "Error: ".$e->getMessage();
-         $response = $this->catchResponse($error_message);
-      }
-      die(json_encode($response));
+   //    } catch (Exception $e) {
+   //       $error_message = "Error: ".$e->getMessage();
+   //       $response = $this->catchResponse($error_message);
+   //    }
+   //    die(json_encode($response));
    
-   }
+   // }
 
-   function mostrarMenusHijos($belongs_to) {
-      try {
-         $response = $this->defaultResponse();
+   // function mostrarMenusHijos($belongs_to) {
+   //    try {
+   //       $response = $this->defaultResponse();
    
-         $query = "SELECT * FROM menus WHERE belongs_to=$belongs_to AND active=1 ORDER BY orden ASC";
-         $resultado = $this->SelectAndContinue($query);
-         if (sizeof($resultado) > 0) {
-           $response = array(
-               "Resultado" => true,
-               "Datos" => $resultado
-           );
-         } else {
-            $response = array(
-               "Resultado" => true,
-               "Mensaje" => 'No registers.',
-               // "Mensaje" => 'Sin registros.',
-               "Datos" => array()
-            );
-         }
+   //       $query = "SELECT * FROM menus WHERE belongs_to=$belongs_to AND active=1 ORDER BY orden ASC";
+   //       $resultado = $this->SelectAndContinue($query);
+   //       if (sizeof($resultado) > 0) {
+   //         $response = array(
+   //             "Resultado" => true,
+   //             "Datos" => $resultado
+   //         );
+   //       } else {
+   //          $response = array(
+   //             "Resultado" => true,
+   //             "Mensaje" => 'No registers.',
+   //             // "Mensaje" => 'Sin registros.',
+   //             "Datos" => array()
+   //          );
+   //       }
    
-      } catch (Exception $e) {
-         $error_message = "Error: ".$e->getMessage();
-         $response = $this->catchResponse($error_message);
-      }
-      die(json_encode($response));
-   }
+   //    } catch (Exception $e) {
+   //       $error_message = "Error: ".$e->getMessage();
+   //       $response = $this->catchResponse($error_message);
+   //    }
+   //    die(json_encode($response));
+   // }
 
    function activeDesactive($active,$id) {
       try {
@@ -229,7 +229,7 @@ class Menu extends Connection {
 
 
          $response = $this->CorrectResponse();
-         $response["message"] = "Peticion satisfactoria | registro creado.";
+         $response["message"] = "Peticion satisfactoria | registro modificado.";
          $response["alert_title"] = "Módulo $status";
          $response["alert_text"] = "Módulo $status";
          $this->Close();

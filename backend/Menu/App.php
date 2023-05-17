@@ -29,7 +29,7 @@ if (isset($_POST['menu'])) { $menu = $_POST['menu']; }
 
 #PETICIONES
 
-elseif ($op == "index") $Menu->index();
+if ($op == "index") $Menu->index();
 
 elseif ($op == "showMyMenus") $Menu->showMyMenus($role_id);
 elseif ($op == 'showSelect') $Menu->showSelect();
@@ -45,5 +45,5 @@ elseif ($op == "activeDesactive") $Menu->activeDesactive($active,$id);
 //    $Menu->delete($id);
 // }
 
-elseif ($op == "showParentMenus") $Menu->showParentMenus();
-elseif ($op == "showChildrenMenus") $Menu->showChildrenMenus();
+// elseif ($op == "showParentMenus") $Menu->showParentMenus();
+// elseif ($op == "showChildrenMenus") $Menu->showChildrenMenus();

@@ -136,6 +136,30 @@ class Connection{
 		);
 		return $response;
 	}
+	
+	function checkAvailableData($table, $column, $value, $propTitle, $input, $id) {
+		$query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1";
+		if ($id != null) $query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1 AND id!=$id";
+
+		$consulta = $this->Select($query,false);
+		if ($consulta["duplicate"] > 0) {
+			$response = array(
+				"result" => true,
+				"alert_icon" => 'warning',
+				"alert_title" => "$propTitle no esta disponible!",
+				"alert_text" => "<b>$value</b> ya existe, intenta con uno diferente.",
+				"message" => "duplicado",
+				"input" => $input
+			);
+			// $response = $this->duplicateResponse($propTitle, $value, $input);
+		} else {
+			 $response = array(
+					"result" => false,
+			 );
+		}
+		return $response;
+ 	}
+	
 
    function Close() {
       $this->conn = null;

@@ -62,11 +62,11 @@ class Role extends Connection
       try {
          $respuesta = $this->respuestaDefault();
 
-         $duplicado = $this->verificarDatoDisponible('usuario',$usuario,'Rolename',$usuario);
-         if ($duplicado["Resultado"] == true) die(json_encode($duplicado));
+         // $duplicado = $this->verificarDatoDisponible('usuario',$usuario,'Rolename',$usuario);
+         // if ($duplicado["Resultado"] == true) die(json_encode($duplicado));
 
-         $duplicado = $this->verificarDatoDisponible('correo',$correo,'E-mail',$correo);
-         if ($duplicado["Resultado"] == true) die(json_encode($duplicado));
+         // $duplicado = $this->verificarDatoDisponible('correo',$correo,'E-mail',$correo);
+         // if ($duplicado["Resultado"] == true) die(json_encode($duplicado));
 
 
          $contrasenia_hash = password_hash($contrasenia,PASSWORD_DEFAULT);
@@ -143,10 +143,10 @@ class Role extends Connection
          if ($cambio_contrasenia) {
             $contrasenia_hash = password_hash($contrasenia,PASSWORD_DEFAULT);
             $query = "UPDATE usuarios SET usuario=?, correo=?, contrasenia=?, perfil_id=?, actualizado=? WHERE id=?";
-            $this->ExecuteQueryAndContinue($query,array($usuario,$correo,$contrasenia_hash,$perfil_id,$actualizado,$id));
+            $this->ExecuteQueryAndContinue($query, array($usuario,$correo,$contrasenia_hash,$perfil_id,$actualizado,$id));
          } else {
             $query = "UPDATE usuarios SET usuario=?, correo=?, perfil_id=?, actualizado=? WHERE id=?";
-            $this->ExecuteQueryAndContinue($query,array($usuario,$correo,$perfil_id,$actualizado,$id));
+            $this->ExecuteQueryAndContinue($query, array($usuario,$correo,$perfil_id,$actualizado,$id));
          }
 
          $id = $_COOKIE["dpnstash_user_id"];
@@ -173,7 +173,7 @@ class Role extends Connection
         $respuesta = $this->respuestaDefault();
 
          $query = "UPDATE usuarios SET activo=0, eliminado=? WHERE id=?";
-         $this->ExecuteQuery($query,array($eliminado,$id));
+         $this->ExecuteQuery($query, array($eliminado,$id));
 
          $respuesta = array(
             "Resultado" => true,
@@ -208,24 +208,4 @@ class Role extends Connection
       }
       die(json_encode($response));
    } 
-
-
-   function checkAvailableData($table,$campo,$dato,$propiedadTitulo,$propiedadTexto){
-     $query = "SELECT count(*) as duplicado FROM $table WHERE $campo='$dato' AND activo=1";
-
-     $consulta = $this->SelectOneAndContinue($query);
-     if ($consulta["duplicado"] > 0) {
-       $respuesta = array(
-          "Resultado" => true,
-          "Icono_alerta" => 'warning',
-          "Titulo_alerta" => "$propiedadTitulo unavailable!",
-          "Texto_alerta" => "<b>$propiedadTexto</b> already exists, try a different one.",
-       );
-     } else {
-       $respuesta = array(
-         "Resultado" => false,
-        );
-     }
-     return $respuesta;
-   }
 }

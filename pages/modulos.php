@@ -112,7 +112,7 @@ $current_page = "Módulos";
                      <tfoot>
                         <tr class="thead-dark">
                            <th scope="col">Ícono</th>
-                           <th scope="col">Módulp</th>
+                           <th scope="col">Módulo</th>
                            <th scope="col">Info</th>
                            <th scope="col">Activo</th>
                            <th scope="col">Acciones</th>

@@ -10,6 +10,7 @@ const
 	URL_USER_APP = `${BACKEND_PATH}/User/App.php`,
 	URL_ROLE_APP = `${BACKEND_PATH}/Role/App.php`,
 	URL_MENU_APP = `${BACKEND_PATH}/Menu/App.php`;
+	URL_BUSINESS_LINE_APP = `${BACKEND_PATH}/BusinessLine/App.php`;
 
 const btn_close = $(".btn-close");
 
@@ -47,8 +48,10 @@ const ajaxRequestAsync = async (
 		// console.log(response);
 
 		if (response.message == "duplicado") {
-			showToast(response.alert_icon, response.alert_text);
-			return
+			$.unblockUI();
+			showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
+			$(`#${response.input}`).focus();
+			return response;
 		};
 
 		if (response.result) {
@@ -56,13 +59,7 @@ const ajaxRequestAsync = async (
 				if (show_toast)
 					showToast(response.alert_icon, response.alert_text);
 		} else {
-			Swal.fire({
-				icon: response.alert_icon,
-				title: response.alert_title,
-				html: response.alert_text,
-				showConfirmButton: true,
-				confirmButtonColor: "#494E53",
-			});
+			showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
 		}
 
 		if (close_modal == null && btn_close != null) btn_close.click();
@@ -73,13 +70,7 @@ const ajaxRequestAsync = async (
 		if (close_modal == null && btn_close != null) btn_close.click();
 		$.unblockUI();
 		console.error(error);
-		Swal.fire({
-			icon: "error",
-			title: "Oops...!",
-			html: ` Ocurrio un error inesperado. <br> ${error.responseText}`,
-			showConfirmButton: true,
-			confirmButtonColor: "#494E53",
-		});
+		showAlert("error", "Oopss...!!", `Ocurrio un error inesperado. <br> ${error.responseText}`, true);
 	}
 }
 const ajaxRequestDeleteAsync = async (
@@ -116,30 +107,16 @@ const ajaxRequestDeleteAsync = async (
 					deleted = true;
 					
 				} else {
-					Swal.fire({
-						icon: response.alert_icon,
-						title: response.alert_title,
-						text: response.alert_text,
-						showConfirmButton: true,
-						confirmButtonColor: "#494E53",
-					});
+					showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
 				}
-				if (function_complete_string != null)
-					eval(function_complete_string.toString());
+				if (function_complete_string != null) eval(function_complete_string.toString());
 				$.unblockUI();
 				return response;
 
 			} catch (error) {
 				$.unblockUI();
-
 				console.error(error);
-				Swal.fire({
-					icon: "error",
-					title: "Oops...!",
-					html: ` Ocurrio un error inesperado. <br> ${error.responseText}`,
-					showConfirmButton: true,
-					confirmButtonColor: "#494E53",
-				});
+				showAlert("error", "Oopss...!!", `Ocurrio un error inesperado. <br> ${error.responseText}`, true);
 			}
 		}
 	});
@@ -157,6 +134,16 @@ function showBlockUI() {
 	$.blockUI({
 		message: dialogoBlockUI,
 		css: { backgroundColor: null, color: "#313131", border: null },
+	});
+}
+
+function showAlert(icon, title, text, show_confirm_btn) {
+	Swal.fire({
+		icon,
+		title,
+		html: text,
+		showConfirmButton: show_confirm_btn,
+		confirmButtonColor: "#494E53",
 	});
 }
 
