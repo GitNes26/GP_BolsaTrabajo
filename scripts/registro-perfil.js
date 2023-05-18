@@ -2,7 +2,7 @@ console.log("registros-perfil.php");
 
 $(".select2").select2();
 
-$("#div_candidate").hide();
+// $("#div_candidate").hide();
 
 
 const form_role = $("#form_role");
@@ -38,6 +38,9 @@ const div_candidate = $("#div_candidate");
 //  btn_register = $("#btn_register")
 // ;
 // email.focus();
+const
+   btn_done = $("#btn_done"), 
+   btn_return = $("#btn_return");
 
 
 // // const check_theme = $("#check_theme");
@@ -109,7 +112,7 @@ input_name_role.on("change",function() {
 
 async function changeForms(checkbox) {
    // const 
-   if (checkbox == 3) {
+   if (checkbox == "Empresa") {
       await div_candidate.slideUp(450);
       // await div_company.slideDown(450);
       setTimeout(() => {
@@ -117,7 +120,7 @@ async function changeForms(checkbox) {
          setTimeout(() => {input_company.focus();},500)
       }, 450);
    }
-   else if (checkbox == 4) {
+   else if (checkbox == "Candidato") {
       await div_company.slideUp(450);
       // await div_candidate.slideDown(450);
       setTimeout(() => {
@@ -127,23 +130,41 @@ async function changeForms(checkbox) {
    }
 }
 
-// // CONFIRMAR CONTRASEÑA
-// input_confirm_password.on('input',function() {
-//    var pwd1 = input_password.val();
-//    var pwd2 = input_confirm_password.val();
+// REGISTRAR
+form_role.on("submit", async (e) => {
+	e.preventDefault();
+	return console.log(form_role.serializeArray());
 
-//    if (pwd1 === pwd2) {
-//       feedback_confirm_password.addClass('text-success').text('Las contraseñas coinciden').removeClass('text-danger');
-//       input_password.addClass('is-valid').removeClass('is-invalid');
-//       input_confirm_password.addClass('is-valid').removeClass('is-invalid');
-//       btn_register.prop('disabled',false);
-//    } else {
-//       feedback_confirm_password.addClass('text-danger').text("Las contraseñas no coinciden").removeClass('text-success');
-//       input_password.addClass('is-invalid').removeClass('is-valid');
-//       input_confirm_password.addClass('is-invalid').removeClass('is-valid');
-//       btn_register.prop('disabled',true);
-//    }
-// });
+	if (!validateInputs(form)) return;
+
+	if (id_modal.val() <= 0) {
+		//NUEVO
+		if (!permission_write) return;
+		id_modal.val("");
+		op_modal.val("create");
+	} else {
+		//EDICION
+		if (!permission_update) return;
+		op_modal.val("edit");
+	}
+
+	let data = form.serializeArray();
+	// return console.log(data);
+	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
+	if (id_modal.val() <= 0) {
+		//NUEVO
+		addToArray("created_at", current_date, data);
+	} else {
+		//EDICION
+		addToArray("updated_at", current_date, data);
+	}
+
+	// return console.log(data);
+	const ajaxResponse = await ajaxRequestAsync(URL_BUSINESS_LINE_APP, data);
+	if (ajaxResponse.message == "duplicado") return
+	btn_cancel.click();
+	await fillTable();
+});
 
 // function ajaxRequest(url,data) {
 //    $.ajax({

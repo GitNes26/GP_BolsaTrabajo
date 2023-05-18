@@ -112,31 +112,30 @@ if (isset($_GET["p"])) {
 
 
                   <!-- Card Login -->
-                  <div class="card rounded-3 card-outline card-primary shadow" id="card_role" data-slide-down="1">
+                  <form id="form_role" class="card rounded-3 card-outline card-primary shadow" id="card_role" data-slide-down="1">
                      <div class="card-body login-card-body">
                         <div class="text-center mb-4">
                            <label class="form-control">Soy: &nbsp;&nbsp;&nbsp;&nbsp;
                               <div class="form-check form-check-inline">
-                                 <input class="form-check-input" type="radio" name="input_role" id="input_role_company" value="3" checked>
+                                 <input class="form-check-input" type="radio" name="input_role" id="input_role_company" value="Empresa" checked>
                                  <label class="form-check-label" for="input_role_company">Empresa</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                 <input class="form-check-input" type="radio" name="input_role" id="input_role_candidate" value="4">
+                                 <input class="form-check-input" type="radio" name="input_role" id="input_role_candidate" value="Candidato">
                                  <label class="form-check-label" for="input_role_candidate">Candidato</label>
                               </div>
                            </label>
                         </div>
 
-                        <form id="form_role">
                            <input type="hidden" id="op" name="op" value="" class="not_validate">
                            <input type="hidden" id="id" name="id" value='' class="">
                            
-                           <div id="div_company">
-                              <div class="row">
-                                 <div class="col-3">
+                           <div id="div_company" class="d-none">
+                              <div class="row"> <!-- LOGO Y NOMBRE -->
+                                 <div class="col-3"> <!-- LOGO -->
                                     <img src="https://thumbs.dreamstime.com/z/plantilla-del-dise%C3%B1o-logotipo-vector-concepto-edificio-para-la-construcci%C3%B3n-126177482.jpg" class="img-fluid" alt="">
                                  </div>
-                                 <div class="col">
+                                 <div class="col"> <!-- NOMBRE Y ACERCA DE -->
                                     <div class="mb-3 col">
                                        <label for="input_company" class="form-label">Nombre de Empresa: <span class="obligatory"></span></label>
                                        <input type="text" class="form-control" id="input_company" name="input_company" data-input-name="NOMBRES DE EMPRESA">
@@ -148,7 +147,8 @@ if (isset($_GET["p"])) {
                                     </div>
                                  </div>
                               </div>
-                              <div class="row">
+
+                              <div class="row"> <!-- GIRO Y CLASIFICACION -->
                                  <div class="mb-3 col">
                                     <label for="input_business_line_id" class="form-label">Giro: <span class="obligatory"></span></label>
                                     <select class="select2 form-control" style="width:100%"
@@ -162,24 +162,24 @@ if (isset($_GET["p"])) {
                                     </select>
                                  </div>
                               </div>
-                              <div class="row border rounded mb-3">
+                              <div class="row border rounded mb-3"> <!-- UBICACION -->
                                  <label class="text-center">UBICACIÓN</label>
                                  <div class="mb-3 col">
                                     <label for="input_state" class="form-label">Estado: <span class="obligatory"></span></label>
                                     <select class="select2 form-control" style="width:100%; line-height:10px"
-                                    id="item-details-stateValue" name="item-details-stateValue"
+                                    id="input_state" name="input_state"
                                     data-input-name="ESTADO">
                                     </select>
                                  </div>
                                  <div class="mb-3 col">
                                     <label for="input_municipality" class="form-label">Municipio: <span class="obligatory"></span></label>
                                     <select class="select2 form-control" style="width:100%; line-height:20px"
-                                    id="item-details-cityValue" name="item-details-cityValue"
+                                    id="input_municipality" name="input_municipality"
                                     data-input-name="MUNICIPIO">
                                     </select>
                                  </div>
                               </div>
-                              <div class="row border rounded">
+                              <div class="row border rounded"> <!-- CONTACTO -->
                                  <label class="text-center">CONTACTO</label>
                                  <div class="mb-3 col">
                                     <label for="input_contact_name" class="form-label">Nombre: <span class="obligatory"></span></label>
@@ -198,18 +198,17 @@ if (isset($_GET["p"])) {
 
                            <div id="div_candidate" class="">
                               <div class="row">
-                                 <div class="col-4">
-                                    <img src="" alt="">
+                                 <div class="mb-3 col-md-4">
+                                    <label for="input_name" class="form-label">Nombre(s): <span class="obligatory"></span></label>
+                                    <input type="text" class="form-control" readonly id="input_name" name="input_name" data-input-name="NOMBRES">
                                  </div>
-                                 <div class="col-8">
-                                    <div class="mb-3 col-md-6">
-                                       <label for="input_name" class="form-label">Nombre de Empresa: <span class="obligatory"></span></label>
-                                       <input type="text" class="form-control" id="input_name" name="input_name" data-input-name="NOMBRES">
-                                    </div>
-                                    <div class="mb-3 col-md-6">
-                                       <label for="input_last_name" class="form-label">Apellido(s): <span class="obligatory"></span></label>
-                                       <input type="text" class="form-control" id="input_last_name" name="input_last_name" data-input-name="APELLIDOS">
-                                    </div>
+                                 <div class="mb-3 col-md-4">
+                                    <label for="input_last_name" class="form-label">Apellido(s): <span class="obligatory"></span></label>
+                                    <input type="text" class="form-control" readonly id="input_last_name" name="input_last_name" data-input-name="APELLIDOS">
+                                 </div>
+                                 <div class="mb-3 col-md-4">
+                                    <label for="input_email" class="form-label">Correo: <span class="obligatory"></span></label>
+                                    <input type="email" class="form-control" readonly id="input_email" name="input_email" data-input-name="APELLIDOS">
                                  </div>
                               </div>
                               <div class="row">
@@ -218,12 +217,61 @@ if (isset($_GET["p"])) {
                                     <input type="text" class="form-control" id="input_cellphone" name="input_cellphone" data-input-name="CELULAR">
                                  </div>
                                  <div class="mb-3 col-md-6">
-                                    <label for="input_email" class="form-label">Correo: <span class="obligatory"></span></label>
-                                    <input type="email" class="form-control" id="input_email" name="input_email" data-input-name="CORREO">
+                                    <label for="input_age" class="form-label">Edad: <span class="obligatory"></span></label>
+                                    <input type="number" class="form-control" id="input_age" name="input_age" data-input-name="CORREO">
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="form-group" data-select2-id="29">
+                                    <label for="input_interest_tags_ids">Intereses de busqueda:</label>
+                                    <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a tu empresa" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_interest_tags_ids" name="input_interest_tags_ids" data-input-name="ETIQUETAS">
+                                       <option data-select2-id="35">Alabama</option>
+                                       <option data-select2-id="36">Alaska</option>
+                                       <option data-select2-id="37">California</option>
+                                       <option data-select2-id="38">Delaware</option>
+                                       <option data-select2-id="39">Tennessee</option>
+                                       <option data-select2-id="40">Texas</option>
+                                       <option data-select2-id="41">Washington</option>
+                                       <option data-select2-id="41">Washington</option>
+                                       <option data-select2-id="41">Washington</option>
+                                       <option data-select2-id="41">Washington</option>
+                                       <option data-select2-id="41">Washington</option>
+                                    </select>
+                                 </div>
+                              </div>
+
+                              <div class="border rounded mt-3 p-2">
+                                 <div for="" class="text-center fw-bolder mb-3">DATOS PROFESIONALES</div>
+                                 <div class="row">
+                                    <div class="mb-3 col">
+                                       <label for="input_description" class="form-label">Acerca de mí empresa: <span class="obligatory"></span></label>
+                                       <textarea type="text" class="form-control" id="input_description" name="input_description" data-input-name="ACERCA DE" rows="4" data-limit="150"></textarea>
+                                       <div class="text-sm text-end text-muted" id="counter_description">0/150</div>
+                                    </div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                       <ul class="list-group">
+                                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                                             A list item
+                                             <span class="badge bg-primary rounded-pill">14</span>
+                                          </li>
+                                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                                             A second list item
+                                             <span class="badge bg-primary rounded-pill">2</span>
+                                          </li>
+                                          <li class="list-group-item d-flex justify-content-between align-items-center">
+                                             A third list item
+                                             <span class="badge bg-primary rounded-pill">1</span>
+                                          </li>
+                                       </ul>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
                                  </div>
                               </div>
                            </div>
-                        </form>
                      </div>
                      <div class="card-footer">
                         <button type="submit" id="btn_done"
@@ -236,7 +284,7 @@ if (isset($_GET["p"])) {
                         </button>
                      </div>
                      <!-- /.login-card-body -->
-                  </div>
+                  </form>
 
 
                   <!-- /.Registro-box -->

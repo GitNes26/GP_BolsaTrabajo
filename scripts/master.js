@@ -544,7 +544,7 @@ moment.locale("es-mx");
 async function showStates() {
 	console.log("generar token");
 
-	$("#item-details-stateValue").html("<option value=''>Cargando...</option>");
+	$("#input_state").html("<option value=''>Cargando...</option>");
 
 
 	const requestToken = await $.ajax({
@@ -585,7 +585,7 @@ async function showStates() {
 				}
 			}
 			// console.log(estado);
-			// $("#item-details-stateValue").click()
+			// $("#input_state").click()
 			comboStates +=
 				'<option value="' +
 				element["state_name"] +
@@ -596,16 +596,16 @@ async function showStates() {
 				"</option>";
 		});
 
-		$("#item-details-stateValue").html(comboStates);
+		$("#input_state").html(comboStates);
 	}
 	// await estados_ciudades2(output_estado.text(), output_ciudad.text());
 }
 showStates()
-$("#item-details-stateValue").on("change", async function () {
+$("#input_state").on("change", async function () {
 	var state = this.value;
 	// console.log(output_estado.text());
 	console.log(state);
-	$("#item-details-cityValue").html("<option value=''>Cargando...</option>");
+	$("#input_municipality").html("<option value=''>Cargando...</option>");
 
 
 	const cities = await $.ajax({
@@ -633,6 +633,6 @@ $("#item-details-stateValue").on("change", async function () {
 			element["city_name"] +
 			"</option>";
 	});
-	$("#item-details-cityValue").html(comboCities);
+	$("#input_municipality").html(comboCities);
 });
 
