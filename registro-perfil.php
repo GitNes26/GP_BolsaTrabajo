@@ -197,7 +197,7 @@ if (isset($_GET["p"])) {
                            </div>
 
                            <div id="div_candidate" class="">
-                              <div class="row">
+                              <div class="row"><!-- NOMBRE Y CORREO -->
                                  <div class="mb-3 col-md-4">
                                     <label for="input_name" class="form-label">Nombre(s): <span class="obligatory"></span></label>
                                     <input type="text" class="form-control" readonly id="input_name" name="input_name" data-input-name="NOMBRES">
@@ -211,7 +211,7 @@ if (isset($_GET["p"])) {
                                     <input type="email" class="form-control" readonly id="input_email" name="input_email" data-input-name="APELLIDOS">
                                  </div>
                               </div>
-                              <div class="row">
+                              <div class="row"> <!-- CECULAR Y EDAD -->
                                  <div class="mb-3 col-md-6">
                                     <label for="input_cellphone" class="form-label">Celular: <span class="obligatory"></span></label>
                                     <input type="text" class="form-control" id="input_cellphone" name="input_cellphone" data-input-name="CELULAR">
@@ -221,53 +221,79 @@ if (isset($_GET["p"])) {
                                     <input type="number" class="form-control" id="input_age" name="input_age" data-input-name="CORREO">
                                  </div>
                               </div>
-                              <div class="row">
+                              <div class="row"> <!-- INTERESES -->
                                  <div class="form-group" data-select2-id="29">
                                     <label for="input_interest_tags_ids">Intereses de busqueda:</label>
-                                    <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a tu empresa" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_interest_tags_ids" name="input_interest_tags_ids" data-input-name="ETIQUETAS">
-                                       <option data-select2-id="35">Alabama</option>
-                                       <option data-select2-id="36">Alaska</option>
-                                       <option data-select2-id="37">California</option>
-                                       <option data-select2-id="38">Delaware</option>
-                                       <option data-select2-id="39">Tennessee</option>
-                                       <option data-select2-id="40">Texas</option>
-                                       <option data-select2-id="41">Washington</option>
-                                       <option data-select2-id="41">Washington</option>
-                                       <option data-select2-id="41">Washington</option>
-                                       <option data-select2-id="41">Washington</option>
-                                       <option data-select2-id="41">Washington</option>
+                                    <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a tús intereses" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_interest_tags_ids" name="input_interest_tags_ids" data-input-name="INTERESES">
                                     </select>
                                  </div>
                               </div>
 
-                              <div class="border rounded mt-3 p-2">
+                              <div class="border rounded mt-2 p-2"> <!-- DATOS PROFESIONALES -->
                                  <div for="" class="text-center fw-bolder mb-3">DATOS PROFESIONALES</div>
-                                 <div class="row">
+                                 <!-- ACERCA DE MÍ -->
+                                 <!-- <div class="row">
                                     <div class="mb-3 col">
-                                       <label for="input_description" class="form-label">Acerca de mí empresa: <span class="obligatory"></span></label>
-                                       <textarea type="text" class="form-control" id="input_description" name="input_description" data-input-name="ACERCA DE" rows="4" data-limit="150"></textarea>
+                                       <label for="input_about_me" class="form-label">Acerca de mí: <span class="obligatory"></span></label>
+                                       <textarea type="text" class="form-control" id="input_about_me" name="input_about_me" data-input-name="ACERCA DE" rows="4" data-limit="150"></textarea>
                                        <div class="text-sm text-end text-muted" id="counter_description">0/150</div>
                                     </div>
-                                 </div>
-                                 <div class="row">
-                                    <div class="col-md-6">
-                                       <ul class="list-group">
-                                          <li class="list-group-item d-flex justify-content-between align-items-center">
-                                             A list item
-                                             <span class="badge bg-primary rounded-pill">14</span>
-                                          </li>
-                                          <li class="list-group-item d-flex justify-content-between align-items-center">
-                                             A second list item
-                                             <span class="badge bg-primary rounded-pill">2</span>
-                                          </li>
-                                          <li class="list-group-item d-flex justify-content-between align-items-center">
-                                             A third list item
-                                             <span class="badge bg-primary rounded-pill">1</span>
+                                 </div> -->
+                                 <div class="row"> <!-- COMPETENCIAS Y HABILIDADES -->
+                                    <div class="mb-3 col-md-6">
+                                       <label for="">Competencias</label>
+                                       <ul class="list-group" id="list_skills">
+                                          <li class="list-group-item d-flex justify-content-between align-items-center" id="skill_li
+                                          ">
+                                             <!-- <span>Competencia 1</span> -->
+                                             <input type="text" class="border-only-bottom not_validate" id="input_skill_" value="Competencia 1">
+                                             <div class="">
+                                                <span class="badge bg-success rounded-pill pointer btn_skill_ok" data-id="" title="Aceptar"><i class="fa-solid fa-check"></i></span>
+                                                <span class="badge bg-primary rounded-pill pointer btn_skill_edit" data-id="" title="Editar"><i class="fa-solid fa-pen"></i></span>
+                                                <span class="badge bg-danger rounded-pill pointer btn_skill_delete" data-id="" title="Eliminar"><i class="fa-solid fa-xmark"></i></span>
+                                             </div>
                                           </li>
                                        </ul>
+                                       <div class="d-grid gap-2">
+                                          <button class="btn btn-outline-dark" type="button" id="btn_add_skill"><i class="fa-regular fa-circle-plus"></i>&nbsp; Agregar</button>
+                                       </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="mb-3 col-md-6">
+                                       <label for="">Habilidades</label>
+                                       <ul class="list-group" id="list_abilities">
+                                          <li class="list-group-item d-flex justify-content-between align-items-center" id="ability_li
+                                          ">
+                                             <!-- <span>Competencia 1</span> -->
+                                             <input type="text" class="border-only-bottom" id="input_ability_" value="Competencia 1">
+                                             <div class="">
+                                                <span class="badge bg-success rounded-pill pointer btn_ability_ok" data-id="" title="Aceptar"><i class="fa-solid fa-check"></i></span>
+                                                <span class="badge bg-primary rounded-pill pointer btn_ability_edit" data-id="" title="Editar"><i class="fa-solid fa-pen"></i></span>
+                                                <span class="badge bg-danger rounded-pill pointer btn_ability_delete" data-id="" title="Eliminar"><i class="fa-solid fa-xmark"></i></span>
+                                             </div>
+                                          </li>
+                                       </ul>
+                                       <div class="d-grid gap-2">
+                                          <button class="btn btn-outline-dark" type="button" id><i class="fa-regular fa-circle-plus"></i>&nbsp; Agregar</button>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row"> <!-- LENGUAJE Y CV-->
+                                    <div class="mb-3 col-md-6">
+                                       <label for="input_language">Domínio del inglés</label>
+                                       <div class="btn-group ml-3" role="group">
+                                          <input type="radio" class="btn-check" name="input_language" id="input_language_b" autocomplete="off" value="Inglés - Básico" checked>
+                                          <label class="btn btn-outline-dark rounded-left" for="input_language_b">Básico</label>
 
+                                          <input type="radio" class="btn-check" name="input_language" id="input_language_i" autocomplete="off" value="Inglés - Intermedio">
+                                          <label class="btn btn-outline-dark" for="input_language_i" >Intermedio</label>
+
+                                          <input type="radio" class="btn-check" name="input_language" id="input_language_a" autocomplete="off" value="Inglés - Avanzado">
+                                          <label class="btn btn-outline-dark" for="input_language_a" >Avanzado</label>
+                                       </div>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                       <label for="input_cv_path" class="form-label">Cargar CV: <span class="obligatory"></span></label>
+                                       <input type="file" class="form-control" id="input_cv_path" name="input_cv_path" data-input-name="NOMBRES">
                                     </div>
                                  </div>
                               </div>

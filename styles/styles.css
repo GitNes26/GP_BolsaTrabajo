@@ -49,6 +49,16 @@ body {
    display: none;
 }
 
+.pointer { transition: all 0.3s ease-in-out; }
+.pointer:hover { cursor: pointer; transform: scale(1.1); }
+
+.border-only-bottom {
+   border: none;
+   border-radius: 0;
+   border-bottom: 1px solid #c0c1c1;
+   width: 75%;
+}
+
 /* --------------------------------SCROLLBAR------------------------------------------ */
 /*font-family: 'Poppins', sans-serif;*/
 *{

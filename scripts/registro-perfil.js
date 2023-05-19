@@ -26,17 +26,14 @@ const div_company = $("#div_company"),
    ;
 
 // /* INPUTS DE CARD REGISTER */
-const div_candidate = $("#div_candidate");
-// const
-//  form_register = $("#form_register"),
-//  input_name = $("#input_name"),
-//  input_last_name = $("#input_last_name"),
-//  input_email = $("#input_email"),
-//  input_password = $("#input_password"),
-//  input_confirm_password = $("#input_confirm_password"),
-//  feedback_confirm_password = $("#feedback_confirm_password"),
-//  btn_register = $("#btn_register")
-// ;
+const div_candidate = $("#div_candidate"),
+   input_name = $("#input_name"),
+   input_last_name = $("#input_last_name"),
+   input_email = $("#input_email"),
+   input_age = $("#input_age"),
+   input_interest_tags_ids = $("#input_interest_tags_ids")
+   ;
+
 // email.focus();
 const
    btn_done = $("#btn_done"), 
@@ -59,6 +56,7 @@ init();
 async function init() {
    fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
    fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
+   fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
 };
 
 // $("#btn_signup").click((e) => {
