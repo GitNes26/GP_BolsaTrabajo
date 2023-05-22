@@ -7,7 +7,7 @@
 
   <!-- Bootstrap 5.3 -->
   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"> -->
-  <link href="<?=$PLUGINS_PATH?>/bootstrap-5.2.3/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   
   <!-- AdminLTE 3.2 -->
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/css/adminlte.min.css"> -->
@@ -25,7 +25,7 @@
   <link href="<?=$PLUGINS_PATH?>/select2/css/select2.min.css" rel="stylesheet" />
 
   <!-- FontAwesome 6 -->
-  <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/font-awesome-6.1.0/css/all.css">
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.0/css/all.css">
 
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/sweetAlert2/css/sweetalert2.min.css"

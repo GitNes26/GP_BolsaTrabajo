@@ -57,14 +57,14 @@ if (isset($_GET["p"])) {
    <script src="<?=$PLUGINS_PATH?>/jquery.min.js"></script>
 
    <!-- Bootstrap CSS -->
-   <link href="<?=$PLUGINS_PATH?>/bootstrap-5.2.3/css/bootstrap.min.css" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
    <!-- AdminLTE-3 -->
    <link href="<?=$ADMINLTE_PATH ?>/css/adminlte.min.css" rel="stylesheet" />
 
    <!-- FontAwesome 6 -->
    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
-   <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/font-awesome-6.1.0/css/all.css">
+   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.0/css/all.css">
 
    <!-- Moment JS -->
    <script src="<?=$PLUGINS_PATH?>/moment-js/moment.min.js"></script>
@@ -226,14 +226,10 @@ if (isset($_GET["p"])) {
 
    <!-- SCRIPTS -->
    <!-- JQuery 6 -->
-   <script src="<?=$PLUGINS_PATH?>/jquery.min.js"
-      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="<?=$PLUGINS_PATH?>/jquery.min.js"></script>
 
    <!-- Option 1: Bootstrap Bundle with Popper -->
-   <script src="<?=$PLUGINS_PATH?>/bootstrap-5.2.3/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-   </script>
+   <!-- <script src="<?=$PLUGINS_PATH?>/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script> -->
 
    <!-- AdminLTE-3 -->
    <script src="<?=$ADMINLTE_PATH ?>/js/adminlte.min.js"></script>
