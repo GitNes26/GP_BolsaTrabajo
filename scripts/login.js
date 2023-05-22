@@ -73,20 +73,17 @@ $("#btn_register").click(async (e) =>{
    e.preventDefault();
    if (!validateInputs(form_register)) return
 
-   let validado = true;
-
-   if (!validado) return;
    data = {
-      accion: "crear_objeto",
+      op: "register",
       input_name: input_name.val(),
+      input_last_name: input_last_name.val(),
       input_email: input_email.val(),
       input_password: input_password.val(),
-      input_id_perfil: 4, //SUSCRIPTOR
-      creado: moment().format("YYYY-MM-DD hh:mm:ss"),
+      created_at: moment().format("YYYY-MM-DD hh:mm:ss"),
    }
    // console.log(data);
    // return;
-   ajaxRequestRegister(`${BACKEND_PATH}/Usuario/App.php`,data);
+   ajaxRequestRegister(`${BACKEND_PATH}/User/App.php`,data);
 });
 
 
@@ -134,6 +131,8 @@ function ajaxRequest(url,data) {
       dataType: "json",
       success: (ajaxResponse) => {
          if (ajaxResponse.result) {
+            // console.log("ajaxResponse", ajaxResponse);
+            alert("ojo")
            let rol = 1;
 
             Swal.fire({
@@ -149,6 +148,7 @@ function ajaxRequest(url,data) {
                // return console.log("todo bien hasta aqui");
 
                if (location.pathname == URL_BASE || location.pathname == `${URL_BASE}/` || location.pathname == `/` || location.pathname == `/index.php` ) {
+                     if (rol == undefined) window.location.href = `/registro-perfil.php`;
                      // if (rol == 2) window.location.href = `${PATH_CLIENTE}`;
                      // else if (rol > 2) window.location.href = `${PATH_PAYMENT}`;
                      // else window.location.href = `${PAGES_PATH}`;
@@ -171,11 +171,11 @@ function ajaxRequest(url,data) {
             });
          }
       },
-      error: () => {
+      error: (error) => {
          Swal.fire({
             icon: "error",
             title: "Opss!!",
-            text: "Ah ocurrido un error, verifica tu informaciónEEEEEE.",
+            html: `Ah ocurrido un error, verifica tu información <br> ${error.responseText}`,
             showConfirmButton: true,
             confirmButtonColor: '#494E53'
          })
@@ -201,7 +201,8 @@ function ajaxRequestRegister(url,data) {
                showConfirmButton: false,
                timer: 2500
             }).then(() => {
-               if (ajaxResponse.alert_title.includes("unavailable!")) return;
+               // if (ajaxResponse.alert_title.includes("unavailable!")) return;
+               if (ajaxResponse.message.includes("duplicado")) return;
 
                $("#form_register")[0].reset();
                input_password.removeClass('is-invalid is-valid');
@@ -209,8 +210,14 @@ function ajaxRequestRegister(url,data) {
                feedback_confirm_password.text("").removeClass('text-danger text-success');
                btn_register.prop('disabled',false);
 
-               changeLoginSignup();
-               email.val(data.input_email);
+               const data = {
+                  op: 'login',
+                  email: input_email.val(),
+                  password: input_password.val()
+               }
+               ajaxRequest(`${BACKEND_PATH}/User/App.php`,data);
+               // changeLoginSignup();
+               // email.val(data.input_email);
 
             });
          } else {
@@ -227,11 +234,11 @@ function ajaxRequestRegister(url,data) {
             });
          }
       },
-      error: () => {
+      error: (error) => {
          Swal.fire({
             icon: "error",
             title: "Opss!!",
-            text: "Ah ocurrido un error, verifica tu información.",
+            html: `Ah ocurrido un error, verifica tu información <br> ${error.responseText}`,
             showConfirmButton: true,
             confirmButtonColor: '#494E53'
          })

@@ -33,6 +33,7 @@ if ($op == 'index') $User->index();
 
 elseif ($op == 'show') $User->show($id);
 
+elseif ($op == 'register') { $User->register($name,$last_name,$email,$password,$created_at); }
 elseif ($op == 'create') $User->create($name,$last_name,$cellphone,$email,$password,$role_id,$created_at);
 
 elseif ($op == 'edit') {

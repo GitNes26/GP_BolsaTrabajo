@@ -24,9 +24,9 @@ $role_id = 0; //$_COOKIE["role_id"];
 
 // #VERIFICAR QUE SU MENSUALIDAD ESTE PAGADA
 // if ($role_id == 3 || $role_id == 4) {
-//    include("../Backend/Usuario/Usuario.php");
-//    $ValidarPagoUsuario = new Usuario();
-//    $pago_vencido = $ValidarPagoUsuario->validarSuscripcionPagada($_COOKIE["user_id"])["pago_vencido"];
+//    include("../Backend/User/User.php");
+//    $ValidarPagoUser = new User();
+//    $pago_vencido = $ValidarPagoUser->validarSuscripcionPagada($_COOKIE["user_id"])["pago_vencido"];
 //    echo $pago_vencido;
 //    // $pago_vencido = 1;
 //    if ($pago_vencido) die(header("location:$SUBSCRIBE_PAGE"));
@@ -44,7 +44,7 @@ if (isset($Role)) {
 if ($role_id == 1) $role = "SuperAdmin";
 else if ($role_id == 2) $role = "Admin";
 else if ($role_id == 3) $role = "Empresa";
-else if ($role_id == 4) $role = "Usuario";
+else if ($role_id == 4) $role = "User";
 // else $role = "SuperAdmin";
 // echo "perfil: $role_id - $role ";
 
@@ -58,6 +58,10 @@ $menu = new Menu();
 $menu_id = $menu->getIdForPath($path);
 $id=0;
 $access = true;
+echo "todo bien hasta aqui";
+if ($_COOKIE["role_id"] == "0") {
+   header("location:$URL_BASE/registro-perfil.php");
+}
 if ($path != "perfil.php") {
    if (!$menu_id['result']) {
       header("location:$URL_BASE/");
@@ -81,13 +85,10 @@ if ($path != "perfil.php") {
 }
 
 
-// MOSTRAR EL REPORTE DEFAULT EN CASO DE QUE SE VAYA A LA VENTANA DE CUSTOMERS
-$reporte_id_default = 0;
-
 // #CONOCER PERMISOS
 if (!isset($_COOKIE["pages_read"])) {
-   include("../Backend/Usuario/Usuario.php");
-   $UserPermissions = new Usuario();
+   include("../Backend/User/User.php");
+   $UserPermissions = new User();
    $UserPermissions->setCookies($_COOKIE["user_id"]);
 }
 

@@ -1,11 +1,13 @@
 <?php
 require_once "config.php";
 if (isset($_COOKIE["session"])) {
-   if ($_COOKIE["session"] == "active") {
-      // if ($_COOKIE["profile_id"] == 2)
-         // die(header("location:$CUSTOMER_PATH"));
-      die(header("location:$PAGES_PATH"));
+   if ($_COOKIE["session"] != "active") {
+      header("location:$URL_BASE/");
+      die();
    }
+} else {
+   header("location:$URL_BASE/");
+   die();
 }
 // $join_now = '0';
 // if (isset($_GET["join_now"])) {
@@ -54,7 +56,7 @@ if (isset($_GET["p"])) {
    <link rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
    <!-- JQuery 6 -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+   <script src="<?=$PLUGINS_PATH?>/jquery.min.js"
       integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -332,7 +334,7 @@ if (isset($_GET["p"])) {
 
    <!-- SCRIPTS -->
    <!-- JQuery 6 -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+   <script src="<?=$PLUGINS_PATH?>/jquery.min.js"
       integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
