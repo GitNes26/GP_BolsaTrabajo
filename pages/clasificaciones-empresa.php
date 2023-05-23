@@ -55,8 +55,8 @@ $current_page = "Clasificaciones de Empresa";
                   </div>
                   <div class="mb-3">
                      <label for="input_description" class="form-label">Descripción: <span class="obligatory"></span></label>
-                     <textarea type="text" class="form-control" id="input_description" name="input_description" data-input-name="DESCRIPCIÓN" rows="5" max-length="150"></textarea>
-                     <div class="text-sm text-end text-muted" id="counter_description">0/150</div>
+                     <textarea type="text" class="form-control" id="input_description" name="input_description" data-input-name="DESCRIPCIÓN" rows="5" data-limit="150"></textarea>
+                     <div class="text-sm text-end text-muted" id="counter_description"></div>
                   </div>
                 </div>
                 

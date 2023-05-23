@@ -9,6 +9,8 @@ const
 	URL_API_COUNTRIES = `https://www.universal-tutorial.com/api`,
 	
 	URL_USER_APP = `${BACKEND_PATH}/User/App.php`,
+	URL_COMPANY_APP = `${BACKEND_PATH}/Company/App.php`,
+	URL_CANDIDATE_APP = `${BACKEND_PATH}/Candidate/App.php`,
 	URL_ROLE_APP = `${BACKEND_PATH}/Role/App.php`,
 	URL_MENU_APP = `${BACKEND_PATH}/Menu/App.php`,
 	URL_BUSINESS_LINE_APP = `${BACKEND_PATH}/BusinessLine/App.php`,
@@ -29,7 +31,6 @@ const
 	singular_object = $("#singular_object").val(),
 	plural_object = $("#plural_object").val()
 
-let limit=150;
 let auth_token;
 //#endregion VARIABLES
 
@@ -428,10 +429,10 @@ async function fillSelect2(url_app, selected_index, selector, select_modules=fal
 	const objResponse = ajaxResponse.data;
 	// console.log("objResponse",objResponse);
 
-	selector.html(`<option value="-1" readonly>Cargando...</option>`);
+	selector.html(`<option value="-1" disabled>Cargando...</option>`);
 
 	let options = /*HTML*/ `
-      <option value="-1" readonly>Selecciona una opción...</option>
+      <option value="-1" disabled>Selecciona una opción...</option>
    `;
 	if(select_modules) {
 		options += /*HTML*/ `
@@ -541,10 +542,11 @@ moment.locale("es-mx");
 // // #endregion FUNCIONES DE CAJON
 
 
+//#region SELECTORES DE PAISES / CIUDADES
 async function showStates() {
-	console.log("generar token");
+	// console.log("generar token");
 
-	$("#input_state").html("<option value=''>Cargando...</option>");
+	$("#input_state").html("<option value='' disabled>Cargando...</option>");
 
 
 	const requestToken = await $.ajax({
@@ -561,22 +563,22 @@ async function showStates() {
 	});
 
 	auth_token = requestToken.auth_token;
-	console.log(auth_token);
+	// console.log(auth_token);
 
 	// await estados_ciudades(output_estado.text(), output_ciudad.text());
 	await estados_ciudades();
-	console.log("ESTADOS_CIUDADES");
+	// console.log("ESTADOS_CIUDADES");
 	async function estados_ciudades(estado = null, ciudad = null) {
 		const states = await $.ajax({
-			url: `${URL_API_COUNTRIES}/states/United States`,
+			url: `${URL_API_COUNTRIES}/states/México`,
 			method: "GET",
 			headers: {
 				Authorization: `Bearer ${auth_token}`,
 				Accept: "application/json",
 			}
 		});
-		console.log(states);
-		let comboStates = "<option value=''>Seleccionar una opción...</option>";
+		// console.log(states);
+		let comboStates = "<option value='' disabled>Seleccionar una opción...</option>";
 		states.forEach((element) => {
 			let seleccionar_estado = "";
 			if (estado != null) {
@@ -600,12 +602,11 @@ async function showStates() {
 	}
 	// await estados_ciudades2(output_estado.text(), output_ciudad.text());
 }
-showStates()
 $("#input_state").on("change", async function () {
 	var state = this.value;
 	// console.log(output_estado.text());
 	console.log(state);
-	$("#input_municipality").html("<option value=''>Cargando...</option>");
+	$("#input_municipality").html("<option value='' disabled>Cargando...</option>");
 
 
 	const cities = await $.ajax({
@@ -616,7 +617,7 @@ $("#input_state").on("change", async function () {
 			Accept: "application/json",
 		}
 	});
-	var comboCities = "<option value=''>Selecciona una opción...</option>";
+	var comboCities = "<option value='' disabled>Selecciona una opción...</option>";
 	cities.forEach((element) => {
 		let seleccionar_ciudad = "";
 		// if (ciudad != null) {
@@ -635,4 +636,4 @@ $("#input_state").on("change", async function () {
 	});
 	$("#input_municipality").html(comboCities);
 });
-
+//#endregion SELECTORES DE PAISES / CIUDADES

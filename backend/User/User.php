@@ -46,7 +46,7 @@ class User extends Connection {
          $this->Close();
          $error_message = "Error: ".$e->getMessage();
          $response = $this->catchResponse($error_message);
-         $response["alert_title"] = "sadasdsa!";
+         $response["alert_title"] = "Oopss!";
       }
        die(json_encode($response));
    }
@@ -110,7 +110,7 @@ class User extends Connection {
 
             if ($user_found["role_id"] != ""){
                $permissions_query = "SELECT pages_read,pages_write,pages_delete,pages_update FROM roles WHERE id=$user_found[role_id]";
-               echo $permissions_query;
+               // echo $permissions_query;
                $menus = "SELECT * FROM menus WHERE habilitado=1";
                $permisos = $this->Select($permissions_query,false);
                // if (sizeof($user_found) > 0) {

@@ -22,7 +22,9 @@
   <!-- <script src="<?=$PLUGINS_PATH?>/DataTables/dataTables.fixedHeader.min.js"></script> -->
 
   <!-- Select2 -->
-  <link href="<?=$PLUGINS_PATH?>/select2/css/select2.min.css" rel="stylesheet" />
+  <!-- <link href="<?=$PLUGINS_PATH?>/select2/css/select2.min.css" rel="stylesheet" /> -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
   <!-- FontAwesome 6 -->
   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.0/css/all.css">

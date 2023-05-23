@@ -229,7 +229,7 @@ if (isset($_GET["p"])) {
    <script src="<?=$PLUGINS_PATH?>/jquery.min.js"></script>
 
    <!-- Option 1: Bootstrap Bundle with Popper -->
-   <!-- <script src="<?=$PLUGINS_PATH?>/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script> -->
+   <script src="<?=$PLUGINS_PATH?>/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
 
    <!-- AdminLTE-3 -->
    <script src="<?=$ADMINLTE_PATH ?>/js/adminlte.min.js"></script>

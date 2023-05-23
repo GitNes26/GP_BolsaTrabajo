@@ -5,7 +5,6 @@ table = $("#table").DataTable(DT_CONFIG);
 $(document).ready(() => {
 });
 
-limit=150;
 // btn_modal_form = $("#btn_modal_form"),
 const 
 	tbody = $("#table tbody"),
@@ -33,6 +32,9 @@ const
 
 init();
 async function init() {
+	counter_description.text(`0/${input_description.data("limit")}`);
+
+	
 	fillTable();
 	setTimeout(() => {
       input_company_ranking.focus();
@@ -238,5 +240,6 @@ async function deleteObj(btn_delete) {
 }
 
 input_description.on("input", function() {
-	countLetter(this, counter_description, this.value.length, limit)
+	countLetter(this, counter_description, this.value.length, Number(this.dataset.limit))
+
 });

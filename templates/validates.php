@@ -58,7 +58,7 @@ $menu = new Menu();
 $menu_id = $menu->getIdForPath($path);
 $id=0;
 $access = true;
-echo "todo bien hasta aqui";
+// echo "todo bien hasta aqui";
 if ($_COOKIE["role_id"] == "0") {
    header("location:$URL_BASE/registro-perfil.php");
 }

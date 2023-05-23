@@ -31,20 +31,19 @@ include "../templates/validates.php"
   <!-- <script src="<?=$PLUGINS_PATH?>/DataTables/dataTables.fixedHeader.min.js"></script> -->
 
   <!-- Select2 -->
-  <link href="<?=$PLUGINS_PATH?>/select2/css/select2.min.css" rel="stylesheet" />
+  <!-- <link href="<?=$PLUGINS_PATH?>/select2/css/select2.min.css" rel="stylesheet" /> -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
   <!-- FontAwesome 6 -->
   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.0/css/all.css">
   
   <!-- SweetAlert2 -->
-  <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/sweetAlert2/css/sweetalert2.min.css"
-    referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/sweetAlert2/css/sweetalert2.min.css"/>
   <!-- <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script> -->
 
   <!-- Moment JS -->
-  <script src="<?=$PLUGINS_PATH?>/moment-js/moment.min.js" referrerpolicy="no-referrer">
-  </script>
+  <script src="<?=$PLUGINS_PATH?>/moment-js/moment.min.js"></script>
   <!-- Moment JS en español -->
   <script type="text/javascript" src="<?=$PLUGINS_PATH?>/moment-js/es.js"></script>
 

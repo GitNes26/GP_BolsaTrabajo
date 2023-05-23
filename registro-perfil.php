@@ -5,6 +5,12 @@ if (isset($_COOKIE["session"])) {
       header("location:$URL_BASE/");
       die();
    }
+   // elseif (isset($_COOKIE["role_id"])) {
+   //    if ($_COOKIE["role_id"] != "0") {
+   //       header("location:$URL_BASE/");
+   //       die();
+   //    }
+   // }
 } else {
    header("location:$URL_BASE/");
    die();
@@ -18,15 +24,6 @@ if (isset($_COOKIE["session"])) {
 // if (isset($_COOKIE["dpnstash_tema_oscuro"]))
 //    $dark_mode = (bool)$_COOKIE["dpnstash_tema_oscuro"] ? "dark-mode" : "";
 
-$e=null;
-$p=null;
-if (isset($_GET["e"])) {
-   $e = $_GET["e"];
-}
-if (isset($_GET["p"])) {
-   $p = $_GET["p"];
-}
-// echo "la e: $e";
 ?>
 
 
@@ -56,28 +53,27 @@ if (isset($_GET["p"])) {
    <link rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
    <!-- JQuery 6 -->
-   <script src="<?=$PLUGINS_PATH?>/jquery.min.js"
-      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="<?=$PLUGINS_PATH?>/jquery.min.js"></script>
 
    <!-- Bootstrap CSS -->
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
    <!-- AdminLTE-3 -->
    <link href="<?=$ADMINLTE_PATH ?>/css/adminlte.min.css" rel="stylesheet" />
+   
 
    <!-- FontAwesome 6 -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"/>
+   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"/> -->
    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.0/css/all.css">
 
    <!-- Moment JS -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+   <script src="<?=$PLUGINS_PATH?>/moment-js/moment.min.js"></script>
 
    <!-- SweetAlert2 -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.9/sweetalert2.min.css"/>
+   <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/sweetAlert2/js/sweetalert2.all.min.js"/>
 
    <!-- Select2 -->
+   <!-- <link href="<?=$PLUGINS_PATH?>/select2/css/select2.min.js" rel="stylesheet" /> -->
    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
    <!-- MisEstilos -->
@@ -126,9 +122,9 @@ if (isset($_GET["p"])) {
                         </div>
 
                            <input type="hidden" id="op" name="op" value="" class="not_validate">
-                           <input type="hidden" id="id" name="id" value='' class="">
+                           <input type="hidden" id="user_id" name="user_id" value='' class="">
                            
-                           <div id="div_company" class="d-none">
+                           <div id="div_company" class="">
                               <div class="row"> <!-- LOGO Y NOMBRE -->
                                  <div class="col-3"> <!-- LOGO -->
                                     <img src="https://thumbs.dreamstime.com/z/plantilla-del-dise%C3%B1o-logotipo-vector-concepto-edificio-para-la-construcci%C3%B3n-126177482.jpg" class="img-fluid" alt="">
@@ -140,8 +136,8 @@ if (isset($_GET["p"])) {
                                     </div>
                                     <div class="mb-3 col">
                                        <label for="input_description" class="form-label">Acerca de mí empresa: <span class="obligatory"></span></label>
-                                       <textarea type="text" class="form-control" id="input_description" name="input_description" data-input-name="ACERCA DE" rows="4" max-length="150"></textarea>
-                                       <div class="text-sm text-end text-muted" id="counter_description">0/150</div>
+                                       <textarea type="text" class="form-control" id="input_description" name="input_description" data-input-name="ACERCA DE" rows="4" data-limit="15"></textarea>
+                                       <div class="text-sm text-end text-muted" id="counter_description"></div>
                                     </div>
                                  </div>
                               </div>
@@ -197,26 +193,26 @@ if (isset($_GET["p"])) {
                            <div id="div_candidate" class="">
                               <div class="row"><!-- NOMBRE Y CORREO -->
                                  <div class="mb-3 col-md-4">
-                                    <label for="input_name" class="form-label">Nombre(s): <span class="obligatory"></span></label>
-                                    <input type="text" class="form-control" readonly id="input_name" name="input_name" data-input-name="NOMBRES">
+                                    <label for="input_name" class="form-label">Nombre(s):</label>
+                                    <input type="text" class="form-control not_validate" readonly id="input_name" name="input_name" data-input-name="NOMBRES">
                                  </div>
                                  <div class="mb-3 col-md-4">
-                                    <label for="input_last_name" class="form-label">Apellido(s): <span class="obligatory"></span></label>
-                                    <input type="text" class="form-control" readonly id="input_last_name" name="input_last_name" data-input-name="APELLIDOS">
+                                    <label for="input_last_name" class="form-label">Apellido(s):</label>
+                                    <input type="text" class="form-control not_validate" readonly id="input_last_name" name="input_last_name" data-input-name="APELLIDOS">
                                  </div>
                                  <div class="mb-3 col-md-4">
-                                    <label for="input_email" class="form-label">Correo: <span class="obligatory"></span></label>
-                                    <input type="email" class="form-control" readonly id="input_email" name="input_email" data-input-name="APELLIDOS">
+                                    <label for="input_email" class="form-label">Correo:</label>
+                                    <input type="email" class="form-control not_validate" readonly id="input_email" name="input_email" data-input-name="APELLIDOS">
                                  </div>
                               </div>
                               <div class="row"> <!-- CECULAR Y EDAD -->
                                  <div class="mb-3 col-md-6">
                                     <label for="input_cellphone" class="form-label">Celular: <span class="obligatory"></span></label>
-                                    <input type="text" class="form-control" id="input_cellphone" name="input_cellphone" data-input-name="CELULAR">
+                                    <input type="text" class="form-control not_validate" id="input_cellphone" name="input_cellphone" data-input-name="CELULAR">
                                  </div>
                                  <div class="mb-3 col-md-6">
                                     <label for="input_age" class="form-label">Edad: <span class="obligatory"></span></label>
-                                    <input type="number" class="form-control" id="input_age" name="input_age" data-input-name="CORREO">
+                                    <input type="number" class="form-control not_validate" id="input_age" name="input_age" data-input-name="CORREO">
                                  </div>
                               </div>
                               <div class="row"> <!-- INTERESES -->
@@ -239,7 +235,7 @@ if (isset($_GET["p"])) {
                                  </div> -->
                                  <div class="row"> <!-- COMPETENCIAS Y HABILIDADES -->
                                     <div class="mb-3 col-md-6">
-                                       <label for="">Competencias</label>
+                                       <label for="">Competencias:</label>
                                        <ul class="list-group" id="list_skills">
                                           <li class="list-group-item d-flex justify-content-between align-items-center" id="skill_li
                                           ">
@@ -257,12 +253,12 @@ if (isset($_GET["p"])) {
                                        </div>
                                     </div>
                                     <div class="mb-3 col-md-6">
-                                       <label for="">Habilidades</label>
+                                       <label for="">Habilidades:</label>
                                        <ul class="list-group" id="list_abilities">
                                           <li class="list-group-item d-flex justify-content-between align-items-center" id="ability_li
                                           ">
                                              <!-- <span>Competencia 1</span> -->
-                                             <input type="text" class="border-only-bottom" id="input_ability_" value="Competencia 1">
+                                             <input type="text" class="border-only-bottom not_validate" id="input_ability_" value="Competencia 1">
                                              <div class="">
                                                 <span class="badge bg-success rounded-pill pointer btn_ability_ok" data-id="" title="Aceptar"><i class="fa-solid fa-check"></i></span>
                                                 <span class="badge bg-primary rounded-pill pointer btn_ability_edit" data-id="" title="Editar"><i class="fa-solid fa-pen"></i></span>
@@ -277,21 +273,21 @@ if (isset($_GET["p"])) {
                                  </div>
                                  <div class="row"> <!-- LENGUAJE Y CV-->
                                     <div class="mb-3 col-md-6">
-                                       <label for="input_language">Domínio del inglés</label>
+                                       <label for="input_language">Domínio del inglés: <span class="obligatory"></span></label>
                                        <div class="btn-group ml-3" role="group">
-                                          <input type="radio" class="btn-check" name="input_language" id="input_language_b" autocomplete="off" value="Inglés - Básico" checked>
+                                          <input type="radio" class="btn-check not_validate" name="input_language" id="input_language_b" autocomplete="off" value="Inglés - Básico" checked>
                                           <label class="btn btn-outline-dark rounded-left" for="input_language_b">Básico</label>
 
-                                          <input type="radio" class="btn-check" name="input_language" id="input_language_i" autocomplete="off" value="Inglés - Intermedio">
+                                          <input type="radio" class="btn-check not_validate" name="input_language" id="input_language_i" autocomplete="off" value="Inglés - Intermedio">
                                           <label class="btn btn-outline-dark" for="input_language_i" >Intermedio</label>
 
-                                          <input type="radio" class="btn-check" name="input_language" id="input_language_a" autocomplete="off" value="Inglés - Avanzado">
+                                          <input type="radio" class="btn-check not_validate" name="input_language" id="input_language_a" autocomplete="off" value="Inglés - Avanzado">
                                           <label class="btn btn-outline-dark" for="input_language_a" >Avanzado</label>
                                        </div>
                                     </div>
                                     <div class="mb-3 col-md-6">
                                        <label for="input_cv_path" class="form-label">Cargar CV: <span class="obligatory"></span></label>
-                                       <input type="file" class="form-control" id="input_cv_path" name="input_cv_path" data-input-name="NOMBRES">
+                                       <input type="file" class="form-control not_validate" id="input_cv_path" name="input_cv_path" data-input-name="CURRICULUM VITAE">
                                     </div>
                                  </div>
                               </div>
@@ -330,29 +326,25 @@ if (isset($_GET["p"])) {
 
    <!-- SCRIPTS -->
    <!-- JQuery 6 -->
-   <script src="<?=$PLUGINS_PATH?>/jquery.min.js"
-      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="<?=$PLUGINS_PATH?>/jquery.min.js"></script>
 
    <!-- Option 1: Bootstrap Bundle with Popper -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-   </script>
+   <script src="<?=$PLUGINS_PATH?>/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
 
    <!-- AdminLTE-3 -->
    <script src="<?=$ADMINLTE_PATH ?>/js/adminlte.min.js"></script>
 
    <!-- SweetAlert2 -->
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
+   <script src="<?=$PLUGINS_PATH?>/sweetAlert2/js/sweetalert2.all.min.js"></script>
 
    <!-- Select2 -->
+   <!-- <script src="<?=$PLUGINS_PATH?>/select2/js/select2.min.js"></script> -->
    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
    <!-- Block-UI -->
    <script src="<?=$VENDORS_PATH ?>/BlockUI/jquery.blockui.min.js"></script>
 
    <!-- Cookies -->
-   <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+   <script src="<?=$PLUGINS_PATH?>/js-cookie/js.cookie.min.js"></script>
 
    <script src="<?=$SCRIPTS_PATH ?>/master.js"></script>
    <script src="<?=$SCRIPTS_PATH ?>/registro-perfil.js"></script>
