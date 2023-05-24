@@ -109,7 +109,7 @@ if (isset($_GET["p"])) {
                      <!-- /.login-logo -->
 
                      <!-- Card Login -->
-                     <div class="card rounded-3 card-outline card-primary shadow" id="card_login" data-slide-down="1">
+                     <div class="card rounded-3 card-outline card-success shadow" id="card_login" data-slide-down="1">
                         <div class="card-body login-card-body">
                            <p class="login-box-msg text-sm fst-italic">Ingresa tus credenciales para inicar sesión</p>
 
@@ -129,7 +129,7 @@ if (isset($_GET["p"])) {
                               <div class="row">
                                  <div class="col">
                                     <button type="submit" id="btn_login"
-                                       class="btn btn-outline-primary btn-block fw-bold text-center">
+                                       class="btn btn-outline-success btn-block fw-bold text-center">
                                        <i class="fa-solid fa-circle-arrow-right"></i>&nbsp;&nbsp;INICIAR SESIÓN
                                     </button>
                                     <br>
@@ -144,7 +144,7 @@ if (isset($_GET["p"])) {
                      </div>
 
                      <!-- Card Regitro -->
-                     <div class="card rounded-3 card-outline card-primary shadow" id="card_register">
+                     <div class="card rounded-3 card-outline card-success shadow" id="card_register">
                         <div class="card-body login-card-body">
                            <p class="login-box-msg text-sm fst-italic">Favor de llenar todos los campos.</p>
 
@@ -189,7 +189,7 @@ if (isset($_GET["p"])) {
                               <div class="row">
                                  <div class="col">
                                     <button type="submit" id="btn_register"
-                                       class="btn btn-outline-primary btn-block fw-bold text-center">
+                                       class="btn btn-outline-success btn-block fw-bold text-center">
                                        <i class="fa-solid fa-circle-arrow-up"></i>&nbsp;&nbsp;REGISTRARME
                                     </button>
                                     <br>

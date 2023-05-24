@@ -18,7 +18,8 @@ $URL_MAIN = "http://$_SERVER[HTTP_HOST]$URL_BASE";
 // $ICONO = "$URL_BASE/favicon.ico";
 $ICONO = "https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
 // $LOGO = "$URL_BASE/logo.ico";
-$LOGO = "https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
+$LOGO = "$URL_BASE/assets/img/logo_gomez_palacio.png";
+// $LOGO = "https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
 
 $TEMPLATES_PATH = "$URL_BASE/templates";
 $PAGES_PATH = "$URL_BASE/pages";
@@ -27,6 +28,8 @@ $BACKEND_PATH = "$URL_BASE/backend";
 $PLUGINS_PATH = "$URL_BASE/plugins";
 $STYLES_PATH = "$URL_BASE/styles";
 $ADMINLTE_PATH = "$URL_BASE/plugins/AdminLTE-3.2.0";
+$ASSETS_PATH = "$URL_BASE/assets";
+$IMG_PATH = "$ASSETS_PATH/img";
 #endregion CONSTANTES RUTAS
 
 

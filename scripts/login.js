@@ -132,8 +132,7 @@ function ajaxRequest(url,data) {
       success: (ajaxResponse) => {
          if (ajaxResponse.result) {
             // console.log("ajaxResponse", ajaxResponse);
-            alert("ojo")
-           let rol = 1;
+           let role = 1;
 
             Swal.fire({
                icon: ajaxResponse.alert_icon,
@@ -143,16 +142,13 @@ function ajaxRequest(url,data) {
                timer: 2000
             }).then(() => {
                $("#form_login")[0].reset();
-               rol = Number(ajaxResponse.Rol);
-               console.log(location.pathname);
-               // return console.log("todo bien hasta aqui");
+               role = Number(ajaxResponse.data.role_id);
 
                if (location.pathname == URL_BASE || location.pathname == `${URL_BASE}/` || location.pathname == `/` || location.pathname == `/index.php` ) {
-                     if (rol == undefined) window.location.href = `/registro-perfil.php`;
-                     // if (rol == 2) window.location.href = `${PATH_CLIENTE}`;
-                     // else if (rol > 2) window.location.href = `${PATH_PAYMENT}`;
+                     if (role == undefined || role == 0 || role == NaN) window.location.href = `/registro-perfil.php`;
+                     // if (role == 2) window.location.href = `${PATH_CLIENTE}`;
+                     // else if (role > 2) window.location.href = `${PATH_PAYMENT}`;
                      // else window.location.href = `${PAGES_PATH}`;
-                     console.log("aqui entro", PAGES_PATH);
                      window.location.href = `${PAGES_PATH}`;
                }
                location.reload();
@@ -191,7 +187,7 @@ function ajaxRequestRegister(url,data) {
       dataType: "json",
       success: (ajaxResponse) => {
          if (ajaxResponse.result) {
-         //   console.log(data);
+           console.log(data);
            // ajaxRequestEmail(data);
 
             Swal.fire({
@@ -211,13 +207,17 @@ function ajaxRequestRegister(url,data) {
                btn_register.prop('disabled',false);
 
                const data = {
-                  op: 'login',
-                  email: input_email.val(),
-                  password: input_password.val()
+                  op: 'register',
+                  input_name: input_name.val(),
+                  input_last_name: input_last_name.val(),
+                  input_email: input_email.val(),
+                  input_password: input_password.val(),
+                  created_at: moment().format("YYYY-MM-DD hh:mm:ss")
                }
-               ajaxRequest(`${BACKEND_PATH}/User/App.php`,data);
-               // changeLoginSignup();
-               // email.val(data.input_email);
+               // ajaxRequest(`${BACKEND_PATH}/User/App.php`,data);
+               changeLoginSignup();
+               email.val(data.input_email);
+               password.val(input_password.val());
 
             });
          } else {
@@ -228,9 +228,7 @@ function ajaxRequestRegister(url,data) {
                showConfirmButton: true,
                confirmButtonColor: '#494E53'
             }).then(() => {
-               if (ajaxResponse.alert_text == "El usuario no cuenta con los privilegios para acceder.") {
                   $("#email").focus();
-               }
             });
          }
       },

@@ -23,15 +23,15 @@ if (isset($_POST['created_at'])) { $created_at = $_POST['created_at']; }
 if (isset($_POST['updated_at'])) { $updated_at = $_POST['updated_at']; }
 if (isset($_POST['deleted_at'])) { $deleted_at = $_POST['deleted_at']; }
 
-if (isset($_FILES['input_file'])) {
+if (isset($_FILES['input_logo_path'])) {
   $path_files = "assets/img";
-  $file = $_FILES['input_file'];
-
-  $dir = "../../$path_files/$ubication/companies";
-  $file_name = $file["name"];
-  $dest = "$dir/$ubication-$file_name";
-  $type = explode(".",$file_name);
+  $file = $_FILES['input_logo_path'];
+  $type = explode(".",$file["name"]);
   $type = strtoupper(trim(end($type)));
+
+  $dir = "../../$path_files/companies";
+  $file_name = "$company.$type";
+  $dest = "$dir/$file_name";
 
   if (!is_dir($dir)) {
      @mkdir($dir,0755,true);
@@ -42,15 +42,15 @@ if (isset($_FILES['input_file'])) {
      *         los mismos permisos.
      */
   }
-  if (move_uploaded_file($_FILES["input_file"]["tmp_name"],$dest)) {
-     $logo_path = "$path_files/$ubication/companies/$ubication-$file_name";
+  if (move_uploaded_file($_FILES["input_logo_path"]["tmp_name"], $dest)) {
+     $logo_path = "companies/$file_name";
   } else {
-     $logo_path = "null";
+     $logo_path = "";
      $type = "";
      print(error_get_last());
   }
 } else {
-  $logo_path = "null";
+  $logo_path = "";
   $type = "";
 }
 

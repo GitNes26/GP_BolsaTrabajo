@@ -55,7 +55,6 @@ const ajaxRequestAsync = async (
 		if (show_blockUI) {
 			await showBlockUI();
 		}
-		console.log(data);
 		let response = await $.ajax({
 			type: "POST",
 			url: url,
@@ -150,7 +149,6 @@ const ajaxRequestFileAsync = async (
 		if (show_blockUI) {
 			await showBlockUI();
 		}
-		console.log(data);
 		let response = await $.ajax({
 			type: "POST",
 			url: url,
@@ -158,8 +156,8 @@ const ajaxRequestFileAsync = async (
 			async: true,
 			dataType: "json",			
 			contentType:false,
-      cache:false,
-      processData:false,
+			enctype: "multipart/form-data",
+			processData:false,
 		});
 		// console.log(response);
 
@@ -240,7 +238,7 @@ function mayus(e) {
 }
 
 $(".eye_icon").click((e) => {
-   console.log("ojito en loigin");
+   // console.log("ojito en loigin");
    const target = $(e.target);
    target.toggleClass("fa-solid fa-eye fa-duotone fa-eye-slash");
    const input = $(`input#${target.attr('data-input')}`)
@@ -451,24 +449,27 @@ function focusSelect2(select2) {
 	select2.click(function (e) {
 		try {
 			var searcher = $(".select2-search__field");
-			searcher[0].focus();
+			searcher[1].focus();
 		} catch (e) { }
 	});
 	select2.keydown(function (e) {
 		try {
 			var searcher = $(".select2-search__field");
-			searcher[0].focus();
+			searcher[1].focus();
 		} catch (e) { }
 	});
 }
 focusSelect2($(".select2"));
 
-function resetSelect2(selector,) {
+function resetSelect2(selector) {
 	// function resetearSelect2(selector, url, data) {
+	selector.attr("disabled",true);
+
 	selector.prop("selectedIndex", 0);
 	selector.val("-1");
 	$(`#select2-${selector[0].name}-container`).text("Selecciona una opción...");
 	$(`#select2-${selector[0].name}-container`).attr("title", "Selecciona una opción...");
+	selector.attr("disabled",false);
 
 	// iconos(url, data, -1, select2[0].name);
 }
@@ -479,8 +480,8 @@ async function fillSelect2(url_app, selected_index, selector, select_modules=fal
 
 	const objResponse = ajaxResponse.data;
 	// console.log("objResponse",objResponse);
-
-	selector.html(`<option value="-1" disabled>Cargando...</option>`);
+	selector.attr("disabled",true);
+	selector.html(`<option value="">Cargando...</option>`);
 
 	let options = /*HTML*/ `
       <option value="-1" disabled>Selecciona una opción...</option>
@@ -491,7 +492,7 @@ async function fillSelect2(url_app, selected_index, selector, select_modules=fal
 		`;
 	}
 
-	selector.html("")
+	selector.html("");
 	selector.append(options);
 
 	$.each(objResponse, function (i, obj) {
@@ -504,6 +505,8 @@ async function fillSelect2(url_app, selected_index, selector, select_modules=fal
 				`<option value='${obj.value}'>${obj.text}</option>`
 			);
 	});
+	selector.attr("disabled",false);
+
 }
 
 //#endregion /* Select2 */
@@ -595,20 +598,18 @@ moment.locale("es-mx");
 
 //#region SELECTORES DE PAISES / CIUDADES
 async function showStates() {
+	$("#input_state").attr("disabled",true)
+	$("#input_state").html("<option value=''>Cargando...</option>");
+
 	// console.log("generar token");
-
-	$("#input_state").html("<option value='' disabled>Cargando...</option>");
-
-
-	const requestToken = await $.ajax({
+	let requestToken = await $.ajax({
 		async: true,
 		crossDomain: true,
 		url: `${URL_API_COUNTRIES}/getaccesstoken`,
 		method: "GET",
 		headers: {
 			Accept: "application/json",
-			"api-token":
-				"7-XEHwLCLzq7iaJRWwnkSI5GFfL4A8VCIczHNsc2mXrvlUO3VDUGu7ZIBY7dauhz-qA",
+			"api-token": "7-XEHwLCLzq7iaJRWwnkSI5GFfL4A8VCIczHNsc2mXrvlUO3VDUGu7ZIBY7dauhz-qA",
 			"user-email": "182310211@itslerdo.edu.mx",
 		}
 	});
@@ -617,10 +618,10 @@ async function showStates() {
 	// console.log(auth_token);
 
 	// await estados_ciudades(output_estado.text(), output_ciudad.text());
-	await estados_ciudades();
+	await states_cities();
 	// console.log("ESTADOS_CIUDADES");
-	async function estados_ciudades(estado = null, ciudad = null) {
-		const states = await $.ajax({
+	async function states_cities(estado = null, ciudad = null) {
+		let states = await $.ajax({
 			url: `${URL_API_COUNTRIES}/states/México`,
 			method: "GET",
 			headers: {
@@ -628,7 +629,16 @@ async function showStates() {
 				Accept: "application/json",
 			}
 		});
-		// console.log(states);
+		while (states.length < 1) {
+			states = await $.ajax({
+				url: `${URL_API_COUNTRIES}/states/México`,
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${auth_token}`,
+					Accept: "application/json",
+				}
+			});
+		}
 		let comboStates = "<option value='' disabled>Seleccionar una opción...</option>";
 		states.forEach((element) => {
 			let seleccionar_estado = "";
@@ -650,17 +660,19 @@ async function showStates() {
 		});
 
 		$("#input_state").html(comboStates);
+		$("#input_state").attr("disabled",false)
 	}
 	// await estados_ciudades2(output_estado.text(), output_ciudad.text());
 }
 $("#input_state").on("change", async function () {
 	var state = this.value;
 	// console.log(output_estado.text());
-	console.log(state);
-	$("#input_municipality").html("<option value='' disabled>Cargando...</option>");
+	// console.log(state);
+	$("#input_municipality").attr("disabled",true);
+	$("#input_municipality").html("<option value=''>Cargando...</option>");
 
 
-	const cities = await $.ajax({
+	let cities = await $.ajax({
 		url: `${URL_API_COUNTRIES}/cities/${state}`,
 		method: "GET",
 		headers: {
@@ -668,7 +680,17 @@ $("#input_state").on("change", async function () {
 			Accept: "application/json",
 		}
 	});
-	var comboCities = "<option value='' disabled>Selecciona una opción...</option>";
+	// while (cities.length < 1) {
+	// 	cities = await $.ajax({
+	// 		url: `${URL_API_COUNTRIES}/cities/${state}`,
+	// 		method: "GET",
+	// 		headers: {
+	// 			Authorization: `Bearer ${auth_token}`,
+	// 			Accept: "application/json",
+	// 		}
+	// 	});
+	// }
+	var comboCities = "<option value='' >Selecciona una opción...</option>";
 	cities.forEach((element) => {
 		let seleccionar_ciudad = "";
 		// if (ciudad != null) {
@@ -686,5 +708,6 @@ $("#input_state").on("change", async function () {
 			"</option>";
 	});
 	$("#input_municipality").html(comboCities);
+	$("#input_municipality").attr("disabled",false);
 });
 //#endregion SELECTORES DE PAISES / CIUDADES

@@ -22,15 +22,17 @@
       <li class='nav-item'>
          <div class='user-panel d-flex'>
             <div class='info'>
-               <span class='d-block text-decoration-none text-bold'><i
-                     class=''><?= $_COOKIE["name"] ?></i></span>
+               <span class='d-block text-decoration-none text-bold'>
+                  <i class=''><?= $_COOKIE["name"] ?></i>
+               </span>
             </div>
          </div>
       </li>
       <!-- Btn Logout -->
       <li class='nav-item ml-3'>
-         <a href='#' id="btn_logout" class='btn btn-outline-danger btn_logout' title='Cerrar sesión'><i
-               class="fas fa-door-closed"></i></a>
+         <a href='#' id="btn_logout" class='btn btn-outline-danger btn_logout' title='Cerrar sesión'>
+            <i class="fas fa-door-closed"></i>
+         </a>
       </li>
    </ul>
 

@@ -91,6 +91,8 @@ class Company extends Connection {
          $response["alert_title"] = "Empresa registrada";
          $response["alert_text"] = "Empresa registrada";
          $this->Close();
+
+         $this->setCookies($user_id);
    
       } catch (Exception $e) {
          $this->Close();
@@ -153,5 +155,44 @@ class Company extends Connection {
       $duplicate = $this->checkAvailableData('companies', 'company', $company, 'La compañia', 'input_company', $id);
       
       if ($duplicate["result"] == true) die(json_encode($duplicate));
+   }
+
+
+   function setCookies($id) {
+      try {
+         $query = "SELECT u.id, u.name, u.email, u.password, u.role_id
+         FROM users as u WHERE u.id=$id";
+
+         $user_found = $this->Select($query,false);
+
+         if (sizeof($user_found) > 0) {
+            $cookie_time = '+1 months';
+            // if ($user_found["role_id"] == 1)
+            //   $cookie_time = '+1 day';
+
+            setcookie("user_id",$user_found["id"], strtotime($cookie_time), "/");
+            setcookie("name",$user_found["name"], strtotime($cookie_time), "/");
+            setcookie("role_id",$user_found["role_id"] ?? '0', strtotime($cookie_time), "/");
+            setcookie("session","active", strtotime($cookie_time), "/");
+            setcookie("tema_oscuro",false, strtotime($cookie_time), "/");
+            // setcookie("tema_oscuro",$user_found["tema_oscuro"], strtotime($cookie_time), "/");
+
+            if ($user_found["role_id"] != ""){
+               $permissions_query = "SELECT pages_read,pages_write,pages_delete,pages_update FROM roles WHERE id=$user_found[role_id]";
+               // echo $permissions_query;
+               $menus = "SELECT * FROM menus WHERE habilitado=1";
+               $permisos = $this->Select($permissions_query,false);
+               // if (sizeof($user_found) > 0) {
+                  setcookie("pages_read",$permisos["pages_read"], strtotime($cookie_time), "/");
+                  setcookie("pages_write",$permisos["pages_write"], strtotime($cookie_time), "/");
+                  setcookie("pages_delete",$permisos["pages_delete"], strtotime($cookie_time), "/");
+                  setcookie("pages_update",$permisos["pages_update"], strtotime($cookie_time), "/");
+               // }
+            }
+            $this->close();
+         }
+      } catch (Exception $e) {
+         error_log("Error: ".$e->getMessage());
+      }
    }
 }

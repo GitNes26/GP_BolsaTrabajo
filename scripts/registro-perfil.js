@@ -17,6 +17,8 @@ const div_company = $("#div_company"),
    input_company = $("#input_company"),
    input_description = $("#input_description"),
    counter_description = $("#counter_description"),
+   input_logo_path = $('#input_logo_path'), //este es un input_file
+   preview = $('#preview'),
    input_business_line_id = $("#input_business_line_id"),
    input_company_ranking_id = $("#input_company_ranking_id"),
    input_state = $("#input_state"),
@@ -38,6 +40,7 @@ const div_candidate = $("#div_candidate"),
 // email.focus();
 const
    btn_done = $("#btn_done"), 
+   btn_reset = $("#btn_reset"),
    btn_return = $("#btn_return");
 
 $.fn.select2.defaults.set("language", "es");
@@ -53,32 +56,46 @@ focusSelect2($(".select2"));
 //       Cookies.get("dark_mode") ? $("body").addClass("dark-mode") : $("body").removeClass("dark-mode")
 
 
+//RESETEAR FORMULARIOS
+btn_reset.click(async (e) => {
 
-// Obtén el elemento de entrada de archivo y la vista previa
-const input_file = $('#input_file');
-const preview = $('#preview');
+	//EXCLUIR INPUTS PARA VALIDAR
+	await resetSelect2(input_business_line_id);
+	await resetSelect2(input_company_ranking_id);
+	await resetSelect2(input_interest_tags_ids);
+	await resetSelect2(input_state);
+	await resetSelect2(input_municipality);
+   input_municipality.attr("disabled",true)
+	
+	setTimeout(() => {
+		input_company.focus();
+	}, 500);
+});
 
 // Agrega un evento change al elemento de entrada de archivo
-input_file.on('change', function(event) {
-  // Obtén el archivo seleccionado
-  const file = event.target.files[0];
+input_logo_path.on('change', function(event) {
+   // Obtén el archivo seleccionado
+   const file = event.target.files[0];
 
-  // Crea un objeto FileReader
-  const fileReader = new FileReader();
+   // Crea un objeto FileReader
+   const fileReader = new FileReader();
 
-  // Define la función de carga completada del lector
-  fileReader.onload = function(e) {
-    // Crea un elemento de imagen
-    const imagen = document.createElement('img');
-    imagen.src = e.target.result; // Asigna la imagen cargada como fuente
-    imagen.classList.add("img-fluid"); // Asignar clases
-    imagen.classList.add("pointer");// Asignar clases
-    imagen.classList.add("p-3");// Asignar clases
+   // Define la función de carga completada del lector
+   fileReader.onload = function(e) {
+      // Crea un elemento de imagen
+      const imagen = document.createElement('img');
+      imagen.src = e.target.result; // Asigna la imagen cargada como fuente
+      imagen.classList.add("img-fluid"); // Asignar clases
+      imagen.classList.add("pointer"); // Asignar clases
+      //  imagen.classList.add("p-5"); // Asignar clases
+      imagen.classList.add("rounded-lg"); // Asignar clases
+      // imagen.classList.add("text-center"); // Asignar clases
+      imagen.style = "max-height: 200px !important";
 
-    // Agrega la imagen a la vista previa
-    preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
-    preview.append(imagen);
-  };
+      // Agrega la imagen a la vista previa
+      preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+      preview.append(imagen);
+   };
 
   // Lee el contenido del archivo como una URL de datos
   fileReader.readAsDataURL(file);
@@ -95,16 +112,12 @@ async function init() {
    fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
    fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
    user_id.val(id_cookie);
+   input_company.focus();
 };
 
 
-input_name_role.on("change",function() {
-   changeForms(this.value)
-}) 
-
-async function changeForms(checkbox) {
-   // const 
-   if (checkbox == "Empresa") {
+input_name_role.on("change",async function()  {
+   if (this.value == "Empresa") {
       await div_candidate.slideUp(450);
       // await div_company.slideDown(450);
       setTimeout(() => {
@@ -121,7 +134,7 @@ async function changeForms(checkbox) {
       $("#div_company textarea").removeClass("not_validate");
       
    }
-   else if (checkbox == "Candidato") {
+   else if (this.value == "Candidato") {
       await div_company.slideUp(450);
       // await div_candidate.slideDown(450);
       setTimeout(() => {
@@ -140,7 +153,7 @@ async function changeForms(checkbox) {
       $("#div_company select").addClass("not_validate");
       $("#div_company textarea").addClass("not_validate");
    }
-}
+})
 
 // REGISTRAR
 form_role.on("submit", async (e) => {
@@ -171,16 +184,20 @@ form_role.on("submit", async (e) => {
 	// 	addToArray("updated_at", current_date, data);
 	// }
 
-	// return console.log(data);
+   const form_imagen = $("#form_role")[0];
+	data = new FormData(form_imagen);
    console.log("input_name_role", input_name_role.val());
+	// return console.log([...data]);
+	// return console.log(data);
+
    const url_app = input_name_role.val() == "Empresa"
    ? URL_COMPANY_APP
    : URL_CANDIDATE_APP
-   console.log(url_app);
-	const ajaxResponse = await ajaxRequestAsync(url_app, data);
+	const ajaxResponse = await ajaxRequestFileAsync(url_app, data);
 	if (ajaxResponse.message == "duplicado") return
-	btn_cancel.click();
-	await fillTable();
+   
+	// btn_cancel.click();
+	// await fillTable();
 });
 
 input_description.on("input", function() {
