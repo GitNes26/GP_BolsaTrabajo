@@ -238,7 +238,7 @@ if (isset($_GET["p"])) {
    <script src="<?=$PLUGINS_PATH?>/sweetAlert2/js/sweetalert2.all.min.js"></script>
 
    <!-- Block-UI -->
-   <script src="<?=$VENDORS_PATH ?>/BlockUI/jquery.blockui.min.js"></script>
+   <script src="<?=$PLUGINS_PATH ?>/BlockUI/jquery.blockui.min.js"></script>
 
    <!-- Cookies -->
    <script src="<?=$PLUGINS_PATH?>/js-cookie/js.cookie.min.js"></script>

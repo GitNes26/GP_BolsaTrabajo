@@ -55,12 +55,13 @@ const ajaxRequestAsync = async (
 		if (show_blockUI) {
 			await showBlockUI();
 		}
+		console.log(data);
 		let response = await $.ajax({
 			type: "POST",
 			url: url,
 			data: data,
 			async: true,
-			dataType: "json",
+			dataType: "json"
 		});
 		// console.log(response);
 
@@ -85,9 +86,9 @@ const ajaxRequestAsync = async (
 
 	} catch (error) {
 		if (close_modal == null && btn_close != null) btn_close.click();
-		$.unblockUI();
 		console.error(error);
 		showAlert("error", "Oopss...!!", `Ocurrio un error inesperado. <br> ${error.responseText}`, true);
+		$.unblockUI();
 	}
 }
 const ajaxRequestDeleteAsync = async (
@@ -137,6 +138,56 @@ const ajaxRequestDeleteAsync = async (
 			}
 		}
 	});
+}
+const ajaxRequestFileAsync = async (
+	url,
+	data,
+	close_modal = null,
+	show_blockUI = true,
+	show_toast = true
+) => {
+	try {
+		if (show_blockUI) {
+			await showBlockUI();
+		}
+		console.log(data);
+		let response = await $.ajax({
+			type: "POST",
+			url: url,
+			data: data,
+			async: true,
+			dataType: "json",			
+			contentType:false,
+      cache:false,
+      processData:false,
+		});
+		// console.log(response);
+
+		if (response.message == "duplicado") {
+			$.unblockUI();
+			showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
+			$(`#${response.input}`).focus();
+			return response;
+		};
+
+		if (response.result) {
+			if (response.toast)
+				if (show_toast) 
+					showToast(response.alert_icon, response.alert_text);
+		} else {
+			showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
+		}
+
+		if (close_modal == null && btn_close != null) btn_close.click();
+		if (show_blockUI) $.unblockUI();
+		return response;
+
+	} catch (error) {
+		if (close_modal == null && btn_close != null) btn_close.click();
+		console.error(error);
+		showAlert("error", "Oopss...!!", `Ocurrio un error inesperado. <br> ${error.responseText}`, true);
+		$.unblockUI();
+	}
 }
 
 function showBlockUI() {

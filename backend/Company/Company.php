@@ -12,7 +12,7 @@ if (file_exists("../backend/Connection.php")) {
 }
 
 
-class Candidate extends Connection {
+class Company extends Connection {
    
    function index() {
       try {
@@ -76,15 +76,20 @@ class Candidate extends Connection {
       try {
          $response = $this->defaultResponse();
 
-         $this->validateAvailableData($company, null);
+         // $this->validateAvailableData($company, null);
 
+         #Creamos el registro en la tabla compañias
          $query = "INSERT INTO companies(company, description, logo_path, contact_name, contact_phone, contact_email, state, municipality, business_line_id, company_ranking_id, user_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
          $this->ExecuteQuery($query, array($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id));
+
+         #Le asignamos el rol de compañia al usuario
+         $query = "UPDATE users SET role_id=3 WHERE id=?";
+         $this->ExecuteQuery($query, array($user_id));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
-         $response["alert_title"] = "Candidato registrada";
-         $response["alert_text"] = "Candidato registrada";
+         $response["alert_title"] = "Empresa registrada";
+         $response["alert_text"] = "Empresa registrada";
          $this->Close();
    
       } catch (Exception $e) {
@@ -99,15 +104,18 @@ class Candidate extends Connection {
       try {
          $response = $this->defaultResponse();
 
-         $this->validateAvailableData($c.company, $id);
+         $this->validateAvailableData($company, $id);
 
-         $query = "UPDATE companies c INNER JOIN users u ON c.user_id=u.id SET u.c.company=?, updated_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($c.company, $updated_at, $id));
+         $query = "UPDATE companies SET company=?, description=?, logo_path=?, contact_name=?, contact_phone=?, contact_email=?, state=?, municipality=?, business_line_id=?, company_ranking_id=?, user_id=? WHERE id=?";
+         $this->ExecuteQuery($query, array($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id));
+
+         $query = "UPDATE users SET updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($updated_at, $user_id));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
-         $response["alert_title"] = "Candidato actualizado";
-         $response["alert_text"] = "Candidato actualizado";
+         $response["alert_title"] = "Empresa actualizado";
+         $response["alert_text"] = "Empresa actualizado";
          $this->Close();
    
       } catch (Exception $e) {
@@ -118,17 +126,17 @@ class Candidate extends Connection {
       die(json_encode($response));
    }
 
-   function delete($deleted_at, $id) {
+   function delete($deleted_at, $user_id) {
       try {
         $response = $this->defaultResponse();
 
-         $query = "UPDATE companies c INNER JOIN users u ON c.user_id=u.id SET u.active=0, deleted_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($deleted_at, $id));
+         $query = "UPDATE users SET active=0, deleted_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($deleted_at, $user_id));
 
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registro eliminado.";
-         $response["alert_title"] = "Candidato eliminada";
-         $response["alert_text"] = "Candidato eliminada";
+         $response["alert_title"] = "Empresa eliminada";
+         $response["alert_text"] = "Empresa eliminada";
          $this->Close();
 
       } catch (Exception $e) {
@@ -140,9 +148,10 @@ class Candidate extends Connection {
    }
 
 
-   function validateAvailableData($c.company, $id) {
+   function validateAvailableData($company, $id) {
       // #VALIDACION DE DATOS REPETIDOS
-      $duplicate = $this->checkAvailableData('companies c INNER JOIN users u ON c.user_id=u.id', 'u.c.company', $c.company, 'El área', 'input_c.company', $id);
+      $duplicate = $this->checkAvailableData('companies', 'company', $company, 'La compañia', 'input_company', $id);
+      
       if ($duplicate["result"] == true) die(json_encode($duplicate));
    }
 }

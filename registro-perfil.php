@@ -106,7 +106,7 @@ if (isset($_COOKIE["session"])) {
 
 
                   <!-- Card Login -->
-                  <form id="form_role" class="card rounded-3 card-outline card-primary shadow" id="card_role" data-slide-down="1">
+                  <form id="form_role" class="card rounded-3 card-outline card-primary shadow" enctype="multipart/form-data" id="card_role" data-slide-down="1">
                      <div class="card-body login-card-body">
                         <div class="text-center mb-4">
                            <label class="form-control">Soy: &nbsp;&nbsp;&nbsp;&nbsp;
@@ -121,13 +121,19 @@ if (isset($_COOKIE["session"])) {
                            </label>
                         </div>
 
-                           <input type="hidden" id="op" name="op" value="" class="not_validate">
+                           <input type="hidden" id="op" name="op" value="create" class="not_validate">
                            <input type="hidden" id="user_id" name="user_id" value='' class="">
                            
                            <div id="div_company" class="">
                               <div class="row"> <!-- LOGO Y NOMBRE -->
                                  <div class="col-3"> <!-- LOGO -->
-                                    <img src="https://thumbs.dreamstime.com/z/plantilla-del-dise%C3%B1o-logotipo-vector-concepto-edificio-para-la-construcci%C3%B3n-126177482.jpg" class="img-fluid" alt="">
+                                    <input type="file" id="input_file" class="d-none" accept="image/*">
+                                    <label for="input_file">Logo
+                                       <div id="preview" class="">
+                                          <img src="/assets/img/cargar_imagen.png" alt="Cargar Logo" class="img-fluid pointer p-3" for="input_file" title="Haz clic aquí para cargar tu logo de empresa">
+                                       </div>
+                                    </label>
+
                                  </div>
                                  <div class="col"> <!-- NOMBRE Y ACERCA DE -->
                                     <div class="mb-3 col">
@@ -298,10 +304,9 @@ if (isset($_COOKIE["session"])) {
                            class="btn btn-outline-primary btn-block fw-bold text-center">
                            <i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;TERMINAR
                         </button>
-                        <button type="submit" id="btn_return"
-                           class="btn btn-outline-secondary btn-block fw-bold text-center" onclick="history.back()">
+                        <!-- <button type="button" id="btn_return" class="btn btn-outline-secondary btn-block fw-bold text-center" onclick="history.back()">
                            <i class="fa-solid fa-circle-arrow-left"></i>&nbsp;&nbsp;REGRESAR
-                        </button>
+                        </button> -->
                      </div>
                      <!-- /.login-card-body -->
                   </form>
@@ -341,7 +346,7 @@ if (isset($_COOKIE["session"])) {
    <!-- <script src="<?=$PLUGINS_PATH?>/select2/js/select2.min.js"></script> -->
    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
    <!-- Block-UI -->
-   <script src="<?=$VENDORS_PATH ?>/BlockUI/jquery.blockui.min.js"></script>
+   <script src="<?=$PLUGINS_PATH ?>/BlockUI/jquery.blockui.min.js"></script>
 
    <!-- Cookies -->
    <script src="<?=$PLUGINS_PATH?>/js-cookie/js.cookie.min.js"></script>

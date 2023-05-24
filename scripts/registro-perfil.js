@@ -52,7 +52,37 @@ focusSelect2($(".select2"));
 //    // check_theme.is("Cheked",dark_mode)
 //       Cookies.get("dark_mode") ? $("body").addClass("dark-mode") : $("body").removeClass("dark-mode")
 
-// // });
+
+
+// Obtén el elemento de entrada de archivo y la vista previa
+const input_file = $('#input_file');
+const preview = $('#preview');
+
+// Agrega un evento change al elemento de entrada de archivo
+input_file.on('change', function(event) {
+  // Obtén el archivo seleccionado
+  const file = event.target.files[0];
+
+  // Crea un objeto FileReader
+  const fileReader = new FileReader();
+
+  // Define la función de carga completada del lector
+  fileReader.onload = function(e) {
+    // Crea un elemento de imagen
+    const imagen = document.createElement('img');
+    imagen.src = e.target.result; // Asigna la imagen cargada como fuente
+    imagen.classList.add("img-fluid"); // Asignar clases
+    imagen.classList.add("pointer");// Asignar clases
+    imagen.classList.add("p-3");// Asignar clases
+
+    // Agrega la imagen a la vista previa
+    preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+    preview.append(imagen);
+  };
+
+  // Lee el contenido del archivo como una URL de datos
+  fileReader.readAsDataURL(file);
+});
 
 
 
@@ -142,7 +172,7 @@ form_role.on("submit", async (e) => {
 	// }
 
 	// return console.log(data);
-   
+   console.log("input_name_role", input_name_role.val());
    const url_app = input_name_role.val() == "Empresa"
    ? URL_COMPANY_APP
    : URL_CANDIDATE_APP
