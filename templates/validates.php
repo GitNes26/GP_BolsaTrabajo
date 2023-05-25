@@ -32,19 +32,19 @@ $role_id = 0; //$_COOKIE["role_id"];
 //    if ($pago_vencido) die(header("location:$SUBSCRIBE_PAGE"));
 // }
 
-$role = "Admin";
-if (isset($Role)) {
-   if ($Role == null) {
-      $role = "Admin";
-   }
-} else {
-   $role = "Admin";
-}
+$role = $_COOKIE["role"];
+// if (isset($Role)) {
+//    if ($Role == null) {
+//       $role = "Admin";
+//    }
+// } else {
+//    $role = "Admin";
+// }
 
-if ($role_id == 1) $role = "SuperAdmin";
-else if ($role_id == 2) $role = "Admin";
-else if ($role_id == 3) $role = "Empresa";
-else if ($role_id == 4) $role = "User";
+// if ($role_id == 1) $role = "SuperAdmin";
+// else if ($role_id == 2) $role = "Admin";
+// else if ($role_id == 3) $role = "Empresa";
+// else if ($role_id == 4) $role = "User";
 // else $role = "SuperAdmin";
 // echo "perfil: $role_id - $role ";
 

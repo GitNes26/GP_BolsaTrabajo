@@ -23,7 +23,7 @@
          <div class='user-panel d-flex'>
             <div class='info'>
                <span class='d-block text-decoration-none text-bold'>
-                  <i class=''><?= $_COOKIE["name"] ?></i>
+                  <i class=''><?php echo "$role:&nbsp; $_COOKIE[name]" ?></i>
                </span>
             </div>
          </div>

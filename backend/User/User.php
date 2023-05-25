@@ -91,8 +91,8 @@ class User extends Connection {
 
    function setCookies($id) {
       try {
-         $query = "SELECT u.id, u.name, u.email, u.password, u.role_id
-         FROM users as u WHERE u.id=$id";
+         $query = "SELECT u.id, u.name, u.email, u.password, u.role_id, r.role
+         FROM users u INNER JOIN roles r ON u.role_id=r.id WHERE u.id=$id";
 
          $user_found = $this->Select($query,false);
 
@@ -104,6 +104,7 @@ class User extends Connection {
             setcookie("user_id",$user_found["id"], strtotime($cookie_time), "/");
             setcookie("name",$user_found["name"], strtotime($cookie_time), "/");
             setcookie("role_id",$user_found["role_id"] ?? '0', strtotime($cookie_time), "/");
+            setcookie("role",$user_found["role"] ?? '0', strtotime($cookie_time), "/");
             setcookie("session","active", strtotime($cookie_time), "/");
             setcookie("tema_oscuro",false, strtotime($cookie_time), "/");
             // setcookie("tema_oscuro",$user_found["tema_oscuro"], strtotime($cookie_time), "/");

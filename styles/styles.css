@@ -1,3 +1,45 @@
+/* --------------------------------SCROLLBAR------------------------------------------ */
+/*font-family: 'Poppins', sans-serif;*/
+*{
+   --color--scroll: #2aa549;
+   --color--bg--scroll: #343A40;
+   /* --color--bg--scroll: #D6D8D9; */
+}
+/* Works on Firefox */
+* {
+   scrollbar-width: thin;
+   scrollbar-color: var(--color--scroll) var(--color--bg--scroll);
+ }
+
+ /* Works on Chrome, Edge, and Safari */
+ *::-webkit-scrollbar {
+   width: 12px;
+ }
+
+ *::-webkit-scrollbar-track {
+   background: var(--color--bg--scroll);
+ }
+
+ *::-webkit-scrollbar-thumb {
+   background-color: var(--color--scroll);
+   border-radius: 15px;
+   /* border: solid var(--color--scroll); */
+ }
+
+
+ #div_paquetes::-webkit-scrollbar {
+  width: 5px;
+}
+ #div_paquetes::-webkit-scrollbar-thumb {
+  background-color: var(--color--scroll);
+  border-radius: 5px;
+}
+/* --------------------------------SCROLLBAR------------------------------------------ */
+
+
+
+
+
 .eye_icon {
    transition: all 0.3s ease-in-out;
 }
@@ -53,7 +95,7 @@ body {
 .pointer { transition: all 0.3s ease-in-out; }
 .pointer:hover { cursor: pointer; transform: scale(1.1); }
 
-.pointer-sm { transition: all 0.15s ease-in-out; opacity: 0.7 }
+.pointer-sm { transition: all 0.2s ease-in-out; opacity: 0.7 }
 .pointer-sm:hover { cursor: pointer; transform: scale(1.01); opacity: 1; }
 
 .border-only-bottom {
@@ -66,40 +108,19 @@ body {
 a { color: #2aa549; }
 a:hover { color: #0c7827; }
 
-/* --------------------------------SCROLLBAR------------------------------------------ */
-/*font-family: 'Poppins', sans-serif;*/
-*{
-   --color--scroll: #2aa549;
-   --color--bg--scroll: #343A40;
-   /* --color--bg--scroll: #D6D8D9; */
+.card-detail {
+   border: 5px solid #0c7827;
+   border-radius: 20px;
+   max-height: 85vh;
 }
-/* Works on Firefox */
-* {
-   scrollbar-width: thin;
-   scrollbar-color: var(--color--scroll) var(--color--bg--scroll);
- }
-
- /* Works on Chrome, Edge, and Safari */
- *::-webkit-scrollbar {
-   width: 12px;
- }
-
- *::-webkit-scrollbar-track {
-   background: var(--color--bg--scroll);
- }
-
- *::-webkit-scrollbar-thumb {
-   background-color: var(--color--scroll);
-   border-radius: 15px;
-   /* border: solid var(--color--scroll); */
- }
-
-
- #div_paquetes::-webkit-scrollbar {
-  width: 5px;
+.scroll-y {
+   overflow-y: auto;
 }
- #div_paquetes::-webkit-scrollbar-thumb {
-  background-color: var(--color--scroll);
-  border-radius: 5px;
+.card-detail *::-webkit-scrollbar {
+   width: 6px;
 }
-/* --------------------------------SCROLLBAR------------------------------------------ */
+
+
+
+
+
