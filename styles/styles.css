@@ -120,6 +120,12 @@ a:hover { color: #0c7827; }
    width: 6px;
 }
 
+.select2-selection__choice {
+   background-color: #0c7827 !important;
+   border-color: #0c7827 !important;
+   color: whitesmoke !important;
+}
+
 
 
 

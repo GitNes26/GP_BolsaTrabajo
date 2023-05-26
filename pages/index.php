@@ -5,7 +5,7 @@ include "../templates/sidebar.php";
 
 
 
-$pagina_acutal = "Listado de vacantes";
+$pagina_acutal = "Bolsa de Trabajo";
 ?>
 <!-- Content Wrapper. Contenido de la pagina -->
 <div class="content-wrapper text-sm">
@@ -15,7 +15,7 @@ $pagina_acutal = "Listado de vacantes";
          <div class="row mb-2">
             <div class="col-sm-6">
                <h1 class="fw-bolder text-uppercase">
-                  <i class="fas fa-tachometer-alt"></i>&nbsp; <?= $pagina_acutal ?>
+               <i class="fa-regular fa-sack-dollar"></i>&nbsp; <?= $pagina_acutal ?>
                   <em class="fw-ligth text-muted lead text-sm"></em>
                </h1>
             </div>
@@ -35,62 +35,92 @@ $pagina_acutal = "Listado de vacantes";
 
       <div class="content">
          <div class="row">
-            <div class="col-md-4  sticky-top">
-               <!-- FILTROS -->
-               <form id="form"class="card card-outline card-success shadow sticky-top">
+            <!-- FILTROS -->
+            <div class="col-md-4 sticky-top">
+               <form id="form_filter"class="card card-outline card-success shadow sticky-top">
                   <div class="card-header">
                      <div class="pb-1">
-                        <label for="input_search" class="form-label">Buscador General</label>
-                        <input type="search" class="form-control not_validate" id="input_search" name="input_search" data-input-name="NOMBRE DEL MÓDULO" placeholder="Empleo | Empresa">
+                        <label for="input_filter_search" class="form-label">Buscador General</label>
+                        <input type="search" class="form-control not_validate" id="input_filter_search" name="input_filter_search" data-input-name="BUSCADOR GENERAL" placeholder="Puesto | Empresa">
                      </div>
-                     <!-- <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-solid fa-filter-list"></i>&nbsp; FILTROS DE BUSQUEDA</span> -->
                      <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Filtros de busqueda">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Filtros de busqueda" id="btn_show_filters">
                         <i class="fas fa-minus"></i>
                         <i class="fa-solid fa-filter-list"></i>
-                        
                         </button>
                      </div>
                   </div>
                   <div class="card-body text-start">
                      <input type="hidden" id="filter_op" name="filter_op" value="" class="not_validate">
                      <div class="mb-3">
-                        <label for="input_search" class="form-label">Nombre del menú:</label>
-                        <input type="search" class="form-control" id="input_search" name="input_search" data-input-name="NOMBRE DEL MÓDULO">
+                        <label for="input_filter_min_salary" class="form-label">Sueldo deseado:</label>
+                        <div class="row">
+                           <div class="col">
+                              <input type="text" class="form-control" id="input_filter_min_salary" name="input_filter_min_salary" data-input-name="NOMBRE DEL MÓDULO"
+                              placeholder="Mínimo">
+                           </div>
+                           <div class="col">
+                           <input type="text" class="form-control" id="input_filter_max_salary" name="input_filter_max_salary" data-input-name="NOMBRE DEL MÓDULO"
+                           placeholder="Máximo">
+                           </div>
+                        </div>
                      </div>
                      <div class="mb-3">
-                        <label for="input_tag" class="form-label">Tag:</label>
-                        <input type="text" class="form-control" id="input_tag" name="input_tag" data-input-name="TAG">
-                     </div>
-                     <div class="mb-3">
-                        <label for="input_belongs_to" class="form-label">Pertence a:</label>
-                        <select class="select2 form-control" style="width:100%" id="input_belongs_to" name="input_belongs_to" data-input-name="PERTENECE A">
+                        <label for="input_filter_business_line_id" class="form-label">Giro:</label>
+                        <select class="select2 form-control" style="width:100%"
+                        id="input_filter_business_line_id" name="input_filter_business_line_id" data-input-name="GIRO">
                         </select>
                      </div>
                      <div class="mb-3">
-                        <label for="input_file_path" class="form-label">Archivo (php):</label>
-                        <input type="text" class="form-control" id="input_file_path" name="input_file_path" data-input-name="ARCHIVO">
+                        <label for="input_filter_area_id" class="form-label">Área:</label>
+                        <select class="select2 form-control" style="width:100%"
+                        id="input_filter_area_id" name="input_filter_area_id" data-input-name="GIRO">
+                        </select>
+                     </div>
+                     <div class="form-group" data-select2-id="29">
+                        <label for="input_filter_interest_tags_ids">Intereses de busqueda:</label>
+                        <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas con tús intereses" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_filter_interest_tags_ids" name="input_filter_interest_tags_ids" data-input-name="INTERESES">
+                        </select>
                      </div>
                      <div class="mb-3">
-                        <label for="input_icon" class="form-label">Ícono:</label>
-                        <input type="text" class="form-control not_validate" id="input_icon" name="input_icon" data-input-name="ÍCONO">
+                        <label for="input_state" class="form-label">Estado:</label>
+                        <select class="select2 form-control" style="width:100%; line-height:10px"
+                        id="input_state" name="input_state"
+                        data-input-name="ESTADO">
+                        </select>
                      </div>
-                     <div class="form-group">
-                        <div class="custom-control custom-switch">
-                           <input type="checkbox" class="custom-control-input" id="input_active" name="input_active" checked>
-                           <label class="custom-control-label" id="label_module_enable" for="input_active">Activo</label>
-                        </div>
+                     <div class="mb-3">
+                        <label for="input_municipality" class="form-label">Municipio:</label>
+                        <select class="select2 form-control" style="width:100%; line-height:20px"
+                        id="input_municipality" name="input_municipality"
+                        data-input-name="MUNICIPIO" disabled>
+                        </select>
                      </div>
+                     
+                     <!-- <div class="mb-3">
+                        <label for="">Sueldo estimado: (mensual)</label>
+                        <span class="irs irs--flat js-irs-0"><span class="irs"><span class="irs-line" tabindex="0"></span><span class="irs-min" style="visibility: visible;">$0</span><span class="irs-max" style="visibility: visible;">$5 000</span><span class="irs-from" style="visibility: visible; left: 22.9348%;">$1 309</span><span class="irs-to" style="visibility: visible; left: 65.4715%;">$3 505</span><span class="irs-single" style="visibility: hidden; left: 39.6617%;">$1 309 — $3 505</span></span><span class="irs-grid"></span><span class="irs-bar" style="left: 26.9302%; width: 42.5367%;"></span><span class="irs-shadow shadow-from" style="display: none;"></span><span class="irs-shadow shadow-to" style="display: none;"></span><span class="irs-handle from" style="left: 25.3554%;"><i></i><i></i><i></i></span><span class="irs-handle to type_last" style="left: 67.8921%;"><i></i><i></i><i></i></span></span><input id="range_1" type="text" name="range_1" value="" class="irs-hidden-input" tabindex="-1" readonly="">
+                     </div> -->
+
+
                   </div>
                   <div class="card-footer">
-                     <div class="fw-bolder">15 empleos encontrados para ti</div>
+                     <div class="fw-bolder mb-2">15 empleos encontrados para ti</div>
+                     <button type="submit" id="btn_submit"
+                     class="btn btn-outline-success btn-block fw-bold text-center">
+                     <i class="fa-regular fa-magnifying-glass"></i>&nbsp;&nbsp;BUSCAR
+                  </button>
+                  <button type="reset" id="btn_reset"
+                     class="btn btn-outline-secondary btn-block fw-bold text-center">
+                     <i class="fa-solid fa-ban"></i>&nbsp;&nbsp;LIMPIAR
+                  </button>
                   </div>
                </form>
             </div>
             <!-- LISTA DE EMPELOS -->
             <div class="col-md-4">
                <?php for ($i=0; $i < 8; $i++): ?>
-                  <div class="card card-success card-outline direct-chat direct-chat-success shadow-sm pointer-sm">
+                  <div class="card card-success card-outline direct-chat direct-chat-success shadow-sm pointer-sm card_vacancy">
                   <div class="card-header">
                      <span class="card-title fw-bolder">Vacante</span>
                      <div class="card-tools">
@@ -126,7 +156,7 @@ $pagina_acutal = "Listado de vacantes";
                <?php endfor; ?>
             </div>
             <!-- VISTA A DETALLE -->
-            <div class="col d-none d-sm-none  d-md-block">
+            <div class="col d-none d-sm-none d-md-block">
                <form id="form_vacancy" enctype="multipart/form-data" class="card shadow-lg sticky-top card-detail">
                   <div class="card-header">
                      <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-regular fa-memo-circle-info"></i>&nbsp; DETALLE DE LA VACANTE</span>
@@ -157,7 +187,7 @@ $pagina_acutal = "Listado de vacantes";
                      <p class="" id="output_detail_description">Descripción...</p>
                      <div class="mb-2">
                         <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; 
-                        <span class="fw-bolder">Salario:&nbsp;</span> 
+                        <span class="fw-bolder">Sueldo:&nbsp;</span> 
                         <span id="output_detail_min_salary">$0</span> &nbsp;a&nbsp; 
                         <span id="output_detail_max_salary">$0</span>
                      </div>
@@ -272,7 +302,25 @@ $pagina_acutal = "Listado de vacantes";
 <?php
 include "../templates/footer.php";
 ?>
+<script src="<?php echo($SCRIPTS_PATH) ?>/<?=substr($path,0,-4)?>.js"></script>
 
 <script>
-//   window.location.href = `${URL_ADMIN}/users.php`;
+   
+   // $(function () {
+   //    /* BOOTSTRAP SLIDER */
+   //    // $('.slider').bootstrapSlider();
+
+   //    /* ION SLIDER */
+   //    $('#range_1').ionRangeSlider({
+   //    min     : 0,
+   //    max     : 5000,
+   //    from    : 1000,
+   //    to      : 4000,
+   //    type    : 'double',
+   //    step    : 1,
+   //    prefix  : '$',
+   //    prettify: false,
+   //    hasGrid : true
+   //    })
+   // })
 </script>

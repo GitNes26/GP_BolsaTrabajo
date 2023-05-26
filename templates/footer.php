@@ -44,6 +44,12 @@
 <!-- Select2 -->
 <script src="<?=$PLUGINS_PATH?>/select2/js/select2.min.js"></script>
 
+<!-- Ion-RangeSlider -->
+<link rel="stylesheet" href="<?=$PLUGINS_PATH?>/ion-rangeslider/js/ion.rangeSlider.min.js">
+<!-- BootstrapSlider -->
+<!-- <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/bootstrap-slider/js/bootstrap-slider.min.js"> -->
+
+
 <!-- Block-UI -->
 <script src="<?=$PLUGINS_PATH?>/BlockUI/jquery.blockui.min.js"></script>
 

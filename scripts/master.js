@@ -449,12 +449,14 @@ function focusSelect2(select2) {
 	select2.click(function (e) {
 		try {
 			var searcher = $(".select2-search__field");
+			searcher[0].focus();
 			searcher[1].focus();
 		} catch (e) { }
 	});
 	select2.keydown(function (e) {
 		try {
 			var searcher = $(".select2-search__field");
+			searcher[0].focus();
 			searcher[1].focus();
 		} catch (e) { }
 	});
@@ -465,11 +467,20 @@ function resetSelect2(selector) {
 	// function resetearSelect2(selector, url, data) {
 	selector.attr("disabled",true);
 
-	selector.prop("selectedIndex", 0);
-	selector.val("-1");
-	$(`#select2-${selector[0].name}-container`).text("Selecciona una opción...");
-	$(`#select2-${selector[0].name}-container`).attr("title", "Selecciona una opción...");
-	selector.attr("disabled",false);
+	if (selector.data().select2.options.options.multiple) {
+		selector.prop("selectedIndex", 0);
+		selector.val("-1");
+		$(`#select2-${selector[0].name}-container`).attr("title", "Selecciona etiquetas con tús intereses");
+		$(`#select2-${selector[0].name}-container`).text("");
+		// console.log(selector[0].placeholder);
+		selector.attr("disabled",false);
+	} else {
+		selector.prop("selectedIndex", 0);
+		selector.val("-1");
+		$(`#select2-${selector[0].name}-container`).text("Selecciona una opción...");
+		$(`#select2-${selector[0].name}-container`).attr("title", "Selecciona una opción...");
+		selector.attr("disabled",false);
+	}
 
 	// iconos(url, data, -1, select2[0].name);
 }
@@ -483,9 +494,15 @@ async function fillSelect2(url_app, selected_index, selector, select_modules=fal
 	selector.attr("disabled",true);
 	selector.html(`<option value="">Cargando...</option>`);
 
+
 	let options = /*HTML*/ `
       <option value="-1" disabled>Selecciona una opción...</option>
    `;
+	if (selector.data().select2.options.options.multiple) {
+		options = /*HTML*/ `
+      <option value="-1" disabled>Selecciona etiquetas...</option>
+   `;
+	}
 	if(select_modules) {
 		options += /*HTML*/ `
       	<option value="0" selected>***** Soy Módulo Padre *****</option>

@@ -36,7 +36,7 @@ $current_page = "Usuarios";
       <div class="card card-outline card-dark shadow">
          <?php if ($permission_write ?? false): ?>
          <div class="container-fluid mt-2">
-            <button id="btn_modal_form" class="float-end btn btn-success fw-bold fw-" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR USUARIO</button>
+            <button id="btn_modal_form" class="float-end btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR USUARIO</button>
          </div>
          <?php endif ?>
          <div class="card-body">

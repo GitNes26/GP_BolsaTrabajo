@@ -87,7 +87,7 @@ form.on("submit", async (e) => {
 	id_modal.addClass("not_validate");
 	op_modal.addClass("not_validate");
 
-	if (!validateInputs(form)) return;
+	// if (!validateInputs(form)) return;
 
 	if (id_modal.val() <= 0) {
 		//NUEVO
@@ -99,6 +99,10 @@ form.on("submit", async (e) => {
 	}
 
 	let data = form.serializeArray();
+	let class_icon = data[6].value.split('"')[1]; 
+	if (data[6].value.includes('"')) {
+		data[6].value = class_icon;
+	}
 	// return console.log(data);
 	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
 	if (id_modal.val() <= 0) {

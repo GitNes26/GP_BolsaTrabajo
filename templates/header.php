@@ -42,6 +42,12 @@ include "../templates/validates.php"
   <!-- <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script> -->
 
+  <!-- Ion-RangeSlider -->
+  <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/ion-rangeslider/css/ion.rangeSlider.min.css">
+  <!-- BootstrapSlider -->
+  <!-- <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/bootstrap-slider/css/bootstrap-slider.min.css"> -->
+  
+
   <!-- Moment JS -->
   <script src="<?=$PLUGINS_PATH?>/moment-js/moment.min.js"></script>
   <!-- Moment JS en español -->
