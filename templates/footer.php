@@ -56,6 +56,14 @@
 <!-- Cookies -->
 <script src="<?=$PLUGINS_PATH?>/js-cookie/js.cookie.min.js"></script>
 
+<!-- SUMMERNOTE - EDITOR DE TEXTO -->
+<script src="/plugins/summernote-0.8.18/summernote.min.js"></script>
+<script src="/plugins/summernote-0.8.18/summernote-bs4.min.js"></script>
+
+
+
+<script src="/plugins/summernote-0.8.18/lang/summernote-es-ES.min.js"></script>
+
 <!-- bs-stepper- formularios en pasos -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js" charset="utf-8"></script> -->
 

@@ -58,6 +58,12 @@ include "../templates/validates.php"
   <!-- IMask JS -->
   <script src="<?=$PLUGINS_PATH?>/imask-js/imask.js"></script>
 
+  <!-- SUMMERNOTE - EDITOR DE TEXTO -->
+  <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">  -->
+  <link rel="stylesheet" href="/plugins/summernote-0.8.18/summernote.min.css">
+
+
+
   <!-- bs-stepper- formularios en pasos -->
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css"> -->
 

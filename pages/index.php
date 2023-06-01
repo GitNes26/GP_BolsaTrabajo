@@ -52,6 +52,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                   </div>
                   <div class="card-body text-start">
                      <input type="hidden" id="filter_op" name="filter_op" value="" class="not_validate">
+                     <!-- SUELDO -->
                      <div class="mb-3">
                         <label for="input_filter_min_salary" class="form-label">Sueldo deseado:</label>
                         <div class="row">
@@ -65,12 +66,14 @@ $pagina_acutal = "Bolsa de Trabajo";
                            </div>
                         </div>
                      </div>
+                     <!-- GIRO -->
                      <div class="mb-3">
                         <label for="input_filter_business_line_id" class="form-label">Giro:</label>
                         <select class="select2 form-control" style="width:100%"
                         id="input_filter_business_line_id" name="input_filter_business_line_id" data-input-name="GIRO">
                         </select>
                      </div>
+                     <!-- AREA -->
                      <div class="mb-3">
                         <label for="input_filter_area_id" class="form-label">Área:</label>
                         <select class="select2 form-control" style="width:100%"

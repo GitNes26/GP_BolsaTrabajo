@@ -104,6 +104,7 @@ form.on("submit", async (e) => {
 		data[6].value = class_icon;
 	}
 	// return console.log(data);
+	
 	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
 	if (id_modal.val() <= 0) {
 		//NUEVO
@@ -164,7 +165,7 @@ async function fillTable(show_toas=true) {
 			<td class="text-center">
 				<p class="">
 					pertenece a: <b>${!obj.belongs_to ? "-" : obj.parent_menu}</b><br>
-					Orden: <b>${obj.order}</b><br>
+					<!-- Orden: <b>${obj.order}</b><br> -->
 					archivo: <b>${!obj.file_path ? "-" : obj.file_path}</b>
 				</p>
 			</td>
