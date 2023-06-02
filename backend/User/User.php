@@ -96,7 +96,7 @@ class User extends Connection {
 
          $user_found = $this->Select($query,false);
 
-         if (sizeof($user_found) > 0) {
+         if (!empty($user_found)) {
             $cookie_time = '+1 months';
             // if ($user_found["role_id"] == 1)
             //   $cookie_time = '+1 day';

@@ -237,7 +237,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                   </div>
                   <div class="card-footer">
                      <div class="d-grid gap-2">
-                        <button type="reset" id="btn_send" class="btn btn-outline-success fw-bold grid"><i class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
+                        <button type="button" id="btn_send" class="btn btn-outline-success fw-bold grid"><i class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
                         </button>
                      </div>
                   </div>

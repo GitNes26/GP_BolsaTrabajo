@@ -7,7 +7,7 @@ const
 	PAGES_PATH = `${URL_BASE}/pages`,
 	EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`,
 	URL_API_COUNTRIES = `https://www.universal-tutorial.com/api`,
-	
+
 	URL_USER_APP = `${BACKEND_PATH}/User/App.php`,
 	URL_COMPANY_APP = `${BACKEND_PATH}/Company/App.php`,
 	URL_CANDIDATE_APP = `${BACKEND_PATH}/Candidate/App.php`,
@@ -17,6 +17,8 @@ const
 	URL_TAG_APP = `${BACKEND_PATH}/Tag/App.php`,
 	URL_AREA_APP = `${BACKEND_PATH}/Area/App.php`,
 	URL_COMPANY_RANKING_APP = `${BACKEND_PATH}/CompanyRanking/App.php`
+
+	URL_VACANCY_APP = `${BACKEND_PATH}/Vacancy/App.php`
 	;
 
 const btn_close = $(".btn-close");
@@ -73,7 +75,7 @@ const ajaxRequestAsync = async (
 
 		if (response.result) {
 			if (response.toast)
-				if (show_toast) 
+				if (show_toast)
 					showToast(response.alert_icon, response.alert_text);
 		} else {
 			showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
@@ -122,7 +124,7 @@ const ajaxRequestDeleteAsync = async (
 					if (response.alert_text != undefined)
 						showToast(response.alert_icon, response.alert_text);
 					deleted = true;
-					
+
 				} else {
 					showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
 				}
@@ -154,7 +156,7 @@ const ajaxRequestFileAsync = async (
 			url: url,
 			data: data,
 			async: true,
-			dataType: "json",			
+			dataType: "json",
 			contentType:false,
 			enctype: "multipart/form-data",
 			processData:false,
@@ -170,7 +172,7 @@ const ajaxRequestFileAsync = async (
 
 		if (response.result) {
 			if (response.toast)
-				if (show_toast) 
+				if (show_toast)
 					showToast(response.alert_icon, response.alert_text);
 		} else {
 			showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
@@ -246,11 +248,16 @@ $(".eye_icon").click((e) => {
    else input.prop("type","password")
 });
 
-function countLetter(input, counter, letters, limit) {
+// #region CONTADOR DE LETRAS
+$(".counter").on("input", function() {
+	countLetter(this, this.getAttribute("data-counter"), this.value.length, Number(this.dataset.limit));
+});
+function countLetter(input, counter_name, letters, limit) {
+	const counter = $(`#${counter_name}`);
 	counter.text(`${letters}/${limit}`);
 
 	if (letters > limit) {
-		input.value = input.value.slice(0,limit); 
+		input.value = input.value.slice(0,limit);
 		counter.removeClass("text-muted");
 		counter.addClass("text-danger");
 		counter.text(`Máximo de caracteres alcanzado ${limit}/${limit}`);
@@ -261,6 +268,8 @@ function countLetter(input, counter, letters, limit) {
 	counter.addClass("text-muted");
 	// $(input).removeClass("is-invalid");
 }
+// #endregion CONTADOR DE LETRAS
+
 
 //AGREGAR DATO AL ARRAY
 function addToArray(name, value, array) {
@@ -340,7 +349,7 @@ if (btn_logout != null) {
 		const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data);
 		if (ajaxResponse.result) window.location.href = `${URL_BASE}/`;
 	});
-} 
+}
 //#endregion CERRAR SESION
 
 
@@ -437,6 +446,34 @@ function validateInput(input) {
 	input.removeClass("is-invalid")
 	return true;
 }
+
+if ($('.numeric').length > 0) {
+	$('.numeric').numeric();
+}
+function formatCurrency(amount, MX=true, show_currency=true) {
+	let divisa = "MXN";
+	let total = new Intl.NumberFormat("es-MX").format(amount);
+	if (!MX) {
+		divisa = "USD";
+		total = new Intl.NumberFormat("en-US").format(amount);
+	}
+
+	if (!total.includes(".")) total += ".00";
+	let decimales = total.split(".").reverse();
+	if (decimales[0].length == 1) total += "0";
+	if (amount == 0) total == "0.00";
+	show_currency ? total = `$ ${total} ${divisa}` : total = `$ ${total}`;
+
+	return total;
+}
+function formatearCantidadDeRenglones(tds) {
+	$.each(tds, function (i, elemento) {
+		let td = $(elemento);
+		let cantidad = td.text();
+		let cantidad_formateada = formatCurrency(cantidad);
+		td.html(`${cantidad_formateada}`);
+	});
+}
 //#endregion /** VALIDACIONES - INPUTS - FORMULARIOS */
 
 
@@ -500,8 +537,8 @@ async function fillSelect2(url_app, selected_index, selector, select_modules=fal
    `;
 	if (selector.data().select2.options.options.multiple) {
 		options = /*HTML*/ `
-      <option value="-1" disabled>Selecciona etiquetas...</option>
-   `;
+			<option value="-1" disabled>Selecciona etiquetas...</option>
+		`;
 	}
 	if(select_modules) {
 		options += /*HTML*/ `
@@ -605,7 +642,7 @@ $("table thead tr")
 //#endregion /* DataTables */
 
 
-//#region /** MonentJS */
+//#region /** MomentJS */
 moment.locale("es-mx");
 // console.log(moment.locale());
 //#endregion /** MonentJS */

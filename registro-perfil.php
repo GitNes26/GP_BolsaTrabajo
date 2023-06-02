@@ -180,7 +180,7 @@ if (isset($_COOKIE["session"])) {
                               </div>
                               <div class="mb-3 col">
                                  <label for="input_description" class="form-label">Acerca de mí empresa: <span class="obligatory"></span></label>
-                                 <textarea type="text" class="form-control" id="input_description" name="input_description" data-input-name="ACERCA DE" rows="4" data-limit="15"></textarea>
+                                 <textarea type="text" class="form-control counter" id="input_description" name="input_description" data-input-name="ACERCA DE" rows="4" data-limit="15" data-counter="counter_description"></textarea>
                                  <div class="text-sm text-end text-muted" id="counter_description"></div>
                               </div>
                            </div>

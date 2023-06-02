@@ -127,6 +127,15 @@ a:hover { color: #0c7827; }
 }
 
 
-
+.link-dialog {
+   z-index: 1100 !important;
+}
+.link-dialog .modal-dialog{
+   top: 50vh;
+   transform: translateY(-50%) !important;
+}
+.modal-backdrop {
+   z-index: 1019 !important;
+}
 
 

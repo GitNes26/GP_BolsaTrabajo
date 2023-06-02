@@ -238,8 +238,3 @@ async function deleteObj(btn_delete) {
 		"fillTable()"
 	);
 }
-
-input_description.on("input", function() {
-	countLetter(this, counter_description, this.value.length, Number(this.dataset.limit))
-
-});

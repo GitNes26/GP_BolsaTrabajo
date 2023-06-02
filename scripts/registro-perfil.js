@@ -199,7 +199,3 @@ form_role.on("submit", async (e) => {
 	// btn_cancel.click();
 	// await fillTable();
 });
-
-input_description.on("input", function() {
-	countLetter(this, counter_description, this.value.length, Number(this.dataset.limit))
-})

@@ -22,6 +22,9 @@
 <!-- ADMINLTE 3.2 -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script> -->
 <script src="<?=$ADMINLTE_PATH?>/js/adminlte.min.js"></script>
+
+<!-- JQUERY -->
+<script src="/plugins/jquery-validation/jquery.numeric.js"></script>
 <!-- <script src="<? /* =$PLUGINS_PATH */?>/jquery-validation/jquery.validate.min.js"></script>
   <script src="<? /* =$PLUGINS_PATH */?>/jquery-validation/additional-methods.min.js"></script> -->
 

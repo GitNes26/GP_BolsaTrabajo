@@ -38,7 +38,7 @@ $current_page = "Vacantes";
          <div class="col">
             <div class="card card-outline card-success">
                <div class="card-header">
-                  <span class="modal-vacancy fw-bold h5" id="modalLabel"><i class="fa-regular fa-memo-circle-info"></i>&nbsp; FORMULARIO</span>
+                  <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-regular fa-memo-circle-info"></i>&nbsp; FORMULARIO</span>
                   <div class="card-tools">
                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
                      <i class="fas fa-minus"></i>
@@ -51,24 +51,25 @@ $current_page = "Vacantes";
                      <!-- FORMULARIO -->
                      <div class="col-md-6">
                         <!-- card Formulario-->
-                        <form id="form" enctype="multipart/form-data" class="card card-outline card-suce shadow sticky-top">
+                        <form id="form" enctype="multipart/form-data" class="card card-outline card-suce shadow sticky-top" style="max-height: 85vh;">
                            <div class="card-header">
                               <span class="modal-vacancy fw-bold h5" id="modalLabel"><i class="fa-regular fa-circle-plus to-upper-case"></i>&nbsp; AGREGAR VACANTE</span>
                            </div>
-                           <div class="card-body">
+                           <div class="card-body scroll-y">
                               <input type="hidden" id="op" name="op" value="" class="not_validate">
                               <input type="hidden" id="id" name="id" value="" class="not_validate">
                               <!-- VACANTE -->
                               <div class="mb-3">
                                  <label for="input_vacancy" class="form-label">Vacante: <span class="obligatory"></span></label>
-                                 <input type="text" class="form-control" id="input_vacancy" name="input_vacancy" data-input-name="VACANTE" data-limit="45">
+                                 <input type="text" class="form-control counter" id="input_vacancy" name="input_vacancy" data-input-name="VACANTE" data-limit="45" data-counter="counter_vacancy" data-output="output_vacancy">
                                  <div class="text-sm text-end text-muted" id="counter_vacancy"></div>
                               </div>
                               <!-- EMPRESA -->
                               <div class="mb-3">
                                  <label for="input_company_id" class="form-label">Empresa: <span class="obligatory"></span></label>
                                  <select class="select2 form-control" style="width:100%"
-                                 id="input_company_id" name="input_company_id" data-input-name="EMPRESA">
+                                 id="input_company_id" name="input_company_id" data-input-name="EMPRESA"
+                                 data-output="output_info_company">
                                  </select>
                               </div>
 
@@ -78,26 +79,27 @@ $current_page = "Vacantes";
                               <div class="mb-3">
                                  <label for="input_area_id" class="form-label">Área: <span class="obligatory"></span></label>
                                  <select class="select2 form-control" style="width:100%"
-                                 id="input_area_id" name="input_area_id" data-input-name="ÁREA">
+                                 id="input_area_id" name="input_area_id" data-input-name="ÁREA" data-output="output_area">
                                  </select>
                               </div>
                               <!-- DESCRIPCION DE VACANTE -->
                               <div class="mb-3">
                                  <label for="input_description" class="form-label">Descripción de la vacante: <span class="obligatory"></span></label>
-                                 <textarea type="text" class="form-control" id="input_description" name="input_description" data-input-name="DESCRIPCIÓN" rows="5" data-limit="150"></textarea>
+                                 <textarea type="text" class="form-control counter" id="input_description" name="input_description" data-input-name="DESCRIPCIÓN" rows="5" data-limit="150" data-counter="counter_description" data-output="output_description"></textarea>
                                  <div class="text-sm text-end text-muted" id="counter_description"></div>
                               </div>
                               <!-- SUELDO -->
                               <div class="mb-3">
-                                 <label for="input_min_salary" class="form-label">Sueldo: <span class="obligatory"></span></label>
+                                 <label for="input_min_salary" class="form-label">Sueldo: <i>(mensual en pesos mexicanos)</i> <span class="obligatory"></span></label>
                                  <div class="row">
-                                    <div class="col">
-                                       <input type="text" class="form-control" id="input_min_salary" name="input_min_salary" data-input-name="SUELDO MÍNIMO"
-                                       placeholder="Mínimo">
+                                    <div class="col input-group">
+                                       <span class="input-group-text">$</span>
+                                       <input type="text" class="form-control numeric" id="input_min_salary" name="input_min_salary" data-input-name="SUELDO MÍNIMO"
+                                       placeholder="Mínimo" data-output="output_min_salary">
                                     </div>
-                                    <div class="col">
-                                    <input type="text" class="form-control" id="input_max_salary" name="input_max_salary" data-input-name="SUELDO MÁXIMO"
-                                    placeholder="Máximo">
+                                    <div class="col input-group">
+                                       <span class="input-group-text">$</span>
+                                       <input type="text" class="form-control numeric" id="input_max_salary" name="input_max_salary" data-input-name="SUELDO MÁXIMO" placeholder="Máximo" data-output="output_max_salary">
                                     </div>
                                  </div>
                               </div>
@@ -107,20 +109,20 @@ $current_page = "Vacantes";
                               <div class="mb-3">
                                  <label for="input_job_type">Tipo de empleo: <span class="obligatory"></span></label>
                                  <div class="btn-group ml-3" role="group">
-                                    <input type="radio" class="btn-check not_validate" name="input_job_type" id="input_job_type_tc" autocomplete="off" checked>
+                                    <input type="radio" class="btn-check not_validate" name="input_job_type" id="input_job_type_tc" value="Tiempo completo" autocomplete="off" data-output="output_job_type" checked>
                                     <label class="btn btn-outline-dark rounded-left" for="input_job_type_tc">Tiempo completo</label>
 
-                                    <input type="radio" class="btn-check not_validate" name="input_job_type" id="input_job_type_mt" autocomplete="off">
+                                    <input type="radio" class="btn-check not_validate" name="input_job_type" id="input_job_type_mt" value="Medio tiempo" autocomplete="off" data-output="output_job_type">
                                     <label class="btn btn-outline-dark" for="input_job_type_mt" >Medio tiempo</label>
 
-                                    <input type="radio" class="btn-check not_validate" name="input_job_type" id="input_job_type_p" autocomplete="off">
+                                    <input type="radio" class="btn-check not_validate" name="input_job_type" id="input_job_type_p" value="Prácticas" autocomplete="off" data-output="output_job_type">
                                     <label class="btn btn-outline-dark" for="input_job_type_p" >Prácticas</label>
                                  </div>
                               </div>
                               <!-- HORARIO -->
                               <div class="mb-3">
                                  <label for="input_schedules" class="form-label">Horarios: <span class="obligatory"></span></label>
-                                 <input type="text" class="form-control" id="input_schedules" name="input_schedules" data-input-name="VACANTE" placeholder="8 horas - Lunes a viernes">
+                                 <input type="text" class="form-control" id="input_schedules" name="input_schedules" data-input-name="HORARIO" placeholder="8 horas - Lunes a viernes" data-output="output_schedules">
                               </div>
                               <!-- MAS INFORMACION -->
                               <div class="mb-3">
@@ -130,7 +132,7 @@ $current_page = "Vacantes";
                               <!-- TAGS -->
                               <div class="form-group" data-select2-id="29">
                                  <label for="input_tags_ids">TAGS de busqueda:</label>
-                                 <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a la vacante" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_tags_ids" name="input_tags_ids" data-input-name="TAGS">
+                                 <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a la vacante" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_tags_ids" data-input-name="TAGS">
                                  </select>
                               </div>
                            </div>
@@ -146,20 +148,20 @@ $current_page = "Vacantes";
                      </div>
                      
                      <!-- VISTA A DETALLE -->
-                     <div class="col ">
-                        <div id="detail_vacancy" enctype="multipart/form-data" class="card shadow-lg sticky-top card-detail">
+                     <div class="col">
+                        <div id="detail_vacancy" class="card shadow-lg card-detail">
                            <div class="card-header">
-                              <span class="modal-vacancy fw-bold h5" id="modalLabel"><i class="fa-regular fa-memo-circle-info"></i>&nbsp; VISTA PREVIA DE LA VACANTE</span>
+                              <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-regular fa-memo-circle-info"></i>&nbsp; VISTA PREVIA DE LA VACANTE</span>
                            </div>
                            <div class="card-body text-start scroll-y">
                               <input type="hidden" id="op" name="op" value="" class="not_validate">
                               <input type="hidden" id="id" name="id" value="" class="not_validate">
                               <p class="h5 fw-bolder" id="output_vacancy">Vacante</p>
-                              <p class="mb-3">
-                                 <span id="output_company">Empresa</span><br>
-                                 <span id="output_location">Ciudad, Estado</span>
+                              <p class="mb-3" id="output_info_company">
+                                 <span>Empresa</span><br>
+                                 <span>Ciudad, Estado</span><br><br>
+                                 <span class="">Descripción de la empresa...</span>
                               </p>
-                              <p class="" id="output_company_description">Descripción de la empresa...</p>
 
                               <hr>
 
@@ -181,43 +183,41 @@ $current_page = "Vacantes";
                               <div class="mb-2">
                                  <i class="fa-sharp fa-regular fa-timer"></i>&nbsp; 
                                  <span class="fw-bolder">Horario:&nbsp;</span> 
-                                 <span id="output_schedules">8 horas</span> &nbsp;-&nbsp;
-                                 <span id="output_schedules">Lunes a viernes</span>
+                                 <span id="output_schedules">8 horas &nbsp;-&nbsp; Lunes a viernes</span>
                               </div>
-                              <hr>
-                              <p class="">
-                                 <span class="fw-bolder">Requisitos</span>
-                                 <ul class="" id="output_requirements">
-                                    <li>Requerimiento 1</li>
-                                    <li>Requerimiento 1</li>
-                                    <li>Requerimiento 1</li>
-                                 </ul>
-                              </p>
-                              <p class="">
-                                 <span class="fw-bolder">Expriencia necesaria</span>
-                                 <ul class="" id="output_necessary_experience">
-                                    <li>Experiencias 1</li>
-                                    <li>Experiencias 1</li>
-                                    <li>Experiencias 1</li>
-                                 </ul>
-                              </p>
-                              <!-- ./ DETALLES DEL EMPELO -->
 
                               <hr>
 
-                              <p class="">
-                                 <span class="fw-bolder">Beneficios</span>
-                                 <ul class="" id="output_benefits">
-                                    <li>Beneficio 1</li>
-                                    <li>Beneficio 1</li>
-                                    <li>Beneficio 1</li>
-                                 </ul>
-                              </p>
-                           </div>
-                           <div class="card-footer">
-                              <div class="d-grid gap-2">
-                                 <button type="reset" id="btn_send" class="btn btn-outline-success fw-bold grid"><i class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
-                                 </button>
+                              <!-- MAS INFO -->
+                              <div id="output_more_info">
+                                 <i>LA INFORMACION A CONTINUACIÓN ES SOLO DE EJEMPLO, 
+		                           NO SE GUARDARA A MENOS QUE ESCRIBA ALGO EN EL APARTADO DE <b>Más información</b></i>
+                                 <p class="">
+                                    <span class="fw-bolder">Requisitos</span>
+                                    <ul class="" id="output_requirements">
+                                       <li>Requerimiento 1</li>
+                                       <li>Requerimiento 1</li>
+                                       <li>Requerimiento 1</li>
+                                    </ul>
+                                 </p>
+                                 <p class="">
+                                    <span class="fw-bolder">Expriencia necesaria</span>
+                                    <ul class="" id="output_necessary_experience">
+                                       <li>Experiencias 1</li>
+                                       <li>Experiencias 1</li>
+                                       <li>Experiencias 1</li>
+                                    </ul>
+                                 </p>
+                                 <!-- ./ DETALLES DEL EMPELO -->
+                                 <hr>
+                                 <p class="">
+                                    <span class="fw-bolder">Beneficios</span>
+                                    <ul class="" id="output_benefits">
+                                       <li>Beneficio 1</li>
+                                       <li>Beneficio 1</li>
+                                       <li>Beneficio 1</li>
+                                    </ul>
+                                 </p>
                               </div>
                            </div>
                         </div>
@@ -239,7 +239,9 @@ $current_page = "Vacantes";
                      <thead class="thead-dark">
                         <tr>
                            <th scope="col">Vacante</th>
-                           <!-- <th scope="col">Sueldo</th> -->
+                           <th scope="col">Empresa</th>
+                           <th scope="col">Sueldo</th>
+                           <th scope="col">Tipo de empleo</th>
                            <th scope="col">Acciones</th>
                         </tr>
                      </thead>
@@ -248,7 +250,9 @@ $current_page = "Vacantes";
                      <tfoot>
                         <tr class="thead-dark">
                            <th scope="col">Vacante</th>
-                           <!-- <th scope="col">Sueldo</th> -->
+                           <th scope="col">Empresa</th>
+                           <th scope="col">Sueldo</th>
+                           <th scope="col">Tipo de empleo</th>
                            <th scope="col">Acciones</th>
                         </tr>
                      </tfoot>
