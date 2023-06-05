@@ -249,7 +249,7 @@ $(".eye_icon").click((e) => {
 });
 
 // #region CONTADOR DE LETRAS
-$(".counter").on("input", function() {
+$(".counter").on("input change", function() {
 	countLetter(this, this.getAttribute("data-counter"), this.value.length, Number(this.dataset.limit));
 });
 function countLetter(input, counter_name, letters, limit) {
@@ -462,7 +462,7 @@ function formatCurrency(amount, MX=true, show_currency=true) {
 	let decimales = total.split(".").reverse();
 	if (decimales[0].length == 1) total += "0";
 	if (amount == 0) total == "0.00";
-	show_currency ? total = `$ ${total} ${divisa}` : total = `$ ${total}`;
+	show_currency ? total = `$${total} ${divisa}` : total = `$${total}`;
 
 	return total;
 }

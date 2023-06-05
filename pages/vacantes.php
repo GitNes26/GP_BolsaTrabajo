@@ -51,7 +51,7 @@ $current_page = "Vacantes";
                      <!-- FORMULARIO -->
                      <div class="col-md-6">
                         <!-- card Formulario-->
-                        <form id="form" enctype="multipart/form-data" class="card card-outline card-suce shadow sticky-top" style="max-height: 85vh;">
+                        <form id="form" enctype="multipart/form-data" class="card card-outline card-suce shadow" style="max-height: 85vh;">
                            <div class="card-header">
                               <span class="modal-vacancy fw-bold h5" id="modalLabel"><i class="fa-regular fa-circle-plus to-upper-case"></i>&nbsp; AGREGAR VACANTE</span>
                            </div>
@@ -129,6 +129,20 @@ $current_page = "Vacantes";
                                  <label for="input_more_info" class="form-label">Más información: </label>
                                  <div class="summernote"></div>
                               </div>
+                              <!-- TIEMPO DE PUBLICACION -->
+                              <div class="mb-3">
+                                 <label for="input_publication_date" class="form-label">Tiempo de publicación:</i> <span class="obligatory"></span></label>
+                                 <div class="row">
+                                    <div class="col input-group mb-3" title="Iniciar publicación">
+                                       <span class="input-group-text"><i class="fa-regular fa-clock"></i></span>
+                                       <input type="date" class="form-control numeric" id="input_publication_date" name="input_publication_date" data-input-name="FECHA DE PUBLICACIÓN" data-output="output_publication_date"value="<?=date("Y-m-d") ?>">
+                                    </div>
+                                    <div class="col input-group mb-3" title="Finalizar publicación">
+                                       <span class="input-group-text"><i class="fa-solid fa-alarm-exclamation"></i></span>
+                                       <input type="date" class="form-control numeric" id="input_expiration_date" name="input_expiration_date" data-input-name="FECHA DE EXPIRACIÓN" data-output="output_expiration_date">
+                                    </div>
+                                 </div>
+                              </div>
                               <!-- TAGS -->
                               <div class="form-group" data-select2-id="29">
                                  <label for="input_tags_ids">TAGS de busqueda:</label>
@@ -171,7 +185,7 @@ $current_page = "Vacantes";
                               <p class="" id="output_description">Descripción de la vacante...</p>
                               <div class="mb-2">
                                  <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; 
-                                 <span class="fw-bolder">Sueldo:&nbsp;</span> 
+                                 <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span> 
                                  <span id="output_min_salary">$0</span> &nbsp;a&nbsp; 
                                  <span id="output_max_salary">$0</span>
                               </div>

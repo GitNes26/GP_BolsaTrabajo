@@ -40,6 +40,7 @@
 
 <!-- Moment JS -->
 <script src="<?=$PLUGINS_PATH?>/moment-js/moment.min.js"></script>
+<script src="<?=$PLUGINS_PATH?>/moment-js/es-mx.js"></script>
 
 <!-- SweetAlert2 -->
 <script src="<?=$PLUGINS_PATH?>/sweetAlert2/js/sweetalert2.all.min.js"></script>

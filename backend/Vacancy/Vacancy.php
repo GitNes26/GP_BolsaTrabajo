@@ -18,10 +18,16 @@ class Vacancy extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT v.*, c.company, a.area FROM vacancies v INNER JOIN companies c ON v.company_id=c.id INNER JOIN areas a ON v.area_id=a.id WHERE v.active=1;";
+         $query = "SELECT v.*, c.company, c.municipality, c.state, c.contact_name, c.contact_phone, c.contact_email, a.area 
+         FROM vacancies v 
+         INNER JOIN companies c ON v.company_id=c.id 
+         INNER JOIN areas a ON v.area_id=a.id
+         WHERE v.active=1;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
+         $response["alert_title"] = "Registros cargados";
+         $response["alert_text"] = "Registros cargados";
          $response["data"] = $result;
          $this->Close();
    
@@ -56,11 +62,17 @@ class Vacancy extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT * FROM vacancies WHERE id=$id;";
+         $query = "SELECT v.*, c.company, c.municipality, c.state, c.contact_name, c.contact_phone, c.contact_email, a.area 
+         FROM vacancies v 
+         INNER JOIN companies c ON v.company_id=c.id 
+         INNER JOIN areas a ON v.area_id=a.id
+         WHERE v.id=$id;";
          $result = $this->Select($query, false);
 
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro encontrado.";
+         $response["alert_title"] = "Registro encontrado";
+         $response["alert_text"] = "Registro encontrado";
          $response["data"] = $result;
          $this->Close();
    
@@ -77,9 +89,13 @@ class Vacancy extends Connection {
          $response = $this->defaultResponse();
 
          // $this->validateAvailableData(, null);
-
-         $query = "INSERT INTO vacancies(vacancy, description, company_id, area_id, schedules, job_type, min_salary, max_salary, more_info, tags_ids, publication_date, expiration_date, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $created_at));
+         if ($expiration_date == null) {
+            $query = "INSERT INTO vacancies(vacancy, description, company_id, area_id, schedules, job_type, min_salary, max_salary, more_info, tags_ids, publication_date, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $created_at));
+         } else {
+            $query = "INSERT INTO vacancies(vacancy, description, company_id, area_id, schedules, job_type, min_salary, max_salary, more_info, tags_ids, publication_date, expiration_date, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $created_at));
+         }         
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
@@ -101,8 +117,13 @@ class Vacancy extends Connection {
 
          // $this->validateAvailableData($area, $id);
 
-         $query = "UPDATE vacancies SET vacancy=?, description=?, company_id=?, area_id=?, schedules=?, job_type=?, min_salary=?, max_salary=?, more_info=?, tags_ids=?, publication_date=?, expiration_date=?, updated_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $updated_at, $id));
+         if ($expiration_date == null) {
+            $query = "UPDATE vacancies SET vacancy=?, description=?, company_id=?, area_id=?, schedules=?, job_type=?, min_salary=?, max_salary=?, more_info=?, tags_ids=?, publication_date=?, updated_at=? WHERE id=?";
+            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $updated_at, $id));
+         } else {
+            $query = "UPDATE vacancies SET vacancy=?, description=?, company_id=?, area_id=?, schedules=?, job_type=?, min_salary=?, max_salary=?, more_info=?, tags_ids=?, publication_date=?, expiration_date=?, updated_at=? WHERE id=?";
+            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $updated_at, $id));
+         }
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";

@@ -120,6 +120,13 @@ a:hover { color: #0c7827; }
    width: 6px;
 }
 
+.card_vacancy_selected {
+   border: 5px solid #0c7827;
+   border-radius: 10px;
+   opacity: 1;
+   font-weight: bold;
+}
+
 .select2-selection__choice {
    background-color: #0c7827 !important;
    border-color: #0c7827 !important;
@@ -136,6 +143,11 @@ a:hover { color: #0c7827; }
 }
 .modal-backdrop {
    z-index: 1019 !important;
+}
+
+.text-mini {
+   font-size: 12px !important;
+   font-style: italic;
 }
 
 

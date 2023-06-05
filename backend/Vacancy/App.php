@@ -15,9 +15,9 @@ if (isset($_POST['input_job_type'])) { $job_type = $_POST['input_job_type']; }
 if (isset($_POST['input_min_salary'])) { $min_salary = $_POST['input_min_salary']; }
 if (isset($_POST['input_max_salary'])) { $max_salary = $_POST['input_max_salary']; }
 if (isset($_POST['input_more_info'])) { $more_info = $_POST['input_more_info']; }
-if (isset($_POST['input_tags_ids'])) { $tags_ids = $_POST['input_tags_ids']; }
+if (isset($_POST['input_tags_ids'])) { $tags_ids = $_POST['input_tags_ids']; } else { $tags_ids = ""; } 
 if (isset($_POST['input_publication_date'])) { $publication_date = $_POST['input_publication_date']; }
-if (isset($_POST['input_expiration_date'])) { $expiration_date = $_POST['input_expiration_date']; }
+if (isset($_POST['input_expiration_date'])) { $expiration_date = $_POST['input_expiration_date']; } else { $expiration_date = null; }
 
 if (isset($_POST['created_at'])) { $created_at = $_POST['created_at']; }
 if (isset($_POST['updated_at'])) { $updated_at = $_POST['updated_at']; }
@@ -33,7 +33,7 @@ elseif ($op == 'showSelect') $Vacancy->showSelect();
 
 elseif ($op == "create") $Vacancy->create($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $created_at);
 
-elseif ($op == "edit") $Vacancy->edit($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $id, $updated_at);
+elseif ($op == "edit") $Vacancy->edit($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $updated_at, $id);
 
 elseif ($op == "delete") $Vacancy->delete($deleted_at, $id);
 

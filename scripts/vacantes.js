@@ -41,6 +41,8 @@ const
 	input_job_type_p = $("#input_job_type_p"),
    input_schedules = $("#input_schedules"),
 	input_tags_ids = $("#input_tags_ids"),
+	input_publication_date = $("#input_publication_date"), 
+	input_expiration_date = $("#input_expiration_date"), 
 
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset"),
@@ -73,7 +75,7 @@ async function init() {
 
 
 //CLICK EN BTN CANCELAR PARA CREAR UNO NUEVO
- btn_cancel.click((e) => {
+btn_cancel.click((e) => {
 	e.preventDefault();
 	modal_vacancy.html(
 		"<i class='fa-regular fa-circle-plus'></i>&nbsp; AGREGAR VACANTE"
@@ -93,7 +95,57 @@ async function init() {
 //RESETEAR FORMULARIOS
 btn_reset.click(async (e) => {
 	id_modal.val("");
-	$('.note-editing-area .note-editable').html("")
+	$('.note-editing-area .note-editable').html("");
+	resetSelect2(input_company_id);
+	resetSelect2( input_area_id);
+   resetSelect2(input_tags_ids);
+
+	$('.note-editing-area .note-placeholder').css("display","d-block");
+
+	// PREVIEW
+	$(`#${input_vacancy.attr("data-output")}`).text("Vacante");
+	$(`#${input_company_id.attr("data-output")}`).html(`
+		<span>Empresa</span><br>
+		<span>Ciudad, Estado</span><br><br>
+		<span class="">Descripción de la empresa...</span>
+	`);
+	$(`#${input_area_id.attr("data-output")}`).text("Área");
+	$(`#${input_description.attr("data-output")}`).text("Descripción de la vacante...");
+	$(`#${input_min_salary.attr("data-output")}`).text("$0");
+	$(`#${input_max_salary.attr("data-output")}`).text("$0");
+	$(`#${input_name_job_type.attr("data-output")}`).text("Tiempo completo");
+	$(`#${input_schedules.attr("data-output")}`).html("8 horas &nbsp;-&nbsp; Lunes a viernes");
+	$(`#output_more_info`).html(`
+		<i>LA INFORMACION A CONTINUACIÓIN ES SOLO DE EJEMPLO, 
+		NO SE GUARDARA A MENOS QUE ESCRIBA ALGO EN EL APARTADO DE <b>Más información</b></i>
+		<p class="">
+			<span class="fw-bolder">Requisitos</span>
+			<ul class="" id="output_requirements">
+				<li>Requerimiento 1</li>
+				<li>Requerimiento 1</li>
+				<li>Requerimiento 1</li>
+			</ul>
+		</p>
+		<p class="">
+			<span class="fw-bolder">Expriencia necesaria</span>
+			<ul class="" id="output_necessary_experience">
+				<li>Experiencias 1</li>
+				<li>Experiencias 1</li>
+				<li>Experiencias 1</li>
+			</ul>
+		</p>
+		<!-- ./ DETALLES DEL EMPELO -->
+		<hr>
+		<p class="">
+			<span class="fw-bolder">Beneficios</span>
+			<ul class="" id="output_benefits">
+				<li>Beneficio 1</li>
+				<li>Beneficio 1</li>
+				<li>Beneficio 1</li>
+			</ul>
+		</p>
+	`);
+
 	// setTimeout(() => {
 	// 	input_area.focus();
 	// }, 500);
@@ -131,6 +183,8 @@ form.on("submit", async (e) => {
 	}
 	addToArray("input_more_info", input_more_info, data);
 	addToArray("input_tags_ids", input_tags_ids.val().join(","), data);
+	data[10].value = `${data[10].value}:00:00:00`;
+	data[11].value = `${data[11].value}:23:59:59`;
 
 	// return console.log(data);
 	const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data);
@@ -244,13 +298,16 @@ async function editObj(btn_edit) {
 	const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data);
 
 	const obj = ajaxResponse.data;
-	console.log(obj);
+	// console.log(obj);
+
 	//form
 	id_modal.val(Number(obj.id));
 	input_vacancy.val(obj.vacancy);
+	countLetter(input_vacancy, input_vacancy.attr("data-counter"), input_vacancy.val().length, Number(input_vacancy.data("limit")));
 	fillSelect2(URL_COMPANY_APP, obj.company_id, input_company_id);
 	fillSelect2(URL_AREA_APP, obj.area_id, input_area_id);
 	input_description.val(obj.description);
+	countLetter(input_description, input_description.attr("data-counter"), input_description.val().length, Number(input_description.data("limit")));
 	input_min_salary.val(obj.min_salary);
 	input_max_salary.val(obj.max_salary);
 	switch (obj.job_type) {
@@ -265,23 +322,29 @@ async function editObj(btn_edit) {
 			break;
 	}
 	input_schedules.val(obj.schedules);
-	$('.note-editing-area .note-placeholder').css("{display:none}")
+	$('.note-editing-area .note-placeholder').css("display","none");
 	$('.note-editing-area .note-editable').html(obj.more_info);
+	input_publication_date.val(moment(obj.publication_date).format("Y-MM-DD"));
+	input_expiration_date.val(moment(obj.expiration_date).format("Y-MM-DD"));
 	input_tags_ids.val(4);
 
 	// PREVIEW
 	$(`#${input_vacancy.attr("data-output")}`).text(obj.vacancy);
 	data = { op: "show", id: obj.company_id }
 	const ajaxResponseCompany = await ajaxRequestAsync(URL_COMPANY_APP, data);
-	console.log(ajaxResponseCompany);
 	const objCompany = ajaxResponseCompany.data
-	$(`#${input_vacancy.attr("data-output")}`).html(`
+	$(`#${input_company_id.attr("data-output")}`).html(`
 		<span>${objCompany.company}</span><br>
 		<span>${objCompany.municipality}, ${objCompany.state}</span><br><br>
 		<span class="">${objCompany.description}</span>
 	`);
-	$(`#${input_vacancy.attr("data-output")}`).text(obj.vacancy);
-	$(`#${input_vacancy.attr("data-output")}`).text(obj.vacancy);
+	$(`#${input_area_id.attr("data-output")}`).text($(`#input_area_id option:selected`).text());
+	$(`#${input_description.attr("data-output")}`).text(obj.description);
+	$(`#${input_min_salary.attr("data-output")}`).text(formatCurrency(obj.min_salary));
+	$(`#${input_max_salary.attr("data-output")}`).text(formatCurrency(obj.max_salary));
+	$(`#${input_name_job_type.attr("data-output")}`).text(obj.job_type);
+	$(`#${input_schedules.attr("data-output")}`).text(obj.schedules);
+	$(`#output_more_info`).html(obj.more_info);
 
 	setTimeout(() => {
 		input_vacancy.focus();
@@ -292,7 +355,7 @@ async function editObj(btn_edit) {
 
 //ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
 async function deleteObj(btn_delete) {
-	let title = `¿Estas seguro de eliminar el área <br> ${btn_delete.attr("data-name")}?`;
+	let title = `¿Estas seguro de eliminar la vacante de <br> ${btn_delete.attr("data-name")}?`;
 	let text = ``;
 
 	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
