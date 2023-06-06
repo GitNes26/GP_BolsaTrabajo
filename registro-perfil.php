@@ -204,6 +204,7 @@ if (isset($_COOKIE["session"])) {
                            <label class="text-center">UBICACIÓN</label>
                            <div class="mb-3 col">
                               <label for="input_state" class="form-label">Estado: <span class="obligatory"></span></label>
+                              <span title="dar click aqui si no se cargan los datos." data-input="input_state" class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span>
                               <select class="select2 form-control" style="width:100%; line-height:10px"
                               id="input_state" name="input_state"
                               data-input-name="ESTADO">
@@ -211,6 +212,7 @@ if (isset($_COOKIE["session"])) {
                            </div>
                            <div class="mb-3 col">
                               <label for="input_municipality" class="form-label">Municipio: <span class="obligatory"></span></label>
+                              <span title="dar click aqui si no se cargan los datos." data-input="input_municipality" class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span>
                               <select class="select2 form-control" style="width:100%; line-height:20px"
                               id="input_municipality" name="input_municipality"
                               data-input-name="MUNICIPIO" disabled>

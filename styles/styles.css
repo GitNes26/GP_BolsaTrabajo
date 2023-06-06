@@ -150,4 +150,6 @@ a:hover { color: #0c7827; }
    font-style: italic;
 }
 
-
+.sticky-top {
+   top: 6.5%;
+}

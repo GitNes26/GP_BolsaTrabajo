@@ -16,9 +16,10 @@ const
 	URL_BUSINESS_LINE_APP = `${BACKEND_PATH}/BusinessLine/App.php`,
 	URL_TAG_APP = `${BACKEND_PATH}/Tag/App.php`,
 	URL_AREA_APP = `${BACKEND_PATH}/Area/App.php`,
-	URL_COMPANY_RANKING_APP = `${BACKEND_PATH}/CompanyRanking/App.php`
+	URL_COMPANY_RANKING_APP = `${BACKEND_PATH}/CompanyRanking/App.php`,
 
-	URL_VACANCY_APP = `${BACKEND_PATH}/Vacancy/App.php`
+	URL_VACANCY_APP = `${BACKEND_PATH}/Vacancy/App.php`,
+	URL_APPLICATION_APP = `${BACKEND_PATH}/Application/App.php`
 	;
 
 const btn_close = $(".btn-close");
@@ -74,9 +75,13 @@ const ajaxRequestAsync = async (
 		};
 
 		if (response.result) {
-			if (response.toast)
+			if (response.toast) {
 				if (show_toast)
 					showToast(response.alert_icon, response.alert_text);
+			}
+			else 
+				showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
+
 		} else {
 			showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
 		}
@@ -722,6 +727,9 @@ $("#input_state").on("change", async function () {
 	var state = this.value;
 	// console.log(output_estado.text());
 	// console.log(state);
+	showCities(state);
+});
+async function showCities(state) {
 	$("#input_municipality").attr("disabled",true);
 	$("#input_municipality").html("<option value=''>Cargando...</option>");
 
@@ -763,5 +771,11 @@ $("#input_state").on("change", async function () {
 	});
 	$("#input_municipality").html(comboCities);
 	$("#input_municipality").attr("disabled",false);
-});
+}
+
+$(".reload_input").click(function() {
+	const input = $(`#${$(this).attr("data-input")}`);
+	if (input.attr("id") == "input_state") showStates();
+	else if (input.attr("id") == "input_municipality") showCities($("#input_state").val());
+})
 //#endregion SELECTORES DE PAISES / CIUDADES

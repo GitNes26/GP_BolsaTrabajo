@@ -3,13 +3,9 @@ include "../templates/header.php";
 include "../templates/navbar.php";
 include "../templates/sidebar.php";
 
-
-echo "<script language=\"JavaScript\">
-    document.location=+ ?Ancho'+screen.width'
-    </script>";
-
 $pagina_acutal = "Bolsa de Trabajo";
 ?>
+
 <!-- Content Wrapper. Contenido de la pagina -->
 <div class="content-wrapper text-sm">
    <!-- Content Header (Encabezado en el contenido de la pagina) -->
@@ -54,7 +50,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                         </button>
                      </div>
                   </div>
-                  <div class="card-body text-start">
+                  <div class="card-body text-start d-none">
                      <input type="hidden" id="filter_op" name="filter_op" value="" class="not_validate">
                      <!-- SUELDO -->
                      <div class="mb-3">
@@ -84,20 +80,25 @@ $pagina_acutal = "Bolsa de Trabajo";
                         id="input_filter_area_id" name="input_filter_area_id" data-input-name="GIRO">
                         </select>
                      </div>
-                     <div class="form-group" data-select2-id="29">
+                     <!-- INTERESES -->
+                     <div class="form-group d-none" data-select2-id="29">
                         <label for="input_filter_interest_tags_ids">Intereses de busqueda:</label>
                         <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas con tús intereses" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_filter_interest_tags_ids" name="input_filter_interest_tags_ids" data-input-name="INTERESES">
                         </select>
                      </div>
+                     <!-- ESTADO -->
                      <div class="mb-3">
                         <label for="input_state" class="form-label">Estado:</label>
+                        <span title="dar click aqui si no se cargan los datos." data-input="input_state" class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span>
                         <select class="select2 form-control" style="width:100%; line-height:10px"
                         id="input_state" name="input_state"
                         data-input-name="ESTADO">
                         </select>
                      </div>
+                     <!-- MUNICIPIO -->
                      <div class="mb-3">
                         <label for="input_municipality" class="form-label">Municipio:</label>
+                        <span title="dar click aqui si no se cargan los datos." data-input="input_municipality" class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span>
                         <select class="select2 form-control" style="width:100%; line-height:20px"
                         id="input_municipality" name="input_municipality"
                         data-input-name="MUNICIPIO" disabled>
@@ -112,7 +113,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 
                   </div>
                   <div class="card-footer">
-                     <div class="fw-bolder mb-2">15 empleos encontrados para ti</div>
+                     <div class="fw-bolder mb-2" id="leyend_job_found">¡Busca tú empleo ideal!</div>
                      <button type="submit" id="btn_submit"
                      class="btn btn-outline-success btn-block fw-bold text-center">
                      <i class="fa-regular fa-magnifying-glass"></i>&nbsp;&nbsp;BUSCAR
@@ -143,8 +144,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                      </div>
                   </div>
                   <div class="card-body text-start scroll-y">
-                     <input type="hidden" id="op" name="op" value="" class="not_validate">
-                     <input type="hidden" id="id" name="id" value="" class="not_validate">
+                     <input type="hidden" name="id" value="" class="id not_validate">
                      <p class="h5 fw-bolder output_vacancy">Vacante</p>
                      <p class="mb-3 output_info_company">
                         <span>Empresa</span><br>
@@ -182,7 +182,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                   </div>
                   <div class="card-footer">
                      <div class="d-grid gap-2">
-                        <button type="submit" id="btn_send" class="btn btn-outline-success fw-bold grid"><i class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
+                        <button type="submit" id="btn_send" class="btn btn-outline-success fw-bold grid btn_submit" disabled><i class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
                         </button>
                      </div>
                   </div>
@@ -203,8 +203,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-start scroll-y">
-               <input type="hidden" id="op" name="op" value="" class="not_validate">
-               <input type="hidden" id="id" name="id" value="" class="not_validate">
+               <input type="hidden" name="id" value="" class="id not_validate">
                <p class="h5 fw-bolder output_vacancy">Vacante</p>
                <p class="mb-3 output_info_company">
                   <span>Empresa</span><br>
@@ -242,7 +241,7 @@ $pagina_acutal = "Bolsa de Trabajo";
             </div>
             <div class="modal-footer">
                <div class="d-grid gap-2">
-                  <button type="submit" class="btn btn-outline-success fw-bold grid"><i class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
+                  <button type="submit" class="btn btn-outline-success fw-bold grid btn_submit" disabled><i class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
                   </button>
                </div>
             </div>
@@ -259,7 +258,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 
 
 <template id="template_card_vacancy">
-   <div class="card card-success card-outline direct-chat direct-chat-success shadow-sm pointer-sm card_vacancy" data-id="id" data-bs-toggle="modal" data-bs-target="#modal">
+   <div class="card card-success card-outline direct-chat direct-chat-success shadow-sm pointer-sm card_vacancy" data-id="id">
       <div class="card-header">  
          <span class="card-title fw-bolder vacancy">Vacante</span>
          <div class="card-tools">
