@@ -150,18 +150,6 @@ if (isset($_GET["p"])) {
 
                            <form id="form_register">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control rounded-lg" id='input_name'
-                                    name='input_name' placeholder="Nombres" autofocus="autofocus"
-                                    data-input-name="NOMBRES" />
-                                 <label for="input_name">Nombre(s)</label>
-                              </div>
-                              <div class="form-floating mb-3">
-                                 <input type="text" class="form-control rounded-lg" id='input_last_name'
-                                    name='input_last_name' placeholder="Apellidos" autofocus="autofocus"
-                                    data-input-name="APELLIDOS" />
-                                 <label for="input_last_name">Apellido(s)</label>
-                              </div>
-                              <div class="form-floating mb-3">
                                  <input type="email" class="form-control rounded-lg" id='input_email'
                                     name='input_email' placeholder="Correo Electrónico" autofocus="autofocus"
                                     data-input-name="CORREO" />

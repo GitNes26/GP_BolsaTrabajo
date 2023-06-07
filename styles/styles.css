@@ -125,6 +125,7 @@ a:hover { color: #0c7827; }
    border-radius: 10px;
    opacity: 1;
    font-weight: bold;
+   transform: scale(1.05) !important;
 }
 
 .select2-selection__choice {

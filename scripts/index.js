@@ -193,7 +193,7 @@ async function searchVacancies(input) {
    // console.log("buscando...",input.value);
    searching = true;
 
-	const search = input.value;
+	const search = accentFold(input.value);
 	// const filtered_cards = vacancy_container.html();
 	// console.log(filtered_cards);
 
@@ -204,8 +204,8 @@ async function searchVacancies(input) {
 	}
 	const filtered_results = dataVacancies.filter(function(item) {
 		// Lógica de búsqueda, por ejemplo:
-		if (item.vacancy.toLowerCase().includes(search.toLowerCase())) return item;
-		else if (item.company.toLowerCase().includes(search.toLowerCase())) return item;
+		if (accentFold(item.vacancy).toLowerCase().includes(search.toLowerCase())) return item;
+		else if (accentFold(item.company).toLowerCase().includes(search.toLowerCase())) return item;
 	});
   	displayResults(filtered_results);
 
@@ -221,7 +221,7 @@ async function searchVacancies(input_js) {
    // console.log("buscando...",input.val());
    searching = true;
 
-	const search = input.val();
+	const search = accentFold(input.val());
 	// console.log(search);
 
 	if (search == "") {
@@ -231,11 +231,13 @@ async function searchVacancies(input_js) {
 	}
 	const filtered_results = dataVacancies.filter(function(item) {
 		// Lógica de búsqueda, por ejemplo:
-		if (item.vacancy.toLowerCase().includes(search.toLowerCase())) return item;
-		else if (item.company.toLowerCase().includes(search.toLowerCase())) return item;
+		if (accentFold(item.vacancy).toLowerCase().includes(search.toLowerCase())) return item;
+		else if (accentFold(item.company).toLowerCase().includes(search.toLowerCase())) return item;
 	});
   	displayResults(filtered_results);
-
+		setTimeout(() => {
+			vacancy_container.click();
+		}, 1000);
 }
 
 function displayResults(results) {

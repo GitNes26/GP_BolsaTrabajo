@@ -11,12 +11,11 @@ const form_login = $("#form_login");
 const card_login = $("#card_login");
 const card_register = $("#card_register");
 const email = $("#email");
+const password = $("#password");
 
 /* INPUTS DE CARD REGISTER */
 const
  form_register = $("#form_register"),
- input_name = $("#input_name"),
- input_last_name = $("#input_last_name"),
  input_email = $("#input_email"),
  input_password = $("#input_password"),
  input_confirm_password = $("#input_confirm_password"),
@@ -75,8 +74,6 @@ $("#btn_register").click(async (e) =>{
 
    data = {
       op: "register",
-      input_name: input_name.val(),
-      input_last_name: input_last_name.val(),
       input_email: input_email.val(),
       input_password: input_password.val(),
       created_at: moment().format("YYYY-MM-DD hh:mm:ss"),
@@ -96,12 +93,12 @@ async function changeLoginSignup() {
       await card_login.slideUp(450);
       setTimeout(() => {
          card_register.slideDown(450);
-         setTimeout(() => {input_name.focus();},500)
+         setTimeout(() => {input_email.focus();},500);
       }, 450);
    } else {
       await card_register.slideUp(450);
       await card_login.slideDown(450);
-      setTimeout(() => {email.focus();},500)
+      setTimeout(() => {email.focus();},500);
    }
 }
 
@@ -187,7 +184,7 @@ function ajaxRequestRegister(url,data) {
       dataType: "json",
       success: (ajaxResponse) => {
          if (ajaxResponse.result) {
-           console.log(data);
+         //   console.log(data);
            // ajaxRequestEmail(data);
 
             Swal.fire({
@@ -208,16 +205,16 @@ function ajaxRequestRegister(url,data) {
 
                const data = {
                   op: 'register',
-                  input_name: input_name.val(),
-                  input_last_name: input_last_name.val(),
                   input_email: input_email.val(),
                   input_password: input_password.val(),
                   created_at: moment().format("YYYY-MM-DD hh:mm:ss")
                }
                // ajaxRequest(`${BACKEND_PATH}/User/App.php`,data);
                changeLoginSignup();
-               email.val(data.input_email);
-               password.val(input_password.val());
+               setTimeout(() => {
+                  email.val(input_email.val());
+                  password.val(input_password.val());
+               }, 1000);
 
             });
          } else {

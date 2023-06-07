@@ -19,8 +19,7 @@ class User extends Connection {
       $response["alert_text"] = "Credenciales incorrectas, verifica tú información.";
       
       try {
-         $query = "SELECT u.id, u.name, u.last_name, u.cellphone, u.email, u.password, u.role_id
-         FROM users as u WHERE u.email='$email' AND u.active=1 LIMIT 1";
+         $query = "SELECT * FROM users  WHERE email='$email' AND active=1 LIMIT 1";
          $user_found = $this->Select($query,false);
          // echo "el user_found:";
          // var_dump($user_found);
@@ -33,7 +32,7 @@ class User extends Connection {
                $response = $this->correctResponse();
                $response["message"] = "Peticion satisfactoria | sesion inciada.";
                $response["alert_title"] = "Bienvenido!";
-               $response["alert_text"] = "$user_found[name]";
+               $response["alert_text"] = "$user_found[email]";
                $response["data"] = $user_found;
 
             } else {
@@ -62,23 +61,23 @@ class User extends Connection {
       die(json_encode($response));
    }
 
-   function register($name, $last_name, $email, $password, $created_at) {
+   function register($email, $password, $created_at) {
       try {
          $response = $this->defaultResponse();
 
          // #VALIDACION DE DATOS REPETIDOS
-         $this->validateAvailableData(null, $email, null);
+         $this->validateAvailableData($email, null);
 
          $password_hash = password_hash($password,PASSWORD_DEFAULT);
-         $query = "INSERT INTO users (name,last_name,email,password,created_at) VALUES (?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($name, $last_name, $email, $password_hash, $created_at) );
+         $query = "INSERT INTO users (email,password,created_at) VALUES (?,?,?)";
+         $this->ExecuteQuery($query, array($email, $password_hash, $created_at) );
          // $insert_id = (int)$this->getInsertId();
          // $objeto->_name_id = $insert_id;
 
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
          $response["alert_title"] = "Usuario registrado";
-         $response["alert_text"] = "Usuario registrado";
+         $response["alert_text"] = "";
          $this->Close();
 
       } catch (Exception $e) {
@@ -91,7 +90,7 @@ class User extends Connection {
 
    function setCookies($id) {
       try {
-         $query = "SELECT u.id, u.name, u.email, u.password, u.role_id, r.role
+         $query = "SELECT u.id, u.email, u.password, u.role_id, r.role
          FROM users u INNER JOIN roles r ON u.role_id=r.id WHERE u.id=$id";
 
          $user_found = $this->Select($query,false);
@@ -102,17 +101,18 @@ class User extends Connection {
             //   $cookie_time = '+1 day';
 
             setcookie("user_id",$user_found["id"], strtotime($cookie_time), "/");
-            setcookie("name",$user_found["name"], strtotime($cookie_time), "/");
+            // setcookie("name",$user_found["name"], strtotime($cookie_time), "/");
+            setcookie("email",$user_found["email"], strtotime($cookie_time), "/");
             setcookie("role_id",$user_found["role_id"] ?? '0', strtotime($cookie_time), "/");
             setcookie("role",$user_found["role"] ?? '0', strtotime($cookie_time), "/");
             setcookie("session","active", strtotime($cookie_time), "/");
-            setcookie("tema_oscuro",false, strtotime($cookie_time), "/");
-            // setcookie("tema_oscuro",$user_found["tema_oscuro"], strtotime($cookie_time), "/");
+            setcookie("dark_mode",false, strtotime($cookie_time), "/");
+            // setcookie("dark_mode",$user_found["dark_mode"], strtotime($cookie_time), "/");
 
             if ($user_found["role_id"] != ""){
                $permissions_query = "SELECT pages_read,pages_write,pages_delete,pages_update FROM roles WHERE id=$user_found[role_id]";
                // echo $permissions_query;
-               $menus = "SELECT * FROM menus WHERE habilitado=1";
+               // $menus = "SELECT * FROM menus WHERE habilitado=1";
                $permisos = $this->Select($permissions_query,false);
                // if (sizeof($user_found) > 0) {
                   setcookie("pages_read",$permisos["pages_read"], strtotime($cookie_time), "/");
@@ -184,16 +184,16 @@ class User extends Connection {
       die(json_encode($response));
    } 
 
-   function create($name, $last_name, $cellphone, $email, $password, $role_id, $created_at) {
+   function create($email, $password, $role_id, $created_at) {
       try {
          $response = $this->defaultResponse();
 
          // #VALIDACION DE DATOS REPETIDOS
-         $this->validateAvailableData($cellphone, $email, null);
+         $this->validateAvailableData($email, null);
 
          $password_hash = password_hash($password,PASSWORD_DEFAULT);
-         $query = "INSERT INTO users (name,last_name,cellphone,email,password,role_id,created_at) VALUES (?,?,?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $email, $password_hash, $role_id, $created_at) );
+         $query = "INSERT INTO users (email, password, role_id, created_at) VALUES (?,?,?,?)";
+         $this->ExecuteQuery($query, array($email, $password_hash, $role_id, $created_at) );
          // $insert_id = (int)$this->getInsertId();
          // $objeto->_name_id = $insert_id;
 
@@ -211,21 +211,21 @@ class User extends Connection {
       die(json_encode($response));
    }
 
-   function edit($name, $last_name, $cellphone, $email, $password, $role_id, $updated_at, $change_password, $id) {
+   function edit($email, $password, $role_id, $updated_at, $change_password, $id) {
       // function edit($name,$email,$password,$role_id,$updated_at,$change_password,$id){
       try {         
          $response = $this->defaultResponse();
 
          // #VALIDACION DE DATOS REPETIDOS
-         $this->validateAvailableData($cellphone, $email, $id);
+         $this->validateAvailableData($email, $id);
 
          if ($change_password) {
             $password_hash = password_hash($password,PASSWORD_DEFAULT);
-            $query = "UPDATE users SET name=?, last_name=?, cellphone=?, email=?, password=?, role_id=?, updated_at=? WHERE id=?";
-            $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $email, $password_hash, $role_id, $updated_at, $id));
+            $query = "UPDATE users SET email=?, password=?, role_id=?, updated_at=? WHERE id=?";
+            $this->ExecuteQuery($query, array($email, $password_hash, $role_id, $updated_at, $id));
          } else {
-            $query = "UPDATE users SET name=?, last_name=?, cellphone=?, email=?, role_id=?, updated_at=? WHERE id=?";
-            $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $email, $role_id, $updated_at, $id));
+            $query = "UPDATE users SET email=?, role_id=?, updated_at=? WHERE id=?";
+            $this->ExecuteQuery($query, array($email, $role_id, $updated_at, $id));
          }
 
          $id = $_COOKIE["user_id"];
@@ -267,12 +267,7 @@ class User extends Connection {
       die(json_encode($response));
    }
 
-   function validateAvailableData($cellphone, $email, $id) {
-      if ($cellphone != null) {
-         $duplicate = $this->checkAvailableData('users', 'cellphone', $cellphone, 'El número celular', 'input_cellphone', $id);
-         if ($duplicate["result"] == true) die(json_encode($duplicate));
-      }
-
+   function validateAvailableData($email, $id) {
       $duplicate = $this->checkAvailableData('users', 'email', $email, 'El correo', 'input_email', $id);
       if ($duplicate["result"] == true) die(json_encode($duplicate));
    }

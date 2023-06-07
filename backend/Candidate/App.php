@@ -67,8 +67,8 @@ if ($op == "index") $Company->index();
 elseif ($op == "show") $Company->show($id);
 elseif ($op == 'showSelect') $Company->showSelect();
 
-elseif ($op == "create") {$Company->create($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id);}
+elseif ($op == "create") {$Company->create($name, $last_name, $municipality, $business_line_id, $company_ranking_id, $user_id);}
 
-elseif ($op == "edit") $Company->edit($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id, $updated_at);
+elseif ($op == "edit") $Company->edit($name, $last_name, $municipality, $business_line_id, $company_ranking_id, $user_id, $id, $updated_at);
 
 elseif ($op == "delete") $Company->delete($deleted_at, $user_id);

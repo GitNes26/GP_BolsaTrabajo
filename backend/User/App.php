@@ -15,9 +15,6 @@ if ($op == 'logout') { $User->logout(); }
 
 
 if(isset($_POST['id'])) $id = $_POST['id'];
-if(isset($_POST['input_name'])) $name = $_POST['input_name'];
-if(isset($_POST['input_last_name'])) $last_name = $_POST['input_last_name'];
-if(isset($_POST['input_cellphone'])) $cellphone = $_POST['input_cellphone']; else $input_cellphone = 'null';
 if(isset($_POST['input_email'])) $email = $_POST['input_email'];
 if(isset($_POST['input_password'])) $password = $_POST['input_password'];
 if(isset($_POST['input_new_password'])) $new_password = $_POST['input_new_password']; else $new_password = "";
@@ -33,8 +30,8 @@ if ($op == 'index') $User->index();
 
 elseif ($op == 'show') $User->show($id);
 
-elseif ($op == 'register') { $User->register($name,$last_name,$email,$password,$created_at); }
-elseif ($op == 'create') $User->create($name,$last_name,$cellphone,$email,$password,$role_id,$created_at);
+elseif ($op == 'register') { $User->register($email,$password,$created_at); }
+elseif ($op == 'create') $User->create($email,$password,$role_id,$created_at);
 
 elseif ($op == 'edit') {
   $change_password = false;
@@ -42,7 +39,7 @@ elseif ($op == 'edit') {
     $password = $new_password;
     $change_password = true;
   }
-  $User->edit($name,$last_name,$cellphone,$email,$password,$role_id,$updated_at,$change_password,$id);
+  $User->edit($email,$password,$role_id,$updated_at,$change_password,$id);
 }
 
 elseif ($op == "delete") $User->delete($deleted_at, $id);

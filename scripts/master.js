@@ -244,6 +244,16 @@ function mayus(e) {
 	e.value = e.value.toUpperCase();
 }
 
+const accent_map = {'á':'a', 'é':'e', 'è':'e', 'í':'i','ó':'o','ú':'u','Á':'a', 'É':'e', 'è':'e', 'Í':'i','Ó':'o','Ú':'u'};
+function accentFold (s) {
+  if (!s) { return ''; }
+  var ret = '';
+  for (var i = 0; i < s.length; i++) {
+    ret += accent_map[s.charAt(i)] || s.charAt(i);
+  }
+  return ret;
+};
+
 $(".eye_icon").click((e) => {
    // console.log("ojito en loigin");
    const target = $(e.target);

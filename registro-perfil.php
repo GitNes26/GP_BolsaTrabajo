@@ -116,8 +116,8 @@ if (isset($_COOKIE["session"])) {
                      <div class='user-panel d-flex'>
                         <div class='info'>
                            <span class='d-block text-decoration-none text-bold text-light'><i
-                                 class=''><?= isset($_COOKIE["name"]) 
-                                 ? $_COOKIE["name"] 
+                                 class=''><?= isset($_COOKIE["email"]) 
+                                 ? $_COOKIE["email"] 
                                  : "<a class='nav-link' data-bs-toggle='modal' data-bs-target='#modal' style='cursor:pointer'>CERRAR SESIÓN</a>" ?></i></span>
                         </div>
                      </div>
