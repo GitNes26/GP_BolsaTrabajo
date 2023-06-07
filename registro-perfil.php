@@ -6,10 +6,10 @@ if (isset($_COOKIE["session"])) {
       die();
    }
    elseif (isset($_COOKIE["role_id"])) {
-      if ($_COOKIE["role_id"] != "0") {
-         header("location:$URL_BASE/");
-         die();
-      }
+      // if ($_COOKIE["role_id"] != "0") {
+      //    header("location:$URL_BASE/");
+      //    die();
+      // }
    }
 } else {
    header("location:$URL_BASE/");
