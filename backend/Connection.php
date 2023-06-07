@@ -125,9 +125,15 @@ class Connection{
 		return $response;
 	}
 	
-	function checkAvailableData($table, $column, $value, $propTitle, $input, $id) {
-		$query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1";
-		if ($id != null) $query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1 AND id!=$id";
+	function checkAvailableData($table, $column, $value, $propTitle, $input, $id, $secondTable=null) {
+
+		if ($secondTable) {
+			$query = "SELECT count(*) as duplicate FROM $table INNER JOIN $secondTable ON user_id=users.id WHERE $column='$value' AND active=1;";
+			if ($id != null) $query = "SELECT count(*) as duplicate FROM $table INNER JOIN $secondTable ON user_id=users.id WHERE $column='$value' AND active=1 AND id!=$id";
+		} else {
+			$query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1";
+			if ($id != null) $query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1 AND id!=$id";
+		}
 
 		$consulta = $this->Select($query,false);
 		if ($consulta["duplicate"] > 0) {
@@ -141,9 +147,9 @@ class Connection{
 			);
 			// $response = $this->duplicateResponse($propTitle, $value, $input);
 		} else {
-			 $response = array(
-					"result" => false,
-			 );
+			$response = array(
+				"result" => false,
+			);
 		}
 		return $response;
  	}

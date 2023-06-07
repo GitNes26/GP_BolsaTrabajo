@@ -22,7 +22,32 @@ class Vacancy extends Connection {
          FROM vacancies v 
          INNER JOIN companies c ON v.company_id=c.id 
          INNER JOIN areas a ON v.area_id=a.id
-         WHERE v.active=1;";
+         WHERE v.active=1 ORDER BY v.id DESC;";
+         $result = $this->Select($query, true);
+         $response = $this->CorrectResponse();
+         $response["message"] = "Peticion satisfactoria | registros encontrados.";
+         $response["alert_title"] = "Registros cargados";
+         $response["alert_text"] = "Registros cargados";
+         $response["data"] = $result;
+         $this->Close();
+   
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->CatchResponse($error_message);
+      }
+      die(json_encode($response));
+   }
+
+   function indexJobBag() {
+      try {
+         $response = $this->defaultResponse();
+   
+         $query = "SELECT v.*, c.company, c.municipality, c.state, c.contact_name, c.contact_phone, c.contact_email, a.area 
+         FROM vacancies v 
+         INNER JOIN companies c ON v.company_id=c.id 
+         INNER JOIN areas a ON v.area_id=a.id
+         WHERE v.publication_date >=  v.active=1 ORDER BY v.id DESC;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";

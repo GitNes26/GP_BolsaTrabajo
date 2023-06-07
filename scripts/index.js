@@ -313,3 +313,9 @@ async function applyVacancy(form_js) {
 	btns_submit.attr("disabled",false);
 
 }
+// let num = 0
+// setInterval(() => {
+// 	num++;
+// 	$(".notification").text(num);
+// 	console.log("Refrescando");
+// }, 1000);

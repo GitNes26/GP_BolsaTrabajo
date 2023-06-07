@@ -78,6 +78,12 @@ $current_page = "Módulos";
                         <label class="custom-control-label" id="label_module_enable" for="input_active">Activo</label>
                      </div>
                   </div>
+                  <div class="form-group">
+                     <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="input_show_counter" name="input_show_counter" checked>
+                        <label class="custom-control-label" id="label_module_counter" for="input_show_counter" title="Mostrará el indicador de cantidades en el menú lateral de cada página">Mostrar contador</label>
+                     </div>
+                  </div>
                 </div>
                 <div class="card-footer">
                    <button type="reset" id="btn_cancel" class="btn btn-danger fw-bold float-start">CANCELAR</button>

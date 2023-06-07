@@ -82,15 +82,15 @@ class Menu extends Connection {
       die(json_encode($response));
    }
 
-   function create($menu, $tag, $belongs_to, $active, $file_path, $icon, $created_at) {
+   function create($menu, $tag, $belongs_to, $active, $show_counter, $file_path, $icon, $created_at) {
       try {
          $response = $this->defaultResponse();
          if($icon == "")
             $belongs_to == 0 ? $icon="fa-solid fa-folder-tree" : $icon="far fa-circle";
          // $belongs_to == 0 ? $tiene_hijos=true : $tiene_hijos=false;
 
-         $query = "INSERT INTO menus(menu, tag, belongs_to, active, file_path, icon, created_at) VALUES(?,?,?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($menu,$tag,$belongs_to,$active,$file_path,$icon,$created_at));
+         $query = "INSERT INTO menus(menu, tag, belongs_to, active, show_counter, file_path, icon, created_at) VALUES(?,?,?,?,?,?,?,?)";
+         $this->ExecuteQuery($query, array($menu,$tag,$belongs_to,$active,$show_counter,$file_path,$icon,$created_at));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
@@ -106,7 +106,7 @@ class Menu extends Connection {
       die(json_encode($response));
    }
 
-   function edit($menu, $tag, $belongs_to, $active, $file_path, $icon, $id, $updated_at) {
+   function edit($menu, $tag, $belongs_to, $active, $show_counter, $file_path, $icon, $id, $updated_at) {
       try {
          $response = $this->defaultResponse();
 
@@ -114,8 +114,8 @@ class Menu extends Connection {
             $belongs_to == 0 ? $icon="fa-solid fa-folder-tree" : $icon="far fa-circle";
          // $belongs_to == 0 ? $tiene_hijos=true : $tiene_hijos=false;
 
-         $query = "UPDATE menus SET menu=?, tag=?, belongs_to=?, active=?, file_path=?, icon=?, updated_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($menu,$tag,$belongs_to,$active,$file_path,$icon,$updated_at, $id));
+         $query = "UPDATE menus SET menu=?, tag=?, belongs_to=?, active=?, show_counter=?, file_path=?, icon=?, updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($menu,$tag,$belongs_to,$active,$show_counter,$file_path,$icon,$updated_at, $id));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";

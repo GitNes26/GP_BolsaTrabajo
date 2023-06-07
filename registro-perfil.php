@@ -6,10 +6,10 @@ if (isset($_COOKIE["session"])) {
       die();
    }
    elseif (isset($_COOKIE["role_id"])) {
-      // if ($_COOKIE["role_id"] != "0") {
-      //    header("location:$URL_BASE/");
-      //    die();
-      // }
+      if ($_COOKIE["role_id"] != "0") {
+         header("location:$URL_BASE/");
+         die();
+      }
    }
 } else {
    header("location:$URL_BASE/");
@@ -72,6 +72,11 @@ if (isset($_COOKIE["session"])) {
    <!-- <link href="<?=$PLUGINS_PATH?>/select2/css/select2.min.js" rel="stylesheet" /> -->
    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+   <!-- SUMMERNOTE - EDITOR DE TEXTO -->
+   <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">  -->
+   <link rel="stylesheet" href="/plugins/summernote-0.8.18/summernote.min.css">
+
+
    <!-- MisEstilos -->
    <link rel="stylesheet" href="<?=$STYLES_PATH ?>/styles.css"/>
    <link rel="stylesheet" href="<?=$STYLES_PATH?>/responsive.css">
@@ -90,9 +95,9 @@ if (isset($_COOKIE["session"])) {
       <nav class="main-header navbar navbar-expand-md navbar-success navbar-dark">
          <div class="container">
             <a href="/" class="navbar-brand">
-               <img src="<?=$LOGO?>" alt="AdminLTE Logo" class="img-responsive"
+               <img src="<?=$LOGO?>" alt="Imagen Logo" class="img-responsive"
                   style="opacity: .8; width:125px">
-               <!-- <span class="brand-text font-weight-light">AdminLTE 3</span> -->
+               <!-- <span class="brand-text font-weight-light">BT</span> -->
             </a>
             <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -167,7 +172,7 @@ if (isset($_COOKIE["session"])) {
                            <div class="col-3 rounded-lg"> <!-- LOGO -->
                               <input type="file" id="input_logo_path" name="input_logo_path" class="d-none" accept="image/*">
                               <label for="input_logo_path">Logo
-                                 <div id="preview" class="d-flex justify-content-center">
+                                 <div id="preview_logo" class="d-flex justify-content-center">
                                     <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar Logo" class="img-fluid pointer p-3 rounded-lg" for="input_logo_path" title="Haz clic aquí para cargar tu logo de empresa">
                                  </div>
                               </label>
@@ -180,7 +185,7 @@ if (isset($_COOKIE["session"])) {
                               </div>
                               <div class="mb-3 col">
                                  <label for="input_description" class="form-label">Acerca de mí empresa: <span class="obligatory"></span></label>
-                                 <textarea type="text" class="form-control counter" id="input_description" name="input_description" data-input-name="ACERCA DE" rows="4" data-limit="15" data-counter="counter_description"></textarea>
+                                 <textarea type="text" class="form-control counter" id="input_description" name="input_description" data-input-name="ACERCA DE" rows="4" data-limit="150" data-counter="counter_description"></textarea>
                                  <div class="text-sm text-end text-muted" id="counter_description"></div>
                               </div>
                            </div>
@@ -237,19 +242,19 @@ if (isset($_COOKIE["session"])) {
                      </div>
 
                      <div id="div_candidate" class="">
-                        <div class="row"><!-- NOMBRE Y CORREO -->
-                           <div class="mb-3 col-md-4">
+                        <div class="row"><!-- NOMBRE Y APELLIDO -->
+                           <div class="mb-3 col-md-6">
                               <label for="input_name" class="form-label">Nombre(s):</label>
-                              <input type="text" class="form-control not_validate" readonly id="input_name" name="input_name" data-input-name="NOMBRES">
+                              <input type="text" class="form-control not_validate" id="input_name" name="input_name" data-input-name="NOMBRES">
                            </div>
-                           <div class="mb-3 col-md-4">
+                           <div class="mb-3 col-md-6">
                               <label for="input_last_name" class="form-label">Apellido(s):</label>
-                              <input type="text" class="form-control not_validate" readonly id="input_last_name" name="input_last_name" data-input-name="APELLIDOS">
+                              <input type="text" class="form-control not_validate" id="input_last_name" name="input_last_name" data-input-name="APELLIDOS">
                            </div>
-                           <div class="mb-3 col-md-4">
+                           <!-- <div class="mb-3 col-md-4">
                               <label for="input_email" class="form-label">Correo:</label>
-                              <input type="email" class="form-control not_validate" readonly id="input_email" name="input_email" data-input-name="APELLIDOS">
-                           </div>
+                              <input type="email" class="form-control not_validate" id="input_email" name="input_email" data-input-name="APELLIDOS">
+                           </div> -->
                         </div>
                         <div class="row"> <!-- CECULAR Y EDAD -->
                            <div class="mb-3 col-md-6">
@@ -279,13 +284,13 @@ if (isset($_COOKIE["session"])) {
                                  <div class="text-sm text-end text-muted" id="counter_description">0/150</div>
                               </div>
                            </div> -->
-                           <div class="row"> <!-- COMPETENCIAS Y HABILIDADES -->
+                           <!-- COMPETENCIAS Y HABILIDADES -->
+                           <!-- <div class="row">
                               <div class="mb-3 col-md-6">
                                  <label for="">Competencias:</label>
                                  <ul class="list-group" id="list_skills">
                                     <li class="list-group-item d-flex justify-content-between align-items-center" id="skill_li
                                     ">
-                                       <!-- <span>Competencia 1</span> -->
                                        <input type="text" class="border-only-bottom not_validate" id="input_skill_" value="Competencia 1">
                                        <div class="">
                                           <span class="badge bg-success rounded-pill pointer btn_skill_ok" data-id="" title="Aceptar"><i class="fa-solid fa-check"></i></span>
@@ -303,7 +308,6 @@ if (isset($_COOKIE["session"])) {
                                  <ul class="list-group" id="list_abilities">
                                     <li class="list-group-item d-flex justify-content-between align-items-center" id="ability_li
                                     ">
-                                       <!-- <span>Competencia 1</span> -->
                                        <input type="text" class="border-only-bottom not_validate" id="input_ability_" value="Competencia 1">
                                        <div class="">
                                           <span class="badge bg-success rounded-pill pointer btn_ability_ok" data-id="" title="Aceptar"><i class="fa-solid fa-check"></i></span>
@@ -316,24 +320,29 @@ if (isset($_COOKIE["session"])) {
                                     <button class="btn btn-outline-dark" type="button" id><i class="fa-regular fa-circle-plus"></i>&nbsp; Agregar</button>
                                  </div>
                               </div>
-                           </div>
+                           </div> -->
+                           <!-- INFORMACION PROFESIONAL -->
+                           <div class="mb-3">
+                                 <label for="input_professional_info" class="form-label">Más información: &nbsp;<i class="fa-duotone fa-circle-info" title="Escribir Habilidades, competencias, experiencias, observaciones, etc."></i></label>
+                                 <div class="summernote"></div>
+                              </div>
                            <div class="row"> <!-- LENGUAJE Y CV-->
                               <div class="mb-3 col-md-6">
-                                 <label for="input_language">Domínio del inglés: <span class="obligatory"></span></label>
+                                 <label for="input_languages">Domínio del inglés: <span class="obligatory"></span></label>
                                  <div class="btn-group ml-3" role="group">
-                                    <input type="radio" class="btn-check not_validate" name="input_language" id="input_language_b" autocomplete="off" value="Inglés - Básico" checked>
-                                    <label class="btn btn-outline-dark rounded-left" for="input_language_b">Básico</label>
+                                    <input type="radio" class="btn-check not_validate" name="input_languages" id="input_languages_b" autocomplete="off" value="Inglés - Básico" checked>
+                                    <label class="btn btn-outline-dark rounded-left" for="input_languages_b">Básico</label>
 
-                                    <input type="radio" class="btn-check not_validate" name="input_language" id="input_language_i" autocomplete="off" value="Inglés - Intermedio">
-                                    <label class="btn btn-outline-dark" for="input_language_i" >Intermedio</label>
+                                    <input type="radio" class="btn-check not_validate" name="input_languages" id="input_languages_i" autocomplete="off" value="Inglés - Intermedio">
+                                    <label class="btn btn-outline-dark" for="input_languages_i" >Intermedio</label>
 
-                                    <input type="radio" class="btn-check not_validate" name="input_language" id="input_language_a" autocomplete="off" value="Inglés - Avanzado">
-                                    <label class="btn btn-outline-dark" for="input_language_a" >Avanzado</label>
+                                    <input type="radio" class="btn-check not_validate" name="input_languages" id="input_languages_a" autocomplete="off" value="Inglés - Avanzado">
+                                    <label class="btn btn-outline-dark" for="input_languages_a" >Avanzado</label>
                                  </div>
                               </div>
                               <div class="mb-3 col-md-6">
                                  <label for="input_cv_path" class="form-label">Cargar CV: <span class="obligatory"></span></label>
-                                 <input type="file" class="form-control not_validate" id="input_cv_path" name="input_cv_path" data-input-name="CURRICULUM VITAE">
+                                 <input type="file" class="form-control not_validate" accept=".pdf" id="input_cv_path" name="input_cv_path" data-input-name="CURRICULUM VITAE">
                               </div>
                            </div>
                         </div>
@@ -387,6 +396,12 @@ if (isset($_COOKIE["session"])) {
 
    <!-- Cookies -->
    <script src="<?=$PLUGINS_PATH?>/js-cookie/js.cookie.min.js"></script>
+
+   <!-- SUMMERNOTE - EDITOR DE TEXTO -->
+   <script src="/plugins/summernote-0.8.18/summernote.min.js"></script>
+   <script src="/plugins/summernote-0.8.18/summernote-bs4.min.js"></script>
+   <script src="/plugins/summernote-0.8.18/lang/summernote-es-ES.min.js"></script>
+
 
    <script src="<?=$SCRIPTS_PATH ?>/master.js"></script>
    <script src="<?=$SCRIPTS_PATH ?>/registro-perfil.js"></script>

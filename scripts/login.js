@@ -128,8 +128,7 @@ function ajaxRequest(url,data) {
       dataType: "json",
       success: (ajaxResponse) => {
          if (ajaxResponse.result) {
-            // console.log("ajaxResponse", ajaxResponse);
-           let role = 1;
+           let role = 0;
 
             Swal.fire({
                icon: ajaxResponse.alert_icon,

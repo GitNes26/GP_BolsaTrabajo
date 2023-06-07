@@ -14,15 +14,19 @@ const btn_modal_form = $("#btn_modal_form"),
 	modal_title = $(".modal-title"),
 	id_modal = $("#id"),
 	op_modal = $("#op"),
-	input_email = $("#input_email"),
-	div_password = $("#div_password"),
-	input_password = $("#input_password"),
-	input_confirm_password = $("#input_confirm_password"),
-	feedback_password = $("#feedback_password"),
-	div_new_password = $("#div_new_password"),
-	input_new_password = $("#input_new_password"),
-	switch_new_password = $("#switch_new_password"),
-	input_role_id = $("#input_role_id"),
+	input_company = $("#input_company"),
+   input_description = $("#input_description"),
+   counter_description = $("#counter_description"),
+   input_logo_path = $('#input_logo_path'), //este es un input_file
+   preview_logo = $('#preview_logo'),
+   input_business_line_id = $("#input_business_line_id"),
+   input_company_ranking_id = $("#input_company_ranking_id"),
+   input_state = $("#input_state"),
+   input_municipality = $("#input_municipality"),
+   input_contact_name = $("#input_contact_name"),
+   input_contact_phone = $("#input_contact_phone"),
+   input_contact_email = $("#input_contact_email")   
+   ;
 	
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset");
@@ -86,7 +90,7 @@ btn_modal_form.click((e) => {
 	$("#input_new_password").prop("readonly", true);
 
 	modal_title.html(
-		"<i class='fa-solid fa-user-plus'></i></i>&nbsp; REGISTRAR USUARIO"
+		"<i class='fa-solid fa-user-pen'></i></i>&nbsp; REGISTRAR USUARIO"
 	);
 	btn_submit.removeClass("btn-primary");
 	btn_submit.addClass("btn-success");

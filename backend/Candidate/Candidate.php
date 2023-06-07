@@ -18,7 +18,7 @@ class Candidate extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT c.* FROM candidate c INNER JOIN users u ON c.user_id=u.id WHERE u.active=1;";
+         $query = "SELECT c.* FROM candidates c INNER JOIN users u ON c.user_id=u.id WHERE u.active=1;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -37,7 +37,7 @@ class Candidate extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT c.id value, c.company text FROM candidate c INNER JOIN users u ON c.user_id=u.id WHERE u.active=1;";
+         $query = "SELECT c.id value, c.name text FROM candidates c INNER JOIN users u ON c.user_id=u.id WHERE u.active=1;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -56,7 +56,7 @@ class Candidate extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT c.* FROM candidate c WHERE c.id=$id;";
+         $query = "SELECT c.* FROM candidates c WHERE c.id=$id;";
          $result = $this->Select($query, false);
 
          $response = $this->CorrectResponse();
@@ -72,27 +72,29 @@ class Candidate extends Connection {
       die(json_encode($response));
    }
 
-   function create($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id) {
+   function create($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $area_id, $interest_tags_ids, $user_id) {
       try {
          $response = $this->defaultResponse();
 
-         // $this->validateAvailableData($company, null);
+         $this->validateAvailableData($cellphone, null);
 
-         #Creamos el registro en la tabla compañias
-         $query = "INSERT INTO candidate(company, description, logo_path, contact_name, contact_phone, contact_email, state, municipality, business_line_id, company_ranking_id, user_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id));
+         #Creamos el registro en la tabla candidatos
+         $query = "INSERT INTO candidates(name, last_name, cellphone, age, professional_info, cv_path, languages, area_id, interest_tags_ids, user_id) VALUES(?,?,?,?,?,?,?,?,?,?)";
+         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $area_id, $interest_tags_ids, $user_id));
 
          #Le asignamos el rol de compañia al usuario
-         $query = "UPDATE users SET role_id=3 WHERE id=?";
+         $query = "UPDATE users SET role_id=4 WHERE id=?";
          $this->ExecuteQuery($query, array($user_id));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
-         $response["alert_title"] = "Empresa registrada";
-         $response["alert_text"] = "Empresa registrada";
+         $response["alert_title"] = "Candidato registrada";
+         $response["alert_text"] = "Candidato registrada";
          $this->Close();
 
-         $this->setCookies($user_id);
+         require_once "../User/User.php";
+         $User = new User();
+         $User->setCookies($user_id);
    
       } catch (Exception $e) {
          $this->Close();
@@ -102,22 +104,22 @@ class Candidate extends Connection {
       die(json_encode($response));
    }
 
-   function edit($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id, $updated_at) {
+   function edit($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $area_id, $interest_tags_ids, $user_id, $updated_at, $id) {
       try {
          $response = $this->defaultResponse();
 
-         $this->validateAvailableData($company, $id);
+         $this->validateAvailableData($cellphone, $id);
 
-         $query = "UPDATE candidate SET company=?, description=?, logo_path=?, contact_name=?, contact_phone=?, contact_email=?, state=?, municipality=?, business_line_id=?, company_ranking_id=?, user_id=? WHERE id=?";
-         $this->ExecuteQuery($query, array($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id));
+         $query = "UPDATE candidates SET name=?, last_name=?, cellphone=?, age=?, professional_info=?, cv_path=?, languages=?, area_id=?, interest_tags_ids=?, user_id=?, updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $area_id, $interest_tags_ids, $user_id, $updated_at, $id));
 
          $query = "UPDATE users SET updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($updated_at, $user_id));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
-         $response["alert_title"] = "Empresa actualizado";
-         $response["alert_text"] = "Empresa actualizado";
+         $response["alert_title"] = "Candidato actualizado";
+         $response["alert_text"] = "Candidato actualizado";
          $this->Close();
    
       } catch (Exception $e) {
@@ -137,8 +139,8 @@ class Candidate extends Connection {
 
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registro eliminado.";
-         $response["alert_title"] = "Empresa eliminada";
-         $response["alert_text"] = "Empresa eliminada";
+         $response["alert_title"] = "Candidato eliminado";
+         $response["alert_text"] = "Candidato eliminado";
          $this->Close();
 
       } catch (Exception $e) {
@@ -150,9 +152,9 @@ class Candidate extends Connection {
    }
 
 
-   function validateAvailableData($company, $id) {
+   function validateAvailableData($cellphone, $id) {
       // #VALIDACION DE DATOS REPETIDOS
-      $duplicate = $this->checkAvailableData('candidate', 'company', $company, 'La compañia', 'input_company', $id);
+      $duplicate = $this->checkAvailableData('candidates', 'cellphone', $cellphone, 'El número celular', 'input_cellphone', $id, 'users');
       
       if ($duplicate["result"] == true) die(json_encode($duplicate));
    }
@@ -160,7 +162,7 @@ class Candidate extends Connection {
 
    function setCookies($id) {
       try {
-         $query = "SELECT u.id, u.name, u.email, u.password, u.role_id
+         $query = "SELECT u.id, u.email, u.password, u.role_id
          FROM users as u WHERE u.id=$id";
 
          $user_found = $this->Select($query,false);
@@ -171,7 +173,7 @@ class Candidate extends Connection {
             //   $cookie_time = '+1 day';
 
             setcookie("user_id",$user_found["id"], strtotime($cookie_time), "/");
-            setcookie("name",$user_found["name"], strtotime($cookie_time), "/");
+            setcookie("email",$user_found["email"], strtotime($cookie_time), "/");
             setcookie("role_id",$user_found["role_id"] ?? '0', strtotime($cookie_time), "/");
             setcookie("session","active", strtotime($cookie_time), "/");
             setcookie("tema_oscuro",false, strtotime($cookie_time), "/");

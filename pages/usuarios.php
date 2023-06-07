@@ -45,8 +45,6 @@ $current_page = "Usuarios";
               <table id="table" class="table table-hover text-center" style="width:100%">
                   <thead class="thead-dark">
                      <tr>
-                        <th scope="col">Nombre Completo</th>
-                        <th scope="col">Celular</th>
                         <th scope="col">Correo</th>
                         <th scope="col">Rol</th>
                         <th scope="col">Miembro desde</th>
@@ -57,8 +55,6 @@ $current_page = "Usuarios";
                   </tbody>
                   <tfoot>
                      <tr class="thead-dark">
-                        <th>Nombre Completo</th>
-                        <th>Celular</th>
                         <th>Correo</th>
                         <th>Rol</th>
                         <th>Miembro desde</th>
@@ -87,7 +83,7 @@ $current_page = "Usuarios";
             <div class="modal-body">
                <input type="hidden" id="op" name="op" value="" class="not_validate">
                <input type="hidden" id="id" name="id" value='' class="not_validate">
-               <div class="row">
+               <!-- <div class="row">
                   <div class="mb-3 col-md-6">
                      <label for="input_name" class="form-label">Nombre(s): <span class="obligatory"></span></label>
                      <input type="text" class="form-control" id="input_name" name="input_name" data-input-name="NOMBRES">
@@ -96,13 +92,13 @@ $current_page = "Usuarios";
                      <label for="input_last_name" class="form-label">Apellido(s): <span class="obligatory"></span></label>
                      <input type="text" class="form-control" id="input_last_name" name="input_last_name" data-input-name="APELLIDOS">
                   </div>
-               </div>
+               </div> -->
                <div class="row">
-                  <div class="mb-3 col-md-6">
+                  <!-- <div class="mb-3 col-md-6">
                      <label for="input_cellphone" class="form-label">Celular: <span class="obligatory"></span></label>
                      <input type="text" class="form-control" id="input_cellphone" name="input_cellphone" data-input-name="CELULAR">
-                  </div>
-                  <div class="mb-3 col-md-6">
+                  </div> -->
+                  <div class="mb-3 col">
                      <label for="input_email" class="form-label">Correo: <span class="obligatory"></span></label>
                      <input type="email" class="form-control" id="input_email" name="input_email" data-input-name="CORREO">
                   </div>

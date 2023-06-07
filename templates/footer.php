@@ -63,9 +63,6 @@
 <!-- SUMMERNOTE - EDITOR DE TEXTO -->
 <script src="/plugins/summernote-0.8.18/summernote.min.js"></script>
 <script src="/plugins/summernote-0.8.18/summernote-bs4.min.js"></script>
-
-
-
 <script src="/plugins/summernote-0.8.18/lang/summernote-es-ES.min.js"></script>
 
 <!-- bs-stepper- formularios en pasos -->

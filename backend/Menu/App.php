@@ -14,6 +14,7 @@ if (isset($_POST['input_file_path'])) { $file_path = $_POST['input_file_path']; 
 if (isset($_POST['input_icon'])) { $icon = $_POST['input_icon']; }
 if (isset($_POST['input_order'])) { $order = $_POST['input_order']; }
 if (isset($_POST['input_active'])) { $active = $_POST['input_active'] == 'on' ? "1"  : $_POST['input_active']; } else { $active = "0"; }
+if (isset($_POST['input_show_counter'])) { $show_counter = $_POST['input_show_counter'] == 'on' ? "1"  : $_POST['input_show_counter']; } else { $show_counter = "0"; }
 if (isset($_POST['switch_active'])) { $active = $_POST['switch_active']; }
 
 if (isset($_POST['created_at'])) { $created_at = $_POST['created_at']; }
@@ -35,9 +36,9 @@ elseif ($op == "showMyMenus") $Menu->showMyMenus($role_id);
 elseif ($op == 'showSelect') $Menu->showSelect();
 elseif ($op == "show") $Menu->show($id);
 
-elseif ($op == "create") $Menu->create($menu, $tag, $belongs_to, $active, $file_path, $icon, $created_at);
+elseif ($op == "create") $Menu->create($menu, $tag, $belongs_to, $active, $show_counter, $file_path, $icon, $created_at);
 
-elseif ($op == "edit") $Menu->edit($menu, $tag, $belongs_to, $active, $file_path, $icon, $id, $updated_at);
+elseif ($op == "edit") $Menu->edit($menu, $tag, $belongs_to, $active, $show_counter, $file_path, $icon, $id, $updated_at);
 
 elseif ($op == "activeDesactive") $Menu->activeDesactive($active,$id);
 

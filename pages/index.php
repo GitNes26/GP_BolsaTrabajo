@@ -32,7 +32,7 @@ $pagina_acutal = "Bolsa de Trabajo";
    <!-- Main content -->
    <section class="content text-center">
 
-      <div class="content">
+      <div class="content ">
          <div class="row">
 
             <!-- FILTROS -->
@@ -127,7 +127,7 @@ $pagina_acutal = "Bolsa de Trabajo";
             </div>
 
             <!-- LISTA DE EMPELOS -->
-            <div class="col-md-4" id="vacancy_container"></div>
+            <div class="col-md-4 p-3" id="vacancy_container"></div>
 
             <!-- VISTA A DETALLE -->
             <div class="col d-none d-sm-none d-md-block">

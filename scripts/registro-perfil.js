@@ -1,4 +1,9 @@
-console.log("registros-perfil.php");
+$(document).ready(function() {
+   SUMMERNOTE_CONFIG.placeholder = "Escribir Habilidades, competencias, experiencias, observaciones, etc."
+   SUMMERNOTE_CONFIG.toolbar.push(['templates', ['template_candidate']]),
+
+	$('.summernote').summernote(SUMMERNOTE_CONFIG)
+});
 
 $(".select2").select2();
 
@@ -12,13 +17,13 @@ const op_modal = $("#op");
 const input_name_role = $("[name='input_role']");
 const input_role = $("#input_role");
 
-// /* INPUTS DE CARD REGISTRO */
+// /* INPUTS DE REGISTRO EMPRESA */
 const div_company = $("#div_company"),
    input_company = $("#input_company"),
    input_description = $("#input_description"),
    counter_description = $("#counter_description"),
    input_logo_path = $('#input_logo_path'), //este es un input_file
-   preview = $('#preview'),
+   preview_logo = $('#preview_logo'),
    input_business_line_id = $("#input_business_line_id"),
    input_company_ranking_id = $("#input_company_ranking_id"),
    input_state = $("#input_state"),
@@ -28,7 +33,7 @@ const div_company = $("#div_company"),
    input_contact_email = $("#input_contact_email")
    ;
 
-// /* INPUTS DE CARD REGISTER */
+// /* INPUTS DE REGISTRO CANDIDATO */
 const div_candidate = $("#div_candidate"),
    input_name = $("#input_name"),
    input_last_name = $("#input_last_name"),
@@ -65,7 +70,11 @@ btn_reset.click(async (e) => {
 	await resetSelect2(input_interest_tags_ids);
 	await resetSelect2(input_state);
 	await resetSelect2(input_municipality);
-   input_municipality.attr("disabled",true)
+   input_municipality.attr("disabled",true);
+
+	$('.note-editing-area .note-editable').html(null);
+	$('.note-editing-area .note-placeholder').css("display","block");
+
 	
 	setTimeout(() => {
 		input_company.focus();
@@ -93,8 +102,8 @@ input_logo_path.on('change', function(event) {
       imagen.style = "max-height: 200px !important";
 
       // Agrega la imagen a la vista previa
-      preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
-      preview.append(imagen);
+      preview_logo.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+      preview_logo.append(imagen);
    };
 
   // Lee el contenido del archivo como una URL de datos
@@ -159,42 +168,56 @@ input_name_role.on("change",async function()  {
 form_role.on("submit", async (e) => {
 	e.preventDefault();
 
+   console.log();
 	if (!validateInputs(form_role)) return;
 	// return console.log(form_role.serializeArray());
+   let data = form_role.serializeArray();
+   let url_app = URL_COMPANY_APP;
 
-	// if (user_id.val() <= 0) {
-	// 	//NUEVO
-	// 	if (!permission_write) return;
-	// 	user_id.val("");
-	// 	op_modal.val("create");
-	// } else {
-	// 	//EDICION
-	// 	if (!permission_update) return;
-	// 	op_modal.val("edit");
-	// }
+   // si esta seleccionada la "Empresa"
+   if (input_name_role[0].checked) {
+      console.log("soy empresa");
+      // if (user_id.val() <= 0) {
+      // 	//NUEVO
+      // 	if (!permission_write) return;
+      // 	user_id.val("");
+      // 	op_modal.val("create");
+      // } else {
+      // 	//EDICION
+      // 	if (!permission_update) return;
+      // 	op_modal.val("edit");
+      // }
 
-	let data = form_role.serializeArray();
-	// return console.log(data);
-	// let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
-	// if (user_id.val() <= 0) {
-		//NUEVO
-		// addToArray("created_at", current_date, data);
-	// } else {
-	// 	//EDICION
-	// 	addToArray("updated_at", current_date, data);
-	// }
+      // return console.log(data);
+      // let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
+      // if (user_id.val() <= 0) {
+         //NUEVO
+         // addToArray("created_at", current_date, data);
+      // } else {
+      // 	//EDICION
+      // 	addToArray("updated_at", current_date, data);
+      // }
 
-   const form_imagen = $("#form_role")[0];
-	data = new FormData(form_imagen);
-   console.log("input_name_role", input_name_role.val());
-	// return console.log([...data]);
-	// return console.log(data);
+      const form_imagen = $("#form_role")[0];
+      data = new FormData(form_imagen);
+      console.log("input_name_role", input_name_role.val());
+      // return console.log([...data]);
+      // return console.log(data);
+   } else {
+      console.log("soy candidato");
+      url_app = URL_CANDIDATE_APP;
 
-   const url_app = input_name_role.val() == "Empresa"
-   ? URL_COMPANY_APP
-   : URL_CANDIDATE_APP
-	const ajaxResponse = await ajaxRequestFileAsync(url_app, data);
+      const input_current_date = $('.note-editing-area .note-editable').html();
+      addToArray("input_professional_info", input_current_date, data);
+      addToArray("input_user_id", id_cookie, data);
+      
+   }	
+
+   // return console.log(url_app, data);
+	const ajaxResponse = await ajaxRequestAsync(url_app, data);
+	// const ajaxResponse = await ajaxRequestFileAsync(url_app, data);
 	if (ajaxResponse.message == "duplicado") return
+   console.log("ahi quedo");
    
 	// btn_cancel.click();
 	// await fillTable();

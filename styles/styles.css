@@ -108,6 +108,15 @@ body {
 a { color: #2aa549; }
 a:hover { color: #0c7827; }
 
+.content-index, #vacancy_container {
+   max-height: 88.8vh !important;
+   overflow-y: auto;
+   overflow-x: hidden;
+}
+#vacancy_container ::-webkit-scrollbar {
+   width: 4px !important;
+}
+
 .card-detail {
    border: 5px solid #0c7827;
    border-radius: 20px;
@@ -150,7 +159,12 @@ a:hover { color: #0c7827; }
    font-size: 12px !important;
    font-style: italic;
 }
-
+/* 
 .sticky-top {
    top: 6.5%;
 }
+@media screen and (max-width: 767px) {
+   .sticky-top {
+      top: 0%;
+   }
+} */

@@ -3,19 +3,9 @@ var table;
 table = $("#table").DataTable(DT_CONFIG);
 
 $(document).ready(function() {
-	$('.summernote').summernote({
-		placeholder: "Escribir requisitos, expreiencias necesarias, beneficios,  prestaciones, observaciones, etc.",
-		lang: 'es-ES',
-		toolbar: [
-			['style', ['bold', 'italic', 'underline', 'clear', 'highlight']],
-			['font', ['strikethrough', 'superscript', 'subscript']],
-			['para', ['ul', 'ol']],
-			['insert', ['link']],
-			// ['insert', ['link', 'picture', 'video']],
-			// ['view', ['codeview']],
-		 ],
-		 height: 350,
-	});
+	SUMMERNOTE_CONFIG.placeholder = "Escribir requisitos, expreiencias necesarias, beneficios,  prestaciones, observaciones, etc."
+	SUMMERNOTE_CONFIG.toolbar.push(['templates', ['template_vacancy']]),
+	$('.summernote').summernote(SUMMERNOTE_CONFIG)
 });
 
 // btn_modal_form = $("#btn_modal_form"),
@@ -60,7 +50,7 @@ init();
 async function init() {
 	counter_vacancy.text(`0/${input_vacancy.data("limit")}`);
 	counter_description.text(`0/${input_description.data("limit")}`);
-	$('.note-editing-area .note-editable').html("")
+	$('.note-editing-area .note-editable').html(null)
 
 	fillTable();
 
@@ -95,12 +85,12 @@ btn_cancel.click((e) => {
 //RESETEAR FORMULARIOS
 btn_reset.click(async (e) => {
 	id_modal.val("");
-	$('.note-editing-area .note-editable').html("");
+	$('.note-editing-area .note-editable').html(null);
 	resetSelect2(input_company_id);
 	resetSelect2( input_area_id);
    resetSelect2(input_tags_ids);
 
-	$('.note-editing-area .note-placeholder').css("display","d-block");
+	$('.note-editing-area .note-placeholder').css("display","block");
 
 	// PREVIEW
 	$(`#${input_vacancy.attr("data-output")}`).text("Vacante");

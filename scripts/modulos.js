@@ -21,6 +21,8 @@ const
 	input_icon = $("#input_icon"),
 	input_active = $("#input_active"),
 	label_module_enable = $("#label_module_enable"),
+	input_show_counter = $("#input_show_counter"),
+	label_module_counter = $("#label_module_counter"),
 
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset"),
@@ -65,7 +67,8 @@ async function init() {
 
 //RESETEAR FORMULARIOS
 btn_reset.click(async (e) => {
-	label_module_enable.text("Activo")
+	label_module_enable.text("Activo");
+	label_module_counter.text("Mostrar contador");
 	await resetSelect2(input_belongs_to);
 	id_modal.val("");
 	// setTimeout(() => {
@@ -74,11 +77,13 @@ btn_reset.click(async (e) => {
 });
 
 // SWITCH HABILITADO/DESAHBILITADO
-function switchEnabled(status) {
-   if (status) input_active.is(":checked") ? null : input_active.click()
-   else input_active.is(":checked") ? input_active.click() : null 
+function switchEnabled(status, input) {
+	// console.log("status",status);
+   if (status) input.is(":checked") ? null : input.click()
+   else input.is(":checked") ? input.click() : null 
 }
 input_active.change(() => input_active.is(":checked") ? label_module_enable.text("Activo") : label_module_enable.text("No Activo"))
+input_show_counter.change(() => input_show_counter.is(":checked") ? label_module_counter.text("Mostrar Contador") : label_module_counter.text("No Mostrar Contador"))
 
 
 // REGISTRAR O EDITAR OBJETO
@@ -87,7 +92,7 @@ form.on("submit", async (e) => {
 	id_modal.addClass("not_validate");
 	op_modal.addClass("not_validate");
 
-	// if (!validateInputs(form)) return;
+	if (!validateInputs(form)) return;
 
 	if (id_modal.val() <= 0) {
 		//NUEVO
@@ -262,6 +267,7 @@ async function editObj(btn_edit) {
 
 	const obj = ajaxResponse.data;
 	//form
+	// console.log(obj);
 	id_modal.val(Number(obj.id));
 	input_menu.val(obj.menu);
 	input_description.val(obj.description);
@@ -269,8 +275,10 @@ async function editObj(btn_edit) {
 	input_file_path.val(obj.file_path);
 	input_icon.val(obj.icon);
 	await fillSelect2(URL_MENU_APP, obj.belongs_to, input_belongs_to, true);
-	switchEnabled(Boolean(Number(obj.active)))
+	switchEnabled(Boolean(Number(obj.active)), input_active);
+	switchEnabled(Boolean(Number(obj.show_counter)), input_show_counter);
 	label_module_enable.text(obj.active==1 ? "Activo" : "No Activo");
+	label_module_counter.text(obj.show_counter==1 ? "Mostrar Contador" : "No Mostrar Contador");
 
 	setTimeout(() => {
 		input_menu.focus();

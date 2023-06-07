@@ -10,7 +10,6 @@ const
 
 	URL_USER_APP = `${BACKEND_PATH}/User/App.php`,
 	URL_COMPANY_APP = `${BACKEND_PATH}/Company/App.php`,
-	URL_CANDIDATE_APP = `${BACKEND_PATH}/Candidate/App.php`,
 	URL_ROLE_APP = `${BACKEND_PATH}/Role/App.php`,
 	URL_MENU_APP = `${BACKEND_PATH}/Menu/App.php`,
 	URL_BUSINESS_LINE_APP = `${BACKEND_PATH}/BusinessLine/App.php`,
@@ -19,6 +18,7 @@ const
 	URL_COMPANY_RANKING_APP = `${BACKEND_PATH}/CompanyRanking/App.php`,
 
 	URL_VACANCY_APP = `${BACKEND_PATH}/Vacancy/App.php`,
+	URL_CANDIDATE_APP = `${BACKEND_PATH}/Candidate/App.php`,
 	URL_APPLICATION_APP = `${BACKEND_PATH}/Application/App.php`
 	;
 
@@ -35,6 +35,111 @@ const
 	plural_object = $("#plural_object").val()
 
 let auth_token;
+
+const SUMMERNOTE_CONFIG = {
+	placeholder: "Escribir Habilidades, competencias, experiencias, observaciones, etc.",
+	lang: 'es-ES',
+	toolbar: [
+		['style', ['bold', 'italic', 'underline', 'clear', 'highlight']],
+		['font', ['strikethrough', 'superscript', 'subscript']],
+		['para', ['ul', 'ol']],
+		['insert', ['link', 'unlink', 'separator']],
+		// ['templates', ['template_candidate', 'template_vancancy']],
+		// ['insert', ['link', 'picture', 'video']],
+		['view', ['codeview', 'clean']],
+	],   
+	buttons: {
+		separator: function() {
+			var ui = $.summernote.ui;
+			var button = ui.button({
+				contents: '<i class="note-icon-minus"/>',
+				tooltip: 'Separador',
+				click: function() {
+					// Insertar código aquí para agregar el separador en el editor
+					$('.note-editing-area .note-placeholder').css("display","none");
+					var hr = '<hr class="custom-separator">';
+					$('.note-editing-area .note-editable').append(hr);
+					// $('#summernote').summernote('pasteHTML', hr);
+				}
+			});
+			return button.render();
+		},
+		clean: function() {
+			var ui = $.summernote.ui;
+			var button = ui.button({
+				contents: '<i class="fa-solid fa-ban"/>',
+				tooltip: 'Limpiar todo',
+				click: function() {
+					// Insertar código aquí para agregar en el editor
+					$('.note-editing-area .note-placeholder').css("display","block");
+					$('.note-editing-area .note-editable').html(null);
+					// $('#summernote').summernote('pasteHTML', hr);
+				}
+			});
+			return button.render();
+		},
+		template_candidate: function() {
+			// console.log("template", template);
+			var ui = $.summernote.ui;
+			var button = ui.button({
+				contents: '<i class="fa-solid fa-file-lines"/>',
+				tooltip: 'Agregar plantilla',
+				click: function() {
+					// Insertar código aquí para agregar en el editor
+					$('.note-editing-area .note-placeholder').css("display","none");
+
+					$('.note-editing-area .note-editable').html(null);
+					$('.note-editing-area .note-editable').html(`<p></p><p></p><p><b>Habilidades</b></p><ul><li>Habilidad 1</li><li>Habilidad 2</li><li>...</li></ul><hr class="custom-separator"><b>Competencias</b><p></p><ul><li>Competencia 1</li><li>Competencia 2</li><li>....</li></ul><hr class="custom-separator"><b>EXPERIENCIAS</b><p></p><ul><li><b>Empresa - Puesto | </b>01/01/2020<b> - </b>02/02/2023<br>Descripción de lo que hacías...</li><li><span style="font-weight: bolder;">Empresa - Puesto |&nbsp;</span>01/01/2020<span style="font-weight: bolder;">&nbsp;-&nbsp;</span>02/02/2023<br>Descripción de lo que hacías...</li></ul><p><br></p>`);
+					// $('#summernote').summernote('pasteHTML', hr);
+				}
+			});
+			return button.render();
+		},
+		template_vacancy: function() {
+			// console.log("template", template);
+			var ui = $.summernote.ui;
+			var button = ui.button({
+				contents: '<i class="fa-solid fa-file-lines"/>',
+				tooltip: 'Agregar plantilla',
+				click: function() {
+					// Insertar código aquí para agregar en el editor
+					$('.note-editing-area .note-placeholder').css("display","none");
+
+					$('.note-editing-area .note-editable').html(null);
+					$('.note-editing-area .note-editable').html(`<p class="">
+						<span class="fw-bolder">Requisitos</span>
+						<ul class="" id="output_requirements">
+							<li>Requerimiento 1</li>
+							<li>Requerimiento 1</li>
+							<li>Requerimiento 1</li>
+						</ul>
+					</p>
+					<p class="">
+						<span class="fw-bolder">Expriencia necesaria</span>
+						<ul class="" id="output_necessary_experience">
+							<li>Experiencias 1</li>
+							<li>Experiencias 1</li>
+							<li>Experiencias 1</li>
+						</ul>
+					</p>
+					<!-- ./ DETALLES DEL EMPELO -->
+					<hr>
+					<p class="">
+						<span class="fw-bolder">Beneficios</span>
+						<ul class="" id="output_benefits">
+							<li>Beneficio 1</li>
+							<li>Beneficio 1</li>
+							<li>Beneficio 1</li>
+						</ul>
+					</p>`);
+					// $('#summernote').summernote('pasteHTML', hr);
+				}
+			});
+			return button.render();
+		}
+	},
+	height: 350,
+}
 //#endregion VARIABLES
 
 // console.log("Cookies",Cookies.get());
@@ -324,13 +429,21 @@ const fillSidebar = async (show_toast=false) => {
 			(menu) => menu.belongs_to == parent_menu.id
 		);
 		children_menus.sort((a, b) => b.order - a.order);
-		children_menus.map((child_menu) => {
+		children_menus.map(async (child_menu) => {
 			menus += `
               <ul class="nav nav-treeview text-sm">
                 <li class="nav-item">
                     <a href="${PAGES_PATH}/${child_menu.file_path}" class="nav-link">
                         <i class="nav-icon ${child_menu.icon} text-sm"></i>
-                        <p>${child_menu.menu}</p>
+                        <p>
+									${child_menu.menu}`;
+                           if (Boolean(child_menu.show_counter)) {
+										// const data = {op: "counter"}
+										// const ajaxCount = await ajaxRequestAsync(URL_MENU_APP, data, null, null, false);
+										// const count = ajaxCount.data;
+										menus += `<span class="badge badge-info right notification">0</span>`;
+									}
+								menus += `</p>
                     </a>
                 </li>
               </ul>`;

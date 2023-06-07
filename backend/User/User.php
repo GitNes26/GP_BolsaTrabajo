@@ -70,7 +70,7 @@ class User extends Connection {
 
          $password_hash = password_hash($password,PASSWORD_DEFAULT);
          $query = "INSERT INTO users (email,password,created_at) VALUES (?,?,?)";
-         $this->ExecuteQuery($query, array($email, $password_hash, $created_at) );
+         $this->ExecuteQuery($query, array(strtolower($email), $password_hash, $created_at) );
          // $insert_id = (int)$this->getInsertId();
          // $objeto->_name_id = $insert_id;
 
@@ -91,7 +91,7 @@ class User extends Connection {
    function setCookies($id) {
       try {
          $query = "SELECT u.id, u.email, u.password, u.role_id, r.role
-         FROM users u INNER JOIN roles r ON u.role_id=r.id WHERE u.id=$id";
+         FROM users u LEFT JOIN roles r ON u.role_id=r.id WHERE u.id=$id";
 
          $user_found = $this->Select($query,false);
 
@@ -145,8 +145,8 @@ class User extends Connection {
       try {
          $response = $this->defaultResponse();
          $query = "SELECT u.*, r.role
-         FROM users u INNER JOIN roles r ON u.role_id=r.id 
-         WHERE u.active=1";
+         FROM users u LEFT JOIN roles r ON u.role_id=r.id 
+         WHERE u.active=1 ORDER BY id DESC";
          $result = $this->Select($query, true);
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -166,7 +166,7 @@ class User extends Connection {
 
       try {
          $query = "SELECT u.*, r.id role_id, r.role
-         FROM users u INNER JOIN roles r ON u.role_id=r.id 
+         FROM users u LEFT JOIN roles r ON u.role_id=r.id 
          WHERE u.active=1 and u.id=$id";
          $result = $this->Select($query,false);
          $response = $this->correctResponse();
@@ -193,7 +193,7 @@ class User extends Connection {
 
          $password_hash = password_hash($password,PASSWORD_DEFAULT);
          $query = "INSERT INTO users (email, password, role_id, created_at) VALUES (?,?,?,?)";
-         $this->ExecuteQuery($query, array($email, $password_hash, $role_id, $created_at) );
+         $this->ExecuteQuery($query, array(strtolower($email), $password_hash, $role_id, $created_at) );
          // $insert_id = (int)$this->getInsertId();
          // $objeto->_name_id = $insert_id;
 
@@ -222,10 +222,10 @@ class User extends Connection {
          if ($change_password) {
             $password_hash = password_hash($password,PASSWORD_DEFAULT);
             $query = "UPDATE users SET email=?, password=?, role_id=?, updated_at=? WHERE id=?";
-            $this->ExecuteQuery($query, array($email, $password_hash, $role_id, $updated_at, $id));
+            $this->ExecuteQuery($query, array(strtolower($email), $password_hash, $role_id, $updated_at, $id));
          } else {
             $query = "UPDATE users SET email=?, role_id=?, updated_at=? WHERE id=?";
-            $this->ExecuteQuery($query, array($email, $role_id, $updated_at, $id));
+            $this->ExecuteQuery($query, array(strtolower($email), $role_id, $updated_at, $id));
          }
 
          $id = $_COOKIE["user_id"];
@@ -268,7 +268,7 @@ class User extends Connection {
    }
 
    function validateAvailableData($email, $id) {
-      $duplicate = $this->checkAvailableData('users', 'email', $email, 'El correo', 'input_email', $id);
+      $duplicate = $this->checkAvailableData('users', 'email', strtolower($email), 'El correo', 'input_email', $id);
       if ($duplicate["result"] == true) die(json_encode($duplicate));
    }
 }
