@@ -1,6 +1,7 @@
 
 //#region VARIABLES
 const
+	vacancies_enabled = $("#vacancies_enabled"),
    form_filter = $("#form_filter"),
    btn_show_filters = $("#btn_show_filters"),
    input_filter_search = $("#input_filter_search"),
@@ -134,7 +135,7 @@ vacancy_container.click(async (e) => {
 })
 
 async function fillVacancies(show_toas=true) {
-	let data = { op: "index" };
+	let data = { op: "indexJobBag" };
 	const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data, null, true, show_toas);
 
 	//Limpiar table
@@ -176,6 +177,7 @@ async function fillVacancies(show_toas=true) {
 	card_vacancy = $(".card_vacancy");
 
    adaptDetail();
+	vacancies_enabled.text(dataVacancies.length);
 }
 
 

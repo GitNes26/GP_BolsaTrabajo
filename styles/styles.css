@@ -113,9 +113,7 @@ a:hover { color: #0c7827; }
    overflow-y: auto;
    overflow-x: hidden;
 }
-#vacancy_container ::-webkit-scrollbar {
-   width: 4px !important;
-}
+
 
 .card-detail {
    border: 5px solid #0c7827;
@@ -159,12 +157,16 @@ a:hover { color: #0c7827; }
    font-size: 12px !important;
    font-style: italic;
 }
+#vacancy_container ::-webkit-scrollbar {
+   width: 4px !important;
+}
 /* 
 .sticky-top {
    top: 6.5%;
 }
+*/
 @media screen and (max-width: 767px) {
    .sticky-top {
-      top: 0%;
+      top: 10%;
    }
-} */
+}

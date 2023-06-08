@@ -12,19 +12,18 @@ $pagina_acutal = "Bolsa de Trabajo";
    <section class="content-header">
       <div class="container-fluid">
          <div class="row mb-2">
-            <div class="col-sm-6">
+            <div class="col text-center">
                <h1 class="fw-bolder text-uppercase">
                <i class="fa-regular fa-sack-dollar"></i>&nbsp; <?= $pagina_acutal ?>
-                  <em class="fw-ligth text-muted lead text-sm"></em>
+                  <em class="fw-ligth text-muted lead text-sm">| Actualmente contamos con <b id="vacancies_enabled" class="badge bg-dark">0</b> vacantes disponibles para ti</em>
                </h1>
             </div>
-            <div class="col-sm-6">
+            <!-- <div class="col-sm-6">
                <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="<?= $ADMIN_PATH ?>"><i class="fa-solid fa-house"></i>&nbsp; Inicio</a></li>
-                  <!-- <li class="breadcrumb-item">Catálogos</li> -->
                   <li class="breadcrumb-item active"><?= $pagina_acutal ?></li>
                </ol>
-            </div>
+            </div> -->
          </div>
       </div><!-- /.container-fluid -->
    </section>

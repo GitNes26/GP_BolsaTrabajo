@@ -27,6 +27,7 @@ if (isset($_POST['deleted_at'])) { $deleted_at = $_POST['deleted_at']; }
 #PETICIONES
 
 if ($op == "index") $Vacancy->index();
+if ($op == "indexJobBag") $Vacancy->indexJobBag();
 
 elseif ($op == "show") $Vacancy->show($id);
 elseif ($op == 'showSelect') $Vacancy->showSelect();

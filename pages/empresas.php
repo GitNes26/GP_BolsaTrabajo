@@ -45,8 +45,10 @@ $current_page = "Empresas";
               <table id="table" class="table table-hover text-center" style="width:100%">
                   <thead class="thead-dark">
                      <tr>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Rol</th>
+                        <th scope="col">Empresa</th>
+                        <th scope="col">Contacto</th>
+                        <th scope="col">Giro</th>
+                        <th scope="col">Tamaño</th>
                         <th scope="col">Miembro desde</th>
                         <th scope="col">Acciones</th>
                      </tr>
@@ -55,10 +57,12 @@ $current_page = "Empresas";
                   </tbody>
                   <tfoot>
                      <tr class="thead-dark">
-                        <th>Correo</th>
-                        <th>Rol</th>
-                        <th>Miembro desde</th>
-                        <th>Acciones</th>
+                        <th scope="col">Empresa</th>
+                        <th scope="col">Contacto</th>
+                        <th scope="col">Giro</th>
+                        <th scope="col">Tamaño</th>
+                        <th scope="col">Miembro desde</th>
+                        <th scope="col">Acciones</th>
                      </tr>
                   </tfoot>
 
@@ -103,6 +107,14 @@ $current_page = "Empresas";
                      <input type="email" class="form-control" id="input_email" name="input_email" data-input-name="CORREO">
                   </div>
                </div> -->
+               <div class="row"> <!-- USUARIO -->
+                  <div class="mb-3 col">
+                     <label for="input_user_id" class="form-label">Usuario: <i>(con el que se registro al inicio)</i><span class="obligatory"></span></label>
+                     <select class="select2 form-control" style="width:100%"
+                     id="input_user_id" name="input_user_id" data-input-name="USUARIO">
+                     </select>
+                  </div>
+               </di>
                <div class="row"> <!-- LOGO Y NOMBRE -->
                   <div class="col-3 rounded-lg"> <!-- LOGO -->
                      <input type="file" id="input_logo_path" name="input_logo_path" class="d-none" accept="image/*">

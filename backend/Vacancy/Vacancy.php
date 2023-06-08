@@ -47,12 +47,12 @@ class Vacancy extends Connection {
          FROM vacancies v 
          INNER JOIN companies c ON v.company_id=c.id 
          INNER JOIN areas a ON v.area_id=a.id
-         WHERE v.publication_date >=  v.active=1 ORDER BY v.id DESC;";
+         WHERE v.publication_date <= Date_format(now(),'%Y-%m-%d 00:00:00') AND v.expiration_date >= Date_format(now(),'%Y-%m-%d 23:59:59') AND v.active=1 ORDER BY v.id DESC;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
-         $response["alert_title"] = "Registros cargados";
-         $response["alert_text"] = "Registros cargados";
+         $response["alert_title"] = "Vacantes cargados";
+         $response["alert_text"] = "Vacantes cargados";
          $response["data"] = $result;
          $this->Close();
    

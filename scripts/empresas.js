@@ -3,17 +3,18 @@ var table;
 table = $("#table").DataTable(DT_CONFIG);
 
 $(document).ready(() => {
-	$("#div_new_password").hide();
-	$("#input_new_password").prop("readonly", true);
+
 });
 
-const btn_modal_form = $("#btn_modal_form"),
+const 
+	btn_modal_form = $("#btn_modal_form"),
 	tbody = $("#table tbody"),
 	modal_body = $("#modal-body"),
 	form = $("#form"),
 	modal_title = $(".modal-title"),
 	id_modal = $("#id"),
 	op_modal = $("#op"),
+	input_user_id = $("#input_user_id"),
 	input_company = $("#input_company"),
    input_description = $("#input_description"),
    counter_description = $("#counter_description"),
@@ -25,11 +26,11 @@ const btn_modal_form = $("#btn_modal_form"),
    input_municipality = $("#input_municipality"),
    input_contact_name = $("#input_contact_name"),
    input_contact_phone = $("#input_contact_phone"),
-   input_contact_email = $("#input_contact_email")   
-   ;
+   input_contact_email = $("#input_contact_email"),
 	
 	btn_submit = $("#btn_submit"),
-	btn_reset = $("#btn_reset");
+	btn_reset = $("#btn_reset")
+	;
 	
 //#endregion VARIABLES
 $(".select2").select2({ dropdownParent: $("#modal") });
@@ -42,69 +43,35 @@ focusSelect2($(".select2"));
 init();
 async function init() {
 	fillTable();
-	fillSelect2(URL_ROLE_APP, -1, input_role_id);
+	counter_description.text(`0/${input_description.data("limit")}`);
+   showStates();
+   fillSelect2(URL_USER_APP, -1, input_user_id, false);
+
+   fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
+   fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
+   // fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
+   input_company.focus();
 }
 
-// CONFIRMAR CONTRASEÑA
-input_confirm_password.on("input", function () {
-	var pwd1 = input_password.val();
-	var pwd2 = input_confirm_password.val();
 
-	if (pwd1 === pwd2) {
-		feedback_password
-			.addClass("text-success")
-			.text("Las contraseñas coinciden")
-			.removeClass("text-danger");
-		input_password.addClass("is-valid").removeClass("is-invalid");
-		input_confirm_password
-			.addClass("is-valid")
-			.removeClass("is-invalid");
-		btn_submit.prop("disabled", false);
-	} else {
-		feedback_password
-			.addClass("text-danger")
-			.text("Las contraseñas no coinciden")
-			.removeClass("text-success");
-		input_password.addClass("is-invalid").removeClass("is-valid");
-		input_confirm_password
-			.addClass("is-invalid")
-			.removeClass("is-valid");
-		btn_submit.prop("disabled", true);
-	}
-});
-
-//CAMBIAR CONTRASEÑA - SWITCH
-switch_new_password.click(() => {
-	if (switch_new_password.is(":checked")) {
-		input_new_password.prop("readonly", false);
-	} else {
-		input_new_password.val("");
-		input_new_password.prop("readonly", true);
-	}
-});
 
 //CLICK EN BTN ABRIR MODAL
 btn_modal_form.click((e) => {
 	e.preventDefault();
-	$("#div_new_password").hide();
-	$("#input_new_password").prop("readonly", true);
 
 	modal_title.html(
-		"<i class='fa-solid fa-user-pen'></i></i>&nbsp; REGISTRAR USUARIO"
+		"<i class='fa-solid fa-circle-plus'></i></i>&nbsp; REGISTRAR EMPRESA"
 	);
 	btn_submit.removeClass("btn-primary");
 	btn_submit.addClass("btn-success");
 	btn_submit.text("AGREGAR");
-	div_new_password.hide();
-	div_password.show();
 
 	//Resetear form
 	btn_reset.click();
 
 	//EXCLUIR INPUTS PARA VALIDAR
-	input_new_password.addClass("not_validate");
-	input_password.removeClass("not_validate");
-	input_confirm_password.removeClass("not_validate");
+	// input_new_password.addClass("not_validate");
+	// input_password.removeClass("not_validate");
 
 	// input_email.val("nuevo@gmial.com");
 	// input_password.val("1");
@@ -112,21 +79,24 @@ btn_modal_form.click((e) => {
 
 //RESETEAR FORMULARIOS
 btn_reset.click(async (e) => {
-	input_password.removeClass("is-invalid is-valid");
-	input_confirm_password.removeClass("is-invalid is-valid");
-	feedback_password.text("").removeClass("text-danger text-success");
 	btn_submit.prop("disabled", false);
 
 	//EXCLUIR INPUTS PARA VALIDAR
-	input_new_password.addClass("not_validate");
-	input_password.removeClass("not_validate");
-	input_confirm_password.removeClass("not_validate");
 
-	await resetSelect2(input_role_id);
+	await resetSelect2(input_user_id);
+	await resetSelect2(input_business_line_id);
+	await resetSelect2(input_company_ranking_id);
+	// await resetSelect2(input_interest_tags_ids);
+	await resetSelect2(input_state);
+	await resetSelect2(input_municipality);
+   input_municipality.attr("disabled",true);
+
+	// $('.note-editing-area .note-editable').html(null);
+	// $('.note-editing-area .note-placeholder').css("display","block");
 	
 	id_modal.val("");
 	setTimeout(() => {
-		input_email.focus();
+		input_user_id.focus();
 	}, 500);
 });
 
@@ -135,10 +105,7 @@ form.on("submit", async (e) => {
 	e.preventDefault();
 	id_modal.addClass("not_validate");
 	op_modal.addClass("not_validate");
-	input_new_password.addClass("not_validate");
 
-	if (switch_new_password.is(":checked"))
-		input_new_password.removeClass("not_validate");
 	if (!validateInputs(form)) return;
 
 	if (id_modal.val() <= 0) {
@@ -153,29 +120,19 @@ form.on("submit", async (e) => {
 	let data = form.serializeArray();
 	// return console.log(data);
 	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
-	if (id_modal.val() <= 0) {
-		//NUEVO
-		addToArray("created_at", current_date, data);
-	} else {
+	// if (id_modal.val() <= 0) {
+	// 	//NUEVO
+	// 	addToArray("created_at", current_date, data);
+	// } else {
 		//EDICION
 		addToArray("updated_at", current_date, data);
-	}
-
-	// addToArray("consultor_paquete_id", 2, data);
-	// addToArray("consultor_fecha_pago", current_date, data);
-	// addToArray("consultor_pagado", true, data);
-	// addToArray("tipo_objeto","consultor",data);
-
-	// addToArray("suscriptor_name_negocio",vacasCrew,data);
-	// addToArray("suscriptor_consultor_id",2,data);
-	// addToArray("suscriptor_paquete_id",2,data);
-	// addToArray("suscriptor_consultor_viewer",true,data);
-	// addToArray("suscriptor_fecha_pago",current_date,data);
-	// addToArray("suscriptor_pagado",true,data);
-	// addToArray("tipo_objeto", "suscriptor", data);
-
+	// }
+	// console.log("disabled:",input_user_id.attr("disabled"));
+	// if (input_user_id.attr("disabled")) await input_user_id.removeAttr("disabled"); 
+	// console.log("disabled:",input_user_id.attr("disabled"));
 	// return console.log(data);
-	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data);
+	
+	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
 	if (ajaxResponse.message == "duplicado") return;
 	if (id_modal.val() == id_cookie) fillSidebar();
 	fillTable();
@@ -183,7 +140,7 @@ form.on("submit", async (e) => {
 
 async function fillTable() {
 	let data = { op: "index" };
-	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data);
+	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
 
 	//Limpiar table
 	tbody.slideUp();
@@ -195,29 +152,48 @@ async function fillTable() {
 
 	objResponse.map((obj) => {
 		//Campos
-		let column_email = `${obj.email}`,
-			column_role = `${obj.role}`,
-			campo_creado = formatDatetime(obj.created_at, true);
+		let 
+			column_company = `
+				<b>${obj.company}</b><br>
+				${obj.municipality}, ${obj.state}<br><br>
+
+				<b>${obj.email}</b>
+			`,
+			column_contact = `
+				<i class="fa-solid fa-id-badge"></i>&nbsp; <b>${obj.contact_name}</b><br>
+				<i class="fa-solid fa-phone-office"></i>&nbsp; ${obj.contact_phone}<br>
+				<i class="fa-solid fa-at"></i>&nbsp; ${obj.contact_email}
+			`,
+			column_business_line = `
+				${obj.business_line}
+			`,
+			column_company_ranking = `
+				<b>${obj.company_ranking}</b><br>
+				${obj.cr_description}
+			`,
+			column_created_at = formatDatetime(obj.created_at, true);
 
 		let column_buttons = `<td class='align-middle'>
             <div class='btn-group' role='group' aria-label='Basic example'>`;
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Usuario' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-user-pen fa-lg i_edit'></i></button>`;
+				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Empresa' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-user-pen fa-lg i_edit'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Usuario' data-name='${obj.email}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
+				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.user_id}' title='Eliminar Empresa' data-name='${obj.company}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
 		}
 		column_buttons += `</div>
          </td>`;
 
 		list.push([
-			column_email,
-			column_role,
-			campo_creado,
+			column_company,
+			column_contact,
+			column_business_line,
+			column_company_ranking,
+			column_created_at,
 			column_buttons,
 		]);		
 	});
@@ -268,30 +244,37 @@ tbody.click((e) => {
 
 //EDITAR OBJETO
 async function editObj(btn_edit) {
-	modal_title.html("<i class='fa-solid fa-user-pen'></i></i>&nbsp; EDITAR USUARIO");
+	modal_title.html("<i class='fa-solid fa-user-pen'></i></i>&nbsp; EDITAR EMPRESA");
 	btn_submit.removeClass("btn-success");
 	btn_submit.addClass("btn-primary");
 	btn_submit.text("GUARDAR");
-	div_password.hide();
-	div_new_password.show();
 
 	//EXCLUIR INPUTS PARA VALIDAR
-	input_password.addClass("not_validate");
-	input_confirm_password.addClass("not_validate");
 
 	let id_obj = btn_edit.attr("data-id");
 	let data = { id: id_obj, op: "show" };
-	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data);
+	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
 
 	const obj = ajaxResponse.data;
+	console.log(obj);
 	//form
 	id_modal.val(Number(obj.id));
-	input_email.val(obj.email);
-	input_new_password.val("");
+	await fillSelect2(URL_USER_APP, obj.user_id, input_user_id);
+	// input_user_id.attr("disabled", true);
+	
+	input_company.val(obj.company);
+	input_description.val(obj.description);
+	await fillSelect2(URL_BUSINESS_LINE_APP, obj.business_line_id, input_business_line_id);
+	await fillSelect2(URL_COMPANY_RANKING_APP, obj.company_ranking_id, input_company_ranking_id);
+	// await fillSelect2(, obj.municipality, input_municipality);
+	// await fillSelect2(, obj.state, input_state);
+	input_contact_name.val(obj.contact_name);
+	input_contact_phone.val(obj.contact_phone);
+	input_contact_email.val(obj.contact_nemail);
+	
 
-	await fillSelect2(URL_ROLE_APP, obj.role_id, input_role_id);
 	setTimeout(() => {
-		input_email.focus();
+		input_company.focus();
 	}, 500);
 }
 
@@ -303,14 +286,14 @@ async function deleteObj(btn_delete) {
 	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
 	let data = {
 		op: "delete",
-		id: Number(btn_delete.attr("data-id")),
+		user_id: Number(btn_delete.attr("data-id")),
 		deleted_at: current_date,
 	};
 
 	ajaxRequestDeleteAsync(
 		title,
 		text,
-		URL_USER_APP,
+		URL_COMPANY_APP,
 		data,
 		"fillTable()"
 	);

@@ -161,6 +161,24 @@ class User extends Connection {
       die(json_encode($response));
    }
 
+   function showSelect() {
+      try {
+         $response = $this->defaultResponse();
+         $query = "SELECT u.id value, u.email text FROM users u WHERE u.active=1";
+         $result = $this->Select($query, true);
+         $response = $this->correctResponse();
+         $response["message"] = "Peticion satisfactoria | registros encontrados.";
+         $response["data"] = $result;
+         $this->Close();
+
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->catchResponse($error_message);
+      }
+      die(json_encode($response));
+   }
+
    function show($id) {
       $response = $this->defaultResponse();
 

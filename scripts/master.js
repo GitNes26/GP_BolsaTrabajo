@@ -661,11 +661,11 @@ async function fillSelect2(url_app, selected_index, selector, select_modules=fal
 
 
 	let options = /*HTML*/ `
-      <option value="-1" disabled>Selecciona una opción...</option>
+      <option value="-1">Selecciona una opción...</option>
    `;
 	if (selector.data().select2.options.options.multiple) {
 		options = /*HTML*/ `
-			<option value="-1" disabled>Selecciona etiquetas...</option>
+			<option value="-1">Selecciona etiquetas...</option>
 		`;
 	}
 	if(select_modules) {
@@ -821,7 +821,7 @@ async function showStates() {
 				}
 			});
 		}
-		let comboStates = "<option value='' disabled>Seleccionar una opción...</option>";
+		let comboStates = "<option value=''>Seleccionar una opción...</option>";
 		states.forEach((element) => {
 			let seleccionar_estado = "";
 			if (estado != null) {

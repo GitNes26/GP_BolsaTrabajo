@@ -98,7 +98,7 @@ class Application extends Connection {
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
          $response["alert_title"] = "Solicitud enviada";
-         $response["alert_text"] = "Revisa el status de la postulación en la sección de solicitudes";
+         $response["alert_text"] = "Revisa el status de la postulación en la sección de 'Mis Solicitudes'";
          $response["toast"] = false;
          $this->Close();
    

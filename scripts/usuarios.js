@@ -193,7 +193,7 @@ async function fillTable() {
 		//Campos
 		let column_email = `${obj.email}`,
 			column_role = `${obj.role}`,
-			campo_creado = formatDatetime(obj.created_at, true);
+			column_created_at = formatDatetime(obj.created_at, true);
 
 		let column_buttons = `<td class='align-middle'>
             <div class='btn-group' role='group' aria-label='Basic example'>`;
@@ -213,7 +213,7 @@ async function fillTable() {
 		list.push([
 			column_email,
 			column_role,
-			campo_creado,
+			column_created_at,
 			column_buttons,
 		]);		
 	});

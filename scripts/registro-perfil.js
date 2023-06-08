@@ -61,10 +61,24 @@ focusSelect2($(".select2"));
 //       Cookies.get("dark_mode") ? $("body").addClass("dark-mode") : $("body").removeClass("dark-mode")
 
 
+init();
+async function init() {
+   counter_description.text(`0/${input_description.data("limit")}`);
+   showStates();
+
+   fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
+   fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
+   fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
+   user_id.val(id_cookie);
+   input_company.focus();
+};
+
 //RESETEAR FORMULARIOS
 btn_reset.click(async (e) => {
 
 	//EXCLUIR INPUTS PARA VALIDAR
+
+
 	await resetSelect2(input_business_line_id);
 	await resetSelect2(input_company_ranking_id);
 	await resetSelect2(input_interest_tags_ids);
@@ -112,17 +126,7 @@ input_logo_path.on('change', function(event) {
 
 
 
-init();
-async function init() {
-   counter_description.text(`0/${input_description.data("limit")}`);
-   showStates();
 
-   fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
-   fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
-   fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
-   user_id.val(id_cookie);
-   input_company.focus();
-};
 
 
 input_name_role.on("change",async function()  {
