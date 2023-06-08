@@ -42,7 +42,7 @@ $pagina_acutal = "Dashboard";
    </section>
    <!-- /.content -->
 
-   <!-- Modal Usuario -->
+   <!-- Modal -->
    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
          <div class="modal-content">

@@ -26,6 +26,7 @@ const btn_close = $(".btn-close");
 
 const
 	id_cookie = Number(Cookies.get("user_id")),
+	role_cookie = Number(Cookies.get("role_id")),
 	permission_read = Boolean(Cookies.get("permission_read")),
 	permission_write = Boolean(Cookies.get("permission_write")),
 	permission_delete = Boolean(Cookies.get("permission_delete")),
@@ -202,20 +203,23 @@ const ajaxRequestAsync = async (
 		$.unblockUI();
 	}
 }
-const ajaxRequestDeleteAsync = async (
+const ajaxRequestQuestionAsync = async (
 	title,
 	text,
 	url,
 	data,
-	function_complete_string
+	function_complete_string,
+	text_btn_confirm = "Eliminar",
+	color_btn_confirm = "#B04759",
+
 ) => {
 	Swal.fire({
 		title: title,
 		text: text,
 		icon: "warning",
 		showCancelButton: true,
-		confirmButtonColor: "#B04759",
-		confirmButtonText: "Eliminar",
+		confirmButtonColor: color_btn_confirm,
+		confirmButtonText: text_btn_confirm,
 		cancelButtonColor: "#9BA4B5",
 		cancelButtonText: "Cancelar",
 	}).then(async (result) => {

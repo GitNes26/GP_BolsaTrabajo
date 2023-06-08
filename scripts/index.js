@@ -46,6 +46,10 @@ async function init() {
 	fillSelect2(URL_AREA_APP, -1, input_filter_area_id);
    fillSelect2(URL_TAG_APP, -1, input_filter_interest_tags_ids, false);
    showStates();
+	if (role_cookie != 4) {
+		btns_submit.attr("disabled",true);
+		btns_submit.text("SOLO CANDIDATOS");
+	}
 }
 
 
@@ -126,6 +130,10 @@ vacancy_container.click(async (e) => {
 			$(`.output_more_info`).html(obj.more_info);
 			inputs_id.val(obj.id);
 			btns_submit.attr("disabled",false);
+			if (role_cookie != 4) {
+				btns_submit.attr("disabled",true);
+				btns_submit.text("SOLO CANDIDATOS");
+			}
 			setTimeout(() => {
 				input_filter_search.focus();
 			}, 500);
@@ -294,9 +302,10 @@ async function applyVacancy(form_js) {
 	let data = { 
 		op: "checkAlreadyApplied",
 		input_vacancy_id: inputs_id.val(), 
-		input_candidate_id: id_cookie,
+		user_id: id_cookie,
 	}
 	const ajaxApplied = await ajaxRequestAsync(URL_APPLICATION_APP, data, null, true, false);
+	//validar cuando no sea candidato! o quitar el boton de postularse
 	if (ajaxApplied.data.applied > 0) {
 		showToast(ajaxApplied.alert_icon, ajaxApplied.alert_title, "bottom-end")
 		btns_submit.attr("disabled",false);
@@ -307,7 +316,7 @@ async function applyVacancy(form_js) {
 	data = { 
 		op: "apply",
 		input_vacancy_id: inputs_id.val(), 
-		input_candidate_id: id_cookie,
+		user_id: id_cookie,
 		created_at: moment().format("YYYY-MM-DD hh:mm:ss")
 	}
 	console.log("data",data);

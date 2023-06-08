@@ -21,7 +21,7 @@ $current_page = "Empresas";
             <div class="col-sm-6">
                <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="<?php echo $ADMIN_PATH ?>"><i class="fa-solid fa-house"></i>&nbsp; <?php echo $role ?? "" ?></a></li>
-                  <li class="breadcrumb-item">Administración</li>
+                  <!-- <li class="breadcrumb-item">Administración</li> -->
                   <li class="breadcrumb-item active"><?php echo $current_page ?></li>
                </ol>
             </div>
@@ -76,7 +76,7 @@ $current_page = "Empresas";
    </section>
    <!-- /.content -->
 
-   <!-- Modal Usuario -->
+   <!-- Modal -->
    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
          <form class="modal-content" id="form" enctype="multipart/form-data">

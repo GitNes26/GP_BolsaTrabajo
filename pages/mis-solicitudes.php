@@ -44,7 +44,6 @@ $current_page = "Solicitudes";
                   <table id="table" class="table table-hover text-center" style="width:100%">
                      <thead class="thead-dark">
                         <tr>
-                           <th scope="col">Candidato</th>
                            <th scope="col">Vacante</th>
                            <th scope="col">Info</th>
                            <th scope="col">Flujo</th>
@@ -55,7 +54,6 @@ $current_page = "Solicitudes";
                      </tbody>
                      <tfoot>
                         <tr class="thead-dark">
-                           <th scope="col">Candidato</th>
                            <th scope="col">Vacante</th>
                            <th scope="col">Info</th>
                            <th scope="col">Flujo</th>

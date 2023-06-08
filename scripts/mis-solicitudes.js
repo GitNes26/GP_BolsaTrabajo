@@ -73,7 +73,7 @@ form.on("submit", async (e) => {
 });
 
 async function fillTable(show_toas=true) {
-	let data = { op: "myApplicationsByCompany", user_id: id_cookie };
+	let data = { op: "myApplications", user_id: id_cookie };
 	const ajaxResponse = await ajaxRequestAsync(URL_APPLICATION_APP, data, null, true, show_toas);
 
 	//Limpiar table
@@ -85,7 +85,6 @@ async function fillTable(show_toas=true) {
 	// console.log(objResponse);
 
 	objResponse.map((obj) => {
-		
 		switch (obj.status) {
 			case 'Pendiente':
 				bg_badge = "bg-secondary";
@@ -97,7 +96,7 @@ async function fillTable(show_toas=true) {
 				break;
 			case 'En evaluación':
 				bg_badge = "bg-primary";
-				icon = `<i class="fa-brands fa-readme fa-fade"></i>`;
+				icon = ``;
 				break;
 			case 'Aceptada':
 				bg_badge = "bg-success";
@@ -119,13 +118,7 @@ async function fillTable(show_toas=true) {
 		}
 		let status = `<span class="badge ${bg_badge}">${icon} &nbsp; ${obj.status}</span>`;
 		//Campos
-		let
-			column_candidate = `
-				<button class='btn btn-outline-dark' type='button' data-id='${obj.ca_id}' onclick="showCandidate(${obj.ca_id})" title='Ver Candidato' data-bs-toggle="modal" data-bs-target="#modal_candidate"><i class='fa-solid fa-eye fa-lg'></i></button><br><br>
-				<b>${obj.name} ${obj.last_name}</b><br><br>
-				<i class="fa-solid fa-at"></i>&nbsp; ${obj.email}<br>
-				<i class="fa-solid fa-phone"></i>&nbsp; ${obj.cellphone}<br>
-			`; 
+		let 
 			column_vacancy = `
 				<b>${obj.vacancy}</b><br><br>
 				<b>${obj.company}</b><br>
@@ -136,8 +129,8 @@ async function fillTable(show_toas=true) {
 				<div class="mb-2">
                   <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; 
                   <span class="fw-bolder">&nbsp;</span> 
-                  <span class="">${formatCurrency(obj.min_salary)}</span> &nbsp;a&nbsp; 
-                  <span class="">${formatCurrency(obj.max_salary)}</span>
+                  <span class="">$${obj.min_salary}</span> &nbsp;a&nbsp; 
+                  <span class="">$${obj.max_salary}</span>
                </div>
                <div class="mb-2">
                   <i class="fa-solid fa-briefcase"></i>&nbsp; 
@@ -156,27 +149,21 @@ async function fillTable(show_toas=true) {
 			`;
 
 		let column_buttons = `<td class='align-middle'>
-            <div class='d-grid gap-2' role='group'>`;
+            <div class='btn-group' role='group'>`;
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary' type='button' data-id='${obj.id}' onclick="showDetail(${obj.v_id})" title='Mostrar Vacante' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-eye fa-lg'></i></button>
-				<button class='btn btn-sm btn-outline-secondary' type='button' onclick="changeStatus('Pendiente', ${obj.a_id})" title='Pasar a status PENDIENTE'>PENDIENTE</button>
-				<button class='btn btn-sm btn-outline-info' type='button' onclick="changeStatus('Recibida', ${obj.a_id})" title='Pasar a status RECIBIDA'>RECIBIDA</button>
-				<button class='btn btn-sm btn-outline-primary' type='button' onclick="changeStatus('En evaluación', ${obj.a_id})" title='Pasar a status EN'>EN EVALUACIÓN</button>
-				<button class='btn btn-sm btn-outline-success' type='button' onclick="changeStatus('Aceptada', ${obj.a_id})" title='Pasar a status ACEPTAR'>ACEPTAR</button>
-				<button class='btn btn-sm btn-outline-danger' type='button' onclick="changeStatus('Rechazada',${obj.a_id})" title='Pasar a status RECHAZAR'>RECHAZAR</button>`;
+				`<button class='btn btn-outline-primary' type='button' data-id='${obj.id}' onclick="showDetail(${obj.v_id})" title='Mostrar Vacante' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-eye fa-lg'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-danger btn_cancel' type='button' onclick="changeStatus('Cancelada',${obj.a_id})" title='Cancelar Solicitud' data-name='${obj.vacancy}'><i class='fa-solid fa-ban'></i></button>`;
+				`<button class='btn btn-outline-danger btn_cancel' type='button' data-id='${obj.a_id}' onclick="cancel(this)" title='Cancelar Solicitud' data-name='${obj.vacancy}'><i class='fa-solid fa-ban'></i></button>`;
 		}
 		column_buttons += `</div>
 					</td>`;
 
 		list.push([
-			column_candidate,
 			column_vacancy,
 			column_info,
 			column_flow,
@@ -234,7 +221,7 @@ async function showDetail(id) {
 	const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data);
 
 	const obj = ajaxResponse.data;
-	console.log(obj);
+	// console.log(obj);
 
 	// PREVIEW
 	$(`.output_vacancy`).text(obj.vacancy);
@@ -257,23 +244,7 @@ async function showDetail(id) {
 	btns_cancel.attr("data-name", obj.vacancy);
 }
 
-async function changeStatus(status, vacancy_id) {
-	let title = `¿Estas de acuerdo con pasar a ${status} esta solicitud?`;
-	// if (status == "Cancelada") title = `¿Estas seguro de cancelar tu solicitud de <br> ${btn_cancel.attr("data-name")}?`;
-	let text = ``;
-
-	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
-	let data = {
-		op: "changeStatus",
-		input_status: status,
-		id: vacancy_id,
-		updated_at: current_date,
-	};
-
-	ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable(false)", "De acuerdo", "#0c7827");
-}
-
-//ELIMINAR OBJETO 
+//ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
 async function cancel(btn_cancel_js) {
 	const btn_cancel = $(btn_cancel_js)
 	let title = `¿Estas seguro de cancelar tu solicitud de <br> ${btn_cancel.attr("data-name")}?`;
@@ -286,6 +257,5 @@ async function cancel(btn_cancel_js) {
 		deleted_at: current_date,
 	};
 
-	console.log(data);
 	ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable()");
 }

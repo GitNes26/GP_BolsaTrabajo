@@ -11,6 +11,8 @@ if (isset($_POST['input_candidate_id'])) { $candidate_id = $_POST['input_candida
 if (isset($_POST['input_status'])) { $status = $_POST['input_status']; }
 if (isset($_POST['input_active'])) { $active = $_POST['input_active']; }
 
+if (isset($_POST['user_id'])) { $user_id = $_POST['user_id']; }
+
 if (isset($_POST['created_at'])) { $created_at = $_POST['created_at']; }
 if (isset($_POST['updated_at'])) { $updated_at = $_POST['updated_at']; }
 if (isset($_POST['deleted_at'])) { $deleted_at = $_POST['deleted_at']; }
@@ -19,12 +21,14 @@ if (isset($_POST['deleted_at'])) { $deleted_at = $_POST['deleted_at']; }
 #PETICIONES
 
 if ($op == "index") $Application->index();
+if ($op == "myApplications") $Application->myApplications($user_id);
+if ($op == "myApplicationsByCompany") $Application->myApplicationsByCompany($user_id);
 
 elseif ($op == "show") $Application->show($id);
 // elseif ($op == 'showSelect') $Application->showSelect();
 
-elseif ($op == "apply") $Application->apply($vacancy_id, $candidate_id, $created_at);
-elseif ($op == "checkAlreadyApplied") $Application->checkAlreadyApplied($vacancy_id, $candidate_id);
+elseif ($op == "apply") $Application->apply($vacancy_id, $user_id, $created_at);
+elseif ($op == "checkAlreadyApplied") $Application->checkAlreadyApplied($vacancy_id, $user_id);
 
 // elseif ($op == "edit") $Application->edit($vacancy_id, $id, $updated_at);
 elseif ($op == "changeStatus") $Application->changeStatus($status, $updated_at, $id);

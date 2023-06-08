@@ -202,9 +202,9 @@ form_role.on("submit", async (e) => {
       // 	addToArray("updated_at", current_date, data);
       // }
 
-      const form_imagen = $("#form_role")[0];
-      data = new FormData(form_imagen);
-      console.log("input_name_role", input_name_role.val());
+      // const form_imagen = $("#form_role")[0];
+      // data = new FormData(form_imagen);
+      // console.log("input_name_role", input_name_role.val());
       // return console.log([...data]);
       // return console.log(data);
    } else {
@@ -214,14 +214,15 @@ form_role.on("submit", async (e) => {
       const input_current_date = $('.note-editing-area .note-editable').html();
       addToArray("input_professional_info", input_current_date, data);
       addToArray("input_user_id", id_cookie, data);
-      
    }	
 
    // return console.log(url_app, data);
 	const ajaxResponse = await ajaxRequestAsync(url_app, data);
 	// const ajaxResponse = await ajaxRequestFileAsync(url_app, data);
 	if (ajaxResponse.message == "duplicado") return
-   console.log("ahi quedo");
+   setTimeout(() => {
+      location.reload();
+   }, 2500);
    
 	// btn_cancel.click();
 	// await fillTable();

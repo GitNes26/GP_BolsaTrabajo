@@ -104,6 +104,7 @@ class Company extends Connection {
          $response["message"] = "Peticion satisfactoria | registro creado.";
          $response["alert_title"] = "Empresa registrada";
          $response["alert_text"] = "Empresa registrada";
+         $response["toast"] = false;
          $this->Close();
 
          include "../User/User.php";

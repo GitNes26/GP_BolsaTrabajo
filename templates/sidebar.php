@@ -13,7 +13,7 @@
       <!-- Mi Perfil -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
          <div class="info">
-            <a class="d-block nav-link" href="./perfil.php">
+            <a class="d-block nav-link" href="/pages/perfil.php">
                <i class="nav-icon fa-solid fa-id-card fa-lg"></i>
                <span class="fw-bold text-normal">&nbsp;&nbsp;Mi Perfil</span>
             </a>

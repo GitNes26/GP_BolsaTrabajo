@@ -208,7 +208,7 @@ async function fillTable(show_toas=true) {
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Vacante' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
+				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Vacante'><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
@@ -355,7 +355,7 @@ async function deleteObj(btn_delete) {
 		deleted_at: current_date,
 	};
 
-	ajaxRequestDeleteAsync(
+	ajaxRequestQuestionAsync(
 		title,
 		text,
 		URL_VACANCY_APP,

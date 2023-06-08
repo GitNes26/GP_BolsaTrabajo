@@ -230,7 +230,7 @@ async function deleteObj(btn_delete) {
 		deleted_at: current_date,
 	};
 
-	ajaxRequestDeleteAsync(
+	ajaxRequestQuestionAsync(
 		title,
 		text,
 		URL_COMPANY_RANKING_APP,

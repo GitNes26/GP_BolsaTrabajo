@@ -23,7 +23,7 @@ $current_page = "Vacantes";
             <div class="col-sm-6">
                <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="<?= $ADMIN_PATH ?>"><i class="fa-solid fa-house"></i>&nbsp; <?= $role ?? "" ?></a></li>
-                  <li class="breadcrumb-item">Administración</li>
+                  <!-- <li class="breadcrumb-item">Administración</li> -->
                   <li class="breadcrumb-item active"><?= $current_page ?></li>
                </ol>
             </div>

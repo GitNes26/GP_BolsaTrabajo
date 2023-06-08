@@ -92,6 +92,11 @@ if (!isset($_COOKIE["pages_read"])) {
    $UserPermissions->setCookies($_COOKIE["user_id"]);
 }
 
+$permission_read = $_COOKIE["pages_read"] == null ? false : true;
+if ($_COOKIE["pages_read"] != "todas") {
+   $access = explode(",", $_COOKIE["pages_read"]);
+   if (!in_array($id,$access)) $permission_read = false;
+}
 $permission_write = $_COOKIE["pages_write"] == null ? false : true;
 if ($_COOKIE["pages_write"] != "todas") {
    $access = explode(",", $_COOKIE["pages_write"]);
@@ -109,11 +114,11 @@ if ($_COOKIE["pages_update"] != "todas") {
 }
 
 
-$tiempo_coockies = '+1 months';
-setcookie("permission_read",$access,strtotime($tiempo_coockies), "/");
-setcookie("permission_write",$permission_write,strtotime($tiempo_coockies), "/");
-setcookie("permission_delete",$permission_delete,strtotime($tiempo_coockies), "/");
-setcookie("permission_update",$permission_update,strtotime($tiempo_coockies), "/");
+$cookies_time = '+1 months';
+setcookie("permission_read",$permission_read,strtotime($cookies_time), "/");
+setcookie("permission_write",$permission_write,strtotime($cookies_time), "/");
+setcookie("permission_delete",$permission_delete,strtotime($cookies_time), "/");
+setcookie("permission_update",$permission_update,strtotime($cookies_time), "/");
 
 
 // $bg_powerbi = "navbar-white navbar-light";
