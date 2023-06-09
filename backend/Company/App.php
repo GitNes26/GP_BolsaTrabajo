@@ -67,3 +67,5 @@ elseif ($op == "create") {$Company->create($company, $description, $contact_name
 elseif ($op == "edit") $Company->edit($company, $description, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id, $updated_at);
 
 elseif ($op == "delete") $Company->delete($deleted_at, $user_id);
+
+elseif ($op == "getIdByUserId") $Company->getIdByUserId($user_id);

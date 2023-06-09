@@ -157,4 +157,11 @@ class Candidate extends Connection {
       $duplicate = $this->checkAvailableData('candidates', 'cellphone', $cellphone, 'El número celular', 'input_cellphone', $id, 'users');
       if ($duplicate["result"] == true) die(json_encode($duplicate));
    }
+
+   function getIdByUserId($user_id) {
+      $query = "SELECT id FROM candidates WHERE user_id=$user_id;";
+      $candidate = $this->Select($query, false);
+      if (!$candidate) return 0;
+      else return $candidate["id"]; 
+   }
 }

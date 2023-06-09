@@ -62,26 +62,28 @@ $access = true;
 if ($_COOKIE["role_id"] == "0") {
    header("location:$URL_BASE/registro-perfil.php");
 }
-if ($path != "perfil.php") {
+if ($path != "perfil.php" || $path != "/" || $path != "/pages") {
    if (!$menu_id['result']) {
       header("location:$URL_BASE/");
       die();
    }
    $id = $menu_id['data'];
-   // echo "id_menu: $id<br>";
-   // $access = true;
+   // // echo "id_menu: $id<br>";
+   // // $access = true;
    if ($_COOKIE["pages_read"] != "todas") {
       $access = explode(",", $_COOKIE["pages_read"]);
       // echo "access: ".print_r($access)."<br>";
-
+      
       if (!in_array($id,$access)) $access = false;
-      // echo "access: $access<br>";
+      // echo "access: ".print_r($access)."<br>";
+      // echo "URL_SERVER: ".print_r($URL_SERVER)."<br>";
+      // echo "ADMIN_PATH: ".print_r($ADMIN_PATH)."<br>";
    }
-   if (!$access && $URL_SERVER != "$ADMIN_PATH/") {
-      // echo "ESTOY SIN access... CREO";
-      header("location:$URL_BASE/");
-      die();
-   }
+   // if (!$access && $URL_SERVER != "$ADMIN_PATH/") {
+   //    // echo "ESTOY SIN access... CREO";
+   //    header("location:$URL_BASE/");
+   //    die();
+   // }
 }
 
 

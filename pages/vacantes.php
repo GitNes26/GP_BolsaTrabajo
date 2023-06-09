@@ -65,6 +65,7 @@ $current_page = "Vacantes";
                                  <div class="text-sm text-end text-muted" id="counter_vacancy"></div>
                               </div>
                               <!-- EMPRESA -->
+                              <?php if ($_COOKIE["role_id"] > 3): ?>
                               <div class="mb-3">
                                  <label for="input_company_id" class="form-label">Empresa: <span class="obligatory"></span></label>
                                  <select class="select2 form-control" style="width:100%"
@@ -72,7 +73,7 @@ $current_page = "Vacantes";
                                  data-output="output_info_company">
                                  </select>
                               </div>
-
+                              <?php endif ?>
                               <hr>
 
                               <!-- AREA -->

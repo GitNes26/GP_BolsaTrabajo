@@ -38,6 +38,7 @@ const
 	btn_reset = $("#btn_reset"),
 	btn_cancel = $("#btn_cancel");
 	
+let company_id = null;
 //#endregion VARIABLES
 $(".select2").select2();
 focusSelect2($(".select2"));
@@ -50,13 +51,27 @@ init();
 async function init() {
 	counter_vacancy.text(`0/${input_vacancy.data("limit")}`);
 	counter_description.text(`0/${input_description.data("limit")}`);
-	$('.note-editing-area .note-editable').html(null)
+	$('.note-editing-area .note-editable').html(null);
+	
+	if (role_cookie == 3) {
+		let data = {op: "getIdByUserId", user_id: id_cookie};
+		const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
+		company_id = ajaxResponse.data
+		data = { op: "show", id: company_id }
+		const ajaxResponseCompany = await ajaxRequestAsync(URL_COMPANY_APP, data);
+		const objCompany = ajaxResponseCompany.data
+		$(`#output_info_company`).html(`
+			<span>${objCompany.company}</span><br>
+			<span>${objCompany.municipality}, ${objCompany.state}</span><br><br>
+			<span class="">${objCompany.description}</span>
+		`);
+	}
 
 	fillTable();
-
-	fillSelect2(URL_COMPANY_APP, -1, input_company_id);
+	
+	if (role_cookie > 3) fillSelect2(URL_COMPANY_APP, -1, input_company_id);
 	fillSelect2(URL_AREA_APP, -1, input_area_id);
-   fillSelect2(URL_TAG_APP, -1, input_tags_ids, false);
+	fillSelect2(URL_TAG_APP, -1, input_tags_ids, false);
 	setTimeout(() => {
       input_vacancy.focus();
    }, 1000);
@@ -86,9 +101,9 @@ btn_cancel.click((e) => {
 btn_reset.click(async (e) => {
 	id_modal.val("");
 	$('.note-editing-area .note-editable').html(null);
-	resetSelect2(input_company_id);
+	if (role_cookie > 3) resetSelect2(input_company_id);
 	resetSelect2( input_area_id);
-   resetSelect2(input_tags_ids);
+  resetSelect2(input_tags_ids);
 
 	$('.note-editing-area .note-placeholder').css("display","block");
 
@@ -171,20 +186,26 @@ form.on("submit", async (e) => {
 		//EDICION
 		addToArray("updated_at", current_date, data);
 	}
+	if (role_cookie == 3) {
+		addToArray("input_company_id", company_id, data);
+	}
 	addToArray("input_more_info", input_more_info, data);
 	addToArray("input_tags_ids", input_tags_ids.val().join(","), data);
-	data[10].value = `${data[10].value}:00:00:00`;
-	data[11].value = `${data[11].value}:23:59:59`;
+	data.map(d => {
+		if (d.name == "input_publication_date") d.value = moment(d.value).format("YYYY-MM-DD 00:00:00");
+		if (d.name == "input_expiration_date") d.value = moment(d.value).format("YYYY-MM-DD 23:59:59");
+	});
 
 	// return console.log(data);
 	const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data);
 	if (ajaxResponse.message == "duplicado") return
 	btn_cancel.click();
-	await fillTable();
+	await fillTable(false);
 });
 
 async function fillTable(show_toas=true) {
 	let data = { op: "index" };
+	if (role_cookie == 3) data = { op: "indexByCompany", input_company_id: company_id };
 	const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data, null, true, show_toas);
 
 	//Limpiar table
@@ -294,7 +315,7 @@ async function editObj(btn_edit) {
 	id_modal.val(Number(obj.id));
 	input_vacancy.val(obj.vacancy);
 	countLetter(input_vacancy, input_vacancy.attr("data-counter"), input_vacancy.val().length, Number(input_vacancy.data("limit")));
-	fillSelect2(URL_COMPANY_APP, obj.company_id, input_company_id);
+	if (role_cookie > 3) fillSelect2(URL_COMPANY_APP, obj.company_id, input_company_id);
 	fillSelect2(URL_AREA_APP, obj.area_id, input_area_id);
 	input_description.val(obj.description);
 	countLetter(input_description, input_description.attr("data-counter"), input_description.val().length, Number(input_description.data("limit")));
@@ -320,14 +341,17 @@ async function editObj(btn_edit) {
 
 	// PREVIEW
 	$(`#${input_vacancy.attr("data-output")}`).text(obj.vacancy);
-	data = { op: "show", id: obj.company_id }
-	const ajaxResponseCompany = await ajaxRequestAsync(URL_COMPANY_APP, data);
-	const objCompany = ajaxResponseCompany.data
-	$(`#${input_company_id.attr("data-output")}`).html(`
+
+	if (role_cookie > 3) {
+		data = { op: "show", id: obj.company_id }
+		const ajaxResponseCompany = await ajaxRequestAsync(URL_COMPANY_APP, data);
+		const objCompany = ajaxResponseCompany.data
+		$(`#${input_company_id.attr("data-output")}`).html(`
 		<span>${objCompany.company}</span><br>
 		<span>${objCompany.municipality}, ${objCompany.state}</span><br><br>
 		<span class="">${objCompany.description}</span>
-	`);
+		`);
+	}
 	$(`#${input_area_id.attr("data-output")}`).text($(`#input_area_id option:selected`).text());
 	$(`#${input_description.attr("data-output")}`).text(obj.description);
 	$(`#${input_min_salary.attr("data-output")}`).text(formatCurrency(obj.min_salary));

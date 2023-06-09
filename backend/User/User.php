@@ -113,12 +113,13 @@ class User extends Connection {
                $permissions_query = "SELECT pages_read,pages_write,pages_delete,pages_update FROM roles WHERE id=$user_found[role_id]";
                // echo $permissions_query;
                // $menus = "SELECT * FROM menus WHERE habilitado=1";
-               $permisos = $this->Select($permissions_query,false);
+               $permissions = $this->Select($permissions_query,false);
+               // var_dump($permissions);
                // if (sizeof($user_found) > 0) {
-                  setcookie("pages_read",$permisos["pages_read"], strtotime($cookie_time), "/");
-                  setcookie("pages_write",$permisos["pages_write"], strtotime($cookie_time), "/");
-                  setcookie("pages_delete",$permisos["pages_delete"], strtotime($cookie_time), "/");
-                  setcookie("pages_update",$permisos["pages_update"], strtotime($cookie_time), "/");
+                  setcookie("pages_read",$permissions["pages_read"], strtotime($cookie_time), "/");
+                  setcookie("pages_write",$permissions["pages_write"], strtotime($cookie_time), "/");
+                  setcookie("pages_delete",$permissions["pages_delete"], strtotime($cookie_time), "/");
+                  setcookie("pages_update",$permissions["pages_update"], strtotime($cookie_time), "/");
                // }
             }
             $this->close();

@@ -262,6 +262,7 @@ function displayResults(results) {
 	results.forEach(function(obj) {
 	//busco los elementos que existen en mi template y le asigno valores a sus atributos y contenido...
 		template_card_vacancy.querySelector(".card_vacancy").setAttribute("data-id", obj.id);
+		template_card_vacancy.querySelector(".ribbon-wrapper").classList.add("d-none");
 		template_card_vacancy.querySelector(".vacancy").innerText = `${obj.vacancy}`;
 		// template_card_vacancy.querySelector(".vacancy_numbers").innerText = `1`;
 		template_card_vacancy.querySelector(".publication_date").innerText = `Publicado ${moment(obj.publication_date, "YYYYMMDD").fromNow()}`;

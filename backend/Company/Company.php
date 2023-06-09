@@ -172,4 +172,11 @@ class Company extends Connection {
       $duplicate = $this->checkAvailableData('companies', 'company', $company, 'La compañia', 'input_company', $id, 'users');
       if ($duplicate["result"] == true) die(json_encode($duplicate));
    }
+
+   function getIdByUserId($user_id) {
+      $query = "SELECT id FROM companies WHERE user_id=$user_id;";
+      $company = $this->Select($query, false);
+      if (!$company) die(json_encode(array("data" => 0)));
+      else die(json_encode(array("data" => $company["id"]))); 
+   }
 }

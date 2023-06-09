@@ -15,7 +15,7 @@ $pagina_acutal = "Bolsa de Trabajo";
             <div class="col text-center">
                <h1 class="fw-bolder text-uppercase">
                <i class="fa-regular fa-sack-dollar"></i>&nbsp; <?= $pagina_acutal ?>
-                  <em class="fw-ligth text-muted lead text-sm">| Actualmente contamos con <b id="vacancies_enabled" class="badge bg-dark">0</b> vacantes disponibles para ti</em>
+                  <em class="fw-ligth text-muted lead text-sm">| Actualmente contamos con <b id="vacancies_enabled" class="">0</b> vacantes disponibles para ti</em>
                </h1>
             </div>
             <!-- <div class="col-sm-6">
@@ -258,6 +258,9 @@ $pagina_acutal = "Bolsa de Trabajo";
 
 <template id="template_card_vacancy">
    <div class="card card-success card-outline direct-chat direct-chat-success shadow-sm pointer-sm card_vacancy" data-id="id">
+      <div class="ribbon-wrapper ribbon-lg">
+         <div class="ribbon bg-info fw-bolder">POSTULADO</div>
+      </div>
       <div class="card-header">  
          <span class="card-title fw-bolder vacancy">Vacante</span>
          <div class="card-tools">

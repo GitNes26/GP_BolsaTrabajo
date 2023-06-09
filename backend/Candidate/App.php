@@ -72,3 +72,5 @@ elseif ($op == "create") $Candidate->create($name, $last_name, $cellphone, $age,
 elseif ($op == "edit") $Candidate->edit($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $area_id, $interest_tags_ids, $user_id, $updated_at, $id);
 
 elseif ($op == "delete") $Candidate->delete($deleted_at, $user_id);
+
+elseif ($op == "getIdByUserId") $Candidate->getIdByUserId($user_id);
