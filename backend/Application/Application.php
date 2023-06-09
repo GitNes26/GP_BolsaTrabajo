@@ -201,7 +201,7 @@ class Application extends Connection {
    }
 
 
-   function checkAlreadyApplied($vacancy_id, $user_id) {
+   private function checkAlreadyApplied($vacancy_id, $user_id) {
       try {
          $response = $this->defaultResponse();
 
@@ -230,20 +230,20 @@ class Application extends Connection {
       die(json_encode($response));
    }
 
-   function getCandidateIdByUserId($user_id) {
+   private function getCandidateIdByUserId($user_id) {
       $query = "SELECT id FROM candidates WHERE user_id=$user_id;";
       $candidate = $this->Select($query, false);
       if (!$candidate) return 0;
       else return $candidate["id"]; 
    }
-   function getCompanyIdByUserId($user_id) {
+   private function getCompanyIdByUserId($user_id) {
       $query = "SELECT id FROM companies WHERE user_id=$user_id;";
       $company = $this->Select($query, false);
       if (!$company) return 0;
       else return $company["id"]; 
    }
 
-   function validateAvailableData($area, $id) {
+   private function validateAvailableData($area, $id) {
       // #VALIDACION DE DATOS REPETIDOS
       $duplicate = $this->checkAvailableData('applications', 'area', $area, 'El área', 'input_area', $id);
       if ($duplicate["result"] == true) die(json_encode($duplicate));

@@ -96,7 +96,7 @@ async function fillTable(show_toas=true) {
 				break;
 			case 'En evaluación':
 				bg_badge = "bg-primary";
-				icon = ``;
+				icon = `<i class="fa-brands fa-readme fa-fade"></i>`;
 				break;
 			case 'Aceptada':
 				bg_badge = "bg-success";
@@ -116,7 +116,7 @@ async function fillTable(show_toas=true) {
 				icon = ``;
 				break;
 		}
-		let status = `<span class="badge ${bg_badge}">${icon} &nbsp; ${obj.status}</span>`;
+		let status = `<h5><span class="badge ${bg_badge}">${icon} &nbsp; ${obj.status}</span></h5>`;
 		//Campos
 		let 
 			column_vacancy = `
@@ -129,8 +129,8 @@ async function fillTable(show_toas=true) {
 				<div class="mb-2">
                   <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; 
                   <span class="fw-bolder">&nbsp;</span> 
-                  <span class="">$${obj.min_salary}</span> &nbsp;a&nbsp; 
-                  <span class="">$${obj.max_salary}</span>
+                  <span class="">${formatCurrency(obj.min_salary)}</span> &nbsp;a&nbsp; 
+                  <span class="">${formatCurrency(obj.max_salary)}</span>
                </div>
                <div class="mb-2">
                   <i class="fa-solid fa-briefcase"></i>&nbsp; 
@@ -179,40 +179,6 @@ async function fillTable(show_toas=true) {
 	tbody.slideDown("slow");
 }
 
-//ACCIONES EN BOTONES DE LA TABLA
-// tbody.click((e) => {
-// 	// console.log(e.target);
-// 	e.preventDefault();
-
-// 	//EDITAR OBJETO
-// 	if ($(e.target).hasClass("btn_edit") || $(e.target).hasClass("i_edit")) {
-// 		let btn_edit;
-
-// 		if ($(e.target).hasClass("i_edit")) {
-// 			btn_edit = $(e.target).parent();
-// 		} else {
-// 			btn_edit = $(e.target);
-// 		}
-
-// 		editObj(btn_edit);
-// 	}
-
-// 	//ELIMINAR OBJETO
-// 	if (
-// 		$(e.target).hasClass("btn_delete") ||
-// 		$(e.target).hasClass("i_delete")
-// 	) {
-// 		let btn_delete;
-
-// 		if ($(e.target).hasClass("i_delete")) {
-// 			btn_delete = $(e.target).parent();
-// 		} else {
-// 			btn_delete = $(e.target);
-// 		}
-
-// 		deleteObj(btn_delete);
-// 	}
-// });
 
 //EDITAR OBJETO
 async function showDetail(id) {

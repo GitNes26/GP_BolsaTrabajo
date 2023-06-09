@@ -39,6 +39,7 @@ const div_candidate = $("#div_candidate"),
    input_last_name = $("#input_last_name"),
    input_email = $("#input_email"),
    input_age = $("#input_age"),
+   input_profession_id = $("#input_profession_id"),
    input_interest_tags_ids = $("#input_interest_tags_ids")
    ;
 
@@ -68,6 +69,7 @@ async function init() {
 
    fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
    fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
+   fillSelect2(URL_PROFESSION_APP, -1, input_profession_id, false);
    fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
    user_id.val(id_cookie);
    input_company.focus();
@@ -141,6 +143,8 @@ input_name_role.on("change",async function()  {
       $("#div_candidate input").addClass("not_validate");
       $("#div_candidate select").addClass("not_validate");
       $("#div_candidate textarea").addClass("not_validate");
+      input_profession_id.addClass("not_validate");
+
       // valido empresa
       $("#div_company input").removeClass("not_validate");
       $("#div_company select").removeClass("not_validate");
@@ -158,9 +162,11 @@ input_name_role.on("change",async function()  {
       $("#div_candidate input").removeClass("not_validate");
       $("#div_candidate select").removeClass("not_validate");
       $("#div_candidate textarea").removeClass("not_validate");
+      input_profession_id.removeClass("not_validate");
       input_interest_tags_ids.addClass("not_validate");
       // input_skills.addClass("not_validate");
       // input_abilities.addClass("not_validate");
+      
       // no valido empresa
       $("#div_company input").addClass("not_validate");
       $("#div_company select").addClass("not_validate");
@@ -169,7 +175,7 @@ input_name_role.on("change",async function()  {
 })
 
 // REGISTRAR
-form_role.on("submit", async (e) => {
+form_role.on("submit", async function(e) {
 	e.preventDefault();
 
    console.log();
@@ -207,6 +213,15 @@ form_role.on("submit", async (e) => {
       // console.log("input_name_role", input_name_role.val());
       // return console.log([...data]);
       // return console.log(data);
+      
+      // Crea un objeto FormData y agrega los datos del formulario
+      // const formData = new FormData(this);
+
+      // Agrega el archivo seleccionado al objeto FormData
+      const archivo = $('#input_logo_path')[0].files[0];
+      console.log(archivo);
+      // formData.append('archivo', archivo);
+      addToArray("input_logo_path", archivo, data);
    } else {
       console.log("soy candidato");
       url_app = URL_CANDIDATE_APP;

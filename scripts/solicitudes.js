@@ -117,7 +117,7 @@ async function fillTable(show_toas=true) {
 				icon = ``;
 				break;
 		}
-		let status = `<span class="badge ${bg_badge}">${icon} &nbsp; ${obj.status}</span>`;
+		let status = `<h5><span class="badge ${bg_badge}">${icon} &nbsp; ${obj.status}</span></h5>`;
 		//Campos
 		let
 			column_candidate = `
@@ -192,40 +192,7 @@ async function fillTable(show_toas=true) {
 	tbody.slideDown("slow");
 }
 
-//ACCIONES EN BOTONES DE LA TABLA
-// tbody.click((e) => {
-// 	// console.log(e.target);
-// 	e.preventDefault();
 
-// 	//EDITAR OBJETO
-// 	if ($(e.target).hasClass("btn_edit") || $(e.target).hasClass("i_edit")) {
-// 		let btn_edit;
-
-// 		if ($(e.target).hasClass("i_edit")) {
-// 			btn_edit = $(e.target).parent();
-// 		} else {
-// 			btn_edit = $(e.target);
-// 		}
-
-// 		editObj(btn_edit);
-// 	}
-
-// 	//ELIMINAR OBJETO
-// 	if (
-// 		$(e.target).hasClass("btn_delete") ||
-// 		$(e.target).hasClass("i_delete")
-// 	) {
-// 		let btn_delete;
-
-// 		if ($(e.target).hasClass("i_delete")) {
-// 			btn_delete = $(e.target).parent();
-// 		} else {
-// 			btn_delete = $(e.target);
-// 		}
-
-// 		deleteObj(btn_delete);
-// 	}
-// });
 
 //EDITAR OBJETO
 async function showDetail(id) {

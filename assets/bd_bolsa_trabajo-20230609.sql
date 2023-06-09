@@ -166,7 +166,7 @@ CREATE TABLE `companies` (
   CONSTRAINT `fk_company_businnes_line` FOREIGN KEY (`business_line_id`) REFERENCES `business_lines` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_company_ranking` FOREIGN KEY (`company_ranking_id`) REFERENCES `company_rankings` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_company_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +175,7 @@ CREATE TABLE `companies` (
 
 LOCK TABLES `companies` WRITE;
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` VALUES (1,'La Nueva Empresa','Enim irure tota','companies/Meyer Dennis Traders.PNG','Zelda Summers','2131231313','rh@gmail.com','Coahuila','Torreon',3,2,1),(2,'Morrison Hester Traders','Culpa expedita ','companies/Morrison Hester Traders.JPEG','Eleanor Massey','5464544646','dasexun@mailinator.com','Chiapas','Acala',4,1,2),(7,'Empresa  1','soy una empresa',NULL,'Contacto 1','4165876878','rh@gmail.com','Coahuila','Torreon',1,1,6),(9,'Empresa Registrada','Esta es una empresa creada desde el administrativo.',NULL,'Micaela Juárez','8774464446','rh@gmail.com','Campeche','Calkini',2,3,4),(10,'Creando empresa','Creando empresa desde el admin a un usuario ya existente.',NULL,'Natalia Morones','7895432454','rh@gmail.com','Durango','Gomez Palacio',3,3,3),(11,'Seré Empresa','Soy una empresa de prubea.',NULL,'Nancy Najera','8711564464','rh@gmail.com','Zacatecas','Banon',2,2,8),(12,'Otra empresa','asdasjklsadlñ',NULL,'Contacto 1','7897513135','rh@gmail.com','Guerrero','Acapulco',2,2,9),(13,'CALIDAD EN CASA','empresa de salud y bienestar.',NULL,'Maria Mares','8710215213','maria@rh.com','Durango','Gomez Palacio',3,2,13);
+INSERT INTO `companies` VALUES (1,'La Nueva Empresa','Enim irure tota','companies/Meyer Dennis Traders.PNG','Zelda Summers','2131231313','rh@gmail.com','Coahuila','Torreon',3,2,1),(2,'Morrison Hester Traders','Culpa expedita ','companies/Morrison Hester Traders.JPEG','Eleanor Massey','5464544646','dasexun@mailinator.com','Chiapas','Acala',4,1,2),(7,'Empresa  1','soy una empresa',NULL,'Contacto 1','4165876878','rh@gmail.com','Coahuila','Torreon',1,1,6),(9,'Empresa Registrada','Esta es una empresa creada desde el administrativo.',NULL,'Micaela Juárez','8774464446','rh@gmail.com','Campeche','Calkini',2,3,4),(10,'Creando empresa','Creando empresa desde el admin a un usuario ya existente.',NULL,'Natalia Morones','7895432454','rh@gmail.com','Durango','Gomez Palacio',3,3,3),(11,'Seré Empresa','Soy una empresa de prubea.',NULL,'Nancy Najera','8711564464','rh@gmail.com','Zacatecas','Banon',2,2,8),(12,'Otra empresa','asdasjklsadlñ',NULL,'Contacto 1','7897513135','rh@gmail.com','Guerrero','Acapulco',2,2,9),(13,'CALIDAD EN CASA','empresa de salud y bienestar.',NULL,'Maria Mares','8710215213','maria@rh.com','Durango','Gomez Palacio',3,2,13),(14,'KoalaTecno','Empresa de desarrollo....',NULL,'Natalia Morones','8797897979','rh@gmail.com','Coahuila','Arteaga',1,2,16);
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -382,7 +382,7 @@ CREATE TABLE `users` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -391,7 +391,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'nes@gmail.com','$2y$10$L4zA0yzj/cdFSq4RjTDxcOkpwkP9vlCSBfyFQzpw4R0qrECaf38nC',1,1,'2023-05-24 02:45:33','2023-06-08 11:05:21',NULL),(2,'gustavo@gmail.com','$2y$10$VVlv.fewbfZbv5YnqiuCzOsFtYk/GtlUU4eDBR/XYNzsqlkDSMyFi',1,3,'2023-05-24 03:01:33','2023-06-08 02:44:27',NULL),(3,'sam@gmail.com','$2y$10$AU9ZIbk55Io4kfThyijNwua1N3geP7cy2D2hqrvZLq6CY2/fDMYy2',1,3,'2023-06-02 02:54:13',NULL,NULL),(4,'otromx@gmail.com','$2y$10$C4sm7kKwqstdmwK07Cgm9OPssLpzRM787ydudOSGA6AG5uP2eILXe',0,3,'2023-06-07 09:08:00','2023-06-07 09:08:14','2023-06-08 11:13:42'),(5,'editar@gmail','$2y$10$TwHwEjkHz64.YNuzb9aMI.KwQ7KUYz.Tlx1GoHpW6/wWm4x2AQWUu',0,2,'2023-06-07 09:08:47','2023-06-07 09:09:00','2023-06-07 09:10:41'),(6,'empresa@gmail.com','$2y$10$xRAlqJr1OHF8BwbMASsPBO3ZOzjOcFjnePf9AjkfkyjHqBwbN3K8K',1,3,'2023-06-07 11:56:57',NULL,NULL),(7,'candidato@gmail.com','$2y$10$IMmVFwcMcs9r9P.GPuKhxOxbh2RSbDAw8aN4W1moi1.6WXQZ.2RyW',1,4,'2023-06-07 12:16:41',NULL,NULL),(8,'nuevo@gmail.com','$2y$10$ws8htWbBKH.gmzYN6SSsxO5DTXFNz8phmXSocS6imiC0ULGVsT.uO',1,3,'2023-06-08 03:53:52',NULL,NULL),(9,'otraempresa@gmail.com','$2y$10$IQ/muTAhxRm8SuNonqVbjO5PRLTqv0Zx0iU4XhuAzxVQaYbuYYPTe',1,3,'2023-06-08 04:00:15',NULL,NULL),(10,'candidato1@gmail.com','$2y$10$.V8UFzcJQBoLG9HsofSTreOEeSY7IryBeg9VfNDm9a7dK5h28k1PG',1,4,'2023-06-09 08:12:37',NULL,NULL),(11,'candidato2@gmail.com','$2y$10$ma8DCNKhtlcJ9W.53UzOf.3/PkglCLKvuaZEnHws.GpVgZ4OcPBmS',1,4,'2023-06-09 08:18:28',NULL,NULL),(12,'sinrol@gmail.com','$2y$10$t7ayYXUbiETvAV7bvQxg/uL3qFzQ.2lkUS/GSZR2DAWe9tGbXLhb.',1,NULL,'2023-06-09 09:25:44',NULL,NULL),(13,'rocio@hotmail.com','$2y$10$ZmVdMEADGgpc9spUBZUaxO4fD1vRHeOeAaY9p5NV2tfPZoG87RGrG',1,3,'2023-06-09 10:19:39',NULL,NULL),(14,'samuel_candidato@gmail.com','$2y$10$IN4Iz.QOPlC/I7S4k8EGDO0eSVOZkz.z03dxf0aqjgPJLUrMtR9v.',1,4,'2023-06-09 10:37:29',NULL,NULL),(15,'nueva_empresa@gmail.com','$2y$10$INsbflm4qV4AEnU8bzMyzu8XIsStsamomTvU7NXJnA7UV.f.b/Foa',1,3,'2023-06-09 10:53:17','2023-06-09 10:53:37',NULL);
+INSERT INTO `users` VALUES (1,'nes@gmail.com','$2y$10$L4zA0yzj/cdFSq4RjTDxcOkpwkP9vlCSBfyFQzpw4R0qrECaf38nC',1,1,'2023-05-24 02:45:33','2023-06-08 11:05:21',NULL),(2,'gustavo@gmail.com','$2y$10$VVlv.fewbfZbv5YnqiuCzOsFtYk/GtlUU4eDBR/XYNzsqlkDSMyFi',1,3,'2023-05-24 03:01:33','2023-06-08 02:44:27',NULL),(3,'sam@gmail.com','$2y$10$AU9ZIbk55Io4kfThyijNwua1N3geP7cy2D2hqrvZLq6CY2/fDMYy2',1,3,'2023-06-02 02:54:13',NULL,NULL),(4,'otromx@gmail.com','$2y$10$C4sm7kKwqstdmwK07Cgm9OPssLpzRM787ydudOSGA6AG5uP2eILXe',0,3,'2023-06-07 09:08:00','2023-06-07 09:08:14','2023-06-08 11:13:42'),(5,'editar@gmail','$2y$10$TwHwEjkHz64.YNuzb9aMI.KwQ7KUYz.Tlx1GoHpW6/wWm4x2AQWUu',0,2,'2023-06-07 09:08:47','2023-06-07 09:09:00','2023-06-07 09:10:41'),(6,'empresa@gmail.com','$2y$10$xRAlqJr1OHF8BwbMASsPBO3ZOzjOcFjnePf9AjkfkyjHqBwbN3K8K',1,3,'2023-06-07 11:56:57',NULL,NULL),(7,'candidato@gmail.com','$2y$10$IMmVFwcMcs9r9P.GPuKhxOxbh2RSbDAw8aN4W1moi1.6WXQZ.2RyW',1,4,'2023-06-07 12:16:41',NULL,NULL),(8,'nuevo@gmail.com','$2y$10$ws8htWbBKH.gmzYN6SSsxO5DTXFNz8phmXSocS6imiC0ULGVsT.uO',1,3,'2023-06-08 03:53:52',NULL,NULL),(9,'otraempresa@gmail.com','$2y$10$IQ/muTAhxRm8SuNonqVbjO5PRLTqv0Zx0iU4XhuAzxVQaYbuYYPTe',1,3,'2023-06-08 04:00:15',NULL,NULL),(10,'candidato1@gmail.com','$2y$10$.V8UFzcJQBoLG9HsofSTreOEeSY7IryBeg9VfNDm9a7dK5h28k1PG',1,4,'2023-06-09 08:12:37',NULL,NULL),(11,'candidato2@gmail.com','$2y$10$ma8DCNKhtlcJ9W.53UzOf.3/PkglCLKvuaZEnHws.GpVgZ4OcPBmS',1,4,'2023-06-09 08:18:28',NULL,NULL),(12,'sinrol@gmail.com','$2y$10$t7ayYXUbiETvAV7bvQxg/uL3qFzQ.2lkUS/GSZR2DAWe9tGbXLhb.',1,NULL,'2023-06-09 09:25:44',NULL,NULL),(13,'rocio@hotmail.com','$2y$10$ZmVdMEADGgpc9spUBZUaxO4fD1vRHeOeAaY9p5NV2tfPZoG87RGrG',1,3,'2023-06-09 10:19:39',NULL,NULL),(14,'samuel_candidato@gmail.com','$2y$10$IN4Iz.QOPlC/I7S4k8EGDO0eSVOZkz.z03dxf0aqjgPJLUrMtR9v.',1,4,'2023-06-09 10:37:29',NULL,NULL),(15,'nueva_empresa@gmail.com','$2y$10$INsbflm4qV4AEnU8bzMyzu8XIsStsamomTvU7NXJnA7UV.f.b/Foa',1,3,'2023-06-09 10:53:17','2023-06-09 10:53:37',NULL),(16,'soynuevo@gmail.com','$2y$10$61hiiuMFEvEf0Svo8rwKS.ej5N7cb7k8L4hqtnCPSBIi0Iq1xQQVW',1,3,'2023-06-09 03:11:58',NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -447,4 +447,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-09 13:16:54
+-- Dump completed on 2023-06-09 16:01:08

@@ -213,7 +213,7 @@ function ajaxRequestRegister(url,data) {
                setTimeout(() => {
                   email.val(input_email.val());
                   password.val(input_password.val());
-               }, 1000);
+               }, 1500);
 
             });
          } else {

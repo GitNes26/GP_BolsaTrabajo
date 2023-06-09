@@ -1,12 +1,20 @@
 <?php
 #region CONSTANTES DE CONFIGURACION
-$CONN_DB = array(
+$CONN_DB_LOCAL = array(
   "HOST_NAME" => "127.0.0.1",
   "DB_PORT" => "3306",
   "DB_USER" => "root",
   "DB_PWD" => "",
   "DB_NAME" => "bd_bolsa_trabajo",
 );
+$CONN_DB_WEB = array(
+  "HOST_NAME" => "132.148.76.141",
+  "DB_PORT" => "3306",
+  "DB_USER" => "usr_bolsatrabajo",
+  "DB_PWD" => "Sxm4r31~1",
+  "DB_NAME" => "bd_bolsa_trabajo",
+);
+$CONN_DB = $CONN_DB_LOCAL;
 #endregion CONSTANTES DE CONFIGURACION
 
 #region CONSTANTES RUTAS
@@ -16,7 +24,7 @@ $URL_BASE = "";
 // $PROTOCOL = $_SERVER["HTTPS"] == "on" ? "https" : "http";
 $URL_MAIN = "http://$_SERVER[HTTP_HOST]$URL_BASE";
 // $ICONO = "$URL_BASE/favicon.ico";
-$ICONO = "https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
+$ICONO = "URL_BASE/assets/img/logo_gomez_palacio.png"; #"https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
 // $LOGO = "$URL_BASE/logo.ico";
 $LOGO = "$URL_BASE/assets/img/logo_gomez_palacio.png";
 // $LOGO = "https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
