@@ -17,7 +17,16 @@ const
 
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset"),
-	btn_cancel = $("#btn_cancel");
+	btn_cancel = $("#btn_cancel"),
+
+	input_logo_path = $('#input_logo_path'), //este es un input_file
+	label_input_file = $("#label_input_file"),
+   preview_logo = $('#preview_logo'),
+	
+	input_file = $('#input_file'), //este es un input_file
+   preview_file = $('#preview_file'),
+	
+	output_professional_info = $("#output_professional_info");
 	
 //#endregion VARIABLES
 // $(".select2").select2();
@@ -29,11 +38,80 @@ const
 
 init();
 async function init() {
-	fillTable();
+	fillInfo();
 	setTimeout(() => {
       input_business_line.focus();
    }, 500);
 }
+
+
+// Agrega un evento change a la foto de perfil
+input_file.on('change', function(event) {
+   // Obtén el archivo seleccionado
+   const file = event.target.files[0];
+
+   // Crea un objeto FileReader
+   const fileReader = new FileReader();
+
+   // Define la función de carga completada del lector
+   fileReader.onload = function(e) {
+      // Crea un elemento de imagen
+      const iframe = document.createElement('iframe');
+      iframe.src = e.target.result; // Asigna la iframe cargada como fuente
+		console.log(iframe);
+      // canvas.getContext("2d") // Asigna la iframe cargada como fuente
+      iframe.classList.add("img-fluid"); // Asignar clases
+      // iframe.classList.add("pointer"); // Asignar clases
+      //  iframe.classList.add("p-5"); // Asignar clases
+      iframe.classList.add("rounded-lg"); // Asignar clases
+      // iframe.classList.add("text-center"); // Asignar clases
+      iframe.style = "height: 100% !important";
+
+      // Agrega la iframe a la vista previa
+      preview_file.html(""); // Limpia la vista previa antes de agregar la nueva iframe
+      preview_file.append(iframe);
+		label_input_file.css("height","100%");
+		preview_file.css("height","90%");
+   };
+
+  // Lee el contenido del archivo como una URL de datos
+  fileReader.readAsDataURL(file);
+});
+
+// Agrega un evento change al elemento de entrada de archivo
+input_logo_path.on('change', function(event) {
+   // Obtén el archivo seleccionado
+   const file = event.target.files[0];
+
+   // Crea un objeto FileReader
+   const fileReader = new FileReader();
+
+   // Define la función de carga completada del lector
+   fileReader.onload = function(e) {
+      // Crea un elemento de imagen
+      const imagen = document.createElement('img');
+      imagen.src = e.target.result; // Asigna la imagen cargada como fuente
+      // canvas.getContext("2d") // Asigna la imagen cargada como fuente
+      imagen.classList.add("img-fluid"); // Asignar clases
+      imagen.classList.add("pointer"); // Asignar clases
+      //  imagen.classList.add("p-5"); // Asignar clases
+      imagen.classList.add("rounded-lg"); // Asignar clases
+      // imagen.classList.add("text-center"); // Asignar clases
+      imagen.style = "max-height: 200px !important";
+
+      // Agrega la imagen a la vista previa
+      preview_logo.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+      preview_logo.append(imagen);
+   };
+
+  // Lee el contenido del archivo como una URL de datos
+  fileReader.readAsDataURL(file);
+});
+
+
+
+
+
 
 
 
@@ -100,9 +178,9 @@ form.on("submit", async (e) => {
 	await fillTable();
 });
 
-async function fillTable(show_toas=true) {
-	let data = { op: "index" };
-	const ajaxResponse = await ajaxRequestAsync(URL_BUSINESS_LINE_APP, data, null, true, show_toas);
+async function fillInfo(show_toas=true) {
+	let data = { op: "showInfo", input_role_id: role_cookie };
+	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data, null, true, show_toas);
 
 	//Limpiar table
 	tbody.slideUp();
@@ -122,12 +200,12 @@ async function fillTable(show_toas=true) {
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Giro' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
+				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Perfil' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Giro' data-name='${obj.business_line}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
+				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Perfil' data-name='${obj.business_line}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
 		}
 		column_buttons += `</div>
 					</td>`;

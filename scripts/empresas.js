@@ -256,7 +256,7 @@ async function editObj(btn_edit) {
 	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
 
 	const obj = ajaxResponse.data;
-	console.log(obj);
+	// console.log(obj);
 	//form
 	id_modal.val(Number(obj.id));
 	await fillSelect2(URL_USER_APP, obj.user_id, input_user_id);
@@ -270,7 +270,7 @@ async function editObj(btn_edit) {
 	// await fillSelect2(, obj.state, input_state);
 	input_contact_name.val(obj.contact_name);
 	input_contact_phone.val(obj.contact_phone);
-	input_contact_email.val(obj.contact_nemail);
+	input_contact_email.val(obj.contact_email);
 	
 
 	setTimeout(() => {

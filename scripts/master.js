@@ -14,6 +14,7 @@ const
 	URL_MENU_APP = `${BACKEND_PATH}/Menu/App.php`,
 	URL_BUSINESS_LINE_APP = `${BACKEND_PATH}/BusinessLine/App.php`,
 	URL_TAG_APP = `${BACKEND_PATH}/Tag/App.php`,
+	URL_PROFESSION_APP = `${BACKEND_PATH}/Profession/App.php`,
 	URL_AREA_APP = `${BACKEND_PATH}/Area/App.php`,
 	URL_COMPANY_RANKING_APP = `${BACKEND_PATH}/CompanyRanking/App.php`,
 

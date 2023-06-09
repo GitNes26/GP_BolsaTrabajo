@@ -29,6 +29,7 @@ if(isset($_POST['deleted_at'])) $deleted_at = $_POST['deleted_at'];
 if ($op == 'index') $User->index();
 
 elseif ($op == 'show') $User->show($id);
+elseif ($op == 'showInfo') $User->showInfo($id, $role_id);
 elseif ($op == 'showSelect') $User->showSelect();
 
 elseif ($op == 'register') { $User->register($email,$password,$created_at); }

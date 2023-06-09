@@ -62,28 +62,30 @@ $access = true;
 if ($_COOKIE["role_id"] == "0") {
    header("location:$URL_BASE/registro-perfil.php");
 }
-if ($path != "perfil.php" || $path != "/" || $path != "/pages") {
+if ($path != "perfil.php") {
    if (!$menu_id['result']) {
       header("location:$URL_BASE/");
       die();
    }
-   $id = $menu_id['data'];
-   // // echo "id_menu: $id<br>";
+   // echo "el menu = ".print_r($menu_id['data']);
+   if ($menu_id['data']) $id = $menu_id['data']['id'];
+   else $id = $menu_id['data'];
+   // echo "id_menu: $id<br>";
    // // $access = true;
    if ($_COOKIE["pages_read"] != "todas") {
-      $access = explode(",", $_COOKIE["pages_read"]);
-      // echo "access: ".print_r($access)."<br>";
+      $access_to = explode(",", $_COOKIE["pages_read"]);
+      // echo "=access: ".print_r($access)."<br>";
       
-      if (!in_array($id,$access)) $access = false;
+      if (!in_array($id,$access_to)) $access = false;
       // echo "access: ".print_r($access)."<br>";
-      // echo "URL_SERVER: ".print_r($URL_SERVER)."<br>";
+      // echo "URL_SERVER: $URL_SERVER)<br>";
       // echo "ADMIN_PATH: ".print_r($ADMIN_PATH)."<br>";
    }
-   // if (!$access && $URL_SERVER != "$ADMIN_PATH/") {
-   //    // echo "ESTOY SIN access... CREO";
-   //    header("location:$URL_BASE/");
-   //    die();
-   // }
+   if (!$access && $URL_SERVER != "/pages") {
+      // echo "ESTOY SIN access... CREO";
+      header("location:$URL_BASE/");
+      die();
+   }
 }
 
 
@@ -96,23 +98,24 @@ if (!isset($_COOKIE["pages_read"])) {
 
 $permission_read = $_COOKIE["pages_read"] == null ? false : true;
 if ($_COOKIE["pages_read"] != "todas") {
-   $access = explode(",", $_COOKIE["pages_read"]);
-   if (!in_array($id,$access)) $permission_read = false;
+   $access_to = explode(",", $_COOKIE["pages_read"]);
+   if (!in_array($id,$access_to)) $permission_read = false;
 }
 $permission_write = $_COOKIE["pages_write"] == null ? false : true;
 if ($_COOKIE["pages_write"] != "todas") {
-   $access = explode(",", $_COOKIE["pages_write"]);
-   if (!in_array($id,$access)) $permission_write = false;
-}
-$permission_delete = $_COOKIE["pages_delete"] == null ? false : true;
-if ($_COOKIE["pages_delete"] != "todas") {
-   $access = explode(",", $_COOKIE["pages_delete"]);
-   if (!in_array($id,$access)) $permission_delete = false;
+   $access_to = explode(",", $_COOKIE["pages_write"]);
+   if (!in_array($id,$access_to)) $permission_write = false;
 }
 $permission_update = $_COOKIE["pages_update"] == null ? false : true;
 if ($_COOKIE["pages_update"] != "todas") {
-   $access = explode(",", $_COOKIE["pages_update"]);
-   if (!in_array($id,$access)) $permission_update = false;
+   $access_to = explode(",", $_COOKIE["pages_update"]);
+   if (!in_array($id,$access_to)) $permission_update = false;
+   // echo "la pagina: ".print_r($id)." -- accesos:".print_r($access);
+}
+$permission_delete = $_COOKIE["pages_delete"] == null ? false : true;
+if ($_COOKIE["pages_delete"] != "todas") {
+   $access_to = explode(",", $_COOKIE["pages_delete"]);
+   if (!in_array($id,$access_to)) $permission_delete = false;
 }
 
 

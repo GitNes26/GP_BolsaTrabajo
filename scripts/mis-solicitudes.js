@@ -147,6 +147,7 @@ async function fillTable(show_toas=true) {
 				<i>Aqui ira una linea de flujo</i><br><br>
 				${status}
 			`;
+			console.log("permission_update",permission_update);
 
 		let column_buttons = `<td class='align-middle'>
             <div class='btn-group' role='group'>`;

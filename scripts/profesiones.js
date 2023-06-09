@@ -13,10 +13,7 @@ const
 	modal_title = $(".modal-title"),
 	id_modal = $("#id"),
 	op_modal = $("#op"),
-	input_company_ranking = $("#input_company_ranking"),
-	input_description = $("#input_description"),
-	counter_description = $("#counter_description"),
-	
+	input_profession = $("#input_profession"),
 
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset"),
@@ -32,12 +29,9 @@ const
 
 init();
 async function init() {
-	counter_description.text(`0/${input_description.data("limit")}`);
-
-	
 	fillTable();
 	setTimeout(() => {
-      input_company_ranking.focus();
+      input_profession.focus();
    }, 500);
 }
 
@@ -47,7 +41,7 @@ async function init() {
  btn_cancel.click((e) => {
 	e.preventDefault();
 	modal_title.html(
-		"<i class='fa-regular fa-circle-plus'></i>&nbsp; REGISTRAR CLASIFICACIÓN"
+		"<i class='fa-regular fa-circle-plus'></i>&nbsp; REGISTRAR ÁREA"
 	);
 	btn_submit.removeClass("btn-primary");
 	btn_submit.addClass("btn-success");
@@ -65,7 +59,7 @@ async function init() {
 btn_reset.click(async (e) => {
 	id_modal.val("");
 	// setTimeout(() => {
-	// 	input_company_ranking.focus();
+	// 	input_profession.focus();
 	// }, 500);
 });
 
@@ -100,7 +94,7 @@ form.on("submit", async (e) => {
 	}
 
 	// return console.log(data);
-	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_RANKING_APP, data);
+	const ajaxResponse = await ajaxRequestAsync(URL_PROFESSION_APP, data);
 	if (ajaxResponse.message == "duplicado") return
 	btn_cancel.click();
 	await fillTable();
@@ -108,7 +102,7 @@ form.on("submit", async (e) => {
 
 async function fillTable(show_toas=true) {
 	let data = { op: "index" };
-	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_RANKING_APP, data, null, true, show_toas);
+	const ajaxResponse = await ajaxRequestAsync(URL_PROFESSION_APP, data, null, true, show_toas);
 
 	//Limpiar table
 	tbody.slideUp();
@@ -121,27 +115,25 @@ async function fillTable(show_toas=true) {
 	objResponse.map((obj) => {
 		//Campos
 		let 
-			column_company_ranking = `${obj.company_ranking}`;
-			column_description = `${obj.description}`;
+			column_profession = `${obj.profession}`;
 
 		let column_buttons = `<td class='align-middle'>
             <div class='btn-group' role='group'>`;
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Clasificación><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
+				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Profesión'><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Clasificación' data-name='${obj.company_ranking}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
+				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Profesión' data-name='${obj.profession}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
 		}
 		column_buttons += `</div>
 					</td>`;
 
 		list.push([
-			column_company_ranking,
-			column_description,
+			column_profession,
 			column_buttons,
 		]);		
 	});
@@ -191,7 +183,7 @@ tbody.click((e) => {
 
 //EDITAR OBJETO
 async function editObj(btn_edit) {
-	modal_title.html("<i class='fa-light fa-pen-to-square'></i>&nbsp; EDITAR CLASIFICACIÓN");
+	modal_title.html("<i class='fa-light fa-pen-to-square'></i>&nbsp; EDITAR ÁREA");
 	btn_submit.removeClass("btn-success");
 	btn_submit.addClass("btn-primary");
 	btn_submit.text("GUARDAR");
@@ -204,23 +196,21 @@ async function editObj(btn_edit) {
 
 	let id_obj = btn_edit.attr("data-id");
 	let data = { id: id_obj, op: "show" };
-	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_RANKING_APP, data);
+	const ajaxResponse = await ajaxRequestAsync(URL_PROFESSION_APP, data);
 
 	const obj = ajaxResponse.data;
 	//form
 	id_modal.val(Number(obj.id));
-	input_company_ranking.val(obj.company_ranking);
-	input_description.val(obj.description);
-	
+	input_profession.val(obj.profession);
 
 	setTimeout(() => {
-		input_company_ranking.focus();
+		input_profession.focus();
 	}, 500);
 }
 
 //ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
 async function deleteObj(btn_delete) {
-	let title = `¿Estas seguro de eliminar la clasificación <br> ${btn_delete.attr("data-name")}?`;
+	let title = `¿Estas seguro de eliminar el área <br> ${btn_delete.attr("data-name")}?`;
 	let text = ``;
 
 	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
@@ -233,7 +223,7 @@ async function deleteObj(btn_delete) {
 	ajaxRequestQuestionAsync(
 		title,
 		text,
-		URL_COMPANY_RANKING_APP,
+		URL_PROFESSION_APP,
 		data,
 		"fillTable()"
 	);

@@ -203,6 +203,40 @@ class User extends Connection {
       die(json_encode($response));
    } 
 
+   function showInfo($id, $role_id) {
+      $response = $this->defaultResponse();
+
+      try {
+         // if ($role_id == 3 ) {
+         //    $query = "SELECT u.*, r.id role_id, r.role, 
+         //    FROM users u 
+         //    LEFT JOIN roles r ON u.role_id=r.id 
+         //    LEFT JOIN candidates c ON c.user_id=u.id 
+         //    WHERE u.active=1 and u.id=$id";
+         // } elseif ($role_id == 4) {
+
+         // } else {
+            $query = "SELECT u.*, r.id role_id, r.role
+            FROM users u LEFT JOIN roles r ON u.role_id=r.id 
+            WHERE u.active=1 and u.id=$id";
+         // }
+         
+         $result = $this->Select($query,false);
+         $response = $this->correctResponse();
+         $response["message"] = "Peticion satisfactoria | registro encontrado.";
+         $response["alert_title"] = "Usuario encontrado";
+         $response["alert_text"] = "Usuario encontrado";
+         $response["data"] = $result;
+         $this->Close();
+
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->catchResponse($error_message);
+      }
+      die(json_encode($response));
+   } 
+
    function create($email, $password, $role_id, $created_at) {
       try {
          $response = $this->defaultResponse();

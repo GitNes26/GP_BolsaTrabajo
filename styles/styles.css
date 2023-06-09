@@ -160,6 +160,16 @@ a:hover { color: #0c7827; }
 #vacancy_container ::-webkit-scrollbar {
    width: 4px !important;
 }
+
+.widget-user .widget-user-image>img {
+   height: 100px !important;
+   width: 100px !important;
+   object-fit: contain;
+}
+
+.card-pdf {
+   height: 62vh !important;
+}
 /* 
 .sticky-top {
    top: 6.5%;

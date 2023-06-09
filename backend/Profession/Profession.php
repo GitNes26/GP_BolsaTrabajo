@@ -12,16 +12,18 @@ if (file_exists("../backend/Connection.php")) {
 }
 
 
-class Candidate extends Connection {
+class Profession extends Connection {
    
    function index() {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT c.* FROM candidates c INNER JOIN users u ON c.user_id=u.id WHERE u.active=1;";
+         $query = "SELECT * FROM professions WHERE active=1;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
+         $response["alert_title"] = "Profesiones encontradas";
+         $response["alert_text"] = "Profesiones encontradas";
          $response["data"] = $result;
          $this->Close();
    
@@ -37,10 +39,12 @@ class Candidate extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT c.id value, c.name text FROM candidates c INNER JOIN users u ON c.user_id=u.id WHERE u.active=1;";
+         $query = "SELECT id value, profession text FROM professions WHERE active=1;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
+         $response["alert_title"] = "Profesiones encontradas";
+         $response["alert_text"] = "Profesiones encontradas";
          $response["data"] = $result;
          $this->Close();
    
@@ -56,11 +60,13 @@ class Candidate extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT c.* FROM candidates c WHERE c.id=$id;";
+         $query = "SELECT * FROM professions WHERE id=$id;";
          $result = $this->Select($query, false);
 
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
+         $response["alert_title"] = "Profesión encontrada";
+         $response["alert_text"] = "Profesión encontrada";
          $response["data"] = $result;
          $this->Close();
    
@@ -72,30 +78,20 @@ class Candidate extends Connection {
       die(json_encode($response));
    }
 
-   function create($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $area_id, $interest_tags_ids, $user_id) {
+   function create($profession, $created_at) {
       try {
          $response = $this->defaultResponse();
 
-         $this->validateAvailableData($cellphone, null);
+         $this->validateAvailableData($profession, null);
 
-         #Creamos el registro en la tabla candidatos
-         $query = "INSERT INTO candidates(name, last_name, cellphone, age, professional_info, cv_path, languages, area_id, interest_tags_ids, user_id) VALUES(?,?,?,?,?,?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $area_id, $interest_tags_ids, $user_id));
-
-         #Le asignamos el rol de compañia al usuario
-         $query = "UPDATE users SET role_id=4 WHERE id=?";
-         $this->ExecuteQuery($query, array($user_id));
+         $query = "INSERT INTO professions(profession, created_at) VALUES(?,?)";
+         $this->ExecuteQuery($query, array($profession, $created_at));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
-         $response["alert_title"] = "Candidato registrada";
-         $response["alert_text"] = "Bienvenido $name";
-         $response["toast"] = false;
+         $response["alert_title"] = "Profesión registrada";
+         $response["alert_text"] = "Profesión registrada";
          $this->Close();
-
-         require_once "../User/User.php";
-         $User = new User();
-         $User->setCookies($user_id);
    
       } catch (Exception $e) {
          $this->Close();
@@ -105,22 +101,19 @@ class Candidate extends Connection {
       die(json_encode($response));
    }
 
-   function edit($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $area_id, $interest_tags_ids, $user_id, $updated_at, $id) {
+   function edit($profession, $updated_at, $id) {
       try {
          $response = $this->defaultResponse();
 
-         $this->validateAvailableData($cellphone, $id);
+         $this->validateAvailableData($profession, $id);
 
-         $query = "UPDATE candidates SET name=?, last_name=?, cellphone=?, age=?, professional_info=?, cv_path=?, languages=?, area_id=?, interest_tags_ids=?, user_id=?, updated_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $area_id, $interest_tags_ids, $user_id, $updated_at, $id));
-
-         $query = "UPDATE users SET updated_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($updated_at, $user_id));
+         $query = "UPDATE professions SET profession=?, updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($profession, $updated_at, $id));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
-         $response["alert_title"] = "Candidato actualizado";
-         $response["alert_text"] = "Candidato actualizado";
+         $response["alert_title"] = "Profesión actualizado";
+         $response["alert_text"] = "Profesión actualizado";
          $this->Close();
    
       } catch (Exception $e) {
@@ -131,17 +124,17 @@ class Candidate extends Connection {
       die(json_encode($response));
    }
 
-   function delete($deleted_at, $user_id) {
+   function delete($deleted_at, $id) {
       try {
         $response = $this->defaultResponse();
 
-         $query = "UPDATE users SET active=0, deleted_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($deleted_at, $user_id));
+         $query = "UPDATE professions SET active=0, deleted_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($deleted_at, $id));
 
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registro eliminado.";
-         $response["alert_title"] = "Candidato eliminado";
-         $response["alert_text"] = "Candidato eliminado";
+         $response["alert_title"] = "Profesión eliminada";
+         $response["alert_text"] = "Profesión eliminada";
          $this->Close();
 
       } catch (Exception $e) {
@@ -153,16 +146,9 @@ class Candidate extends Connection {
    }
 
 
-   function validateAvailableData($cellphone, $id) {
+   function validateAvailableData($profession, $id) {
       // #VALIDACION DE DATOS REPETIDOS
-      $duplicate = $this->checkAvailableData('candidates', 'cellphone', $cellphone, 'El número celular', 'input_cellphone', $id, 'users');
+      $duplicate = $this->checkAvailableData('professions', 'profession', $profession, 'El área', 'input_profession', $id);
       if ($duplicate["result"] == true) die(json_encode($duplicate));
-   }
-
-   function getIdByUserId($user_id) {
-      $query = "SELECT id FROM candidates WHERE user_id=$user_id;";
-      $candidate = $this->Select($query, false);
-      if (!$candidate) return 0;
-      else return $candidate["id"]; 
    }
 }

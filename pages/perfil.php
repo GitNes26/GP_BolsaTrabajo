@@ -21,7 +21,7 @@ $pagina_acutal = "Bolsa de Trabajo";
           <h5 class="widget-user-desc">26 Años</h5>
         </div>
         <div class="widget-user-image">
-          <img class="img-circle elevation-2" src="/assets/img/logo_gomez_palacio.png" alt="User Avatar">
+          <img class="img-circle elevation-2" src="/assets/img/logo_gomez_palacio.png" alt="Foto de perfil">
         </div>
         <div class="card-footer">
           <div class="row">
@@ -54,46 +54,33 @@ $pagina_acutal = "Bolsa de Trabajo";
         </div>
       </div>
       <div class="row">
-        <div class="col-4">
+        <!-- CURRICULUM VITAE -->
+        <div class="col col-md-4">
           <div class="card card-success card-outline">
-            <div class="card-body box-profile">
+            <div class="card-body box-profile card-pdf">
               <div class="text-center h2 fw-bolder">CURRICULUM VITAE</div>
-              <h3 class="profile-username text-center">Nina Mcintire</h3>
-              <p class="text-muted text-center">Software Engineer</p>
-              <ul class="list-group list-group-unbordered mb-3">
-                <li class="list-group-item">
-                  <b>Followers</b> <a class="float-right">1,322</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Following</b> <a class="float-right">543</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Friends</b> <a class="float-right">13,287</a>
-                </li>
-              </ul>
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+              <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
+              <p class="text-muted text-center">Software Engineer</p> -->
+              <input type="file" id="input_file" name="input_file" class="d-none" accept=".pdf" style="height: 50% !important">
+              <label for="input_file" id="label_input_file">
+                  <div id="preview_file" class="d-flex justify-content-center">
+                  <!-- <iframe frameborder="0"  src="/assets/img/elPDF.pdf" ></iframe> -->
+                    <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar Logo" class="img-fluid pointer p-3 rounded-lg" for="input_file" title="Haz clic aquí para cargar tu logo de empresa">
+                  </div>
+              </label>
             </div>
 
           </div>
         </div>
+
+        <!-- INFORMACION PROFESIONAL -->
         <div class="col">
          <div class="card card-success card-outline">
             <div class="card-body box-profile">
               <div class="text-center h2 fw-bolder">DATOS PROFESIONALES</div>
-              <h3 class="profile-username text-center">Nina Mcintire</h3>
-              <p class="text-muted text-center">Software Engineer</p>
-              <ul class="list-group list-group-unbordered mb-3">
-                <li class="list-group-item">
-                  <b>Followers</b> <a class="float-right">1,322</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Following</b> <a class="float-right">543</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Friends</b> <a class="float-right">13,287</a>
-                </li>
-              </ul>
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+              <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
+              <p class="text-muted text-center">Software Engineer</p> -->
+              <div id="output_professional_info"></div>
             </div>
 
           </div>

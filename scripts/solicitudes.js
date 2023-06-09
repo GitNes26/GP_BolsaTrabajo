@@ -122,7 +122,7 @@ async function fillTable(show_toas=true) {
 		let
 			column_candidate = `
 				<button class='btn btn-outline-dark' type='button' data-id='${obj.ca_id}' onclick="showCandidate(${obj.ca_id})" title='Ver Candidato' data-bs-toggle="modal" data-bs-target="#modal_candidate"><i class='fa-solid fa-eye fa-lg'></i></button><br><br>
-				<b>${obj.name} ${obj.last_name}</b><br><br>
+				<b>${obj.name} ${obj.last_name}</b><br>
 				<i class="fa-solid fa-at"></i>&nbsp; ${obj.email}<br>
 				<i class="fa-solid fa-phone"></i>&nbsp; ${obj.cellphone}<br>
 			`; 
@@ -156,13 +156,14 @@ async function fillTable(show_toas=true) {
 			`;
 
 		let column_buttons = `<td class='align-middle'>
-            <div class='d-grid gap-2' role='group'>`;
+            <div class='' role='group'>`;
 		if (permission_update) {
 			column_buttons +=
 				//html
 				`<button class='btn btn-outline-primary' type='button' data-id='${obj.id}' onclick="showDetail(${obj.v_id})" title='Mostrar Vacante' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-eye fa-lg'></i></button>
 				<button class='btn btn-sm btn-outline-secondary' type='button' onclick="changeStatus('Pendiente', ${obj.a_id})" title='Pasar a status PENDIENTE'>PENDIENTE</button>
 				<button class='btn btn-sm btn-outline-info' type='button' onclick="changeStatus('Recibida', ${obj.a_id})" title='Pasar a status RECIBIDA'>RECIBIDA</button>
+				<br>
 				<button class='btn btn-sm btn-outline-primary' type='button' onclick="changeStatus('En evaluación', ${obj.a_id})" title='Pasar a status EN'>EN EVALUACIÓN</button>
 				<button class='btn btn-sm btn-outline-success' type='button' onclick="changeStatus('Aceptada', ${obj.a_id})" title='Pasar a status ACEPTAR'>ACEPTAR</button>
 				<button class='btn btn-sm btn-outline-danger' type='button' onclick="changeStatus('Rechazada',${obj.a_id})" title='Pasar a status RECHAZAR'>RECHAZAR</button>`;
