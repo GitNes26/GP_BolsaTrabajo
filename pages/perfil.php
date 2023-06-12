@@ -17,11 +17,11 @@ $pagina_acutal = "Bolsa de Trabajo";
       <div class="card card-widget widget-user shadow">
 
         <div class="widget-user-header bg-success">
-          <h3 class="widget-user-username" id="output_name">Alexander Pierce</h3>
-          <h5 class="widget-user-desc">26 Años</h5>
+          <h3 class="widget-user-username" id="output_name">Néstor Puentes</h3>
+          <h5 class="widget-user-desc" id="output_profession">Programador</h5>
         </div>
         <div class="widget-user-image">
-          <img class="img-circle elevation-2" src="/assets/img/logo_gomez_palacio.png" alt="Foto de perfil">
+          <img class="img-circle elevation-2" src="/assets/img/cargar_imagen.png" alt="Foto de perfil">
         </div>
         <div class="card-footer">
           <div class="row">
