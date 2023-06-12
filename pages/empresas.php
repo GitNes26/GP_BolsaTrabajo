@@ -116,10 +116,10 @@ $current_page = "Empresas";
                   </div>
                </di>
                <div class="row"> <!-- LOGO Y NOMBRE -->
-                  <div class="col-3 rounded-lg"> <!-- LOGO -->
+                  <div class="col-3 rounded-lg text-center"> <!-- LOGO -->
                      <input type="file" id="input_logo_path" name="input_logo_path" class="d-none" accept="image/*">
                      <label for="input_logo_path">Logo
-                        <div id="preview" class="d-flex justify-content-center">
+                        <div id="preview_logo" class="d-flex justify-content-center">
                            <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar Logo" class="img-fluid pointer p-3 rounded-lg" for="input_logo_path" title="Haz clic aquí para cargar tu logo de empresa">
                         </div>
                      </label>

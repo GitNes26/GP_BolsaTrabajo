@@ -100,6 +100,37 @@ btn_reset.click(async (e) => {
 	}, 500);
 });
 
+
+// Agrega un evento change al elemento de entrada de archivo
+input_logo_path.on('change', function(event) {
+	// Obtén el archivo seleccionado
+	const file = event.target.files[0];
+
+	// Crea un objeto FileReader
+	const fileReader = new FileReader();
+
+	// Define la función de carga completada del lector
+	fileReader.onload = function(e) {
+		 // Crea un elemento de imagen
+		 const imagen = document.createElement('img');
+		 imagen.src = e.target.result; // Asigna la imagen cargada como fuente
+		 imagen.classList.add("img-fluid"); // Asignar clases
+		 imagen.classList.add("pointer-sm"); // Asignar clases
+		 //  imagen.classList.add("p-5"); // Asignar clases
+		 imagen.classList.add("rounded-lg"); // Asignar clases
+		 // imagen.classList.add("text-center"); // Asignar clases
+		 imagen.style = "max-height: 200px !important";
+
+		 // Agrega la imagen a la vista previa
+		 preview_logo.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+		 preview_logo.append(imagen);
+	};
+
+ // Lee el contenido del archivo como una URL de datos
+ fileReader.readAsDataURL(file);
+});
+
+
 // REGISTRAR O EDITAR OBJETO
 form.on("submit", async (e) => {
 	e.preventDefault();

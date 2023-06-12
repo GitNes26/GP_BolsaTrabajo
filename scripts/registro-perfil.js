@@ -109,7 +109,7 @@ input_logo_path.on('change', function(event) {
       const imagen = document.createElement('img');
       imagen.src = e.target.result; // Asigna la imagen cargada como fuente
       imagen.classList.add("img-fluid"); // Asignar clases
-      imagen.classList.add("pointer"); // Asignar clases
+      imagen.classList.add("pointer-sm"); // Asignar clases
       //  imagen.classList.add("p-5"); // Asignar clases
       imagen.classList.add("rounded-lg"); // Asignar clases
       // imagen.classList.add("text-center"); // Asignar clases

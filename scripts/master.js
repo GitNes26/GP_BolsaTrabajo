@@ -187,7 +187,9 @@ const ajaxRequestAsync = async (
 					showToast(response.alert_icon, response.alert_text);
 			}
 			else 
-				showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
+				setTimeout(() => {
+					showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
+				}, 2000);
 
 		} else {
 			showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
@@ -784,7 +786,7 @@ moment.locale("es-mx");
 
 
 //#region SELECTORES DE PAISES / CIUDADES
-async function showStates() {
+async function showStates(state = null, city = null) {
 	$("#input_state").attr("disabled",true)
 	$("#input_state").html("<option value=''>Cargando...</option>");
 
@@ -805,9 +807,9 @@ async function showStates() {
 	// console.log(auth_token);
 
 	// await estados_ciudades(output_estado.text(), output_ciudad.text());
-	await states_cities();
+	await states_cities(state, city);
 	// console.log("ESTADOS_CIUDADES");
-	async function states_cities(estado = null, ciudad = null) {
+	async function states_cities(state = null, city = null) {
 		let states = await $.ajax({
 			url: `${URL_API_COUNTRIES}/states/México`,
 			method: "GET",
@@ -828,19 +830,19 @@ async function showStates() {
 		}
 		let comboStates = "<option value=''>Seleccionar una opción...</option>";
 		states.forEach((element) => {
-			let seleccionar_estado = "";
-			if (estado != null) {
-				if (estado == element[`state_name`]) {
-					seleccionar_estado = "selected";
+			let selected_state = "";
+			if (state != null) {
+				if (state == element[`state_name`]) {
+					selected_state = "selected";
 				}
 			}
-			// console.log(estado);
+			// console.log(state);
 			// $("#input_state").click()
 			comboStates +=
 				'<option value="' +
 				element["state_name"] +
 				'" ' +
-				seleccionar_estado +
+				selected_state +
 				">" +
 				element["state_name"] +
 				"</option>";
@@ -883,8 +885,8 @@ async function showCities(state) {
 	var comboCities = "<option value='' >Selecciona una opción...</option>";
 	cities.forEach((element) => {
 		let seleccionar_ciudad = "";
-		// if (ciudad != null) {
-		// 	if (estado == element[`state_name`]) {
+		// if (city != null) {
+		// 	if (state == element[`state_name`]) {
 		// 		seleccionar_ciudad = "selected";
 		// 	}
 		// }

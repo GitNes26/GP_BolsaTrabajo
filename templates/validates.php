@@ -14,13 +14,6 @@ if (isset($_COOKIE["session"])) {
 }
 
 
-// #VERIFICAR QUE NO SEA UN USUARIO TIPO CLIENTE
-$role_id = 0; //$_COOKIE["role_id"];
-// if ($role_id == 2) {
-//   header("location:$URL_BASE/");
-//   die();
-// }
-
 
 // #VERIFICAR QUE SU MENSUALIDAD ESTE PAGADA
 // if ($role_id == 3 || $role_id == 4) {
@@ -33,20 +26,6 @@ $role_id = 0; //$_COOKIE["role_id"];
 // }
 
 $role = $_COOKIE["role"];
-// if (isset($Role)) {
-//    if ($Role == null) {
-//       $role = "Admin";
-//    }
-// } else {
-//    $role = "Admin";
-// }
-
-// if ($role_id == 1) $role = "SuperAdmin";
-// else if ($role_id == 2) $role = "Admin";
-// else if ($role_id == 3) $role = "Empresa";
-// else if ($role_id == 4) $role = "User";
-// else $role = "SuperAdmin";
-// echo "perfil: $role_id - $role ";
 
 
 // #VALIDAR QUE TENGA access A ESTA PAGINA
@@ -81,7 +60,11 @@ if ($path != "perfil.php") {
       // echo "URL_SERVER: $URL_SERVER)<br>";
       // echo "ADMIN_PATH: ".print_r($ADMIN_PATH)."<br>";
    }
-   if (!$access && $URL_SERVER != "/pages") {
+   if (!$access) {
+      if ($URL_SERVER == "/pages") return;
+      elseif ($URL_SERVER == "/pages/") return;
+      elseif ($URL_SERVER == "/pages/index.php") return;
+      elseif ($URL_SERVER == "/perfil.php") return;
       // echo "ESTOY SIN access... CREO";
       header("location:$URL_BASE/");
       die();
@@ -125,6 +108,23 @@ setcookie("permission_write",$permission_write,strtotime($cookies_time), "/");
 setcookie("permission_delete",$permission_delete,strtotime($cookies_time), "/");
 setcookie("permission_update",$permission_update,strtotime($cookies_time), "/");
 
+
+#Esta validacion es para cuando le dan "atras" y la pagina se sigue viendo
+echo "
+<!-- Cookies -->
+<script src='/plugins/js-cookie/js.cookie.min.js'></script>
+<script>
+   const validateNeedCookies = () => {
+      let needCookies = true;
+      if (location.pathname == '/') needCookies = false;
+      else if (location.pathname == '/index.php') needCookies = false;
+      else if (location.pathname == '/registro-perfil.php') needCookies = false;
+      
+      if (!Cookies.get('session') && needCookies) location.reload();
+   };
+   validateNeedCookies();
+</script>
+";
 
 // $bg_powerbi = "navbar-white navbar-light";
 // $cookie_dark_mode = $_COOKIE["tema_oscuro"];
