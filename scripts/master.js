@@ -466,7 +466,7 @@ const fillSidebar = async (show_toast=false) => {
                         <i class="nav-icon ${child_menu.icon} text-sm"></i>
                         <p>
 									${child_menu.menu}`;
-                           if (Boolean(child_menu.show_counter)) {
+                           if (child_menu.show_counter == 1) {
 										// const data = {op: "counter"}
 										// const ajaxCount = await ajaxRequestAsync(URL_MENU_APP, data, null, null, false);
 										// const count = ajaxCount.data;

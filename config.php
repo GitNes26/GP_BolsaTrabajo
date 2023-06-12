@@ -1,12 +1,20 @@
 <?php
 #region CONSTANTES DE CONFIGURACION
-$CONN_DB = array(
+$CONN_DB_LOCAL = array(
   "HOST_NAME" => "127.0.0.1",
   "DB_PORT" => "3306",
   "DB_USER" => "root",
   "DB_PWD" => "",
   "DB_NAME" => "bd_bolsa_trabajo",
 );
+$CONN_DB_WEB = array(
+  "HOST_NAME" => "127.0.0.1",
+  "DB_PORT" => "3306",
+  "DB_USER" => "usr_bolsatrabajo",
+  "DB_PWD" => "Sxm4r31~1",
+  "DB_NAME" => "bd_bolsa_trabajo",
+);
+$CONN_DB = $CONN_DB_WEB;
 #endregion CONSTANTES DE CONFIGURACION
 
 #region CONSTANTES RUTAS

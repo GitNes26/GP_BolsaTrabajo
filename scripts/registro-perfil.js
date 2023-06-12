@@ -144,6 +144,7 @@ input_name_role.on("change",async function()  {
       $("#div_candidate input").addClass("not_validate");
       $("#div_candidate select").addClass("not_validate");
       $("#div_candidate textarea").addClass("not_validate");
+      input_profession_id.addClass("not_validate");
       // valido empresa
       $("#div_company input").removeClass("not_validate");
       $("#div_company select").removeClass("not_validate");
@@ -161,6 +162,7 @@ input_name_role.on("change",async function()  {
       $("#div_candidate input").removeClass("not_validate");
       $("#div_candidate select").removeClass("not_validate");
       $("#div_candidate textarea").removeClass("not_validate");
+      input_profession_id.removeClass("not_validate");
       input_interest_tags_ids.addClass("not_validate");
       // input_skills.addClass("not_validate");
       // input_abilities.addClass("not_validate");

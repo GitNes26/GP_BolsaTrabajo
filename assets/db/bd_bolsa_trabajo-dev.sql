@@ -130,7 +130,7 @@ CREATE TABLE `candidates` (
 -- Volcado de datos para la tabla `candidates`
 --
 
-INSERT INTO `candidates` (`id`, `name`, `last_name`, `cellphone`, `age`, `professional_info`, `cv_path`, `languages`, `area_id`, `interest_tags_ids`, `user_id`, `experiencies_ids`, `skills`, `abilities`) VALUES
+INSERT INTO `candidates` (`id`, `name`, `last_name`, `cellphone`, `age`, `professional_info`, `cv_path`, `languages`, `profession_id`, `interest_tags_ids`, `user_id`, `experiencies_ids`, `skills`, `abilities`) VALUES
 (1, 'Candidato 1', 'Del 1', '8784531313', 26, '<p><br></p>', '', 'Inglés - Básico', 0, 'null', 7, NULL, NULL, NULL),
 (6, 'Candidato 1 nuevo', 'Del nuevo 1', '8741464853', 50, '<p><br></p>', '', 'Inglés - Básico', 0, 'null', 10, NULL, NULL, NULL),
 (7, 'Candidato 2', 'de Pruebas', '8794131381', 46, '<p></p><p></p><p><b>Habilidades</b></p><ul><li>Habilidad 1</li><li>Habilidad 2</li><li>...</li></ul><hr class=\"custom-separator\"><b>Competencias</b><p></p><ul><li>Competencia 1</li><li>Competencia 2</li><li>....</li></ul><hr class=\"custom-separator\"><b>EXPERIENCIAS</b><p></p><ul><li><b>Empresa - Puesto | </b>01/01/2020<b> - </b>02/02/2023<br>Descripción de lo que hacías...</li><li><span style=\"font-weight: bolder;\">Empresa - Puesto |&nbsp;</span>01/01/2020<span style=\"font-weight: bolder;\">&nbsp;-&nbsp;</span>02/02/2023<br>Descripción de lo que hacías...</li></ul><p><br></p>', '', 'Inglés - Avanzado', 0, '2', 11, NULL, NULL, NULL),
