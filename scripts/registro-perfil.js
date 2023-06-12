@@ -39,6 +39,7 @@ const div_candidate = $("#div_candidate"),
    input_last_name = $("#input_last_name"),
    input_email = $("#input_email"),
    input_age = $("#input_age"),
+   input_profession_id = $("#input_profession_id"),
    input_interest_tags_ids = $("#input_interest_tags_ids")
    ;
 
@@ -68,6 +69,7 @@ async function init() {
 
    fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
    fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
+   fillSelect2(URL_PROFESSION_APP, -1, input_profession_id, false);
    fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
    user_id.val(id_cookie);
    input_company.focus();
@@ -81,6 +83,7 @@ btn_reset.click(async (e) => {
 
 	await resetSelect2(input_business_line_id);
 	await resetSelect2(input_company_ranking_id);
+	await resetSelect2(input_profession_id);
 	await resetSelect2(input_interest_tags_ids);
 	await resetSelect2(input_state);
 	await resetSelect2(input_municipality);
@@ -169,56 +172,31 @@ input_name_role.on("change",async function()  {
 })
 
 // REGISTRAR
-form_role.on("submit", async (e) => {
+form_role.on("submit", async function(e) {
 	e.preventDefault();
 
    console.log();
 	if (!validateInputs(form_role)) return;
 	// return console.log(form_role.serializeArray());
-   let data = form_role.serializeArray();
+   // let data = form_role.serializeArray();
+	let data = new FormData(this);
+
    let url_app = URL_COMPANY_APP;
 
    // si esta seleccionada la "Empresa"
    if (input_name_role[0].checked) {
       console.log("soy empresa");
-      // if (user_id.val() <= 0) {
-      // 	//NUEVO
-      // 	if (!permission_write) return;
-      // 	user_id.val("");
-      // 	op_modal.val("create");
-      // } else {
-      // 	//EDICION
-      // 	if (!permission_update) return;
-      // 	op_modal.val("edit");
-      // }
-
-      // return console.log(data);
-      // let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
-      // if (user_id.val() <= 0) {
-         //NUEVO
-         // addToArray("created_at", current_date, data);
-      // } else {
-      // 	//EDICION
-      // 	addToArray("updated_at", current_date, data);
-      // }
-
-      // const form_imagen = $("#form_role")[0];
-      // data = new FormData(form_imagen);
-      // console.log("input_name_role", input_name_role.val());
-      // return console.log([...data]);
-      // return console.log(data);
    } else {
       console.log("soy candidato");
       url_app = URL_CANDIDATE_APP;
 
       const input_current_date = $('.note-editing-area .note-editable').html();
-      addToArray("input_professional_info", input_current_date, data);
-      addToArray("input_user_id", id_cookie, data);
+      addToArray("input_professional_info", input_current_date, data, true);
+      addToArray("input_user_id", id_cookie, data, true);
    }	
 
    // return console.log(url_app, data);
-	const ajaxResponse = await ajaxRequestAsync(url_app, data);
-	// const ajaxResponse = await ajaxRequestFileAsync(url_app, data);
+	const ajaxResponse = await ajaxRequestFileAsync(url_app, data);
 	if (ajaxResponse.message == "duplicado") return
    setTimeout(() => {
       location.reload();

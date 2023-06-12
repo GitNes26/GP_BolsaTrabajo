@@ -3,7 +3,7 @@ include "../templates/header.php";
 include "../templates/navbar.php";
 include "../templates/sidebar.php";
 
-$current_page = "Empresas";
+$current_page = "Candidatos";
 
 ?>
 <!-- Content Wrapper. Contenido de la pagina -->
@@ -15,7 +15,7 @@ $current_page = "Empresas";
             <div class="col-sm-6">
                <h1 class="fw-bolder text-uppercase">
                   <i class="fa-solid fa-buildings"></i>&nbsp; <?php echo $current_page ?>
-                  <em class="fw-ligth text-muted lead text-sm">| Gestión de empresas</em>
+                  <em class="fw-ligth text-muted lead text-sm">| Gestión de candidatos</em>
                </h1>
             </div>
             <div class="col-sm-6">
@@ -45,11 +45,10 @@ $current_page = "Empresas";
               <table id="table" class="table table-hover text-center" style="width:100%">
                   <thead class="thead-dark">
                      <tr>
-                        <th scope="col">Logo</th>
-                        <th scope="col">Empresa</th>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Candidato</th>
                         <th scope="col">Contacto</th>
-                        <th scope="col">Giro</th>
-                        <th scope="col">Tamaño</th>
+                        <th scope="col">Profesión</th>
                         <th scope="col">Miembro desde</th>
                         <th scope="col">Acciones</th>
                      </tr>
@@ -58,11 +57,10 @@ $current_page = "Empresas";
                   </tbody>
                   <tfoot>
                      <tr class="thead-dark">
-                        <th scope="col">Logo</th>
-                        <th scope="col">Empresa</th>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Candidato</th>
                         <th scope="col">Contacto</th>
-                        <th scope="col">Giro</th>
-                        <th scope="col">Tamaño</th>
+                        <th scope="col">Profesión</th>
                         <th scope="col">Miembro desde</th>
                         <th scope="col">Acciones</th>
                      </tr>

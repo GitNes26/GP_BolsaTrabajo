@@ -207,19 +207,23 @@ class User extends Connection {
       $response = $this->defaultResponse();
 
       try {
-         // if ($role_id == 3 ) {
-         //    $query = "SELECT u.*, r.id role_id, r.role, 
-         //    FROM users u 
-         //    LEFT JOIN roles r ON u.role_id=r.id 
-         //    LEFT JOIN candidates c ON c.user_id=u.id 
-         //    WHERE u.active=1 and u.id=$id";
-         // } elseif ($role_id == 4) {
-
-         // } else {
+         if ($role_id == 3 ) {
+            $query = "SELECT u.*, r.id role_id, r.role, c.*
+            FROM users u 
+            LEFT JOIN roles r ON u.role_id=r.id 
+            LEFT JOIN companies c ON c.user_id=u.id 
+            WHERE u.active=1 and u.id=$id";
+         } elseif ($role_id == 4) {
+            $query = "SELECT u.*, r.id role_id, r.role, c.*
+            FROM users u 
+            LEFT JOIN roles r ON u.role_id=r.id 
+            LEFT JOIN candidates c ON c.user_id=u.id 
+            WHERE u.active=1 and u.id=$id";
+         } else {
             $query = "SELECT u.*, r.id role_id, r.role
             FROM users u LEFT JOIN roles r ON u.role_id=r.id 
             WHERE u.active=1 and u.id=$id";
-         // }
+         }
          
          $result = $this->Select($query,false);
          $response = $this->correctResponse();

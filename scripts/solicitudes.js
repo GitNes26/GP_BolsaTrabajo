@@ -121,7 +121,7 @@ async function fillTable(show_toas=true) {
 		//Campos
 		let
 			column_candidate = `
-				<button class='btn btn-outline-dark' type='button' data-id='${obj.ca_id}' onclick="showCandidate(${obj.ca_id})" title='Ver Candidato' data-bs-toggle="modal" data-bs-target="#modal_candidate"><i class='fa-solid fa-eye fa-lg'></i></button><br><br>
+				<button class='btn btn-outline-dark' type='button' data-id='${obj.ca_id}' onclick="showCandidate(${obj.ca_id})" title='Ver Candidato' data-bs-toggle="modal" data-bs-target="#candidate_modal"><i class='fa-solid fa-eye fa-lg'></i></button><br><br>
 				<b>${obj.name} ${obj.last_name}</b><br>
 				<i class="fa-solid fa-at"></i>&nbsp; ${obj.email}<br>
 				<i class="fa-solid fa-phone"></i>&nbsp; ${obj.cellphone}<br>
@@ -192,42 +192,8 @@ async function fillTable(show_toas=true) {
 	tbody.slideDown("slow");
 }
 
-//ACCIONES EN BOTONES DE LA TABLA
-// tbody.click((e) => {
-// 	// console.log(e.target);
-// 	e.preventDefault();
 
-// 	//EDITAR OBJETO
-// 	if ($(e.target).hasClass("btn_edit") || $(e.target).hasClass("i_edit")) {
-// 		let btn_edit;
 
-// 		if ($(e.target).hasClass("i_edit")) {
-// 			btn_edit = $(e.target).parent();
-// 		} else {
-// 			btn_edit = $(e.target);
-// 		}
-
-// 		editObj(btn_edit);
-// 	}
-
-// 	//ELIMINAR OBJETO
-// 	if (
-// 		$(e.target).hasClass("btn_delete") ||
-// 		$(e.target).hasClass("i_delete")
-// 	) {
-// 		let btn_delete;
-
-// 		if ($(e.target).hasClass("i_delete")) {
-// 			btn_delete = $(e.target).parent();
-// 		} else {
-// 			btn_delete = $(e.target);
-// 		}
-
-// 		deleteObj(btn_delete);
-// 	}
-// });
-
-//EDITAR OBJETO
 async function showDetail(id) {
 	modal_title.html("<i class='fa-solid fa-memo-circle-info'></i>&nbsp; DETALLE DE LA VACANTE");
 
@@ -256,6 +222,36 @@ async function showDetail(id) {
 	$(`.output_more_info`).html(obj.more_info);
 	btns_cancel.attr("data-id", obj.id);
 	btns_cancel.attr("data-name", obj.vacancy);
+}
+
+async function showCandidate(id) {
+	modal_title.html("<i class='fa-solid fa-memo-circle-info'></i>&nbsp; DETALLE DE LA VACANTE");
+
+	let data = { id, op: "show" };
+	const ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
+
+	const obj = ajaxResponse.data;
+	console.log(obj);
+
+	// PREVIEW
+	// $(`.output_vacancy`).text(obj.vacancy);
+	// data = { op: "show", id: obj.company_id }
+	// const ajaxResponseCompany = await ajaxRequestAsync(URL_COMPANY_APP, data);
+	// const objCompany = ajaxResponseCompany.data
+	// $(`.output_info_company`).html(`
+	// 	<span>${objCompany.company}</span><br>
+	// 	<span>${objCompany.municipality}, ${objCompany.state}</span><br><br>
+	// 	<span class="">${objCompany.description}</span>
+	// `);
+	// $(`.output_area`).text(obj.area);
+	// $(`.output_description`).text(obj.description);
+	// $(`.output_min_salary`).text(formatCurrency(obj.min_salary));
+	// $(`.output_max_salary`).text(formatCurrency(obj.max_salary));
+	// $(`.output_job_type`).text(obj.job_type);
+	// $(`.output_schedules`).text(obj.schedules);
+	// $(`.output_more_info`).html(obj.more_info);
+	// btns_cancel.attr("data-id", obj.id);
+	// btns_cancel.attr("data-name", obj.vacancy);
 }
 
 async function changeStatus(status, vacancy_id) {

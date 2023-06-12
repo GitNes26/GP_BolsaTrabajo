@@ -80,6 +80,11 @@ if (isset($_COOKIE["session"])) {
    <!-- MisEstilos -->
    <link rel="stylesheet" href="<?=$STYLES_PATH ?>/styles.css"/>
    <link rel="stylesheet" href="<?=$STYLES_PATH?>/responsive.css">
+   <style>
+      .select2-container--default .select2-selection--single .select2-selection__rendered {
+         margin-top: -8px !important;
+      }
+   </style>
 
 </head>
 
@@ -244,11 +249,11 @@ if (isset($_COOKIE["session"])) {
                      <div id="div_candidate" class="">
                         <div class="row"><!-- NOMBRE Y APELLIDO -->
                            <div class="mb-3 col-md-6">
-                              <label for="input_name" class="form-label">Nombre(s):</label>
+                              <label for="input_name" class="form-label">Nombre(s): <span class="obligatory"></span></label>
                               <input type="text" class="form-control not_validate" id="input_name" name="input_name" data-input-name="NOMBRES">
                            </div>
                            <div class="mb-3 col-md-6">
-                              <label for="input_last_name" class="form-label">Apellido(s):</label>
+                              <label for="input_last_name" class="form-label">Apellido(s): <span class="obligatory"></span></label>
                               <input type="text" class="form-control not_validate" id="input_last_name" name="input_last_name" data-input-name="APELLIDOS">
                            </div>
                            <!-- <div class="mb-3 col-md-4">
@@ -264,6 +269,15 @@ if (isset($_COOKIE["session"])) {
                            <div class="mb-3 col-md-6">
                               <label for="input_age" class="form-label">Edad: <span class="obligatory"></span></label>
                               <input type="number" class="form-control not_validate" id="input_age" name="input_age" data-input-name="CORREO">
+                           </div>
+                        </div>
+                        <div class="row"> <!-- PROFESION -->
+                           <div class="mb-3 col">
+                              <label for="input_profession_id" class="form-label">Profesión/Oficio: <span class="obligatory"></span></label>
+                              <select class="select2 form-control" style="width:100%; line-height:10px"
+                              id="input_profession_id" name="input_profession_id"
+                              data-input-name="PROFESIÓN">
+                              </select>
                            </div>
                         </div>
                         <div class="row"> <!-- INTERESES -->

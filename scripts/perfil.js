@@ -179,47 +179,19 @@ form.on("submit", async (e) => {
 });
 
 async function fillInfo(show_toas=true) {
-	let data = { op: "showInfo", input_role_id: role_cookie };
+	let data = { op: "showInfo", id: id_cookie, input_role_id: role_cookie };
 	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data, null, true, show_toas);
 
 	//Limpiar table
 	tbody.slideUp();
 	table.clear().draw();
 
-	const list = [];
-	let objResponse = ajaxResponse.data;
-	// console.log(objResponse);
+	let obj = ajaxResponse.data;
+	console.log(obj);
 
-	objResponse.map((obj) => {
-		//Campos
-		let 
-			column_business_line = `${obj.business_line}`;
+	output_professional_info.html(obj.professional_info)
 
-		let column_buttons = `<td class='align-middle'>
-            <div class='btn-group' role='group'>`;
-		if (permission_update) {
-			column_buttons +=
-				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Perfil' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
-		}
-		if (permission_delete) {
-			column_buttons +=
-				//html
-				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Perfil' data-name='${obj.business_line}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
-		}
-		column_buttons += `</div>
-					</td>`;
-
-		list.push([
-			column_business_line,
-			column_buttons,
-		]);		
-	});
-	//Dibujar Tabla
-	await table.rows
-	.add(list)
-	.draw();
-	await table.columns.adjust().draw();
+	
 	tbody.slideDown("slow");
 	btn_reset.click();
 }

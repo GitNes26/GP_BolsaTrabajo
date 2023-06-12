@@ -170,7 +170,7 @@ const ajaxRequestAsync = async (
 			url: url,
 			data: data,
 			async: true,
-			dataType: "json"
+			dataType: "json",
 		});
 		// console.log(response);
 
@@ -183,13 +183,13 @@ const ajaxRequestAsync = async (
 
 		if (response.result) {
 			if (response.toast) {
-				if (show_toast)
-					showToast(response.alert_icon, response.alert_text);
-			}
-			else 
-				setTimeout(() => {
-					showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
-				}, 2000);
+				if (show_toast) {
+					// setTimeout(() => {
+						showToast(response.alert_icon, response.alert_text);
+					// }, 2000);
+				}
+			} else 
+				showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
 
 		} else {
 			showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
@@ -273,10 +273,11 @@ const ajaxRequestFileAsync = async (
 			url: url,
 			data: data,
 			async: true,
-			dataType: "json",
-			contentType:false,
+			dataType: "json",																																																															
 			enctype: "multipart/form-data",
-			processData:false,
+			contentType: false,
+			cache: false,
+			processData: false,
 		});
 		// console.log(response);
 
@@ -288,9 +289,13 @@ const ajaxRequestFileAsync = async (
 		};
 
 		if (response.result) {
-			if (response.toast)
-				if (show_toast)
-					showToast(response.alert_icon, response.alert_text);
+			if (response.toast) {
+				if (show_toast) {
+					// setTimeout(() => {
+						showToast(response.alert_icon, response.alert_text);
+					// }, 2000);
+				}
+			} else showAlert(response.alert_icon, response.alert_title, response.alert_text, false);
 		} else {
 			showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
 		}
@@ -399,11 +404,28 @@ function countLetter(input, counter_name, letters, limit) {
 
 
 //AGREGAR DATO AL ARRAY
-function addToArray(name, value, array) {
+function addToArray(name, value, array, formData=false) {
 	//array obtenido de formulario_modal.serializeArray()
 	// console.log(nombre,valor,array);
 	const new_data = { name, value };
-	array.push(new_data);
+	if (formData) array.append(name, value);
+	else array.push(new_data);
+}
+
+function resetImgPreview(preview, img_path="/assets/img/cargar_imagen.png") {
+	// Crea un elemento de imagen
+	const imagen = document.createElement('img');
+	imagen.src = img_path; // Asigna la imagen cargada como fuente
+	imagen.classList.add("img-fluid"); // Asignar clases
+	imagen.classList.add("pointer-sm"); // Asignar clases
+	//  imagen.classList.add("p-5"); // Asignar clases
+	imagen.classList.add("rounded-lg"); // Asignar clases
+	// imagen.classList.add("text-center"); // Asignar clases
+	imagen.style = "max-height: 200px !important";
+
+	// Agrega la imagen a la vista previa
+	preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+	preview.append(imagen);
 }
 
 
@@ -850,8 +872,8 @@ async function showStates(state = null, city = null) {
 
 		$("#input_state").html(comboStates);
 		$("#input_state").attr("disabled",false)
+		if (city != null) await showCities(state, city);
 	}
-	// await estados_ciudades2(output_estado.text(), output_ciudad.text());
 }
 $("#input_state").on("change", async function () {
 	var state = this.value;
@@ -859,7 +881,7 @@ $("#input_state").on("change", async function () {
 	// console.log(state);
 	showCities(state);
 });
-async function showCities(state) {
+async function showCities(state, city=null) {
 	$("#input_municipality").attr("disabled",true);
 	$("#input_municipality").html("<option value=''>Cargando...</option>");
 
@@ -884,17 +906,18 @@ async function showCities(state) {
 	// }
 	var comboCities = "<option value='' >Selecciona una opción...</option>";
 	cities.forEach((element) => {
-		let seleccionar_ciudad = "";
-		// if (city != null) {
-		// 	if (state == element[`state_name`]) {
-		// 		seleccionar_ciudad = "selected";
-		// 	}
-		// }
+		let selected_city = "";
+		if (city != null) {
+			// console.log("hay ciudad:", city);
+			if (city == element[`city_name`]) {
+				selected_city = "selected";
+			}
+		}
 		comboCities +=
 			'<option value="' +
 			element["city_name"] +
 			'" ' +
-			seleccionar_ciudad +
+			selected_city +
 			">" +
 			element["city_name"] +
 			"</option>";
@@ -905,7 +928,7 @@ async function showCities(state) {
 
 $(".reload_input").click(function() {
 	const input = $(`#${$(this).attr("data-input")}`);
-	if (input.attr("id") == "input_state") showStates();
+	if (input.attr("id") == "input_state") showStates(state=null, city=null);
 	else if (input.attr("id") == "input_municipality") showCities($("#input_state").val());
 })
 //#endregion SELECTORES DE PAISES / CIUDADES

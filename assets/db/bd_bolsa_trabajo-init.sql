@@ -83,7 +83,7 @@ CREATE TABLE `candidates` (
   `professional_info` longtext COLLATE utf8mb4_unicode_520_ci,
   `cv_path` varchar(100) COLLATE utf8mb4_unicode_520_ci DEFAULT NULL,
   `languages` text COLLATE utf8mb4_unicode_520_ci,
-  `area_id` int(11) DEFAULT NULL,
+  `profession_id` int(11) DEFAULT NULL,
   `interest_tags_ids` text COLLATE utf8mb4_unicode_520_ci,
   `user_id` int(11) NOT NULL,
   `experiencies_ids` text COLLATE utf8mb4_unicode_520_ci,

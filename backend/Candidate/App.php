@@ -13,7 +13,7 @@ if (isset($_POST['input_age'])) { $age = $_POST['input_age']; }
 if (isset($_POST['input_professional_info'])) { $professional_info = $_POST['input_professional_info']; }
 // if (isset($_POST['input_cv_path'])) { $cv_path = $_POST['input_cv_path']; }
 if (isset($_POST['input_languages'])) { $languages = $_POST['input_languages']; }
-if (isset($_POST['input_area_id'])) { $area_id = $_POST['input_area_id']; } else $area_id = '0';
+if (isset($_POST['input_profession_id'])) { $profession_id = $_POST['input_profession_id']; } else $profession_id = '0';
 if (isset($_POST['input_interest_tags_ids'])) { $interest_tags_ids = $_POST['input_interest_tags_ids']; } else $interest_tags_ids = 'null';
 if (isset($_POST['input_user_id'])) { $user_id = $_POST['input_user_id']; }
 
@@ -27,6 +27,8 @@ if (isset($_POST['input_municipality'])) { $municipality = $_POST['input_municip
 if (isset($_POST['created_at'])) { $created_at = $_POST['created_at']; }
 if (isset($_POST['updated_at'])) { $updated_at = $_POST['updated_at']; }
 if (isset($_POST['deleted_at'])) { $deleted_at = $_POST['deleted_at']; }
+
+if (isset($_POST['haveImg'])) { $haveImg = $_POST['haveImg']; } else { $haveImg = null; }
 
 if (isset($_FILES['input_cv_path'])) {
   $path_files = "assets/img";
@@ -58,7 +60,7 @@ if (isset($_FILES['input_cv_path'])) {
   $cv_path = "";
   $type = "";
 }
-
+if ($haveImg != null) $logo_path = $haveImg;
 
 #PETICIONES
 
@@ -67,9 +69,9 @@ if ($op == "index") $Candidate->index();
 elseif ($op == "show") $Candidate->show($id);
 elseif ($op == 'showSelect') $Candidate->showSelect();
 
-elseif ($op == "create") $Candidate->create($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $area_id, $interest_tags_ids, $user_id);
+elseif ($op == "create") $Candidate->create($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id);
 
-elseif ($op == "edit") $Candidate->edit($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $area_id, $interest_tags_ids, $user_id, $updated_at, $id);
+elseif ($op == "edit") $Candidate->edit($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id);
 
 elseif ($op == "delete") $Candidate->delete($deleted_at, $user_id);
 
