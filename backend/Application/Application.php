@@ -23,7 +23,7 @@ class Application extends Connection {
          INNER JOIN vacancies v ON a.vacancy_id=v.id
          INNER JOIN companies c ON v.company_id=c.id
          INNER JOIN candidates ca ON a.candidate_id=ca.id
-         WHERE a.active=1 ORDER BY id DESC;";
+         WHERE a.active=1 ORDER BY a.id DESC;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";

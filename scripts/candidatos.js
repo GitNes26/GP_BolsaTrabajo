@@ -15,14 +15,15 @@ const
 	id_modal = $("#id"),
 	op_modal = $("#op"),
 	input_user_id = $("#input_user_id"),
-	input_company = $("#input_company"),
+	input_name = $("#input_name"),
+	input_last_name = $("#input_last_name"),
    input_description = $("#input_description"),
    counter_description = $("#counter_description"),
    input_logo_path = $('#input_logo_path'), //este es un input_file
    output_logo = $('#output_logo'),
    preview_logo = $('#preview_logo'),
    input_business_line_id = $("#input_business_line_id"),
-   input_company_ranking_id = $("#input_company_ranking_id"),
+   input_name_ranking_id = $("#input_name_ranking_id"),
    input_state = $("#input_state"),
    input_municipality = $("#input_municipality"),
    input_contact_name = $("#input_contact_name"),
@@ -51,10 +52,10 @@ async function init() {
    fillSelect2(URL_USER_APP, -1, input_user_id, false);
 
    fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
-   fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
+   fillSelect2(URL_COMPANY_RANKING_APP, -1, input_name_ranking_id, false);
    // fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
 	// resetImgPreview(preview_logo);
-   input_company.focus();
+   input_name.focus();
 }
 
 
@@ -89,7 +90,7 @@ btn_reset.click(async (e) => {
 
 	await resetSelect2(input_user_id);
 	await resetSelect2(input_business_line_id);
-	await resetSelect2(input_company_ranking_id);
+	await resetSelect2(input_name_ranking_id);
 	// await resetSelect2(input_interest_tags_ids);
 	await resetSelect2(input_state);
 	await resetSelect2(input_municipality);
@@ -329,10 +330,10 @@ async function editObj(btn_edit) {
 		vLogoPath = obj.logo_path;
 		// input_logo_path.val(obj.logo_path);
 	}
-	input_company.val(obj.company);
+	input_name.val(obj.company);
 	input_description.val(obj.description);
 	await fillSelect2(URL_BUSINESS_LINE_APP, obj.business_line_id, input_business_line_id);
-	await fillSelect2(URL_COMPANY_RANKING_APP, obj.company_ranking_id, input_company_ranking_id);
+	await fillSelect2(URL_COMPANY_RANKING_APP, obj.company_ranking_id, input_name_ranking_id);
 	input_contact_name.val(obj.contact_name);
 	input_contact_phone.val(obj.contact_phone);
 	input_contact_email.val(obj.contact_email);
@@ -341,7 +342,7 @@ async function editObj(btn_edit) {
 	setTimeout(() => {
 		// btn_submit.attr("disabled",false);
 		// btn_reset.attr("disabled",false);
-		input_company.focus();
+		input_name.focus();
 	}, 500);
 }
 

@@ -820,10 +820,11 @@ async function showStates(state = null, city = null) {
 		method: "GET",
 		headers: {
 			Accept: "application/json",
-			"api-token": "7-XEHwLCLzq7iaJRWwnkSI5GFfL4A8VCIczHNsc2mXrvlUO3VDUGu7ZIBY7dauhz-qA",
-			"user-email": "182310211@itslerdo.edu.mx",
+			"api-token": "9BlpaH5qgUCOZJjDtIvbDH9BFkZbt40BdC9VQlVEGwkmibb3ubtwPdKWi9ftc6qVENE",
+			"user-email": "deconomico@gomezpalacio.gob.mx",
 		}
 	});
+	// Desarollo Economico - correo y token
 
 	auth_token = requestToken.auth_token;
 	// console.log(auth_token);
@@ -894,16 +895,6 @@ async function showCities(state, city=null) {
 			Accept: "application/json",
 		}
 	});
-	// while (cities.length < 1) {
-	// 	cities = await $.ajax({
-	// 		url: `${URL_API_COUNTRIES}/cities/${state}`,
-	// 		method: "GET",
-	// 		headers: {
-	// 			Authorization: `Bearer ${auth_token}`,
-	// 			Accept: "application/json",
-	// 		}
-	// 	});
-	// }
 	var comboCities = "<option value='' >Selecciona una opción...</option>";
 	cities.forEach((element) => {
 		let selected_city = "";

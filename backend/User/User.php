@@ -147,7 +147,7 @@ class User extends Connection {
          $response = $this->defaultResponse();
          $query = "SELECT u.*, r.role
          FROM users u LEFT JOIN roles r ON u.role_id=r.id 
-         WHERE u.active=1 ORDER BY id DESC";
+         WHERE u.active=1 AND role_id >= $_COOKIE[role_id] ORDER BY id DESC";
          $result = $this->Select($query, true);
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";

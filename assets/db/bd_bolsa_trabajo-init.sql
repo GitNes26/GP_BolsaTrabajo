@@ -85,6 +85,7 @@ CREATE TABLE `candidates` (
   `languages` text COLLATE utf8mb4_unicode_520_ci,
   `profession_id` int(11) DEFAULT NULL,
   `interest_tags_ids` text COLLATE utf8mb4_unicode_520_ci,
+  `enable` tinyint(4) NOT NULL DEFAULT '1',
   `user_id` int(11) NOT NULL,
   `experiencies_ids` text COLLATE utf8mb4_unicode_520_ci,
   `skills` text COLLATE utf8mb4_unicode_520_ci COMMENT 'Competencias',

@@ -74,6 +74,7 @@ form.on("submit", async (e) => {
 
 async function fillTable(show_toas=true) {
 	let data = { op: "myApplicationsByCompany", user_id: id_cookie };
+	if (role_cookie == 1) data.op = "index";
 	const ajaxResponse = await ajaxRequestAsync(URL_APPLICATION_APP, data, null, true, show_toas);
 
 	//Limpiar table

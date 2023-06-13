@@ -22,7 +22,7 @@ class Role extends Connection
       try {
          $response = $this->defaultResponse();
          $query = "SELECT p.id as perfil_id, p.perfil as perfil_nombre
-         FROM perfiles as p WHERE p.estatus=1 ORDER BY perfil_nombre ASC";
+         FROM perfiles as p WHERE p.estatus=1 AND p.id >= $_COOKIE[role_id] ORDER BY perfil_nombre ASC";
          $result = $this->Select($query, true);
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -194,7 +194,7 @@ class Role extends Connection
       try {
          $query = "SELECT id 'value', role 'text'
          FROM roles
-         WHERE active=1";
+         WHERE active=1 AND id >= $_COOKIE[role_id]";
          $result = $this->Select($query, true);
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";

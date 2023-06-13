@@ -129,7 +129,7 @@ $pagina_acutal = "Bolsa de Trabajo";
             <div class="col-md-4 p-3" id="vacancy_container"></div>
 
             <!-- VISTA A DETALLE -->
-            <div class="col d-none d-sm-none d-md-block">
+            <div class="col-md-4 d-none d-sm-none d-md-block">
                <form id="form_vacancy" enctype="multipart/form-data" class="card shadow-lg sticky-top card-detail">
                   <div class="card-header">
                      <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-regular fa-memo-circle-info"></i>&nbsp; DETALLE DE LA VACANTE</span>
@@ -137,9 +137,9 @@ $pagina_acutal = "Bolsa de Trabajo";
                         <button type="button" id="btn_close_detail" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                         </button>
-                        <button type="button" class="btn btn-tool" title="Favoritos" data-widget="chat-pane-toggle">
+                        <!-- <button type="button" class="btn btn-tool" title="Favoritos" data-widget="chat-pane-toggle">
                            <i class="fa-solid fa-star"></i>
-                        </button>
+                        </button> -->
                      </div>
                   </div>
                   <div class="card-body text-start scroll-y">
@@ -264,10 +264,10 @@ $pagina_acutal = "Bolsa de Trabajo";
       <div class="card-header">  
          <span class="card-title fw-bolder vacancy">Vacante</span>
          <div class="card-tools">
-            <span title="vacantes disponibles" class="badge bg-success vacancy_numbers">3</span>
-            <button type="button" class="btn btn-tool" title="Favoritos" data-widget="chat-pane-toggle">
+            <!-- <span title="vacantes disponibles" class="badge bg-success vacancy_numbers">3</span> -->
+            <!-- <button type="button" class="btn btn-tool" title="Favoritos" data-widget="chat-pane-toggle">
                <i class="fa-solid fa-star"></i>
-            </button>
+            </button> -->
          </div>
       </div>
       <div class="card-body pb-2">
