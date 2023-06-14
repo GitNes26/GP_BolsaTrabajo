@@ -78,11 +78,12 @@ if (isset($_COOKIE["session"])) {
 
 
    <!-- MisEstilos -->
-   <link rel="stylesheet" href="<?=$STYLES_PATH ?>/styles.css"/>
    <link rel="stylesheet" href="<?=$STYLES_PATH?>/responsive.css">
+   <link rel="stylesheet" href="<?=$STYLES_PATH ?>/styles.css"/>
+
    <style>
       .select2-container--default .select2-selection--single .select2-selection__rendered {
-         margin-top: -8px !important;
+         margin-top: -9px !important;
       }
    </style>
 
@@ -174,7 +175,7 @@ if (isset($_COOKIE["session"])) {
                      
                      <div id="div_company" class="">
                         <div class="row"> <!-- LOGO Y NOMBRE -->
-                           <div class="col-3 rounded-lg"> <!-- LOGO -->
+                           <div class="col-3 rounded-lg text-center"> <!-- LOGO -->
                               <input type="file" id="input_logo_path" name="input_logo_path" class="d-none" accept="image/*">
                               <label for="input_logo_path">Logo
                                  <div id="preview_logo" class="d-flex justify-content-center">
@@ -256,10 +257,6 @@ if (isset($_COOKIE["session"])) {
                               <label for="input_last_name" class="form-label">Apellido(s): <span class="obligatory"></span></label>
                               <input type="text" class="form-control not_validate" id="input_last_name" name="input_last_name" data-input-name="APELLIDOS">
                            </div>
-                           <!-- <div class="mb-3 col-md-4">
-                              <label for="input_email" class="form-label">Correo:</label>
-                              <input type="email" class="form-control not_validate" id="input_email" name="input_email" data-input-name="APELLIDOS">
-                           </div> -->
                         </div>
                         <div class="row"> <!-- CECULAR Y EDAD -->
                            <div class="mb-3 col-md-6">
@@ -271,18 +268,9 @@ if (isset($_COOKIE["session"])) {
                               <input type="number" class="form-control not_validate" id="input_age" name="input_age" data-input-name="CORREO">
                            </div>
                         </div>
-                        <div class="row"> <!-- PROFESION -->
-                           <div class="mb-3 col">
-                              <label for="input_profession_id" class="form-label">Profesión/Oficio: <span class="obligatory"></span></label>
-                              <select class="select2 form-control" style="width:100%; line-height:10px"
-                              id="input_profession_id" name="input_profession_id"
-                              data-input-name="PROFESIÓN">
-                              </select>
-                           </div>
-                        </div>
                         <div class="row"> <!-- INTERESES -->
                            <div class="form-group" data-select2-id="29">
-                              <label for="input_interest_tags_ids">Intereses de busqueda:</label>
+                              <label for="input_interest_tags_ids">Intereses de búsqueda:</label>
                               <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a tús intereses" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_interest_tags_ids" name="input_interest_tags_ids" data-input-name="INTERESES">
                               </select>
                            </div>
@@ -290,6 +278,12 @@ if (isset($_COOKIE["session"])) {
 
                         <div class="border rounded mt-2 p-2"> <!-- DATOS PROFESIONALES -->
                            <div for="" class="text-center fw-bolder mb-3">DATOS PROFESIONALES</div>
+                           <div class="mb-3 col">
+                              <label for="input_profession_id" class="form-label">Profesión/Oficio: <span class="obligatory"></span></label>
+                              <select class="select2 form-control not_validate" style="width:100%"
+                              id="input_profession_id" name="input_profession_id" data-input-name="PROFESIÓN">
+                              </select>
+                           </div>
                            <!-- ACERCA DE MÍ -->
                            <!-- <div class="row">
                               <div class="mb-3 col">

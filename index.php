@@ -133,7 +133,7 @@ if (isset($_GET["p"])) {
                                        <i class="fa-solid fa-circle-arrow-right"></i>&nbsp;&nbsp;INICIAR SESIÓN
                                     </button>
                                     <br>
-                                    <a class="float-start" id="btn_signup" style="cursor:pointer">REGISTRARME!</a>
+                                    <a class="float-start" id="btn_signup" style="cursor:pointer">¡REGISTRARME!</a>
                                     <!-- <a href="/" class="float-end">Regresar a gomezpalacio.gom.mx</a> -->
                                  </div>
                                  <!-- /.col -->

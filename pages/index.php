@@ -43,7 +43,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                         <input type="search" class="form-control not_validate" id="input_filter_search" name="input_filter_search" data-input-name="BUSCADOR GENERAL" placeholder="Puesto | Empresa">
                      </div>
                      <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Filtros de busqueda" id="btn_show_filters">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Filtros de búsqueda" id="btn_show_filters">
                         <i class="fas fa-minus"></i>
                         <i class="fa-solid fa-filter-list"></i>
                         </button>
@@ -81,7 +81,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                      </div>
                      <!-- INTERESES -->
                      <div class="form-group d-none" data-select2-id="29">
-                        <label for="input_filter_interest_tags_ids">Intereses de busqueda:</label>
+                        <label for="input_filter_interest_tags_ids">Intereses de búsqueda:</label>
                         <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas con tús intereses" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_filter_interest_tags_ids" name="input_filter_interest_tags_ids" data-input-name="INTERESES">
                         </select>
                      </div>

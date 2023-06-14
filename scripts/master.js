@@ -108,32 +108,7 @@ const SUMMERNOTE_CONFIG = {
 					$('.note-editing-area .note-placeholder').css("display","none");
 
 					$('.note-editing-area .note-editable').html(null);
-					$('.note-editing-area .note-editable').html(`<p class="">
-						<span class="fw-bolder">Requisitos</span>
-						<ul class="" id="output_requirements">
-							<li>Requerimiento 1</li>
-							<li>Requerimiento 1</li>
-							<li>Requerimiento 1</li>
-						</ul>
-					</p>
-					<p class="">
-						<span class="fw-bolder">Expriencia necesaria</span>
-						<ul class="" id="output_necessary_experience">
-							<li>Experiencias 1</li>
-							<li>Experiencias 1</li>
-							<li>Experiencias 1</li>
-						</ul>
-					</p>
-					<!-- ./ DETALLES DEL EMPELO -->
-					<hr>
-					<p class="">
-						<span class="fw-bolder">Beneficios</span>
-						<ul class="" id="output_benefits">
-							<li>Beneficio 1</li>
-							<li>Beneficio 1</li>
-							<li>Beneficio 1</li>
-						</ul>
-					</p>`);
+					$('.note-editing-area .note-editable').html(`<p class=""><span class="fw-bolder">Requisitos</span><ul class="" id="output_requirements"><li>Requerimiento 1</li><li>Requerimiento 1</li><li>Requerimiento 1</li></ul></p><p class=""><span class="fw-bolder">Expriencia necesaria</span><ul class="" id="output_necessary_experience"><li>Experiencias 1</li><li>Experiencias 1</li><li>Experiencias 1</li></ul></p><hr><p class=""><span class="fw-bolder">Beneficios</span><ul class="" id="output_benefits"><li>Beneficio 1</li><li>Beneficio 1</li><li>Beneficio 1</li></ul></p>`);
 					// $('#summernote').summernote('pasteHTML', hr);
 				}
 			});
@@ -434,7 +409,7 @@ function resetImgPreview(preview, img_path="/assets/img/cargar_imagen.png") {
 //#region MENUS
 const sidebar_menus = $("#sidebar_menus");
 const fillSidebar = async (show_toast=false) => {
-	sidebar_menus.slideUp(1000);
+	// sidebar_menus.slideUp(1000);
 	let role_id = Number(Cookies.get("role_id"));
 	// role_id=1;
 	let data = { op: "showMyMenus", role_id: role_id };
@@ -480,7 +455,7 @@ const fillSidebar = async (show_toast=false) => {
 		menus += `</li>`;
 	});
 	await sidebar_menus.append(menus);
-	sidebar_menus.slideDown(1000);
+	// sidebar_menus.slideDown(1000);
 };
 if (sidebar_menus.length > 0) fillSidebar();
 //#endregion

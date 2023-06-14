@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
    <!-- Brand Logo -->
-   <a href="<?php echo($URL_BASE) ?>/pages" class="brand-link text-md" title="Regresar a inicio">
+   <a href="<?php echo($URL_BASE) ?>/pages" class="brand-link text-md" title="Ir a bolsa de trabajo">
       <!-- <img src="<?php echo($ICONO) ?>" alt="Logo" class="brand-image" style="opacity: .8"> -->
       <span class="ml-3 fw-bold">Bolsa de</span>
       <span class="brand-text fw-light">Trabajo <small></small></span>

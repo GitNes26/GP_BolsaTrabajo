@@ -65,7 +65,7 @@ $current_page = "Vacantes";
                                  <div class="text-sm text-end text-muted" id="counter_vacancy"></div>
                               </div>
                               <!-- EMPRESA -->
-                              <?php if ($_COOKIE["role_id"] > 3): ?>
+                              <?php if ($_COOKIE["role_id"] < 3): ?>
                               <div class="mb-3">
                                  <label for="input_company_id" class="form-label">Empresa: <span class="obligatory"></span></label>
                                  <select class="select2 form-control" style="width:100%"
@@ -146,7 +146,7 @@ $current_page = "Vacantes";
                               </div>
                               <!-- TAGS -->
                               <div class="form-group" data-select2-id="29">
-                                 <label for="input_tags_ids">TAGS de busqueda:</label>
+                                 <label for="input_tags_ids">TAGS de búsqueda:</label>
                                  <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a la vacante" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_tags_ids" data-input-name="TAGS">
                                  </select>
                               </div>

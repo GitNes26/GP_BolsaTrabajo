@@ -69,7 +69,7 @@ async function init() {
 
 	fillTable();
 	
-	if (role_cookie > 3) fillSelect2(URL_COMPANY_APP, -1, input_company_id);
+	if (role_cookie < 3) fillSelect2(URL_COMPANY_APP, -1, input_company_id);
 	fillSelect2(URL_AREA_APP, -1, input_area_id);
 	fillSelect2(URL_TAG_APP, -1, input_tags_ids, false);
 	setTimeout(() => {
@@ -101,7 +101,7 @@ btn_cancel.click((e) => {
 btn_reset.click(async (e) => {
 	id_modal.val("");
 	$('.note-editing-area .note-editable').html(null);
-	if (role_cookie > 3) resetSelect2(input_company_id);
+	if (role_cookie < 3) resetSelect2(input_company_id);
 	resetSelect2( input_area_id);
   resetSelect2(input_tags_ids);
 
@@ -315,7 +315,7 @@ async function editObj(btn_edit) {
 	id_modal.val(Number(obj.id));
 	input_vacancy.val(obj.vacancy);
 	countLetter(input_vacancy, input_vacancy.attr("data-counter"), input_vacancy.val().length, Number(input_vacancy.data("limit")));
-	if (role_cookie > 3) fillSelect2(URL_COMPANY_APP, obj.company_id, input_company_id);
+	if (role_cookie < 3) fillSelect2(URL_COMPANY_APP, obj.company_id, input_company_id);
 	fillSelect2(URL_AREA_APP, obj.area_id, input_area_id);
 	input_description.val(obj.description);
 	countLetter(input_description, input_description.attr("data-counter"), input_description.val().length, Number(input_description.data("limit")));
@@ -342,7 +342,7 @@ async function editObj(btn_edit) {
 	// PREVIEW
 	$(`#${input_vacancy.attr("data-output")}`).text(obj.vacancy);
 
-	if (role_cookie > 3) {
+	if (role_cookie < 3) {
 		data = { op: "show", id: obj.company_id }
 		const ajaxResponseCompany = await ajaxRequestAsync(URL_COMPANY_APP, data);
 		const objCompany = ajaxResponseCompany.data
