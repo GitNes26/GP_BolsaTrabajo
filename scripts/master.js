@@ -387,20 +387,41 @@ function addToArray(name, value, array, formData=false) {
 	else array.push(new_data);
 }
 
-function resetImgPreview(preview, img_path="/assets/img/cargar_imagen.png") {
-	// Crea un elemento de imagen
-	const imagen = document.createElement('img');
-	imagen.src = img_path; // Asigna la imagen cargada como fuente
-	imagen.classList.add("img-fluid"); // Asignar clases
-	imagen.classList.add("pointer-sm"); // Asignar clases
-	//  imagen.classList.add("p-5"); // Asignar clases
-	imagen.classList.add("rounded-lg"); // Asignar clases
-	// imagen.classList.add("text-center"); // Asignar clases
-	imagen.style = "max-height: 200px !important";
+function resetImgPreview(preview, img_path="/assets/img/cargar_imagen.png", iframe=false) {
+	if (!iframe) {
+		// Crea un elemento de imagen
+		const imagen = document.createElement('img');
+		imagen.src = img_path; // Asigna la imagen cargada como fuente
+		imagen.classList.add("img-fluid"); // Asignar clases
+		imagen.classList.add("pointer-sm"); // Asignar clases
+		//  imagen.classList.add("p-5"); // Asignar clases
+		imagen.classList.add("rounded-lg"); // Asignar clases
+		// imagen.classList.add("text-center"); // Asignar clases
+		imagen.style = "max-height: 200px !important";
 
-	// Agrega la imagen a la vista previa
-	preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
-	preview.append(imagen);
+		// Agrega la imagen a la vista previa
+		preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+		preview.append(imagen);
+	} else {
+		// Crea un elemento de imagen
+      const iframe = document.createElement('iframe');
+      iframe.src = img_path; // Asigna la iframe cargada como fuente
+		console.log(iframe);
+      // canvas.getContext("2d") // Asigna la iframe cargada como fuente
+      iframe.classList.add("img-fluid"); // Asignar clases
+      // iframe.classList.add("pointer"); // Asignar clases
+      //  iframe.classList.add("p-5"); // Asignar clases
+      iframe.classList.add("rounded-lg"); // Asignar clases
+      // iframe.classList.add("text-center"); // Asignar clases
+      iframe.style = "height: 100% !important";
+
+      // Agrega la iframe a la vista previa
+      preview.html(""); // Limpia la vista previa antes de agregar la nueva iframe
+      preview.append(iframe);
+		preview.parent().css("height","50vh");
+		// label_input_file.css("height","100%");
+		preview.css("height","90%");
+	}
 }
 
 
@@ -605,6 +626,10 @@ function formatearCantidadDeRenglones(tds) {
 		let cantidad_formateada = formatCurrency(cantidad);
 		td.html(`${cantidad_formateada}`);
 	});
+}
+
+function formatPhone(phone) {
+	return `(${phone.slice(0,3)})${phone.slice(3,6)}-${phone.slice(6,8)}-${phone.slice(-2)}`
 }
 //#endregion /** VALIDACIONES - INPUTS - FORMULARIOS */
 

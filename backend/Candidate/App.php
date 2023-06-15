@@ -29,10 +29,11 @@ if (isset($_POST['updated_at'])) { $updated_at = $_POST['updated_at']; }
 if (isset($_POST['deleted_at'])) { $deleted_at = $_POST['deleted_at']; }
 
 if (isset($_POST['haveImg'])) { $haveImg = $_POST['haveImg']; } else { $haveImg = null; }
+if (isset($_POST['haveCv'])) { $haveCv = $_POST['haveCv']; } else { $haveCv = null; }
 
-if (isset($_FILES['input_cv_path'])) {
+if (isset($_FILES['input_photo_path'])) {
   $path_files = "assets/img";
-  $file = $_FILES['input_cv_path'];
+  $file = $_FILES['input_photo_path'];
   $type = explode(".",$file["name"]);
   $type = strtoupper(trim(end($type)));
 
@@ -49,18 +50,50 @@ if (isset($_FILES['input_cv_path'])) {
      *         los mismos permisos.
      */
   }
-  if (move_uploaded_file($_FILES["input_cv_path"]["tmp_name"], $dest)) {
-     $cv_path = "candidates/$file_name";
+  if (move_uploaded_file($_FILES["input_photo_path"]["tmp_name"], $dest)) {
+     $photo_path = "candidates/$file_name";
   } else {
-     $cv_path = "";
+     $photo_path = "";
      $type = "";
      print(error_get_last());
   }
 } else {
-  $cv_path = "";
+  $photo_path = "";
   $type = "";
 }
-if ($haveImg != null) $logo_path = $haveImg;
+if ($haveImg != null) $photo_path = $haveImg;
+
+if (isset($_FILES['input_cv_path'])) {
+   $path_files = "assets/img";
+   $file = $_FILES['input_cv_path'];
+   $type = explode(".",$file["name"]);
+   $type = strtoupper(trim(end($type)));
+ 
+   $dir = "../../$path_files/candidates";
+   $file_name = "$age.$type";
+   $dest = "$dir/$file_name";
+ 
+   if (!is_dir($dir)) {
+      @mkdir($dir,0755,true);
+      /**
+      * 0755 => PERMISOS CRUD de los arvhicos
+      * true => es para hacerlo recursivo,
+      *         es decir todos los files de la ruta tienen
+      *         los mismos permisos.
+      */
+   }
+   if (move_uploaded_file($_FILES["input_cv_path"]["tmp_name"], $dest)) {
+      $cv_path = "candidates/$file_name"."_cv";
+   } else {
+      $cv_path = "";
+      $type = "";
+      print(error_get_last());
+   }
+ } else {
+   $cv_path = "";
+   $type = "";
+ }
+ if ($haveCv != null) $cv_path = $haveCv;
 
 #PETICIONES
 
@@ -69,9 +102,9 @@ if ($op == "index") $Candidate->index();
 elseif ($op == "show") $Candidate->show($id);
 elseif ($op == 'showSelect') $Candidate->showSelect();
 
-elseif ($op == "create") $Candidate->create($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id);
+elseif ($op == "create") $Candidate->create($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id);
 
-elseif ($op == "edit") $Candidate->edit($name, $last_name, $cellphone, $age, $professional_info, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id);
+elseif ($op == "edit") $Candidate->edit($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id);
 
 elseif ($op == "delete") $Candidate->delete($deleted_at, $user_id);
 

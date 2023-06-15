@@ -89,26 +89,6 @@ $current_page = "Empresas";
             <div class="modal-body">
                <input type="hidden" id="op" name="op" value="" class="not_validate">
                <input type="hidden" id="id" name="id" value='' class="not_validate">
-               <!-- <div class="row">
-                  <div class="mb-3 col-md-6">
-                     <label for="input_name" class="form-label">Nombre(s): <span class="obligatory"></span></label>
-                     <input type="text" class="form-control" id="input_name" name="input_name" data-input-name="NOMBRES">
-                  </div>
-                  <div class="mb-3 col-md-6">
-                     <label for="input_last_name" class="form-label">Apellido(s): <span class="obligatory"></span></label>
-                     <input type="text" class="form-control" id="input_last_name" name="input_last_name" data-input-name="APELLIDOS">
-                  </div>
-               </div> -->
-               <!-- <div class="row">
-                  <div class="mb-3 col-md-6">
-                     <label for="input_cellphone" class="form-label">Celular: <span class="obligatory"></span></label>
-                     <input type="text" class="form-control" id="input_cellphone" name="input_cellphone" data-input-name="CELULAR">
-                  </div> 
-                  <div class="mb-3 col">
-                     <label for="input_email" class="form-label">Correo: <span class="obligatory"></span></label>
-                     <input type="email" class="form-control" id="input_email" name="input_email" data-input-name="CORREO">
-                  </div>
-               </div> -->
                <div class="row"> <!-- USUARIO -->
                   <div class="mb-3 col">
                      <label for="input_user_id" class="form-label">Usuario: <i>(con el que se registro al inicio)</i><span class="obligatory"></span></label>

@@ -115,7 +115,7 @@ input_logo_path.on('change', function(event) {
       imagen.classList.add("pointer-sm"); // Asignar clases
       //  imagen.classList.add("p-5"); // Asignar clases
       imagen.classList.add("rounded-lg"); // Asignar clases
-      // imagen.classList.add("text-center"); // Asignar clases
+      // imagen.classList.add("text-center"); // Asignar clases 
       imagen.style = "max-height: 200px !important";
 
       // Agrega la imagen a la vista previa

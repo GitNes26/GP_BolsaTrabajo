@@ -2,8 +2,11 @@
 var table;
 table = $("#table").DataTable(DT_CONFIG);
 
-$(document).ready(() => {
+$(document).ready(function() {
+   SUMMERNOTE_CONFIG.placeholder = "Escribir Habilidades, competencias, experiencias, observaciones, etc."
+   SUMMERNOTE_CONFIG.toolbar.push(['templates', ['template_candidate']]),
 
+	$('.summernote').summernote(SUMMERNOTE_CONFIG)
 });
 
 const 
@@ -15,26 +18,27 @@ const
 	id_modal = $("#id"),
 	op_modal = $("#op"),
 	input_user_id = $("#input_user_id"),
-	input_name = $("#input_name"),
-	input_last_name = $("#input_last_name"),
-   input_description = $("#input_description"),
-   counter_description = $("#counter_description"),
-   input_logo_path = $('#input_logo_path'), //este es un input_file
-   output_logo = $('#output_logo'),
-   preview_logo = $('#preview_logo'),
-   input_business_line_id = $("#input_business_line_id"),
-   input_name_ranking_id = $("#input_name_ranking_id"),
-   input_state = $("#input_state"),
-   input_municipality = $("#input_municipality"),
-   input_contact_name = $("#input_contact_name"),
-   input_contact_phone = $("#input_contact_phone"),
-   input_contact_email = $("#input_contact_email"),
+   input_photo_path = $('#input_photo_path'), //este es un input_file
+   output_photo = $('#output_photo'),
+   preview_photo = $('#preview_photo'),
+   input_name = $("#input_name"),
+   input_last_name = $("#input_last_name"),
+   input_cellphone = $("#input_cellphone"),
+   input_age = $("#input_age"),
+   input_profession_id = $("#input_profession_id"),
+   input_interest_tags_ids = $("#input_interest_tags_ids"),
+	input_languages_b = $("#input_languages_b"),
+	input_languages_i = $("#input_languages_i"),
+	input_languages_a = $("#input_languages_a"),
+	input_cv_path = $('#input_cv_path'), //este es un input_file
+   output_cv = $('#output_cv'),
+   preview_cv = $('#preview_cv'),
 	
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset")
 	;
-let haveImg = false;
-let vLogoPath = null;
+let haveImg = false, haveCv = false;
+let vLogoPath = null, vCvPath = null;
 //#endregion VARIABLES
 $(".select2").select2({ dropdownParent: $("#modal") });
 focusSelect2($(".select2"));
@@ -47,14 +51,12 @@ init();
 async function init() {
 
 	fillTable();
-	counter_description.text(`0/${input_description.data("limit")}`);
-   showStates();
+   // showStates();
    fillSelect2(URL_USER_APP, -1, input_user_id, false);
 
-   fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
-   fillSelect2(URL_COMPANY_RANKING_APP, -1, input_name_ranking_id, false);
-   // fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
-	// resetImgPreview(preview_logo);
+   fillSelect2(URL_PROFESSION_APP, -1, input_profession_id, false);
+   fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
+	resetImgPreview(preview_photo);
    input_name.focus();
 }
 
@@ -65,7 +67,7 @@ btn_modal_form.click((e) => {
 	e.preventDefault();
 
 	modal_title.html(
-		"<i class='fa-solid fa-circle-plus'></i></i>&nbsp; REGISTRAR EMPRESA"
+		"<i class='fa-solid fa-circle-plus'></i></i>&nbsp; REGISTRAR CANDIDATO"
 	);
 	btn_submit.removeClass("btn-primary");
 	btn_submit.addClass("btn-success");
@@ -89,16 +91,16 @@ btn_reset.click(async (e) => {
 	//EXCLUIR INPUTS PARA VALIDAR
 
 	await resetSelect2(input_user_id);
-	await resetSelect2(input_business_line_id);
-	await resetSelect2(input_name_ranking_id);
-	// await resetSelect2(input_interest_tags_ids);
-	await resetSelect2(input_state);
-	await resetSelect2(input_municipality);
-   input_municipality.attr("disabled",true);
+	await resetSelect2(input_profession_id);
+	await resetSelect2(input_interest_tags_ids);
+	// await resetSelect2(input_state);
+	// await resetSelect2(input_municipality);
+   // input_municipality.attr("disabled",true);
 
-	// $('.note-editing-area .note-editable').html(null);
-	// $('.note-editing-area .note-placeholder').css("display","block");
-	resetImgPreview($(`#${input_logo_path.attr("data-preview")}`));
+	$('.note-editing-area .note-editable').html(null);
+	$('.note-editing-area .note-placeholder').css("display","block");
+	resetImgPreview($(`#${input_photo_path.attr("data-preview")}`));
+	resetImgPreview($(`#${input_cv_path.attr("data-preview")}`));
 	
 	id_modal.val("");
 	setTimeout(() => {
@@ -108,12 +110,12 @@ btn_reset.click(async (e) => {
 
 
 // Agrega un evento change al elemento de entrada de archivo
-input_logo_path.on('change', function(event) {
+input_photo_path.on('change', function(event) {
 	// Obtén el archivo seleccionado
 	const file = event.target.files[0];
 	// Crea un objeto FileReader
 	const fileReader = new FileReader();
-	const preview = $(`#${input_logo_path.attr("data-preview")}`);
+	const preview = $(`#${input_photo_path.attr("data-preview")}`);
 
 	// Define la función de carga completada del lector
 	fileReader.onload = function(e) {
@@ -124,7 +126,6 @@ input_logo_path.on('change', function(event) {
 		imagen.classList.add("pointer-sm"); // Asignar clases
 		//  imagen.classList.add("p-5"); // Asignar clases
 		imagen.classList.add("rounded-lg"); // Asignar clases
-		// imagen.classList.add("text-center"); // Asignar clases
 		imagen.style = "max-height: 200px !important";
 
 		// Agrega la imagen a la vista previa
@@ -133,6 +134,40 @@ input_logo_path.on('change', function(event) {
 	};
 
 	if (file == undefined) resetImgPreview(preview);
+
+ // Lee el contenido del archivo como una URL de datos
+ fileReader.readAsDataURL(file);
+});
+input_cv_path.on('change', function(event) {
+	// Obtén el archivo seleccionado
+	const file = event.target.files[0];
+	// Crea un objeto FileReader
+	const fileReader = new FileReader();
+	const preview = $(`#${input_cv_path.attr("data-preview")}`);
+
+	// Define la función de carga completada del lector
+	fileReader.onload = function(e) {
+      // Crea un elemento de imagen
+      const iframe = document.createElement('iframe');
+      iframe.src = e.target.result; // Asigna la iframe cargada como fuente
+		console.log(iframe);
+      // canvas.getContext("2d") // Asigna la iframe cargada como fuente
+      iframe.classList.add("img-fluid"); // Asignar clases
+      // iframe.classList.add("pointer"); // Asignar clases
+      //  iframe.classList.add("p-5"); // Asignar clases
+      iframe.classList.add("rounded-lg"); // Asignar clases
+      // iframe.classList.add("text-center"); // Asignar clases
+      iframe.style = "height: 100% !important";
+
+      // Agrega la iframe a la vista previa
+      preview.html(""); // Limpia la vista previa antes de agregar la nueva iframe
+      preview.append(iframe);
+		preview.parent().css("height","50vh");
+		// label_input_file.css("height","100%");
+		preview.css("height","90%");
+   };
+
+	// if (file == undefined) resetImgPreview(preview);
 
  // Lee el contenido del archivo como una URL de datos
  fileReader.readAsDataURL(file);
@@ -158,16 +193,14 @@ form.on("submit", async function(e) {
 	}
 
 	// let data = form.serializeArray();
+	let data = new FormData(this);
 	// console.log(typeof(data));
 
 	// return console.log(data);
 	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
-	// const input_current_date = $('.note-editing-area .note-editable').html();
-	// addToArray("input_professional_info", input_current_date, data);
+	const input_professional_info = $('.note-editing-area .note-editable').html();
+	addToArray("input_professional_info", input_professional_info, data, true);
 
-	let data = new FormData(this);
-	// console.log(typeof(data));
-	// data.append("updated_at", current_date)
 	if (id_modal.val() <= 0) {
 	// 	//NUEVO
 		addToArray("created_at", current_date, data, true);
@@ -176,17 +209,11 @@ form.on("submit", async function(e) {
 		//EDICION
 		addToArray("updated_at", current_date, data, true);
 
-		// addToArray("haveImg", haveImg, data);
 		if (haveImg) addToArray("haveImg", vLogoPath, data, true);
+		if (haveCv) addToArray("haveCv", vCvPath, data, true);
 	}
-	// console.log([...data]);
-	// console.log("disabled:",input_user_id.attr("disabled"));
-	// if (input_user_id.attr("disabled")) await input_user_id.removeAttr("disabled"); 
-	// console.log("disabled:",input_user_id.attr("disabled"));
-	// return console.log(data);
-	// const form_imagen = $("#form")[0];
 	
-	const ajaxResponse = await ajaxRequestFileAsync(URL_COMPANY_APP, data);
+	const ajaxResponse = await ajaxRequestFileAsync(URL_CANDIDATE_APP, data);
 	if (ajaxResponse.message == "duplicado") return;
 	if (id_modal.val() == id_cookie) fillSidebar();
 	fillTable();
@@ -194,7 +221,7 @@ form.on("submit", async function(e) {
 
 async function fillTable() {
 	let data = { op: "index" };
-	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
+	const ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
 
 	//Limpiar table
 	tbody.slideUp();
@@ -202,29 +229,22 @@ async function fillTable() {
 
 	const list = [];
 	let objResponse = ajaxResponse.data;
-	// return console.log(objResponse);
+	console.log(objResponse);
 
 	objResponse.map((obj) => {
 		//Campos
 		let 
-			column_logo = (obj.logo_path == "" || obj.logo_path == null)  ? `<img class="img-fluid rounded-lg" src="/assets/img/cargar_imagen.png" style="max-height: 150px !important;" />` : `<img class="img-fluid rounded-lg" src="/assets/img/${obj.logo_path}" style="max-height: 150px !important;" />`,
-			column_company = `
-				<b>${obj.company}</b><br>
-				${obj.municipality}, ${obj.state}<br><br>
-
-				<b>${obj.email}</b>
+			column_photo = (obj.photo_path == "" || obj.photo_path == null)  ? `<img class="img-fluid rounded-lg" src="/assets/img/sin_perfil.webp" style="max-height: 150px !important;" />` : `<img class="img-fluid rounded-lg" src="/assets/img/${obj.photo_path}" style="max-height: 150px !important;" />`,
+			column_candidate = `
+				<b>${obj.name} ${obj.last_name}</b><br>
+				<i>(${obj.age} años)</i>
 			`,
 			column_contact = `
-				<i class="fa-solid fa-id-badge"></i>&nbsp; <b>${obj.contact_name}</b><br>
-				<i class="fa-solid fa-phone-office"></i>&nbsp; ${obj.contact_phone}<br>
-				<i class="fa-solid fa-at"></i>&nbsp; ${obj.contact_email}
+				<i class="fa-solid fa-phone"></i>&nbsp; ${obj.cellphone}<br>
+				<i class="fa-solid fa-at"></i>&nbsp; ${obj.email}
 			`,
-			column_business_line = `
-				${obj.business_line}
-			`,
-			column_company_ranking = `
-				<b>${obj.company_ranking}</b><br>
-				${obj.cr_description}
+			column_profession = `
+				${obj.profession}
 			`,
 			column_created_at = formatDatetime(obj.created_at, true);
 
@@ -244,11 +264,10 @@ async function fillTable() {
          </td>`;
 
 		list.push([
-			column_logo,
-			column_company,
+			column_photo,
+			column_candidate,
 			column_contact,
-			column_business_line,
-			column_company_ranking,
+			column_profession,
 			column_created_at,
 			column_buttons,
 		]);		
@@ -276,8 +295,6 @@ tbody.click((e) => {
 			btn_edit = $(e.target);
 		}
 
-		$("#div_new_password").show();
-		$("#input_new_password").prop("readonly", true);
 		editObj(btn_edit);
 	}
 
@@ -300,7 +317,7 @@ tbody.click((e) => {
 
 //EDITAR OBJETO
 async function editObj(btn_edit) {
-	modal_title.html("<i class='fa-solid fa-user-pen'></i></i>&nbsp; EDITAR EMPRESA");
+	modal_title.html("<i class='fa-solid fa-user-pen'></i></i>&nbsp; EDITAR CANDIDATO");
 	btn_submit.removeClass("btn-success");
 	btn_submit.addClass("btn-primary");
 	btn_submit.text("GUARDAR");
@@ -313,7 +330,7 @@ async function editObj(btn_edit) {
 	
 	let id_obj = btn_edit.attr("data-id");
 	let data = { id: id_obj, op: "show" };
-	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
+	const ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
 
 	const obj = ajaxResponse.data;
 	// console.log(obj);
@@ -322,22 +339,47 @@ async function editObj(btn_edit) {
 	await fillSelect2(URL_USER_APP, obj.user_id, input_user_id);
 	// input_user_id.attr("disabled", true);
 	haveImg=false;
-	if (obj.logo_path == "" || obj.logo_path == null) resetImgPreview($(`#${input_logo_path.attr("data-preview")}`) );
+	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreview($(`#${input_photo_path.attr("data-preview")}`));
 	else {
 		haveImg = true;
 		// console.log("tengo imagen guardada");
- 		resetImgPreview($(`#${input_logo_path.attr("data-preview")}`),`/assets/img/${obj.logo_path}`);
-		vLogoPath = obj.logo_path;
-		// input_logo_path.val(obj.logo_path);
+ 		resetImgPreview($(`#${input_photo_path.attr("data-preview")}`),`/assets/img/${obj.photo_path}`);
+		vLogoPath = obj.photo_path;
+		// input_photo_path.val(obj.photo_path);
 	}
-	input_name.val(obj.company);
-	input_description.val(obj.description);
-	await fillSelect2(URL_BUSINESS_LINE_APP, obj.business_line_id, input_business_line_id);
-	await fillSelect2(URL_COMPANY_RANKING_APP, obj.company_ranking_id, input_name_ranking_id);
-	input_contact_name.val(obj.contact_name);
-	input_contact_phone.val(obj.contact_phone);
-	input_contact_email.val(obj.contact_email);
-	await showStates(obj.state, obj.municipality);
+	input_name.val(obj.name);
+	input_last_name.val(obj.last_name);
+	input_cellphone.val(obj.cellphone);
+	input_age.val(obj.age);
+	await fillSelect2(URL_PROFESSION_APP, obj.profession_id, input_profession_id);
+	// await fillSelect2(URL_TAG_APP, obj.interest_tags_ids, input_interest_tags_ids);
+	if (obj.professional_info == "<p><br></p>" || obj.professional_info.length < 1)
+		$('.note-editing-area .note-placeholder').css("display","block");
+	else {
+		$('.note-editing-area .note-placeholder').css("display","none");
+		$('.note-editing-area .note-editable').html(obj.professional_info);
+	}
+	switch (obj.languages) {
+		case "Inglés - Básico":
+			input_languages_b.click();
+			break;
+		case "Inglés - Intermedio":
+			input_languages_i.click();
+		case "Inglés - Avanzado":
+			input_languages_a.click();
+		default:
+			break;
+	}
+	// await showStates(obj.state, obj.municipality);
+	haveCv=false;
+	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreview($(`#${input_cv_path.attr("data-preview")}`) );
+	else {
+		haveCv = true;
+		// console.log("tengo imagen guardada");
+ 		resetImgPreview($(`#${input_cv_path.attr("data-preview")}`),`/assets/img/${obj.photo_path}`, true);
+		vLogoPath = obj.photo_path;
+		// input_cv_path.val(obj.photo_path);
+	}
 	
 	setTimeout(() => {
 		// btn_submit.attr("disabled",false);
@@ -361,7 +403,7 @@ async function deleteObj(btn_delete) {
 	ajaxRequestQuestionAsync(
 		title,
 		text,
-		URL_COMPANY_APP,
+		URL_CANDIDATE_APP,
 		data,
 		"fillTable()"
 	);

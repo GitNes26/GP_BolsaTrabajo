@@ -21,7 +21,7 @@ $pagina_acutal = "Bolsa de Trabajo";
           <h5 class="widget-user-desc" id="output_profession">Programador</h5>
         </div>
         <div class="widget-user-image">
-          <img class="img-circle elevation-2" src="/assets/img/cargar_imagen.png" alt="Foto de perfil">
+          <img class="img-circle elevation-2" src="/assets/img/sin_perfil.webp" alt="Foto de perfil">
         </div>
         <div class="card-footer">
           <div class="row">

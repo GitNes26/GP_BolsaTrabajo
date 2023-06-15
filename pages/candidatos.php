@@ -124,7 +124,7 @@ $current_page = "Candidatos";
                      <div class="row">
                         <div class="mb-3 col-md-6">
                            <label for="input_cellphone" class="form-label">Celular: <span class="obligatory"></span></label>
-                           <input type="text" class="form-control not_validate" id="input_cellphone" name="input_cellphone" data-input-name="CELULAR" maxlength="10">
+                           <input type="text" class="form-control not_validate numeric" id="input_cellphone" name="input_cellphone" data-input-name="CELULAR" maxlength="10">
                         </div>
                         <div class="mb-3 col-md-6">
                            <label for="input_age" class="form-label">Edad: <span class="obligatory"></span></label>
@@ -146,7 +146,7 @@ $current_page = "Candidatos";
                <div class="row"> <!-- INTERESES -->
                   <div class="form-group">
                      <label for="input_interest_tags_ids">Intereses de búsqueda:</label>
-                     <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a tús intereses" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_interest_tags_ids" name="input_interest_tags_ids" data-input-name="INTERESES">
+                     <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a tús intereses" style="width: 100%;" tabindex="-1" aria-hidden="true" id="input_interest_tags_ids" name="input_interest_tags_ids" data-input-name="INTERESES">
                      </select>
                   </div>
                </div>
@@ -217,10 +217,18 @@ $current_page = "Candidatos";
                            <label class="btn btn-outline-dark" for="input_languages_a" >Avanzado</label>
                         </div>
                      </div>
-                     <div class="mb-3 col-md-6">
+                     <!-- <div class="mb-3 col-md-6">
                         <label for="input_cv_path" class="form-label">Cargar CV: <span class="obligatory"></span></label>
                         <input type="file" class="form-control not_validate" accept=".pdf" id="input_cv_path" name="input_cv_path" data-input-name="CURRICULUM VITAE">
-                     </div>
+                     </div> -->
+                     <div class="mb-3 col-md-6 rounded-lg text-center">
+                     <input type="file" id="input_cv_path" name="input_cv_path" class="d-none" accept=".pdf" data-preview="preview_cv" data-input-name="CURRICULUM VITAE">
+                     <label for="input_cv_path">Cargar CV:
+                        <div id="preview_cv" class="d-flex justify-content-center">
+                           <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar CV" id="output_cv" class="img-fluid pointer-sm p-5 rounded-lg" for="input_cv_path" title="Haz clic aquí para cargar tu foto de perfil">
+                        </div>
+                     </label>
+                  </div>
                   </div>
                </div>
             </div>

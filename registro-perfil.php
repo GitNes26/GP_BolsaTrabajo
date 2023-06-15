@@ -269,9 +269,9 @@ if (isset($_COOKIE["session"])) {
                            </div>
                         </div>
                         <div class="row"> <!-- INTERESES -->
-                           <div class="form-group" data-select2-id="29">
+                           <div class="form-group">
                               <label for="input_interest_tags_ids">Intereses de búsqueda:</label>
-                              <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a tús intereses" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_interest_tags_ids" name="input_interest_tags_ids" data-input-name="INTERESES">
+                              <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a tús intereses" style="width: 100%;" tabindex="-1" aria-hidden="true" id="input_interest_tags_ids" name="input_interest_tags_ids" data-input-name="INTERESES">
                               </select>
                            </div>
                         </div>

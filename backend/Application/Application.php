@@ -18,11 +18,12 @@ class Application extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT *, a.id a_id, v.id v_id, c.id c_id, ca.id ca_id
+         $query = "SELECT *, a.id a_id, v.id v_id, c.id c_id, ca.id ca_id, ca.*, u.email
          FROM applications a
          INNER JOIN vacancies v ON a.vacancy_id=v.id
          INNER JOIN companies c ON v.company_id=c.id
          INNER JOIN candidates ca ON a.candidate_id=ca.id
+         INNER JOIN users u ON ca.user_id=u.id
          WHERE a.active=1 ORDER BY a.id DESC;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
