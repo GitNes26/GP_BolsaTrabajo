@@ -3,7 +3,7 @@ include "../templates/header.php";
 include "../templates/navbar.php";
 include "../templates/sidebar.php";
 
-$pagina_acutal = "Bolsa de Trabajo";
+$pagina_acutal = "Mi Perfil";
 ?>
 
 <!-- Content Wrapper. Contenido de la pagina -->
@@ -21,13 +21,13 @@ $pagina_acutal = "Bolsa de Trabajo";
           <h5 class="widget-user-desc" id="output_profession">Programador</h5>
         </div>
         <div class="widget-user-image">
-          <img class="img-circle elevation-2" src="/assets/img/sin_perfil.webp" alt="Foto de perfil">
+          <img class="img-circle elevation-2 bg-white" id="output_photo" src="/assets/img/sin_perfil.webp" alt="Foto de perfil">
         </div>
         <div class="card-footer">
           <div class="row">
             <div class="col-sm-4 border-right">
               <div class="description-block">
-                <h5 class="description-header">micorreo@gmail.com</h5>
+                <p class="description-header" id="output_email">micorreo@gmail.com</p>
                 <span class="description-text"><i class="fa-solid fa-envelope"></i></span>
               </div>
 
@@ -35,7 +35,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 
             <div class="col-sm-4 border-right">
               <div class="description-block">
-                <h5 class="description-header">871-526-5689</h5>
+                <p class="description-header" id="output_cellphone">(871)-526-56-89</p>
                 <span class="description-text"><i class="fa-sharp fa-solid fa-phone"></i></span>
               </div>
 
@@ -43,7 +43,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 
             <div class="col-sm-4">
               <div class="description-block">
-                <h5 class="description-header">Inglés - Básico</h5>
+                <p class="description-header" id="output_languages">Inglés - Básico</p>
                 <span class="description-text"><i class="fa-regular fa-language"></i></span>
               </div>
 
@@ -61,30 +61,29 @@ $pagina_acutal = "Bolsa de Trabajo";
               <div class="text-center h2 fw-bolder">CURRICULUM VITAE</div>
               <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
               <p class="text-muted text-center">Software Engineer</p> -->
-              <input type="file" id="input_file" name="input_file" class="d-none" accept=".pdf" style="height: 50% !important">
-              <label for="input_file" id="label_input_file">
-                  <div id="preview_file" class="d-flex justify-content-center">
-                  <!-- <iframe frameborder="0"  src="/assets/img/elPDF.pdf" ></iframe> -->
-                    <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar Logo" class="img-fluid pointer p-3 rounded-lg" for="input_file" title="Haz clic aquí para cargar tu logo de empresa">
-                  </div>
+              <input type="file" id="input_cv_path" name="input_cv_path" class="d-none" accept=".pdf" data-preview="preview_cv" data-input-name="CURRICULUM VITAE">
+              <label for="input_cv_path" class="">
+                <div id="preview_cv" class="d-flex justify-content-center">
+                    <img src="<?=$IMG_PATH?>/cargar_archivo.png" alt="Cargar CV" id="output_cv" class="img-fluid pointer-sm p-5 rounded-lg" style="height: 250px;" for="input_cv_path" title="Haz clic aquí para cargar tu curriculum vitae">
+                </div>
+                <div class="btn btn-outline-secondary mt-2">Cambiar archivo</div>
               </label>
             </div>
-
           </div>
         </div>
 
         <!-- INFORMACION PROFESIONAL -->
         <div class="col">
-         <div class="card card-success card-outline">
+          <div class="card card-success card-outline">
             <div class="card-body box-profile">
               <div class="text-center h2 fw-bolder">DATOS PROFESIONALES</div>
               <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
               <p class="text-muted text-center">Software Engineer</p> -->
-              <div id="output_professional_info"></div>
+              <div id="output_professional_info" class="text-start"></div>
             </div>
-
           </div>
         </div>
+
       </div>
 
     </div>

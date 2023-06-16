@@ -387,11 +387,11 @@ function addToArray(name, value, array, formData=false) {
 	else array.push(new_data);
 }
 
-function resetImgPreview(preview, img_path="/assets/img/cargar_imagen.png", iframe=false) {
+function resetImgPreview(preview, img_path=null, iframe=false) {
 	if (!iframe) {
 		// Crea un elemento de imagen
 		const imagen = document.createElement('img');
-		imagen.src = img_path; // Asigna la imagen cargada como fuente
+		imagen.src = img_path == null ? "/assets/img/cargar_imagen.png" : img_path; // Asigna la imagen cargada como fuente
 		imagen.classList.add("img-fluid"); // Asignar clases
 		imagen.classList.add("pointer-sm"); // Asignar clases
 		//  imagen.classList.add("p-5"); // Asignar clases
@@ -405,11 +405,10 @@ function resetImgPreview(preview, img_path="/assets/img/cargar_imagen.png", ifra
 	} else {
 		// Crea un elemento de imagen
       const iframe = document.createElement('iframe');
-      iframe.src = img_path; // Asigna la iframe cargada como fuente
-		console.log(iframe);
+      iframe.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path; // Asigna la iframe cargada como fuente
       // canvas.getContext("2d") // Asigna la iframe cargada como fuente
       iframe.classList.add("img-fluid"); // Asignar clases
-      // iframe.classList.add("pointer"); // Asignar clases
+      iframe.classList.add("pointer-sm"); // Asignar clases
       //  iframe.classList.add("p-5"); // Asignar clases
       iframe.classList.add("rounded-lg"); // Asignar clases
       // iframe.classList.add("text-center"); // Asignar clases
@@ -420,7 +419,7 @@ function resetImgPreview(preview, img_path="/assets/img/cargar_imagen.png", ifra
       preview.append(iframe);
 		preview.parent().css("height","50vh");
 		// label_input_file.css("height","100%");
-		preview.css("height","90%");
+		preview.css("height","100%");
 	}
 }
 

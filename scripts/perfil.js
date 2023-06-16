@@ -13,20 +13,48 @@ const
 	modal_title = $(".modal-title"),
 	id_modal = $("#id"),
 	op_modal = $("#op"),
-	input_business_line = $("#input_business_line"),
 
+	input_user_id = $("#input_user_id"),
+   input_photo_path = $('#input_photo_path'), //este es un input_file
+   output_photo = $('#output_photo'),
+   preview_photo = $('#preview_photo'),
+   input_name = $("#input_name"),
+   output_name = $("#output_name"),
+   input_last_name = $("#input_last_name"),
+   output_last_name = $("#output_last_name"),
+	input_email = $("#input_email"),
+   output_email = $("#output_email"),
+   input_cellphone = $("#input_cellphone"),
+   output_cellphone = $("#output_cellphone"),
+   input_age = $("#input_age"),
+   output_age = $("#output_age"),
+   input_profession_id = $("#input_profession_id"),
+   output_profession = $("#output_profession"),
+   input_interest_tags_ids = $("#input_interest_tags_ids"),
+   output_interest_tags_ids = $("#output_interest_tags_ids"),
+	output_professional_info = $("#output_professional_info");
+	input_languages_b = $("#input_languages_b"),
+	input_languages_i = $("#input_languages_i"),
+	input_languages_a = $("#input_languages_a"),
+	output_languages = $("#output_languages"),
+	input_cv_path = $('#input_cv_path'), //este es un input_file
+   output_cv = $('#output_cv'),
+   preview_cv = $('#preview_cv'),
+	
+	
+	
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset"),
 	btn_cancel = $("#btn_cancel"),
-
+	
 	input_logo_path = $('#input_logo_path'), //este es un input_file
 	label_input_file = $("#label_input_file"),
    preview_logo = $('#preview_logo'),
+	input_business_line = $("#input_business_line"),
 	
 	input_file = $('#input_file'), //este es un input_file
    preview_file = $('#preview_file'),
 	
-	output_professional_info = $("#output_professional_info");
 	
 //#endregion VARIABLES
 // $(".select2").select2();
@@ -38,7 +66,7 @@ const
 
 init();
 async function init() {
-	fillInfo();
+	fillInfo(false);
 	setTimeout(() => {
       input_business_line.focus();
    }, 500);
@@ -183,17 +211,72 @@ async function fillInfo(show_toas=true) {
 	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data, null, true, show_toas);
 
 	//Limpiar table
-	tbody.slideUp();
-	table.clear().draw();
+	// tbody.slideUp();
+	// table.clear().draw();
 
 	let obj = ajaxResponse.data;
 	console.log(obj);
 
-	output_professional_info.html(obj.professional_info)
+	haveImg=false;
+	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreview($(`#${input_photo_path.attr("data-preview")}`));
+	else {
+		haveImg = true;
+		// console.log("tengo imagen guardada");
+ 		resetImgPreview($(`#${input_photo_path.attr("data-preview")}`),`/assets/img/${obj.photo_path}`);
+		vLogoPath = obj.photo_path;
+		// input_photo_path.val(obj.photo_path);
+		output_photo.attr("src", `/assets/img/${obj.photo_path}`)
+	}
+	// input_name.val(obj.name);
+	output_name.text(obj.name);
+	// input_last_name.val(obj.last_name);
+	output_last_name.text(obj.last_name);
+	// input_email.val(obj.email);
+	output_email.text(obj.email);
+	// input_cellphone.val(obj.cellphone);
+	output_cellphone.text(formatPhone(obj.cellphone));
+	// input_age.val(obj.age);
+	output_age.text(obj.age);
+	
+	// await fillSelect2(URL_PROFESSION_APP, obj.profession_id, input_profession_id);
+	output_profession.text(obj.profession)
+	// await fillSelect2(URL_TAG_APP, obj.interest_tags_ids, input_interest_tags_ids);
+	// output_interest_tags_ids.text(obj.)
+	// if (obj.professional_info == "<p><br></p>" || obj.professional_info.length < 1)
+	// 	$('.note-editing-area .note-placeholder').css("display","block");
+	// else {
+	// 	$('.note-editing-area .note-placeholder').css("display","none");
+	// 	$('.note-editing-area .note-editable').html(obj.professional_info);
+	// }
+	output_professional_info.html(obj.professional_info);
+
+	// switch (obj.languages) {
+	// 	case "Inglés - Básico":
+	// 		input_languages_b.click();
+	// 		break;
+	// 	case "Inglés - Intermedio":
+	// 		input_languages_i.click();
+	// 	case "Inglés - Avanzado":
+	// 		input_languages_a.click();
+	// 	default:
+	// 		break;
+	// }
+	output_languages.text(obj.languages)
+	// await showStates(obj.state, obj.municipality);
+	haveCv=false;
+	if (obj.cv_path == "" || obj.cv_path == null) resetImgPreview($(`#${input_cv_path.attr("data-preview")}`), null, true );
+	else {
+		haveCv = true;
+		// console.log("tengo imagen guardada");
+ 		resetImgPreview($(`#${input_cv_path.attr("data-preview")}`),`/assets/img/${obj.cv_path}`, true);
+		vCvPath = obj.cv_path;
+		// input_cv_path.val(obj.cv_path);
+	}
+
 
 	
-	tbody.slideDown("slow");
-	btn_reset.click();
+	// tbody.slideDown("slow");
+	// btn_reset.click();
 }
 
 //ACCIONES EN BOTONES DE LA TABLA

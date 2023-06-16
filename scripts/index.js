@@ -118,7 +118,12 @@ vacancy_container.click(async (e) => {
 			const objCompany = ajaxResponseCompany.data
 			$(`.output_info_company`).html(`
 				<span>${objCompany.company}</span><br>
-				<span>${objCompany.municipality}, ${objCompany.state}</span><br><br>
+				<span>${objCompany.municipality}, ${objCompany.state}</span><br>
+				<b>CONTACTO:</b>&nbsp;&nbsp;
+						<i class="fa-solid fa-user"></i>&nbsp; ${objCompany.contact_name} &nbsp; | &nbsp;
+						<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(objCompany.contact_phone)} &nbsp; | &nbsp;
+						<i class="fa-solid fa-at"></i>&nbsp; ${objCompany.contact_email}
+				<br><br>
 				<span class="">${objCompany.description}</span>
 			`);
 			$(`.output_area`).text(obj.area);

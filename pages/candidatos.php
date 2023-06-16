@@ -78,13 +78,13 @@ $current_page = "Candidatos";
 
    <!-- Modal -->
    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
          <form class="modal-content" id="form" enctype="multipart/form-data">
             <div class="modal-header">
                <h5 class="modal-title fw-bold" id="modalLabel"><i class="fa-solid fa-circle-plus"></i>&nbsp; REGISTRAR EMPRESA</h5>
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body scroll-y">
                <input type="hidden" id="op" name="op" value="" class="not_validate">
                <input type="hidden" id="id" name="id" value='' class="not_validate">
                <!-- USUARIO -->
@@ -95,11 +95,11 @@ $current_page = "Candidatos";
                      id="input_user_id" name="input_user_id" data-input-name="USUARIO">
                      </select>
                   </div>
-               </di>
+               </div>
                <!-- LOGO Y NOMBRE -->
                <div class="row">
                   <!-- LOGO -->
-                  <div class="col-3 rounded-lg text-center">
+                  <div class="col-3 rounded-lg text-center border rounded-lg">
                      <input type="file" id="input_photo_path" name="input_photo_path" class="d-none" accept="image/*" data-preview="preview_photo">
                      <label for="input_photo_path">Foto de perfil
                         <div id="preview_photo" class="d-flex justify-content-center">
@@ -133,25 +133,16 @@ $current_page = "Candidatos";
                      </div>
                   </div>
                </div>
-
-               <div class="row"> <!-- PROFESION -->
-                  <div class="mb-3 col">
-                     <label for="input_profession_id" class="form-label">Profesión/Oficio: <span class="obligatory"></span></label>
-                     <select class="select2 form-control" style="width:100%; line-height:10px"
-                     id="input_profession_id" name="input_profession_id"
-                     data-input-name="PROFESIÓN">
-                     </select>
-                  </div>
-               </div>
-               <div class="row"> <!-- INTERESES -->
+               <!-- INTERESES -->
+               <div class="row">
                   <div class="form-group">
                      <label for="input_interest_tags_ids">Intereses de búsqueda:</label>
                      <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a tús intereses" style="width: 100%;" tabindex="-1" aria-hidden="true" id="input_interest_tags_ids" name="input_interest_tags_ids" data-input-name="INTERESES">
                      </select>
                   </div>
                </div>
-
-               <div class="border rounded mt-2 p-2"> <!-- DATOS PROFESIONALES -->
+               <!-- DATOS PROFESIONALES -->
+               <div class="border rounded mt-2 p-2">
                   <div for="" class="text-center fw-bolder mb-3">DATOS PROFESIONALES</div>
                   <!-- ACERCA DE MÍ -->
                   <!-- <div class="row">
@@ -198,12 +189,23 @@ $current_page = "Candidatos";
                         </div>
                      </div>
                   </div> -->
+                  <!-- PROFESION -->
+                  <div class="row">
+                     <div class="mb-3 col">
+                        <label for="input_profession_id" class="form-label">Profesión/Oficio: <span class="obligatory"></span></label>
+                        <select class="select2 form-control" style="width:100%; line-height:10px"
+                        id="input_profession_id" name="input_profession_id"
+                        data-input-name="PROFESIÓN">
+                        </select>
+                     </div>
+                  </div>
                   <!-- INFORMACION PROFESIONAL -->
                   <div class="mb-3">
-                        <label for="input_professional_info" class="form-label">Más información: &nbsp;<i class="fa-duotone fa-circle-info" title="Escribir Habilidades, competencias, experiencias, observaciones, etc."></i></label>
-                        <div class="summernote"></div>
-                     </div>
-                  <div class="row"> <!-- LENGUAJE Y CV-->
+                     <label for="input_professional_info" class="form-label">Más información: &nbsp;<i class="fa-duotone fa-circle-info" title="Escribir Habilidades, competencias, experiencias, observaciones, etc."></i></label>
+                     <div class="summernote"></div>
+                  </div>
+                  <!-- LENGUAJE Y CV-->
+                  <div class="row">
                      <div class="mb-3 col-md-6">
                         <label for="input_languages">Domínio del inglés: <span class="obligatory"></span></label>
                         <div class="btn-group ml-3" role="group">
@@ -217,15 +219,11 @@ $current_page = "Candidatos";
                            <label class="btn btn-outline-dark" for="input_languages_a" >Avanzado</label>
                         </div>
                      </div>
-                     <!-- <div class="mb-3 col-md-6">
-                        <label for="input_cv_path" class="form-label">Cargar CV: <span class="obligatory"></span></label>
-                        <input type="file" class="form-control not_validate" accept=".pdf" id="input_cv_path" name="input_cv_path" data-input-name="CURRICULUM VITAE">
-                     </div> -->
                      <div class="mb-3 col-md-6 rounded-lg text-center">
                      <input type="file" id="input_cv_path" name="input_cv_path" class="d-none" accept=".pdf" data-preview="preview_cv" data-input-name="CURRICULUM VITAE">
-                     <label for="input_cv_path">Cargar CV:
+                     <label for="input_cv_path" class="border rounded-lg">Cargar CV: <span class="badge btn-outline-secondary btn-xs mt-2 h4">Cambiar archivo</span>
                         <div id="preview_cv" class="d-flex justify-content-center">
-                           <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar CV" id="output_cv" class="img-fluid pointer-sm p-5 rounded-lg" for="input_cv_path" title="Haz clic aquí para cargar tu foto de perfil">
+                           <img src="<?=$IMG_PATH?>/cargar_archivo.png" alt="Cargar CV" id="output_cv" class="img-fluid pointer-sm p-5 rounded-lg" style="height: 150px;" for="input_cv_path" title="Haz clic aquí para cargar tu curriculum vitae">
                         </div>
                      </label>
                   </div>

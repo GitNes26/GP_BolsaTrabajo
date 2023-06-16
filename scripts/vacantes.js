@@ -62,7 +62,12 @@ async function init() {
 		const objCompany = ajaxResponseCompany.data
 		$(`#output_info_company`).html(`
 			<span>${objCompany.company}</span><br>
-			<span>${objCompany.municipality}, ${objCompany.state}</span><br><br>
+			<span>${objCompany.municipality}, ${objCompany.state}</span><br>
+			<b>CONTACTO:</b>&nbsp;&nbsp;
+					<i class="fa-solid fa-user"></i>&nbsp; ${objCompany.contact_name} &nbsp; | &nbsp;
+					<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(objCompany.contact_phone)} &nbsp; | &nbsp;
+					<i class="fa-solid fa-at"></i>&nbsp; ${objCompany.contact_email}
+			<br><br>
 			<span class="">${objCompany.description}</span>
 		`);
 	}
@@ -347,9 +352,14 @@ async function editObj(btn_edit) {
 		const ajaxResponseCompany = await ajaxRequestAsync(URL_COMPANY_APP, data);
 		const objCompany = ajaxResponseCompany.data
 		$(`#${input_company_id.attr("data-output")}`).html(`
-		<span>${objCompany.company}</span><br>
-		<span>${objCompany.municipality}, ${objCompany.state}</span><br><br>
-		<span class="">${objCompany.description}</span>
+			<span>${objCompany.company}</span><br>
+			<span>${objCompany.municipality}, ${objCompany.state}</span><br>
+			<b>CONTACTO:</b>&nbsp;&nbsp;
+					<i class="fa-solid fa-user"></i>&nbsp; ${objCompany.contact_name} &nbsp; | &nbsp;
+					<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(objCompany.contact_phone)} &nbsp; | &nbsp;
+					<i class="fa-solid fa-at"></i>&nbsp; ${objCompany.contact_email}
+			<br><br>
+			<span class="">${objCompany.description}</span>
 		`);
 	}
 	$(`#${input_area_id.attr("data-output")}`).text($(`#input_area_id option:selected`).text());
@@ -402,7 +412,12 @@ input_company_id.on("input change", async function() {
 	const obj = ajaxResponse.data
 	output.html(`
 		<span>${obj.company}</span><br>
-		<span>${obj.municipality}, ${obj.state}</span><br><br>
+		<span>${obj.municipality}, ${obj.state}</span><br>
+		<b>CONTACTO:</b>&nbsp;&nbsp;
+				<i class="fa-solid fa-user"></i>&nbsp; ${obj.contact_name} &nbsp; | &nbsp;
+				<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.contact_phone)} &nbsp; | &nbsp;
+				<i class="fa-solid fa-at"></i>&nbsp; ${obj.contact_email}
+		<br><br>
 		<span class="">${obj.description}</span>
 	`);
 	if (this.value == "") output.html(`

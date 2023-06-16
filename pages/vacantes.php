@@ -174,7 +174,12 @@ $current_page = "Vacantes";
                               <p class="h5 fw-bolder" id="output_vacancy">Vacante</p>
                               <p class="mb-3" id="output_info_company">
                                  <span>Empresa</span><br>
-                                 <span>Ciudad, Estado</span><br><br>
+                                 <span>Ciudad, Estado</span><br>
+                                 <b>CONTACTO:</b>&nbsp;&nbsp;
+				                           <i class="fa-solid fa-user"></i>&nbsp; ${obj.contact_name} &nbsp; | &nbsp;
+                                       <i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.contact_phone)} &nbsp; | &nbsp;
+				                           <i class="fa-solid fa-at"></i>&nbsp; ${obj.contact_email}
+                                 <br><br>
                                  <span class="">Descripción de la empresa...</span>
                               </p>
 

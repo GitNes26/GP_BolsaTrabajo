@@ -18,12 +18,7 @@ class Company extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT c.*, bl.business_line, cr.company_ranking, cr.description cr_description, u.email, u.created_at
-         FROM companies c 
-         INNER JOIN users u ON c.user_id=u.id 
-         INNER JOIN business_lines bl ON c.business_line_id=bl.id
-         INNER JOIN company_rankings cr ON c.company_ranking_id=cr.id
-         WHERE u.active=1 ORDER BY c.id DESC;";
+         $query = "SELECT * FROM vw_companies";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -63,12 +58,7 @@ class Company extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT c.*, bl.business_line, cr.company_ranking, cr.description cr_description
-         FROM companies c 
-         INNER JOIN users u ON c.user_id=u.id 
-         INNER JOIN business_lines bl ON c.business_line_id=bl.id
-         INNER JOIN company_rankings cr ON c.company_ranking_id=cr.id
-         WHERE c.id=$id;";
+         $query = "SELECT * FROM vw_companies WHERE id=$id;";
          $result = $this->Select($query, false);
 
          $response = $this->CorrectResponse();

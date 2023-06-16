@@ -18,11 +18,7 @@ class Candidate extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT c.*, u.email, u.created_at, p.profession
-         FROM candidates c 
-         INNER JOIN users u ON c.user_id=u.id 
-         INNER JOIN professions p ON p.id=c.profession_id 
-         WHERE u.active=1";
+         $query = "SELECT * FROM vw_candidates";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -60,7 +56,7 @@ class Candidate extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT c.* FROM candidates c WHERE c.id=$id;";
+         $query = "SELECT * FROM vw_candidates WHERE id=$id;";
          $result = $this->Select($query, false);
 
          $response = $this->CorrectResponse();
@@ -115,8 +111,8 @@ class Candidate extends Connection {
 
          $this->validateAvailableData($cellphone, $id);
 
-         $query = "UPDATE candidates SET name=?, last_name=?, cellphone=?, age=?, professional_info=?, photo_path=?, cv_path=?, languages=?, profession_id=?, interest_tags_ids=?, user_id=?, updated_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id));
+         $query = "UPDATE candidates SET name=?, last_name=?, cellphone=?, age=?, professional_info=?, photo_path=?, cv_path=?, languages=?, profession_id=?, interest_tags_ids=?, user_id=? WHERE id=?";
+         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $id));
 
          $query = "UPDATE users SET updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($updated_at, $user_id));

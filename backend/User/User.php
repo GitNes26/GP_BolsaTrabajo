@@ -208,17 +208,9 @@ class User extends Connection {
 
       try {
          if ($role_id == 3 ) {
-            $query = "SELECT u.*, r.id role_id, r.role, c.*
-            FROM users u 
-            LEFT JOIN roles r ON u.role_id=r.id 
-            LEFT JOIN companies c ON c.user_id=u.id 
-            WHERE u.active=1 and u.id=$id";
+            $query = "SELECT * FROM vw_companies WHERE user_id=$id";
          } elseif ($role_id == 4) {
-            $query = "SELECT u.*, r.id role_id, r.role, c.*
-            FROM users u 
-            LEFT JOIN roles r ON u.role_id=r.id 
-            LEFT JOIN candidates c ON c.user_id=u.id 
-            WHERE u.active=1 and u.id=$id";
+            $query = "SELECT * FROM vw_candidates WHERE user_id=$id";
          } else {
             $query = "SELECT u.*, r.id role_id, r.role
             FROM users u LEFT JOIN roles r ON u.role_id=r.id 

@@ -8,17 +8,18 @@ if (isset($_POST['op'])) { $op = $_POST['op']; }
 if (isset($_POST['id'])) { $id = $_POST['id']; }
 if(isset($_POST['input_name'])) $name = $_POST['input_name'];
 if(isset($_POST['input_last_name'])) $last_name = $_POST['input_last_name'];
-if(isset($_POST['input_cellphone'])) $cellphone = $_POST['input_cellphone']; else $input_cellphone = 'null';
+if(isset($_POST['input_cellphone'])) $cellphone = $_POST['input_cellphone']; else $input_cellphone = '';
 if (isset($_POST['input_age'])) { $age = $_POST['input_age']; }
 if (isset($_POST['input_professional_info'])) { $professional_info = $_POST['input_professional_info']; }
 // if (isset($_POST['input_cv_path'])) { $cv_path = $_POST['input_cv_path']; }
 if (isset($_POST['input_languages'])) { $languages = $_POST['input_languages']; }
 if (isset($_POST['input_profession_id'])) { $profession_id = $_POST['input_profession_id']; } else $profession_id = '0';
-if (isset($_POST['input_interest_tags_ids'])) { $interest_tags_ids = $_POST['input_interest_tags_ids']; } else $interest_tags_ids = 'null';
+if (isset($_POST['input_interest_tags_ids'])) { $interest_tags_ids = $_POST['input_interest_tags_ids']; } else $interest_tags_ids = '';
 if (isset($_POST['input_user_id'])) { $user_id = $_POST['input_user_id']; }
+if (isset($_POST['user_id'])) { $user_id = $_POST['user_id']; }
 
-if (isset($_POST['input_state'])) { $state = $_POST['input_state']; }
-if (isset($_POST['input_municipality'])) { $municipality = $_POST['input_municipality']; }
+// if (isset($_POST['input_state'])) { $state = $_POST['input_state']; }
+// if (isset($_POST['input_municipality'])) { $municipality = $_POST['input_municipality']; }
 
 // if (isset($_POST['input_experiencies_ids'])) { $experiencies_ids = $_POST['input_experiencies_ids']; }
 // if (isset($_POST['input_skills'])) { $skills = $_POST['input_skills']; }
@@ -38,7 +39,7 @@ if (isset($_FILES['input_photo_path'])) {
   $type = strtoupper(trim(end($type)));
 
   $dir = "../../$path_files/candidates";
-  $file_name = "$age.$type";
+  $file_name = "$user_id-$name.$type";
   $dest = "$dir/$file_name";
 
   if (!is_dir($dir)) {
@@ -61,7 +62,8 @@ if (isset($_FILES['input_photo_path'])) {
   $photo_path = "";
   $type = "";
 }
-if ($haveImg != null) $photo_path = $haveImg;
+if ($photo_path == "" && $haveImg != null) $photo_path = $haveImg;
+
 
 if (isset($_FILES['input_cv_path'])) {
    $path_files = "assets/img";
@@ -70,7 +72,7 @@ if (isset($_FILES['input_cv_path'])) {
    $type = strtoupper(trim(end($type)));
  
    $dir = "../../$path_files/candidates";
-   $file_name = "$age.$type";
+   $file_name = "$user_id-$name"."-cv."."$type";
    $dest = "$dir/$file_name";
  
    if (!is_dir($dir)) {
@@ -83,17 +85,17 @@ if (isset($_FILES['input_cv_path'])) {
       */
    }
    if (move_uploaded_file($_FILES["input_cv_path"]["tmp_name"], $dest)) {
-      $cv_path = "candidates/$file_name"."_cv";
+      $cv_path = "candidates/$file_name";
    } else {
       $cv_path = "";
       $type = "";
       print(error_get_last());
    }
- } else {
+} else {
    $cv_path = "";
    $type = "";
- }
- if ($haveCv != null) $cv_path = $haveCv;
+}
+if ($cv_path == "" && $haveCv != null) $cv_path = $haveCv;
 
 #PETICIONES
 

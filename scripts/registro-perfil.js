@@ -35,12 +35,21 @@ const div_company = $("#div_company"),
 
 // /* INPUTS DE REGISTRO CANDIDATO */
 const div_candidate = $("#div_candidate"),
+   input_photo_path = $('#input_photo_path'), //este es un input_file
+   output_photo = $('#output_photo'),
+   preview_photo = $('#preview_photo'),
    input_name = $("#input_name"),
    input_last_name = $("#input_last_name"),
-   input_email = $("#input_email"),
+   input_cellphone = $("#input_cellphone"),
    input_age = $("#input_age"),
    input_profession_id = $("#input_profession_id"),
-   input_interest_tags_ids = $("#input_interest_tags_ids")
+   input_interest_tags_ids = $("#input_interest_tags_ids"),
+	input_languages_b = $("#input_languages_b"),
+	input_languages_i = $("#input_languages_i"),
+	input_languages_a = $("#input_languages_a"),
+	input_cv_path = $('#input_cv_path'), //este es un input_file
+   output_cv = $('#output_cv'),
+   preview_cv = $('#preview_cv')
    ;
 
 // email.focus();
@@ -91,7 +100,8 @@ btn_reset.click(async (e) => {
 
 	$('.note-editing-area .note-editable').html(null);
 	$('.note-editing-area .note-placeholder').css("display","block");
-
+   resetImgPreview($(`#${input_photo_path.attr("data-preview")}`));
+	resetImgPreview($(`#${input_cv_path.attr("data-preview")}`), null, true);
 	
 	setTimeout(() => {
 		input_company.focus();
@@ -99,32 +109,65 @@ btn_reset.click(async (e) => {
 });
 
 // Agrega un evento change al elemento de entrada de archivo
-input_logo_path.on('change', function(event) {
-   // Obtén el archivo seleccionado
-   const file = event.target.files[0];
+input_photo_path.on('change', function(event) {
+	// Obtén el archivo seleccionado
+	const file = event.target.files[0];
+	// Crea un objeto FileReader
+	const fileReader = new FileReader();
+	const preview = $(`#${input_photo_path.attr("data-preview")}`);
 
-   // Crea un objeto FileReader
-   const fileReader = new FileReader();
+	// Define la función de carga completada del lector
+	fileReader.onload = function(e) {
+		// Crea un elemento de imagen
+		const imagen = document.createElement('img');
+		imagen.src = e.target.result; // Asigna la imagen cargada como fuente
+		imagen.classList.add("img-fluid"); // Asignar clases
+		imagen.classList.add("pointer-sm"); // Asignar clases
+		//  imagen.classList.add("p-5"); // Asignar clases
+		imagen.classList.add("rounded-lg"); // Asignar clases
+		imagen.style = "max-height: 200px !important";
 
-   // Define la función de carga completada del lector
-   fileReader.onload = function(e) {
+		// Agrega la imagen a la vista previa
+		preview.html(null); // Limpia la vista previa antes de agregar la nueva imagen
+		preview.append(imagen);
+	};
+
+	if (file == undefined) resetImgPreview(preview);
+
+ // Lee el contenido del archivo como una URL de datos
+ fileReader.readAsDataURL(file);
+});
+input_cv_path.on('change', function(event) {
+	// Obtén el archivo seleccionado
+	const file = event.target.files[0];
+	// Crea un objeto FileReader
+	const fileReader = new FileReader();
+	const preview = $(`#${input_cv_path.attr("data-preview")}`);
+
+	// Define la función de carga completada del lector
+	fileReader.onload = function(e) {
       // Crea un elemento de imagen
-      const imagen = document.createElement('img');
-      imagen.src = e.target.result; // Asigna la imagen cargada como fuente
-      imagen.classList.add("img-fluid"); // Asignar clases
-      imagen.classList.add("pointer-sm"); // Asignar clases
-      //  imagen.classList.add("p-5"); // Asignar clases
-      imagen.classList.add("rounded-lg"); // Asignar clases
-      // imagen.classList.add("text-center"); // Asignar clases 
-      imagen.style = "max-height: 200px !important";
+      const iframe = document.createElement('iframe');
+      iframe.src = e.target.result; // Asigna la iframe cargada como fuente
+      // canvas.getContext("2d") // Asigna la iframe cargada como fuente
+      iframe.classList.add("img-fluid"); // Asignar clases
+      iframe.classList.add("pointer-sm"); // Asignar clases
+      iframe.classList.add("rounded-lg"); // Asignar clases
+      // iframe.classList.add("text-center"); // Asignar clases
+      iframe.style = "height: 100% !important";
 
-      // Agrega la imagen a la vista previa
-      preview_logo.html(""); // Limpia la vista previa antes de agregar la nueva imagen
-      preview_logo.append(imagen);
+      // Agrega la iframe a la vista previa
+      preview.html(null); // Limpia la vista previa antes de agregar la nueva iframe
+      preview.append(iframe);
+		preview.parent().css("height","50vh");
+		// label_input_file.css("height","100%");
+		preview.css("height","100%");
    };
 
-  // Lee el contenido del archivo como una URL de datos
-  fileReader.readAsDataURL(file);
+	// if (file == undefined) resetImgPreview(preview);
+
+ // Lee el contenido del archivo como una URL de datos
+ fileReader.readAsDataURL(file);
 });
 
 

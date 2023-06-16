@@ -100,7 +100,7 @@ btn_reset.click(async (e) => {
 	$('.note-editing-area .note-editable').html(null);
 	$('.note-editing-area .note-placeholder').css("display","block");
 	resetImgPreview($(`#${input_photo_path.attr("data-preview")}`));
-	resetImgPreview($(`#${input_cv_path.attr("data-preview")}`));
+	resetImgPreview($(`#${input_cv_path.attr("data-preview")}`), null, true);
 	
 	id_modal.val("");
 	setTimeout(() => {
@@ -129,7 +129,7 @@ input_photo_path.on('change', function(event) {
 		imagen.style = "max-height: 200px !important";
 
 		// Agrega la imagen a la vista previa
-		preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+		preview.html(null); // Limpia la vista previa antes de agregar la nueva imagen
 		preview.append(imagen);
 	};
 
@@ -150,21 +150,19 @@ input_cv_path.on('change', function(event) {
       // Crea un elemento de imagen
       const iframe = document.createElement('iframe');
       iframe.src = e.target.result; // Asigna la iframe cargada como fuente
-		console.log(iframe);
       // canvas.getContext("2d") // Asigna la iframe cargada como fuente
       iframe.classList.add("img-fluid"); // Asignar clases
-      // iframe.classList.add("pointer"); // Asignar clases
-      //  iframe.classList.add("p-5"); // Asignar clases
+      iframe.classList.add("pointer-sm"); // Asignar clases
       iframe.classList.add("rounded-lg"); // Asignar clases
       // iframe.classList.add("text-center"); // Asignar clases
       iframe.style = "height: 100% !important";
 
       // Agrega la iframe a la vista previa
-      preview.html(""); // Limpia la vista previa antes de agregar la nueva iframe
+      preview.html(null); // Limpia la vista previa antes de agregar la nueva iframe
       preview.append(iframe);
 		preview.parent().css("height","50vh");
 		// label_input_file.css("height","100%");
-		preview.css("height","90%");
+		preview.css("height","100%");
    };
 
 	// if (file == undefined) resetImgPreview(preview);
@@ -208,7 +206,7 @@ form.on("submit", async function(e) {
 	} else {
 		//EDICION
 		addToArray("updated_at", current_date, data, true);
-
+		// debugger
 		if (haveImg) addToArray("haveImg", vLogoPath, data, true);
 		if (haveCv) addToArray("haveCv", vCvPath, data, true);
 	}
@@ -229,7 +227,7 @@ async function fillTable() {
 
 	const list = [];
 	let objResponse = ajaxResponse.data;
-	console.log(objResponse);
+	// console.log(objResponse);
 
 	objResponse.map((obj) => {
 		//Campos
@@ -240,7 +238,7 @@ async function fillTable() {
 				<i>(${obj.age} años)</i>
 			`,
 			column_contact = `
-				<i class="fa-solid fa-phone"></i>&nbsp; ${obj.cellphone}<br>
+				<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.cellphone)}<br>
 				<i class="fa-solid fa-at"></i>&nbsp; ${obj.email}
 			`,
 			column_profession = `
@@ -253,12 +251,12 @@ async function fillTable() {
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Empresa' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-pen-to-square fa-lg i_edit'></i></button>`;
+				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Candidato' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-pen-to-square fa-lg i_edit'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.user_id}' title='Eliminar Empresa' data-name='${obj.company}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
+				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.user_id}' title='Eliminar Candidato' data-name='${obj.name}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
 		}
 		column_buttons += `</div>
          </td>`;
@@ -372,13 +370,13 @@ async function editObj(btn_edit) {
 	}
 	// await showStates(obj.state, obj.municipality);
 	haveCv=false;
-	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreview($(`#${input_cv_path.attr("data-preview")}`) );
+	if (obj.cv_path == "" || obj.cv_path == null) resetImgPreview($(`#${input_cv_path.attr("data-preview")}`), null, true );
 	else {
 		haveCv = true;
 		// console.log("tengo imagen guardada");
- 		resetImgPreview($(`#${input_cv_path.attr("data-preview")}`),`/assets/img/${obj.photo_path}`, true);
-		vLogoPath = obj.photo_path;
-		// input_cv_path.val(obj.photo_path);
+ 		resetImgPreview($(`#${input_cv_path.attr("data-preview")}`),`/assets/img/${obj.cv_path}`, true);
+		vCvPath = obj.cv_path;
+		// input_cv_path.val(obj.cv_path);
 	}
 	
 	setTimeout(() => {
