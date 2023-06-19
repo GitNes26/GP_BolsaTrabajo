@@ -7,6 +7,8 @@ $(document).ready(() => {
 
 // btn_modal_form = $("#btn_modal_form"),
 const 
+	div_header = $("#div_header"),
+	output_enable = $("#output_enable"), 
 	tbody = $("#table tbody"),
 	modal_body = $("#modal-body"),
 	form = $("#form"),
@@ -216,6 +218,13 @@ async function fillInfo(show_toas=true) {
 
 	let obj = ajaxResponse.data;
 	console.log(obj);
+obj.enable=0
+console.log(obj)
+	if (obj.enable == 0) {
+		div_header.removeClass("bg-success");
+		div_header.addClass("bg-primary");
+		output_enable.text("CONTRATADO");
+	}
 
 	haveImg=false;
 	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreview($(`#${input_photo_path.attr("data-preview")}`));

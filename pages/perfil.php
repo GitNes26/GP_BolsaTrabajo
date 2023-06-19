@@ -16,9 +16,10 @@ $pagina_acutal = "Mi Perfil";
     <div class="content">
       <div class="card card-widget widget-user shadow">
 
-        <div class="widget-user-header bg-success">
-          <h3 class="widget-user-username" id="output_name">Néstor Puentes</h3>
-          <h5 class="widget-user-desc" id="output_profession">Programador</h5>
+        <div class="widget-user-header bg-success" id="div_header">
+          <h3 class="widget-user-username" id="output_name">[Mi Nombre]</h3>
+          <h5 class="widget-user-desc" id="output_profession">[Mi Profesión]</h5>
+          <h1 class="text-end fw-bolder" id="output_enable">DISPONIBLE</h1>
         </div>
         <div class="widget-user-image">
           <img class="img-circle elevation-2 bg-white" id="output_photo" src="/assets/img/sin_perfil.webp" alt="Foto de perfil">
@@ -27,7 +28,7 @@ $pagina_acutal = "Mi Perfil";
           <div class="row">
             <div class="col-sm-4 border-right">
               <div class="description-block">
-                <p class="description-header" id="output_email">micorreo@gmail.com</p>
+                <p class="description-header" id="output_email">[micorreo@gmail.com]</p>
                 <span class="description-text"><i class="fa-solid fa-envelope"></i></span>
               </div>
 
@@ -35,7 +36,7 @@ $pagina_acutal = "Mi Perfil";
 
             <div class="col-sm-4 border-right">
               <div class="description-block">
-                <p class="description-header" id="output_cellphone">(871)-526-56-89</p>
+                <p class="description-header" id="output_cellphone">[Mi número celular]</p>
                 <span class="description-text"><i class="fa-sharp fa-solid fa-phone"></i></span>
               </div>
 
@@ -43,7 +44,7 @@ $pagina_acutal = "Mi Perfil";
 
             <div class="col-sm-4">
               <div class="description-block">
-                <p class="description-header" id="output_languages">Inglés - Básico</p>
+                <p class="description-header" id="output_languages">[Mi nivel de ingles]</p>
                 <span class="description-text"><i class="fa-regular fa-language"></i></span>
               </div>
 
