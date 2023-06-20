@@ -107,6 +107,8 @@ elseif ($op == 'showSelect') $Candidate->showSelect();
 elseif ($op == "create") $Candidate->create($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id);
 
 elseif ($op == "edit") $Candidate->edit($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id);
+elseif ($op == "editName") $Candidate->editName($user_id, $name, $last_name, $updated_at);
+
 
 elseif ($op == "delete") $Candidate->delete($deleted_at, $user_id);
 

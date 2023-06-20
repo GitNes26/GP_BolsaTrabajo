@@ -130,6 +130,33 @@ class Candidate extends Connection {
       }
       die(json_encode($response));
    }
+   function editName($user_id, $name, $last_name, $updated_at) {
+      try {
+         $response = $this->defaultResponse();
+
+         // $this->validateAvailableData($cellphone, $id);
+         $id = $this->getIdByUserId($user_id);
+         if ($id == 0) die(json_encode($response));
+
+         $query = "UPDATE candidates SET name=?, last_name=? WHERE id=?";
+         $this->ExecuteQuery($query, array($name, $last_name, $id));
+
+         $query = "UPDATE users SET updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($updated_at, $user_id));
+         
+         $response = $this->CorrectResponse();
+         $response["message"] = "Peticion satisfactoria | registro actualizado.";
+         $response["alert_title"] = "Nombre actualizado";
+         $response["alert_text"] = "Nombre actualizado";
+         $this->Close();
+   
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->CatchResponse($error_message);
+      }
+      die(json_encode($response));
+   }
 
    function delete($deleted_at, $user_id) {
       try {

@@ -3,6 +3,7 @@ var table;
 table = $("#table").DataTable(DT_CONFIG);
 
 $(document).ready(() => {
+	$(`span[aria-labelledby='select2-input_profession_id-container']`).addClass("d-none")
 });
 
 // btn_modal_form = $("#btn_modal_form"),
@@ -23,7 +24,6 @@ const
    input_name = $("#input_name"),
    output_name = $("#output_name"),
    input_last_name = $("#input_last_name"),
-   output_last_name = $("#output_last_name"),
 	input_email = $("#input_email"),
    output_email = $("#output_email"),
    input_cellphone = $("#input_cellphone"),
@@ -55,12 +55,14 @@ const
 	input_business_line = $("#input_business_line"),
 	
 	input_file = $('#input_file'), //este es un input_file
-   preview_file = $('#preview_file'),
+   preview_file = $('#preview_file')
+	;
 	
-	
+let vProfession_id = null;
+
 //#endregion VARIABLES
-// $(".select2").select2();
-// focusSelect2($(".select2"));
+$(".select2").select2();
+focusSelect2($(".select2"));
 
 /* --- FUNCIONES DE CAJON--- */
 // estas funciones se encuentran en index.js para no repetir código
@@ -69,46 +71,12 @@ const
 init();
 async function init() {
 	fillInfo(false);
-	setTimeout(() => {
-      input_business_line.focus();
-   }, 500);
+	// setTimeout(() => {
+   //    input_business_line.focus();
+   // }, 500);
 }
 
-
 // Agrega un evento change a la foto de perfil
-input_file.on('change', function(event) {
-   // Obtén el archivo seleccionado
-   const file = event.target.files[0];
-
-   // Crea un objeto FileReader
-   const fileReader = new FileReader();
-
-   // Define la función de carga completada del lector
-   fileReader.onload = function(e) {
-      // Crea un elemento de imagen
-      const iframe = document.createElement('iframe');
-      iframe.src = e.target.result; // Asigna la iframe cargada como fuente
-		console.log(iframe);
-      // canvas.getContext("2d") // Asigna la iframe cargada como fuente
-      iframe.classList.add("img-fluid"); // Asignar clases
-      // iframe.classList.add("pointer"); // Asignar clases
-      //  iframe.classList.add("p-5"); // Asignar clases
-      iframe.classList.add("rounded-lg"); // Asignar clases
-      // iframe.classList.add("text-center"); // Asignar clases
-      iframe.style = "height: 100% !important";
-
-      // Agrega la iframe a la vista previa
-      preview_file.html(""); // Limpia la vista previa antes de agregar la nueva iframe
-      preview_file.append(iframe);
-		label_input_file.css("height","100%");
-		preview_file.css("height","90%");
-   };
-
-  // Lee el contenido del archivo como una URL de datos
-  fileReader.readAsDataURL(file);
-});
-
-// Agrega un evento change al elemento de entrada de archivo
 input_logo_path.on('change', function(event) {
    // Obtén el archivo seleccionado
    const file = event.target.files[0];
@@ -137,6 +105,40 @@ input_logo_path.on('change', function(event) {
   // Lee el contenido del archivo como una URL de datos
   fileReader.readAsDataURL(file);
 });
+
+// Agrega un evento change al elemento de entrada de archivo
+input_cv_path.on('change', function(event) {
+   // Obtén el archivo seleccionado
+   const file = event.target.files[0];
+
+   // Crea un objeto FileReader
+   const fileReader = new FileReader();
+
+   // Define la función de carga completada del lector
+   fileReader.onload = function(e) {
+      // Crea un elemento de imagen
+      const iframe = document.createElement('iframe');
+      iframe.src = e.target.result; // Asigna la iframe cargada como fuente
+      // canvas.getContext("2d") // Asigna la iframe cargada como fuente
+      iframe.classList.add("img-fluid"); // Asignar clases
+      // iframe.classList.add("pointer"); // Asignar clases
+      //  iframe.classList.add("p-5"); // Asignar clases
+      iframe.classList.add("rounded-lg"); // Asignar clases
+      // iframe.classList.add("text-center"); // Asignar clases
+      iframe.style = "height: 100% !important";
+
+      // Agrega la iframe a la vista previa
+      preview_cv.html(""); // Limpia la vista previa antes de agregar la nueva iframe
+      preview_cv.append(iframe);
+		// label_input_cv_path.css("height","100%");
+		preview_cv.css("height","80%");
+   };
+
+  // Lee el contenido del archivo como una URL de datos
+  fileReader.readAsDataURL(file);
+});
+
+
 
 
 
@@ -218,8 +220,7 @@ async function fillInfo(show_toas=true) {
 
 	let obj = ajaxResponse.data;
 	console.log(obj);
-obj.enable=0
-console.log(obj)
+	// obj.enable=0
 	if (obj.enable == 0) {
 		div_header.removeClass("bg-success");
 		div_header.addClass("bg-primary");
@@ -227,7 +228,7 @@ console.log(obj)
 	}
 
 	haveImg=false;
-	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreview($(`#${input_photo_path.attr("data-preview")}`));
+	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreview($(`#${input_photo_path.attr("data-preview")}`), `/assets/img/sin_perfil.webp`);
 	else {
 		haveImg = true;
 		// console.log("tengo imagen guardada");
@@ -236,10 +237,9 @@ console.log(obj)
 		// input_photo_path.val(obj.photo_path);
 		output_photo.attr("src", `/assets/img/${obj.photo_path}`)
 	}
-	// input_name.val(obj.name);
-	output_name.text(obj.name);
-	// input_last_name.val(obj.last_name);
-	output_last_name.text(obj.last_name);
+	input_name.val(obj.name);
+	input_last_name.val(obj.last_name);
+	output_name.text(`${obj.name} ${obj.last_name}`);
 	// input_email.val(obj.email);
 	output_email.text(obj.email);
 	// input_cellphone.val(obj.cellphone);
@@ -247,7 +247,7 @@ console.log(obj)
 	// input_age.val(obj.age);
 	output_age.text(obj.age);
 	
-	// await fillSelect2(URL_PROFESSION_APP, obj.profession_id, input_profession_id);
+	await fillSelect2(URL_PROFESSION_APP, obj.profession_id, input_profession_id);
 	output_profession.text(obj.profession)
 	// await fillSelect2(URL_TAG_APP, obj.interest_tags_ids, input_interest_tags_ids);
 	// output_interest_tags_ids.text(obj.)
@@ -370,3 +370,31 @@ async function deleteObj(btn_delete) {
 		"fillTable()"
 	);
 }
+
+
+output_name.dblclick(function () {
+	this.classList.add("d-none")
+	input_name.removeClass("d-none");
+	input_last_name.removeClass("d-none");
+	input_name.focus();
+});
+input_name.keypress(async function(e) {
+	if (!Enter(e)) return;
+	input_last_name.focus();
+});
+input_last_name.keypress(async function(e) {
+	if (!Enter(e)) return;
+	const data = { op:"editName", user_id: id_cookie, input_name: input_name.val(), input_last_name: input_last_name.val(), updated_at: moment().format("YYYY-MM-DD hh:mm:ss") }
+	await ajaxRequestAsync(URL_CANDIDATE_APP, data);
+
+	output_name.text(`${input_name.val()} ${input_last_name.val()}`);
+	input_name.addClass("d-none")
+	input_last_name.addClass("d-none");
+	output_name.removeClass("d-none");
+});
+output_profession.dblclick(function () {
+	this.classList.add("d-none")
+	$(`span[aria-labelledby='select2-input_profession_id-container']`).removeClass("d-none");
+	input_profession_id.focus();
+});
+

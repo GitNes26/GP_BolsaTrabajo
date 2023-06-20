@@ -336,6 +336,11 @@ function mayus(e) {
 	e.value = e.value.toUpperCase();
 }
 
+function Enter(e) {
+	const code = (e.keyCode ? e.keyCode : e.which);
+	return code == 13 ? true : false;
+}
+
 const accent_map = {'á':'a', 'é':'e', 'è':'e', 'í':'i','ó':'o','ú':'u','Á':'a', 'É':'e', 'è':'e', 'Í':'i','Ó':'o','Ú':'u'};
 function accentFold (s) {
   if (!s) { return ''; }
@@ -388,10 +393,12 @@ function addToArray(name, value, array, formData=false) {
 }
 
 function resetImgPreview(preview, img_path=null, iframe=false) {
-	if (!iframe) {
+	if (!iframe || img_path==null) {
 		// Crea un elemento de imagen
 		const imagen = document.createElement('img');
-		imagen.src = img_path == null ? "/assets/img/cargar_imagen.png" : img_path; // Asigna la imagen cargada como fuente
+		iframe 
+		? imagen.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path // Asigna la imagen cargada como fuente
+		: imagen.src = img_path == null ? "/assets/img/cargar_imagen.png" : img_path; // Asigna la imagen cargada como fuente
 		imagen.classList.add("img-fluid"); // Asignar clases
 		imagen.classList.add("pointer-sm"); // Asignar clases
 		//  imagen.classList.add("p-5"); // Asignar clases
@@ -691,6 +698,7 @@ async function fillSelect2(url_app, selected_index, selector, select_modules=fal
 	let options = /*HTML*/ `
       <option value="-1">Selecciona una opción...</option>
    `;
+	console.log(selector.data().select2);
 	if (selector.data().select2.options.options.multiple) {
 		options = /*HTML*/ `
 			<option value="-1">Selecciona etiquetas...</option>

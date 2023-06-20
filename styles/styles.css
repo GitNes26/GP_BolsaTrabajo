@@ -92,6 +92,7 @@ body {
    display: none;
 }
 
+.opacity-100 { opacity: 1;}
 .pointer { transition: all 0.3s ease-in-out; }
 .pointer:hover { cursor: pointer; transform: scale(1.1); }
 
@@ -170,6 +171,7 @@ a:hover { color: #0c7827; }
 
 .card-pdf {
    height: 62vh !important;
+   /* max-height: 50%; */
 }
 /* 
 .sticky-top {
@@ -186,3 +188,13 @@ a:hover { color: #0c7827; }
    max-height: 50vh !important;
    overflow-y: hidden !important;
 } */
+
+.form-control-border {
+   border-top: 0;
+   border-left: 0;
+   border-right: 0;
+   border-radius: 0;
+   box-shadow: inherit;
+   border-color: white;
+   background: transparent;
+}
