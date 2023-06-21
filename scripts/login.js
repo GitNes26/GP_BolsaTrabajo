@@ -184,7 +184,7 @@ function ajaxRequestRegister(url,data) {
       success: (ajaxResponse) => {
          if (ajaxResponse.result) {
          //   console.log(data);
-           // ajaxRequestEmail(data);
+           ajaxRequestEmail(data);
 
             Swal.fire({
                icon: ajaxResponse.alert_icon,
@@ -241,8 +241,9 @@ function ajaxRequestRegister(url,data) {
 }
 
 function ajaxRequestEmail(data) {
+   console.log(data);
    $.ajax({
-      url: EMAIL_REGISTER_PATH,
+      url: EMAILS_PATH,
       type: "POST",
       data: data,
       dataType: "json",
