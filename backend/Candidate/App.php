@@ -16,7 +16,10 @@ if (isset($_POST['input_languages'])) { $languages = $_POST['input_languages']; 
 if (isset($_POST['input_profession_id'])) { $profession_id = $_POST['input_profession_id']; } else $profession_id = '0';
 if (isset($_POST['input_interest_tags_ids'])) { $interest_tags_ids = $_POST['input_interest_tags_ids']; } else $interest_tags_ids = '';
 if (isset($_POST['input_user_id'])) { $user_id = $_POST['input_user_id']; }
+if (isset($_POST['input_enable'])) { $enable = $_POST['input_enable']; }
 if (isset($_POST['user_id'])) { $user_id = $_POST['user_id']; }
+if (isset($_POST['input_email'])) { $email = $_POST['input_email']; }
+
 
 // if (isset($_POST['input_state'])) { $state = $_POST['input_state']; }
 // if (isset($_POST['input_municipality'])) { $municipality = $_POST['input_municipality']; }
@@ -64,7 +67,6 @@ if (isset($_FILES['input_photo_path'])) {
 }
 if ($photo_path == "" && $haveImg != null) $photo_path = $haveImg;
 
-
 if (isset($_FILES['input_cv_path'])) {
    $path_files = "assets/img";
    $file = $_FILES['input_cv_path'];
@@ -107,7 +109,10 @@ elseif ($op == 'showSelect') $Candidate->showSelect();
 elseif ($op == "create") $Candidate->create($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id);
 
 elseif ($op == "edit") $Candidate->edit($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id);
+elseif ($op == "editInfo") $Candidate->editInfo($name, $last_name, $cellphone, $professional_info, $languages, $profession_id, $user_id, $email, $updated_at);
+elseif ($op == "editPhoto") $Candidate->editPhoto($user_id, $photo_path, $updated_at);
 elseif ($op == "editName") $Candidate->editName($user_id, $name, $last_name, $updated_at);
+elseif ($op == "changeEnable") $Candidate->changeEnable($user_id, $enable, $updated_at);
 
 
 elseif ($op == "delete") $Candidate->delete($deleted_at, $user_id);

@@ -1,0 +1,18 @@
+# Variables
+@protocol = http
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+@createdAt = {{$datetime iso8601}}
+@modifiedBy = {{$processEnv USERNAME}}
+
+###
+# http://localhost:3000/backend/User/App.php
+POST {{protocol}}://{{host}}/backend/User/App.php HTTP/1.1
+Content-Type: {{contentType}}
+{
+   "op": "login",
+   "email": "nes@gmail.com",
+   "password": "123"
+}

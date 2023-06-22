@@ -242,10 +242,10 @@ function ajaxRequestRegister(url,data) {
 
 function ajaxRequestEmail(data) {
    console.log(data);
-   $.ajax({
-      url: EMAILS_PATH,
-      type: "POST",
-      data: data,
-      dataType: "json",
-   });
+   // $.ajax({
+   //    url: EMAILS_PATH,
+   //    type: "POST",
+   //    data: data,
+   //    dataType: "json",
+   // });
 }

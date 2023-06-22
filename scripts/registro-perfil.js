@@ -1,8 +1,7 @@
 $(document).ready(function() {
-   SUMMERNOTE_CONFIG.placeholder = "Escribir Habilidades, competencias, experiencias, observaciones, etc."
-   SUMMERNOTE_CONFIG.toolbar.push(['templates', ['template_candidate']]),
-
-	$('.summernote').summernote(SUMMERNOTE_CONFIG)
+   SUMMERNOTE_CONFIG.placeholder = "Escribir Habilidades, competencias, experiencias, observaciones, etc.";
+   SUMMERNOTE_CONFIG.toolbar.push(['templates', ['template_candidate']]);
+	$('.summernote').summernote(SUMMERNOTE_CONFIG);
 });
 
 $(".select2").select2();

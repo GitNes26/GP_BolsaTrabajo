@@ -698,7 +698,7 @@ async function fillSelect2(url_app, selected_index, selector, select_modules=fal
 	let options = /*HTML*/ `
       <option value="-1">Selecciona una opción...</option>
    `;
-	console.log(selector.data().select2);
+	// console.log(selector.data().select2);
 	if (selector.data().select2.options.options.multiple) {
 		options = /*HTML*/ `
 			<option value="-1">Selecciona etiquetas...</option>

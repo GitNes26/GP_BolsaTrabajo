@@ -3,7 +3,12 @@ var table;
 table = $("#table").DataTable(DT_CONFIG);
 
 $(document).ready(() => {
-	$(`span[aria-labelledby='select2-input_profession_id-container']`).addClass("d-none")
+	$(`span[aria-labelledby='select2-input_profession_id-container']`).addClass("d-none");
+
+	SUMMERNOTE_CONFIG.placeholder = "Escribir Habilidades, competencias, experiencias, observaciones, etc.";
+	SUMMERNOTE_CONFIG.toolbar.push(['templates', ['template_candidate']]);
+	SUMMERNOTE_CONFIG.height = 400;
+	$('.summernote').summernote(SUMMERNOTE_CONFIG)
 });
 
 // btn_modal_form = $("#btn_modal_form"),
@@ -48,6 +53,9 @@ const
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset"),
 	btn_cancel = $("#btn_cancel"),
+	btn_edit = $("#btn_edit"),
+	btn_change_enable = $("#btn_change_enable"),
+
 	
 	input_logo_path = $('#input_logo_path'), //este es un input_file
 	label_input_file = $("#label_input_file"),
@@ -77,7 +85,7 @@ async function init() {
 }
 
 // Agrega un evento change a la foto de perfil
-input_logo_path.on('change', function(event) {
+input_photo_path.on('change', function(event) {
    // Obtén el archivo seleccionado
    const file = event.target.files[0];
 
@@ -90,17 +98,27 @@ input_logo_path.on('change', function(event) {
       const imagen = document.createElement('img');
       imagen.src = e.target.result; // Asigna la imagen cargada como fuente
       // canvas.getContext("2d") // Asigna la imagen cargada como fuente
-      imagen.classList.add("img-fluid"); // Asignar clases
-      imagen.classList.add("pointer"); // Asignar clases
-      //  imagen.classList.add("p-5"); // Asignar clases
-      imagen.classList.add("rounded-lg"); // Asignar clases
-      // imagen.classList.add("text-center"); // Asignar clases
-      imagen.style = "max-height: 200px !important";
-
+      imagen.classList.add("img-circle"); // Asignar clases
+      imagen.classList.add("elevation-2"); // Asignar clases
+      imagen.classList.add("bg-white"); // Asignar clases
+      imagen.classList.add("pointer-sm"); // Asignar clases
+      imagen.classList.add("opacity-100"); // Asignar clases
+		imagen.title = "Haz clic aquí, si deseas cambiar tu foto de perfil";
+		imagen.setAttribute("style","width: 100px !important; height: 100px !important; object-fit: contain");
       // Agrega la imagen a la vista previa
-      preview_logo.html(""); // Limpia la vista previa antes de agregar la nueva imagen
-      preview_logo.append(imagen);
+      preview_photo.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+      preview_photo.append(imagen);
    };
+
+	//PETICION
+	const data = {
+		op: "editPhoto",
+		user_id: id_cookie,
+		input_photo_path: file,
+		updated_at: moment().format("YYYY-MM-DD hh:mm:ss")
+	}
+	console.log(data);
+	ajaxRequestFileAsync(URL_CANDIDATE_APP, data);
 
   // Lee el contenido del archivo como una URL de datos
   fileReader.readAsDataURL(file);
@@ -144,37 +162,75 @@ input_cv_path.on('change', function(event) {
 
 
 
-
-
+//CLICK EN BTN EDITAR PARA MODIFICAR INFORMACION
+btn_edit.click(function () {
+	$(this).addClass("d-none");
+	btn_change_enable.addClass("d-none");
+	btn_submit.removeClass("d-none");
+	btn_cancel.removeClass("d-none");
+	$(".im_input").removeClass("d-none");
+	$(`span[aria-labelledby='select2-input_profession_id-container']`).removeClass("d-none");
+	
+	$(".im_output").addClass('d-none');
+});
 
 //CLICK EN BTN CANCELAR PARA CREAR UNO NUEVO
  btn_cancel.click((e) => {
 	e.preventDefault();
-	modal_title.html(
-		"<i class='fa-regular fa-circle-plus'></i>&nbsp; REGISTRAR GIRO"
-	);
-	btn_submit.removeClass("btn-primary");
-	btn_submit.addClass("btn-success");
-	btn_submit.text("AGREGAR");
-
-	btn_cancel.removeClass("btn-success");
-	btn_cancel.addClass("btn-danger d-none");
-	btn_cancel.text("CANCELAR");
-
+	btn_edit.removeClass("d-none")
+	btn_change_enable.removeClass("d-none")
+	btn_submit.addClass("d-none");
+	btn_cancel.addClass("d-none");
+	$(".im_output").removeClass('d-none');
+	$(".im_input").addClass("d-none");
+	$(`span[aria-labelledby='select2-input_profession_id-container']`).addClass("d-none");
 	//Resetear form
-	btn_reset.click();
 });
 
 //RESETEAR FORMULARIOS
-btn_reset.click(async (e) => {
-	id_modal.val("");
-	// setTimeout(() => {
-	// 	input_business_line.focus();
-	// }, 500);
+btn_change_enable.click(async (e) => {
+	try {
+		const enable = Boolean(btn_change_enable.attr("data-enable"));
+		const new_enable = enable ? "0" : "1";
+		const data = { op:"changeEnable", input_enable:new_enable, user_id:id_cookie, updated_at:moment().format("YYYY-MM-DD hh:mm:ss") }
+		console.log(data);
+		ajaxRequestAsync(URL_CANDIDATE_APP, data);
+		
+		// new_enable == "1"
+		// ? btn_change_enable.text("Disponible")
+		// : btn_change_enable.text("Fui Contratado")
+	} catch (error) {
+		showAlert("error","Oppss!!", `Ocurrio un error inesperado <br> ${error.message}`)
+		console.error(error);
+	}	
 });
 
 
 // REGISTRAR O EDITAR OBJETO
+form.on("submit", async (e) => {
+	console.log("submit");
+	e.preventDefault();
+	// console.log(form.serializeArray());
+
+	if (!validateInputs(form)) return;
+	const input_professional_info = $('.note-editing-area .note-editable').html();
+
+	//EDICION
+
+	let data = form.serializeArray();
+	// return console.log(data);
+	addToArray("op", "editInfo", data);
+	addToArray("updated_at", moment().format("YYYY-MM-DD hh:mm:ss"), data);
+	addToArray("input_professional_info", input_professional_info, data);
+	addToArray("user_id", id_cookie, data);
+
+	console.log(data);
+	// return console.log(data);
+	const ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
+	if (ajaxResponse.message == "duplicado") return
+	btn_cancel.click();
+	await fillInfo(false);
+});
 form.on("submit", async (e) => {
 	e.preventDefault();
 	// console.log(form.serializeArray());
@@ -228,11 +284,11 @@ async function fillInfo(show_toas=true) {
 	}
 
 	haveImg=false;
-	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreview($(`#${input_photo_path.attr("data-preview")}`), `/assets/img/sin_perfil.webp`);
+	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreviewProfile($(`#${input_photo_path.attr("data-preview")}`), `/assets/img/sin_perfil.webp`);
 	else {
 		haveImg = true;
 		// console.log("tengo imagen guardada");
- 		resetImgPreview($(`#${input_photo_path.attr("data-preview")}`),`/assets/img/${obj.photo_path}`);
+ 		resetImgPreviewProfile($(`#${input_photo_path.attr("data-preview")}`),`/assets/img/${obj.photo_path}`);
 		vLogoPath = obj.photo_path;
 		// input_photo_path.val(obj.photo_path);
 		output_photo.attr("src", `/assets/img/${obj.photo_path}`)
@@ -240,9 +296,9 @@ async function fillInfo(show_toas=true) {
 	input_name.val(obj.name);
 	input_last_name.val(obj.last_name);
 	output_name.text(`${obj.name} ${obj.last_name}`);
-	// input_email.val(obj.email);
+	input_email.val(obj.email);
 	output_email.text(obj.email);
-	// input_cellphone.val(obj.cellphone);
+	input_cellphone.val(obj.cellphone);
 	output_cellphone.text(formatPhone(obj.cellphone));
 	// input_age.val(obj.age);
 	output_age.text(obj.age);
@@ -257,35 +313,88 @@ async function fillInfo(show_toas=true) {
 	// 	$('.note-editing-area .note-placeholder').css("display","none");
 	// 	$('.note-editing-area .note-editable').html(obj.professional_info);
 	// }
+	$('.note-editing-area .note-placeholder').css("display","none");
+	$('.note-editing-area .note-editable').html(obj.professional_info);
 	output_professional_info.html(obj.professional_info);
 
-	// switch (obj.languages) {
-	// 	case "Inglés - Básico":
-	// 		input_languages_b.click();
-	// 		break;
-	// 	case "Inglés - Intermedio":
-	// 		input_languages_i.click();
-	// 	case "Inglés - Avanzado":
-	// 		input_languages_a.click();
-	// 	default:
-	// 		break;
-	// }
-	output_languages.text(obj.languages)
+	switch (obj.languages) {
+		case "Inglés - Básico":
+			input_languages_b.click();
+			break;
+		case "Inglés - Intermedio":
+			input_languages_i.click();
+		case "Inglés - Avanzado":
+			input_languages_a.click();
+		default:
+			break;
+	}
+	output_languages.text(obj.languages);
 	// await showStates(obj.state, obj.municipality);
 	haveCv=false;
-	if (obj.cv_path == "" || obj.cv_path == null) resetImgPreview($(`#${input_cv_path.attr("data-preview")}`), null, true );
+	if (obj.cv_path == "" || obj.cv_path == null) resetImgPreviewProfile($(`#${input_cv_path.attr("data-preview")}`), null, true );
 	else {
 		haveCv = true;
 		// console.log("tengo imagen guardada");
- 		resetImgPreview($(`#${input_cv_path.attr("data-preview")}`),`/assets/img/${obj.cv_path}`, true);
+ 		resetImgPreviewProfile($(`#${input_cv_path.attr("data-preview")}`),`/assets/img/${obj.cv_path}`, true);
 		vCvPath = obj.cv_path;
 		// input_cv_path.val(obj.cv_path);
 	}
-
+	btn_change_enable.attr("data-enable", obj.enable)
+	obj.enable == 1
+	? btn_change_enable.text("Disponible")
+	: btn_change_enable.text("Fui Contratado")
 
 	
 	// tbody.slideDown("slow");
 	// btn_reset.click();
+}
+function resetImgPreviewProfile(preview, img_path=null, iframe=false) {
+	if (!iframe || img_path==null) {
+		// Crea un elemento de imagen
+		const imagen = document.createElement('img');
+		iframe 
+		? imagen.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path // Asigna la imagen cargada como fuente
+		: imagen.src = img_path == null ? "/assets/img/sin_perfil.webp" : img_path; // Asigna la imagen cargada como fuente
+		if (iframe) {
+			imagen.classList.add("img-fluid"); // Asignar clases
+			imagen.classList.add("pointer-sm"); // Asignar clases
+			//  imagen.classList.add("p-5"); // Asignar clases
+			imagen.classList.add("rounded-lg"); // Asignar clases
+			// imagen.classList.add("text-center"); // Asignar clases
+			imagen.style = "max-height: 200px !important";
+		} else {
+			imagen.classList.add("img-circle"); // Asignar clases
+			imagen.classList.add("elevation-2"); // Asignar clases
+			imagen.classList.add("bg-white"); // Asignar clases
+			imagen.classList.add("pointer-sm"); // Asignar clases
+			imagen.classList.add("opacity-100"); // Asignar clases
+			imagen.title = "Haz clic aquí, si deseas cambiar tu foto de perfil";
+			
+			imagen.setAttribute("style","width: 100px !important; height: 100px !important; object-fit: contain");
+		}
+
+		// Agrega la imagen a la vista previa
+		preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+		preview.append(imagen);
+	} else {
+		// Crea un elemento de imagen
+      const iframe = document.createElement('iframe');
+      iframe.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path; // Asigna la iframe cargada como fuente
+      // canvas.getContext("2d") // Asigna la iframe cargada como fuente
+      iframe.classList.add("img-fluid"); // Asignar clases
+      iframe.classList.add("pointer-sm"); // Asignar clases
+      //  iframe.classList.add("p-5"); // Asignar clases
+      iframe.classList.add("rounded-lg"); // Asignar clases
+      // iframe.classList.add("text-center"); // Asignar clases
+      iframe.style = "height: 100% !important";
+
+      // Agrega la iframe a la vista previa
+      preview.html(""); // Limpia la vista previa antes de agregar la nueva iframe
+      preview.append(iframe);
+		preview.parent().css("height","50vh");
+		// label_input_file.css("height","100%");
+		preview.css("height","100%");
+	}
 }
 
 //ACCIONES EN BOTONES DE LA TABLA
@@ -372,29 +481,29 @@ async function deleteObj(btn_delete) {
 }
 
 
-output_name.dblclick(function () {
-	this.classList.add("d-none")
-	input_name.removeClass("d-none");
-	input_last_name.removeClass("d-none");
-	input_name.focus();
-});
-input_name.keypress(async function(e) {
-	if (!Enter(e)) return;
-	input_last_name.focus();
-});
-input_last_name.keypress(async function(e) {
-	if (!Enter(e)) return;
-	const data = { op:"editName", user_id: id_cookie, input_name: input_name.val(), input_last_name: input_last_name.val(), updated_at: moment().format("YYYY-MM-DD hh:mm:ss") }
-	await ajaxRequestAsync(URL_CANDIDATE_APP, data);
+// output_name.dblclick(function () {
+// 	this.classList.add("d-none")
+// 	input_name.removeClass("d-none");
+// 	input_last_name.removeClass("d-none");
+// 	input_name.focus();
+// });
+input_name.keypress((e) => Enter(e) ? input_last_name.focus() : false);
+input_last_name.keypress((e) => Enter(e) ? input_profession_id.focus() : false);
+input_email.keypress((e) => Enter(e) ? input_cellphone.focus() : false);
+input_cellphone.keypress((e) => Enter(e) ? input_languages_b.focus() : false);
+// input_last_name.keypress(async function(e) {
+// 	if (!Enter(e)) return;
+// 	const data = { op:"editName", user_id: id_cookie, input_name: input_name.val(), input_last_name: input_last_name.val(), updated_at: moment().format("YYYY-MM-DD hh:mm:ss") }
+// 	await ajaxRequestAsync(URL_CANDIDATE_APP, data);
 
-	output_name.text(`${input_name.val()} ${input_last_name.val()}`);
-	input_name.addClass("d-none")
-	input_last_name.addClass("d-none");
-	output_name.removeClass("d-none");
-});
-output_profession.dblclick(function () {
-	this.classList.add("d-none")
-	$(`span[aria-labelledby='select2-input_profession_id-container']`).removeClass("d-none");
-	input_profession_id.focus();
-});
+// 	output_name.text(`${input_name.val()} ${input_last_name.val()}`);
+// 	input_name.addClass("d-none")
+// 	input_last_name.addClass("d-none");
+// 	output_name.removeClass("d-none");
+// });
+// output_profession.dblclick(function () {
+// 	this.classList.add("d-none")
+// 	$(`span[aria-labelledby='select2-input_profession_id-container']`).removeClass("d-none");
+// 	input_profession_id.focus();
+// });
 

@@ -9,13 +9,13 @@ $date    = $_POST["created_at"];
 // echo "$name";
 // echo "$email";
 // echo "$date";
-require_once('../plugins/PHPMailer/Exception.php');
-require_once('../plugins/PHPMailer/PHPMailer.php');
-require_once('../plugins/PHPMailer/SMTP.php');
+require_once('../plugins/PHPMailer/src/Exception.php');
+require_once('../plugins/PHPMailer/src/PHPMailer.php');
+require_once('../plugins/PHPMailer/src/SMTP.php');
 
 // require_once("../plugins/PHPMailer/PHPMailerAutoload.php");
 $mail = new PHPMailer(true);
-print_r($mail);
+// print_r($mail);
 
 try {
   //Server settings

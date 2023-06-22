@@ -189,12 +189,22 @@ a:hover { color: #0c7827; }
    overflow-y: hidden !important;
 } */
 
-.form-control-border {
+.form-control-border-white {
    border-top: 0;
    border-left: 0;
    border-right: 0;
    border-radius: 0;
    box-shadow: inherit;
    border-color: white;
+   background: transparent;
+}
+.form-control-border {
+   border-top: 0;
+   border-left: 0;
+   border-right: 0;
+   border-radius: 0;
+   box-shadow: inherit;
+   border-color: black;
+   color: black !important;
    background: transparent;
 }
