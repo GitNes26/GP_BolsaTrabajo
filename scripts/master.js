@@ -248,7 +248,7 @@ const ajaxRequestFileAsync = async (
 			url: url,
 			data: data,
 			async: true,
-			dataType: "json",																																																															
+			dataType: "json",
 			enctype: "multipart/form-data",
 			contentType: false,
 			cache: false,

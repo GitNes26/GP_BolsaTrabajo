@@ -12,7 +12,12 @@ $pagina_acutal = "Mi Perfil";
 
   <!-- Main content -->
   <section class="content text-center">
-
+    <form id="form_photo">
+      <input type="file" id="input_photo_path" name="input_photo_path" class="d-none" accept="image/*" data-preview="preview_photo">
+    </form>
+    <form id="form_cv">
+      <input type="file" id="input_cv_path" name="input_cv_path" class="d-none" accept=".pdf" data-preview="preview_cv" data-input-name="CURRICULUM VITAE">
+    </form>
     <form class="content" id="form">
       <div class="card card-widget widget-user shadow">
 
@@ -30,11 +35,10 @@ $pagina_acutal = "Mi Perfil";
           <h1 class="text-end fw-bolder" id="output_enable">DISPONIBLE</h1>
         </div>
         <div class="widget-user-image">
-          <input type="file" id="input_photo_path" name="input_photo_path" class="d-none" accept="image/*" data-preview="preview_photo">
           <label for="input_photo_path">
               <div id="preview_photo" class="d-flex justify-content-center">
                 <!-- <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar foto" id="output_photo" class="img-pointer p-3 rounded-lg img-circle elevation-2 bg-white" for="input_photo_path" title="Haz clic aquí para cargar tu foto de perfil"> -->
-                <img class="img-circle elevation-2 bg-white pointer-sm opacity-100" id="output_photo" src="/assets/img/sin_perfil.webp" alt="Foto de perfil" for="input_photo_path" title="Haz clic aquí, si deseas cambiar tu foto de perfil">
+                <img class="img-circle elevation-2 bg-white pointer-sm opacity-100 d-none" id="output_photo" src="/assets/img/sin_perfil.webp" alt="Foto de perfil" for="input_photo_path" title="Haz clic aquí, si deseas cambiar tu foto de perfil">
               </div>
           </label>
         </div>
@@ -100,7 +104,6 @@ $pagina_acutal = "Mi Perfil";
               <div class="text-center h2 fw-bolder">CURRICULUM VITAE</div>
               <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
               <p class="text-muted text-center">Software Engineer</p> -->
-              <input type="file" id="input_cv_path" name="input_cv_path" class="d-none" accept=".pdf" data-preview="preview_cv" data-input-name="CURRICULUM VITAE">
               <label for="input_cv_path" class="">
                 <div id="preview_cv" class="d-flex justify-content-center">
                     <img src="<?=$IMG_PATH?>/cargar_archivo.png" alt="Cargar CV" id="output_cv" class="img-fluid pointer-sm p-5 rounded-lg" style="height: 250px !important;" for="input_cv_path" title="Haz clic aquí para cargar tu curriculum vitae">

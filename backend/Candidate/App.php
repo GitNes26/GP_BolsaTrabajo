@@ -111,6 +111,7 @@ elseif ($op == "create") $Candidate->create($name, $last_name, $cellphone, $age,
 elseif ($op == "edit") $Candidate->edit($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id);
 elseif ($op == "editInfo") $Candidate->editInfo($name, $last_name, $cellphone, $professional_info, $languages, $profession_id, $user_id, $email, $updated_at);
 elseif ($op == "editPhoto") $Candidate->editPhoto($user_id, $photo_path, $updated_at);
+elseif ($op == "editCv") $Candidate->editCv($user_id, $cv_path, $updated_at);
 elseif ($op == "editName") $Candidate->editName($user_id, $name, $last_name, $updated_at);
 elseif ($op == "changeEnable") $Candidate->changeEnable($user_id, $enable, $updated_at);
 

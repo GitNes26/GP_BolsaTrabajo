@@ -158,14 +158,12 @@ class Candidate extends Connection {
       }
       die(json_encode($response));
    }
-   function editPhoto($photo_path, $user_id, $updated_at) {
+   function editPhoto($user_id, $photo_path, $updated_at) {
       try {
          $response = $this->defaultResponse();
 
          $id = $this->getIdByUserId($user_id);
          if ($id == 0) die(json_encode($response));
-
-         $this->validateAvailableData($cellphone, $id);
 
          $query = "UPDATE candidates SET photo_path=? WHERE id=?";
          $this->ExecuteQuery($query, array($photo_path, $id));
@@ -186,14 +184,38 @@ class Candidate extends Connection {
       }
       die(json_encode($response));
    }
-   function editName($user_id, $name, $last_name, $updated_at) {
+   function editCv($user_id, $cv_path, $updated_at) {
       try {
          $response = $this->defaultResponse();
 
          $id = $this->getIdByUserId($user_id);
          if ($id == 0) die(json_encode($response));
 
-         // $this->validateAvailableData($cellphone, $id);
+         $query = "UPDATE candidates SET cv_path=? WHERE id=?";
+         $this->ExecuteQuery($query, array($cv_path, $id));
+
+         $query = "UPDATE users SET updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($updated_at, $user_id));
+         
+         $response = $this->CorrectResponse();
+         $response["message"] = "Peticion satisfactoria | registro actualizado.";
+         $response["alert_title"] = "Curriculum actualizado";
+         $response["alert_text"] = "Curriculum actualizado";
+         $this->Close();
+   
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->CatchResponse($error_message);
+      }
+      die(json_encode($response));
+   }
+   function editName($user_id, $name, $last_name, $updated_at) {
+      try {
+         $response = $this->defaultResponse();
+
+         $id = $this->getIdByUserId($user_id);
+         if ($id == 0) die(json_encode($response));
 
          $query = "UPDATE candidates SET name=?, last_name=? WHERE id=?";
          $this->ExecuteQuery($query, array($name, $last_name, $id));
