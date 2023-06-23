@@ -96,7 +96,7 @@ async function fillTable(show_toas=true) {
 				break;
 			case 'En evaluación':
 				bg_badge = "bg-primary";
-				icon = ``;
+				icon = `<i class="fa-brands fa-readme fa-fade"></i>`;
 				break;
 			case 'Aceptada':
 				bg_badge = "bg-success";
@@ -116,7 +116,7 @@ async function fillTable(show_toas=true) {
 				icon = ``;
 				break;
 		}
-		let status = `<span class="badge ${bg_badge}">${icon} &nbsp; ${obj.status}</span>`;
+		let status = `<h5><span class="badge ${bg_badge}">${icon} &nbsp; ${obj.status}</span></h5>`;
 		//Campos
 		let 
 			column_vacancy = `
@@ -129,8 +129,8 @@ async function fillTable(show_toas=true) {
 				<div class="mb-2">
                   <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; 
                   <span class="fw-bolder">&nbsp;</span> 
-                  <span class="">$${obj.min_salary}</span> &nbsp;a&nbsp; 
-                  <span class="">$${obj.max_salary}</span>
+                  <span class="">${formatCurrency(obj.min_salary, true, false)}</span> &nbsp;a&nbsp; 
+                  <span class="">${formatCurrency(obj.max_salary, true, false)}</span>
                </div>
                <div class="mb-2">
                   <i class="fa-solid fa-briefcase"></i>&nbsp; 
@@ -144,7 +144,7 @@ async function fillTable(show_toas=true) {
                </div>
 			`;
 			column_flow = `
-				<i>Aqui ira una linea de flujo</i><br><br>
+				<!-- <i>Aqui ira una linea de flujo</i><br><br> -->
 				${status}
 			`;
 
@@ -153,9 +153,11 @@ async function fillTable(show_toas=true) {
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary' type='button' data-id='${obj.id}' onclick="showDetail(${obj.v_id})" title='Mostrar Vacante' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-eye'></i></button>`;
+				`<button class='btn btn-outline-primary' type='button' data-id='${obj.id}' onclick="showDetail(${obj.v_id},'${obj.status}')" title='Mostrar Vacante' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-eye'></i></button>`;
 		}
 		if (permission_delete) {
+			if (obj.status == "Aceptada" || obj.status == "Rechazada" || obj.status == "Cancelada") column_buttons += "";
+			else
 			column_buttons +=
 				//html
 				`<button class='btn btn-outline-danger btn_cancel' type='button' data-id='${obj.a_id}' onclick="cancel(this)" title='Cancelar Solicitud' data-name='${obj.vacancy}'><i class='fa-solid fa-ban'></i></button>`;
@@ -178,43 +180,8 @@ async function fillTable(show_toas=true) {
 	tbody.slideDown("slow");
 }
 
-//ACCIONES EN BOTONES DE LA TABLA
-// tbody.click((e) => {
-// 	// console.log(e.target);
-// 	e.preventDefault();
-
-// 	//EDITAR OBJETO
-// 	if ($(e.target).hasClass("btn_edit") || $(e.target).hasClass("i_edit")) {
-// 		let btn_edit;
-
-// 		if ($(e.target).hasClass("i_edit")) {
-// 			btn_edit = $(e.target).parent();
-// 		} else {
-// 			btn_edit = $(e.target);
-// 		}
-
-// 		editObj(btn_edit);
-// 	}
-
-// 	//ELIMINAR OBJETO
-// 	if (
-// 		$(e.target).hasClass("btn_delete") ||
-// 		$(e.target).hasClass("i_delete")
-// 	) {
-// 		let btn_delete;
-
-// 		if ($(e.target).hasClass("i_delete")) {
-// 			btn_delete = $(e.target).parent();
-// 		} else {
-// 			btn_delete = $(e.target);
-// 		}
-
-// 		deleteObj(btn_delete);
-// 	}
-// });
-
 //EDITAR OBJETO
-async function showDetail(id) {
+async function showDetail(id, status) {
 	modal_title.html("<i class='fa-solid fa-memo-circle-info'></i>&nbsp; DETALLE DE LA VACANTE");
 
 	let data = { id, op: "show" };
@@ -230,7 +197,12 @@ async function showDetail(id) {
 	const objCompany = ajaxResponseCompany.data
 	$(`.output_info_company`).html(`
 		<span>${objCompany.company}</span><br>
-		<span>${objCompany.municipality}, ${objCompany.state}</span><br><br>
+		<span>${objCompany.municipality}, ${objCompany.state}</span><br>
+		<b>CONTACTO:</b>&nbsp;&nbsp;
+				<i class="fa-solid fa-user"></i>&nbsp; ${objCompany.contact_name} &nbsp; | &nbsp;
+				<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(objCompany.contact_phone)} &nbsp; | &nbsp;
+				<i class="fa-solid fa-at"></i>&nbsp; ${objCompany.contact_email}
+		<br><br>
 		<span class="">${objCompany.description}</span>
 	`);
 	$(`.output_area`).text(obj.area);
@@ -242,6 +214,9 @@ async function showDetail(id) {
 	$(`.output_more_info`).html(obj.more_info);
 	btns_cancel.attr("data-id", obj.id);
 	btns_cancel.attr("data-name", obj.vacancy);
+	console.log(status);
+	if (status == "Aceptada" || status == "Rechazada" || status == "Cancelada") btns_cancel.addClass("d-none")
+	else btns_cancel.removeClass("d-none")
 }
 
 //ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH

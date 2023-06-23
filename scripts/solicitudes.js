@@ -118,7 +118,7 @@ async function fillTable(show_toas=true) {
 				icon = ``;
 				break;
 		}
-		let status = `<span class="badge ${bg_badge}">${icon} &nbsp; ${obj.status}</span>`;
+		let status = `<h5><span class="badge ${bg_badge}">${icon} &nbsp; ${obj.status}</span></h5>`;
 		//Campos
 		let
 			column_candidate = `
@@ -152,7 +152,7 @@ async function fillTable(show_toas=true) {
                </div>
 			`;
 			column_flow = `
-				<i>Aqui ira una linea de flujo</i><br><br>
+				<!-- <i>Aqui ira una linea de flujo</i><br><br> -->
 				${status}
 			`;
 
@@ -170,6 +170,8 @@ async function fillTable(show_toas=true) {
 				<button class='btn btn-sm btn-outline-danger m-1' type='button' onclick="changeStatus('Rechazada',${obj.a_id})" title='Pasar a status RECHAZAR'>RECHAZAR</button>`;
 		}
 		if (permission_delete) {
+			if (obj.status == "Aceptada" || obj.status == "Rechazada" || obj.status == "Cancelada") column_buttons += "";
+			else
 			column_buttons +=
 				//html
 				`<button class='btn btn-outline-danger m-1 btn_cancel' type='button' onclick="changeStatus('Cancelada',${obj.a_id})" title='Cancelar Solicitud' data-name='${obj.vacancy}'><i class='fa-solid fa-ban'></i></button>`;
@@ -211,7 +213,12 @@ async function showDetail(id) {
 	const objCompany = ajaxResponseCompany.data
 	$(`.output_info_company`).html(`
 		<span>${objCompany.company}</span><br>
-		<span>${objCompany.municipality}, ${objCompany.state}</span><br><br>
+		<span>${objCompany.municipality}, ${objCompany.state}</span><br>
+		<b>CONTACTO:</b>&nbsp;&nbsp;
+				<i class="fa-solid fa-user"></i>&nbsp; ${objCompany.contact_name} &nbsp; | &nbsp;
+				<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(objCompany.contact_phone)} &nbsp; | &nbsp;
+				<i class="fa-solid fa-at"></i>&nbsp; ${objCompany.contact_email}
+		<br><br>
 		<span class="">${objCompany.description}</span>
 	`);
 	$(`.output_area`).text(obj.area);

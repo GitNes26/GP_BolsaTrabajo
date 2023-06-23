@@ -238,6 +238,101 @@ $current_page = "Candidatos";
       </div>
    </div>
 
+   <!-- Modal Ver Candidato -->
+   <div class="modal fade" id="candidate_modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+         <form class="modal-content" id="form" enctype="multipart/form-data">
+            <div class="modal-header">
+               <h5 class="modal-title fw-bold" id="modalLabel"><i class="fa-solid fa-circle-plus"></i>&nbsp; INFORMACIÓN DEL CANDIDATO</h5>
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body scroll-y">
+
+
+
+
+
+               <section class="content text-center">
+                  <div class="content">
+                     <div class="card card-widget widget-user shadow">
+
+                        <div class="widget-user-header bg-success" id="d_div_header">
+                           <h3 class="widget-user-username im_output" title="doble clic para editar" id="d_output_name">[Mi Nombre]</h3>
+                           <h5 class="widget-user-desc im_output" id="d_output_profession">[Mi Profesión]</h5>
+                           <h1 class="text-end fw-bolder" id="d_output_enable">DISPONIBLE</h1>
+                        </div>
+                        <div class="widget-user-image">
+                           <label for="input_photo_path">
+                              <div id="preview_photo" class="d-flex justify-content-center">
+                                 <input type="file" id="input_photo_path" name="input_photo_path" class="d-none" accept="image/*" data-preview="preview_photo">
+                                 <img class="img-circle elevation-2 bg-white pointer-sm opacity-100 d-none" id="d_output_photo" src="/assets/img/sin_perfil.webp" alt="Foto de perfil" for="input_photo_path" title="Haz clic aquí, si deseas cambiar tu foto de perfil">
+                              </div>
+                           </label>
+                        </div>
+                        <div class="card-footer">
+                           <div class="row">
+                              <div class="col-sm-4 border-right">
+                                 <div class="description-block">
+                                    <p class="description-header im_output" id="d_output_email">[micorreo@gmail.com]</p>
+                                    <span class="description-text"><i class="fa-solid fa-envelope"></i></span>
+                                 </div>
+                              </div>
+
+                              <div class="col-sm-4 border-right">
+                                 <div class="description-block">
+                                    <p class="description-header im_output" id="d_output_cellphone">[Mi número celular]</p>
+                                    <span class="description-text"><i class="fa-sharp fa-solid fa-phone"></i></span>
+                                 </div>
+                              </div>
+
+                              <div class="col-sm-4 border-right">
+                                 <div class="description-block">
+                                    <p class="description-header im_output" id="d_output_languages">[Mi nivel de ingles]</p>
+                                    <span class="description-text"><i class="fa-regular fa-language"></i></span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="row">
+                     <!-- CURRICULUM VITAE -->
+                     <div class="col col-md-4">
+                        <div class="card card-success card-outline">
+                           <div class="card-body box-profile card-pdf">
+                           <div class="text-center h2 fw-bolder">CURRICULUM VITAE</div>
+                           <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
+                           <p class="text-muted text-center">Software Engineer</p> -->
+                           <label for="input_cv_path" class="">
+                              <div id="preview_cv" class="d-flex justify-content-center">
+                                 <input type="file" id="input_cv_path" name="input_cv_path" class="d-none" accept=".pdf" data-preview="preview_cv" data-input-name="CURRICULUM VITAE">
+                                 <img src="<?=$IMG_PATH?>/cargar_archivo.png" alt="Cargar CV" id="d_output_cv" class="img-fluid pointer-sm p-5 rounded-lg" style="height: 250px !important;" for="input_cv_path" title="Haz clic aquí para cargar tu curriculum vitae">
+                              </div>
+                           </label>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- INFORMACION PROFESIONAL -->
+                     <div class="col">
+                        <div class="card card-success card-outline">
+                           <div class="card-body box-profile card-pdf">
+                           <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONALES</div>
+                           <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
+                           <p class="text-muted text-center">Software Engineer</p> -->
+                           <div id="d_output_professional_info" class="text-start scroll-y im_output" style="max-height: 81%;"></div>
+                           </div>
+                        </div>
+                     </div>
+
+                     </div>
+
+                  </div>
+               </section>
+            </div>
+         </form>
+      </div>
+   </div>
+
 </div>
 <!-- /.content-wrapper -->
 

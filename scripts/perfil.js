@@ -39,7 +39,7 @@ const
    output_profession = $("#output_profession"),
    input_interest_tags_ids = $("#input_interest_tags_ids"),
    output_interest_tags_ids = $("#output_interest_tags_ids"),
-	output_professional_info = $("#output_professional_info");
+	output_professional_info = $("#output_professional_info"),
 	input_languages_b = $("#input_languages_b"),
 	input_languages_i = $("#input_languages_i"),
 	input_languages_a = $("#input_languages_a"),
@@ -284,13 +284,8 @@ async function fillInfo(show_toas=true) {
 	let data = { op: "showInfo", id: id_cookie, input_role_id: role_cookie };
 	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data, null, true, show_toas);
 
-	//Limpiar table
-	// tbody.slideUp();
-	// table.clear().draw();
-
 	let obj = ajaxResponse.data;
 	// console.log(obj);
-	// obj.enable=0
 	if (obj.enable == 0) {
 		div_header.removeClass("bg-success");
 		div_header.addClass("bg-primary");
