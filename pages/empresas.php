@@ -33,7 +33,7 @@ $current_page = "Empresas";
    <section class="content">
 
       <!-- card -->
-      <div class="card card-outline card-dark shadow">
+      <div class="card card-outline card-success shadow">
          <?php if ($permission_write ?? false): ?>
          <div class="container-fluid mt-2">
             <button id="btn_modal_form" class="float-end btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR EMPRESA</button>

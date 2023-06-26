@@ -1,5 +1,10 @@
 <?php
-include "../templates/validates.php"
+include "../templates/validates.php";
+
+$classBody = "hold-transition sidebar-mini layout-fixed";
+if ($URL_SERVER == "/pages") $classBody = "layout-top-nav";
+elseif ($URL_SERVER == "/pages/") $classBody = "layout-top-nav";
+elseif ($URL_SERVER == "/pages/index.php") $classBody = "layout-top-nav";
 ?>
 
 <!DOCTYPE html>
@@ -74,6 +79,7 @@ include "../templates/validates.php"
   <title>Bolsa de Trabajo</title>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed text-sm" style="height: auto;">
+
+<body class="<?= $classBody ?> layout-navbar-fixed text-sm" style="height: auto;">
   <input type="hidden" id="url_base" value="<?=$URL_BASE?>">
   <div class="wrapper">

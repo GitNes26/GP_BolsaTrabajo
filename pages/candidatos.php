@@ -33,7 +33,7 @@ $current_page = "Candidatos";
    <section class="content">
 
       <!-- card -->
-      <div class="card card-outline card-dark shadow">
+      <div class="card card-outline card-success shadow">
          <?php if ($permission_write ?? false): ?>
          <div class="container-fluid mt-2">
             <button id="btn_modal_form" class="float-end btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR EMPRESA</button>
@@ -247,11 +247,6 @@ $current_page = "Candidatos";
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body scroll-y">
-
-
-
-
-
                <section class="content text-center">
                   <div class="content">
                      <div class="card card-widget widget-user shadow">
@@ -262,10 +257,9 @@ $current_page = "Candidatos";
                            <h1 class="text-end fw-bolder" id="d_output_enable">DISPONIBLE</h1>
                         </div>
                         <div class="widget-user-image">
-                           <label for="input_photo_path">
-                              <div id="preview_photo" class="d-flex justify-content-center">
-                                 <input type="file" id="input_photo_path" name="input_photo_path" class="d-none" accept="image/*" data-preview="preview_photo">
-                                 <img class="img-circle elevation-2 bg-white pointer-sm opacity-100 d-none" id="d_output_photo" src="/assets/img/sin_perfil.webp" alt="Foto de perfil" for="input_photo_path" title="Haz clic aquí, si deseas cambiar tu foto de perfil">
+                           <label>
+                              <div id="d_preview_photo" class="d-flex justify-content-center">
+                                 <img class="img-circle elevation-2 bg-white pointer-sm opacity-100 d-none" id="d_output_photo" src="/assets/img/sin_perfil.webp" alt="Foto de perfil" title="Foto de perfil">
                               </div>
                            </label>
                         </div>
@@ -302,10 +296,9 @@ $current_page = "Candidatos";
                            <div class="text-center h2 fw-bolder">CURRICULUM VITAE</div>
                            <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
                            <p class="text-muted text-center">Software Engineer</p> -->
-                           <label for="input_cv_path" class="">
-                              <div id="preview_cv" class="d-flex justify-content-center">
-                                 <input type="file" id="input_cv_path" name="input_cv_path" class="d-none" accept=".pdf" data-preview="preview_cv" data-input-name="CURRICULUM VITAE">
-                                 <img src="<?=$IMG_PATH?>/cargar_archivo.png" alt="Cargar CV" id="d_output_cv" class="img-fluid pointer-sm p-5 rounded-lg" style="height: 250px !important;" for="input_cv_path" title="Haz clic aquí para cargar tu curriculum vitae">
+                           <label for="d_input_cv_path" class="">
+                              <div id="d_preview_cv" class="d-flex justify-content-center">
+                                 <img src="<?=$IMG_PATH?>/cargar_archivo.png" alt="Cargar CV" id="d_output_cv" class="img-fluid p-5 rounded-lg" style="height: 250px !important;" for="d_input_cv_path" title="Curriculum Vitae">
                               </div>
                            </label>
                            </div>
@@ -316,10 +309,10 @@ $current_page = "Candidatos";
                      <div class="col">
                         <div class="card card-success card-outline">
                            <div class="card-body box-profile card-pdf">
-                           <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONALES</div>
-                           <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
-                           <p class="text-muted text-center">Software Engineer</p> -->
-                           <div id="d_output_professional_info" class="text-start scroll-y im_output" style="max-height: 81%;"></div>
+                              <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONALES</div>
+                              <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
+                              <p class="text-muted text-center">Software Engineer</p> -->
+                              <div id="d_output_professional_info" class="text-start scroll-y im_output" style="max-height: 81%;"></div>
                            </div>
                         </div>
                      </div>

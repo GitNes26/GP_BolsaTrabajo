@@ -35,7 +35,7 @@ $current_page = "Módulos";
       <div class="row">
          <div class="col-md-3">
             <!-- card Formulario-->
-            <form id="form" enctype="multipart/form-data" class="card card-outline card-dark shadow sticky-top">
+            <form id="form" enctype="multipart/form-data" class="card card-outline card-success shadow sticky-top">
                <div class="card-header">
                   <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-light fa-circle-info"></i>&nbsp; INFO DEL MÓDULO</span>
                   <div class="card-tools">
@@ -99,7 +99,7 @@ $current_page = "Módulos";
          </div>
          <div class="col">
             <!-- card Tabla-->
-            <div class="card card-outline card-dark shadow">
+            <div class="card card-outline card-success shadow">
                <div class="card-body">
                   <!-- tabla -->
                   <div class="table-responsive">

@@ -48,7 +48,7 @@ $Plural = "nominas"
     <div class="container">
 
       <!-- formulario filtros -->
-      <form id="form" class="card card-dark shadow mb-2">
+      <form id="form" class="card card-success shadow mb-2">
         <input type="hidden" id="op" name="op" value="LoadInfo">
         <div class="card-header btn" data-card-widget="collapse">
           <h3 class="card-title fw-bold"><i class="fa-duotone fa-filters"></i>&nbsp; FILTROS PARA CONSULTA<small>
@@ -131,7 +131,7 @@ $Plural = "nominas"
       <!-- /. formulario filtros -->
 
       <!-- card tabla-->
-      <div class="card card-outline card-dark shadow">
+      <div class="card card-outline card-success shadow">
         <div class="container-fluid mt-2 float-end">
           <!-- <button id="btn_abrir_modal" class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; ADD USER</button> -->
           <button type="button" id="btn_sync_info" class="btn btn-outline-dark fw-bold float-end">

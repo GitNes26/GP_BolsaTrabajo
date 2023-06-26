@@ -37,7 +37,7 @@ $current_page = "Clasificaciones de Empresa";
       <div class="row">
          <div class="col-md-4">
             <!-- card Formulario-->
-            <form id="form" enctype="multipart/form-data" class="card card-outline card-dark shadow sticky-top">
+            <form id="form" enctype="multipart/form-data" class="card card-outline card-success shadow sticky-top">
                <div class="card-header">
                   <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-regular fa-circle-plus to-upper-case"></i>&nbsp; AGREGAR CLASIFICACIÓN</span>
                   <div class="card-tools">
@@ -73,7 +73,7 @@ $current_page = "Clasificaciones de Empresa";
          </div>
          <div class="col">
             <!-- card Tabla-->
-            <div class="card card-outline card-dark shadow">
+            <div class="card card-outline card-success shadow">
                <div class="card-body">
                   <!-- tabla -->
                   <div class="table-responsive">

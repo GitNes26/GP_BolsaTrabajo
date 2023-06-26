@@ -435,6 +435,7 @@ function resetImgPreview(preview, img_path=null, iframe=false) {
 
 //#region MENUS
 const sidebar_menus = $("#sidebar_menus");
+const navbar_menus = $("#navbar_menus");
 const fillSidebar = async (show_toast=false) => {
 	// sidebar_menus.slideUp(1000);
 	let role_id = Number(Cookies.get("role_id"));
@@ -485,6 +486,7 @@ const fillSidebar = async (show_toast=false) => {
 	// sidebar_menus.slideDown(1000);
 };
 if (sidebar_menus.length > 0) fillSidebar();
+
 //#endregion
 
 

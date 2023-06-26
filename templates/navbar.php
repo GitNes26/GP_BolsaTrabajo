@@ -16,15 +16,19 @@
 
    </ul> -->
 
+   <ul id="sidebar_menus" class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+      <!-- CATÁLOGOS -->
+   </ul>
+
    <!-- Right navbar links -->
    <ul class="navbar-nav ml-auto">
       <!-- Perfil -->
       <li class='nav-item'>
          <div class='user-panel d-flex'>
             <div class='info'>
-               <span class='d-block text-decoration-none text-bold'>
-                  <i class=''><?php echo "$role:&nbsp; $_COOKIE[email]" ?></i>
-               </span>
+                  <span class='d-block text-decoration-none text-bold'>
+                     <i class=''><?php echo "$role:&nbsp; $_COOKIE[email]" ?></i>
+                  </span>
             </div>
          </div>
       </li>

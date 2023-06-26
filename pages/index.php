@@ -1,7 +1,8 @@
 <?php
 include "../templates/header.php";
-include "../templates/navbar.php";
-include "../templates/sidebar.php";
+include "../templates/navbar-top.php";
+// include "../templates/navbar.php";
+// include "../templates/sidebar.php";
 
 $pagina_acutal = "Bolsa de Trabajo";
 ?>
@@ -296,7 +297,6 @@ $pagina_acutal = "Bolsa de Trabajo";
 include "../templates/footer.php";
 ?>
 <script src="<?php echo($SCRIPTS_PATH) ?>/index.js"></script>
-
 <script>
    
    // $(function () {
@@ -316,4 +316,5 @@ include "../templates/footer.php";
    //    hasGrid : true
    //    })
    // })
+
 </script>

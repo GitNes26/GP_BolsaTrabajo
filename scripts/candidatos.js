@@ -48,9 +48,8 @@ const
 	d_output_age = $("#d_output_age"),
 	d_output_profession = $("#d_output_profession"),
 	d_output_interest_tags_ids = $("#d_output_interest_tags_ids"),
-	d_output_professional_info = $("#output_professional_info"),
+	d_output_professional_info = $("#d_output_professional_info"),
 	d_output_languages = $("#d_output_languages"),
-	d_output_cv = $("#d_output_cv"),
 	d_preview_cv = $("#d_preview_cv")
 	;
 let haveImg = false, haveCv = false;
@@ -267,7 +266,7 @@ async function fillTable() {
 		if (role_cookie <= 3) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary' type='button' onclick='showObj(${obj.id})' title='Mostrar Información del Candidato' data-bs-toggle="modal" data-bs-target="#candidate_modal"><i class='fa-solid fa-eye fa-lg '></i></button>`;
+				`<button class='btn btn-outline-primary' type='button' onclick='showObj(${obj.id})' title='Mostrar Información del Candidato' data-bs-toggle="modal" data-bs-target="#candidate_modal"><i class='fa-solid fa-eye '></i></button>`;
 		}
 		if (permission_update) {
 			column_buttons +=
@@ -430,7 +429,7 @@ async function deleteObj(btn_delete) {
 }
 
 //MOSTRAR INFORMAICON
-function resetImgPreviewProfile(preview, img_path=null, iframe=false) {
+function resetImgPreviewProfile(preview, img_path=null, iframe=false, pointer=true) {
 	if (!iframe || img_path==null) {
 		// Crea un elemento de imagen
 		const imagen = document.createElement('img');
@@ -439,7 +438,7 @@ function resetImgPreviewProfile(preview, img_path=null, iframe=false) {
 		: imagen.src = img_path == null ? "/assets/img/sin_perfil.webp" : img_path; // Asigna la imagen cargada como fuente
 		if (iframe) {
 			imagen.classList.add("img-fluid"); // Asignar clases
-			imagen.classList.add("pointer-sm"); // Asignar clases
+			pointer ? imagen.classList.add("pointer-sm") : imagen.classList.remove("pointer-sm")  // sAsignar clases
 			//  imagen.classList.add("p-5"); // Asignar clases
 			imagen.classList.add("rounded-lg"); // Asignar clases
 			// imagen.classList.add("text-center"); // Asignar clases
@@ -448,7 +447,7 @@ function resetImgPreviewProfile(preview, img_path=null, iframe=false) {
 			imagen.classList.add("img-circle"); // Asignar clases
 			imagen.classList.add("elevation-2"); // Asignar clases
 			imagen.classList.add("bg-white"); // Asignar clases
-			imagen.classList.add("pointer-sm"); // Asignar clases
+			pointer ? imagen.classList.add("pointer-sm") : imagen.classList.remove("pointer-sm")  // sAsignar clases
 			imagen.classList.add("opacity-100"); // Asignar clases
 			imagen.title = "Haz clic aquí, si deseas cambiar tu foto de perfil";
 			
@@ -464,7 +463,7 @@ function resetImgPreviewProfile(preview, img_path=null, iframe=false) {
       iframe.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path; // Asigna la iframe cargada como fuente
       // canvas.getContext("2d") // Asigna la iframe cargada como fuente
       iframe.classList.add("img-fluid"); // Asignar clases
-      iframe.classList.add("pointer-sm"); // Asignar clases
+      pointer ? iframe.classList.add("pointer-sm") : iframe.classList.remove("pointer-sm")  // sAsignar clases
       //  iframe.classList.add("p-5"); // Asignar clases
       iframe.classList.add("rounded-lg"); // Asignar clases
       iframe.classList.add("opacity-100"); // Asignar clases
@@ -483,7 +482,7 @@ async function showObj(id) {
 	let data = { id, op: "show" };
 	const ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
 	const obj = ajaxResponse.data;
-	console.log(obj);
+	// console.log(obj);
 
 	if (obj.enable == 0) {
 		d_div_header.removeClass("bg-success");
@@ -492,11 +491,11 @@ async function showObj(id) {
 	}
 
 	haveImg=false;
-	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreviewProfile(d_preview_photo, `/assets/img/sin_perfil.webp`);
+	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreviewProfile(d_preview_photo, `/assets/img/sin_perfil.webp`, false, false);
 	else {
 		haveImg = true;
 		// console.log("tengo imagen guardada");
- 		resetImgPreviewProfile(d_preview_photo,`/assets/img/${obj.photo_path}`);
+ 		resetImgPreviewProfile(d_preview_photo,`/assets/img/${obj.photo_path}`, false, false);
 		vLogoPath = obj.photo_path;
 		// input_photo_path.val(obj.photo_path);
 		d_output_photo.attr("src", `/assets/img/${obj.photo_path}`)
@@ -508,24 +507,16 @@ async function showObj(id) {
 	d_output_age.text(obj.age);
 	
 	d_output_profession.text(obj.profession)
-	// await fillSelect2(URL_TAG_APP, obj.interest_tags_ids, input_interest_tags_ids);
-	// output_interest_tags_ids.text(obj.)
-	// if (obj.professional_info == "<p><br></p>" || obj.professional_info.length < 1)
-	// 	$('.note-editing-area .note-placeholder').css("display","block");
-	// else {
-	// 	$('.note-editing-area .note-placeholder').css("display","none");
-	// 	$('.note-editing-area .note-editable').html(obj.professional_info);
-	// }
 	d_output_professional_info.html(obj.professional_info);
 
 	d_output_languages.text(obj.languages);
 	// await showStates(obj.state, obj.municipality);
-	haveCv=false;
-	if (obj.cv_path == "" || obj.cv_path == null) resetImgPreviewProfile(d_preview_cv, null, true );
+	haveCv=false; 
+	if (obj.cv_path == "" || obj.cv_path == null) resetImgPreviewProfile(d_preview_cv, null, true, false);
 	else {
 		haveCv = true;
 		// console.log("tengo imagen guardada");
- 		resetImgPreviewProfile(d_preview_cv,`/assets/img/${obj.cv_path}`, true);
+ 		resetImgPreviewProfile(d_preview_cv,`/assets/img/${obj.cv_path}`, true, false);
 		vCvPath = obj.cv_path;
 		// input_cv_path.val(obj.cv_path);
 	}
