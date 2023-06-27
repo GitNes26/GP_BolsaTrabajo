@@ -10,7 +10,7 @@ const
 	tbody = $("#table tbody"),
 	modal_body = $("#modal-body"),
 	form = $("#form"),
-	modal_title = $(".modal-title"),
+	modalLabel = $("#modalLabel"),
 	id_modal = $("#id"),
 	op_modal = $("#op"),
 	input_area = $("#input_area")
@@ -74,6 +74,7 @@ form.on("submit", async (e) => {
 
 async function fillTable(show_toas=true) {
 	let data = { op: "myApplicationsByCompany", user_id: id_cookie };
+	if (role_cookie < 3) data.op = "index";
 	const ajaxResponse = await ajaxRequestAsync(URL_APPLICATION_APP, data, null, true, show_toas);
 
 	//Limpiar table
@@ -121,10 +122,10 @@ async function fillTable(show_toas=true) {
 		//Campos
 		let
 			column_candidate = `
-				<button class='btn btn-outline-dark' type='button' data-id='${obj.ca_id}' onclick="showCandidate(${obj.ca_id})" title='Ver Candidato' data-bs-toggle="modal" data-bs-target="#modal_candidate"><i class='fa-solid fa-eye fa-lg'></i></button><br><br>
+				<button class='btn btn-outline-dark' type='button' data-id='${obj.ca_id}' onclick="showCandidate(${obj.ca_id})" title='Ver Candidato' data-bs-toggle="modal" data-bs-target="#candidate_modal"><i class='fa-solid fa-eye'></i></button><br><br>
 				<b>${obj.name} ${obj.last_name}</b><br>
 				<i class="fa-solid fa-at"></i>&nbsp; ${obj.email}<br>
-				<i class="fa-solid fa-phone"></i>&nbsp; ${obj.cellphone}<br>
+				<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.cellphone)}<br>
 			`; 
 			column_vacancy = `
 				<b>${obj.vacancy}</b><br><br>
@@ -151,7 +152,7 @@ async function fillTable(show_toas=true) {
                </div>
 			`;
 			column_flow = `
-				<i>Aqui ira una linea de flujo</i><br><br>
+				<!-- <i>Aqui ira una linea de flujo</i><br><br> -->
 				${status}
 			`;
 
@@ -160,18 +161,20 @@ async function fillTable(show_toas=true) {
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary' type='button' data-id='${obj.id}' onclick="showDetail(${obj.v_id})" title='Mostrar Vacante' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-eye fa-lg'></i></button>
-				<button class='btn btn-sm btn-outline-secondary' type='button' onclick="changeStatus('Pendiente', ${obj.a_id})" title='Pasar a status PENDIENTE'>PENDIENTE</button>
-				<button class='btn btn-sm btn-outline-info' type='button' onclick="changeStatus('Recibida', ${obj.a_id})" title='Pasar a status RECIBIDA'>RECIBIDA</button>
+				`<button class='btn btn-outline-primary m-1' type='button' data-id='${obj.id}' onclick="showDetail(${obj.v_id})" title='Mostrar Vacante' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-eye'></i></button>
+				<button class='btn btn-sm btn-outline-secondary m-1' type='button' onclick="changeStatus('Pendiente', ${obj.a_id})" title='Pasar a status PENDIENTE'>PENDIENTE</button>
+				<button class='btn btn-sm btn-outline-info m-1' type='button' onclick="changeStatus('Recibida', ${obj.a_id})" title='Pasar a status RECIBIDA'>RECIBIDA</button>
 				<br>
-				<button class='btn btn-sm btn-outline-primary' type='button' onclick="changeStatus('En evaluación', ${obj.a_id})" title='Pasar a status EN'>EN EVALUACIÓN</button>
-				<button class='btn btn-sm btn-outline-success' type='button' onclick="changeStatus('Aceptada', ${obj.a_id})" title='Pasar a status ACEPTAR'>ACEPTAR</button>
-				<button class='btn btn-sm btn-outline-danger' type='button' onclick="changeStatus('Rechazada',${obj.a_id})" title='Pasar a status RECHAZAR'>RECHAZAR</button>`;
+				<button class='btn btn-sm btn-outline-primary m-1' type='button' onclick="changeStatus('En evaluación', ${obj.a_id})" title='Pasar a status EN'>EN EVALUACIÓN</button>
+				<button class='btn btn-sm btn-outline-success m-1' type='button' onclick="changeStatus('Aceptada', ${obj.a_id})" title='Pasar a status ACEPTAR'>ACEPTAR</button>
+				<button class='btn btn-sm btn-outline-danger m-1' type='button' onclick="changeStatus('Rechazada',${obj.a_id})" title='Pasar a status RECHAZAR'>RECHAZAR</button>`;
 		}
 		if (permission_delete) {
+			if (obj.status == "Aceptada" || obj.status == "Rechazada" || obj.status == "Cancelada") column_buttons += "";
+			else
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-danger btn_cancel' type='button' onclick="changeStatus('Cancelada',${obj.a_id})" title='Cancelar Solicitud' data-name='${obj.vacancy}'><i class='fa-solid fa-ban'></i></button>`;
+				`<button class='btn btn-outline-danger m-1 btn_cancel' type='button' onclick="changeStatus('Cancelada',${obj.a_id})" title='Cancelar Solicitud' data-name='${obj.vacancy}'><i class='fa-solid fa-ban'></i></button>`;
 		}
 		column_buttons += `</div>
 					</td>`;
@@ -194,9 +197,8 @@ async function fillTable(show_toas=true) {
 
 
 
-//EDITAR OBJETO
 async function showDetail(id) {
-	modal_title.html("<i class='fa-solid fa-memo-circle-info'></i>&nbsp; DETALLE DE LA VACANTE");
+	modalLabel.html("<i class='fa-solid fa-memo-circle-info'></i>&nbsp; DETALLE DE LA VACANTE");
 
 	let data = { id, op: "show" };
 	const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data);
@@ -211,7 +213,12 @@ async function showDetail(id) {
 	const objCompany = ajaxResponseCompany.data
 	$(`.output_info_company`).html(`
 		<span>${objCompany.company}</span><br>
-		<span>${objCompany.municipality}, ${objCompany.state}</span><br><br>
+		<span>${objCompany.municipality}, ${objCompany.state}</span><br>
+		<b>CONTACTO:</b>&nbsp;&nbsp;
+				<i class="fa-solid fa-user"></i>&nbsp; ${objCompany.contact_name} &nbsp; | &nbsp;
+				<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(objCompany.contact_phone)} &nbsp; | &nbsp;
+				<i class="fa-solid fa-at"></i>&nbsp; ${objCompany.contact_email}
+		<br><br>
 		<span class="">${objCompany.description}</span>
 	`);
 	$(`.output_area`).text(obj.area);
@@ -223,6 +230,36 @@ async function showDetail(id) {
 	$(`.output_more_info`).html(obj.more_info);
 	btns_cancel.attr("data-id", obj.id);
 	btns_cancel.attr("data-name", obj.vacancy);
+}
+
+async function showCandidate(id) {
+	modalLabel.html("<i class='fa-solid fa-memo-circle-info'></i>&nbsp; DETALLE DE LA VACANTE");
+
+	let data = { id, op: "show" };
+	const ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
+
+	const obj = ajaxResponse.data;
+	console.log(obj);
+
+	// PREVIEW
+	// $(`.output_vacancy`).text(obj.vacancy);
+	// data = { op: "show", id: obj.company_id }
+	// const ajaxResponseCompany = await ajaxRequestAsync(URL_COMPANY_APP, data);
+	// const objCompany = ajaxResponseCompany.data
+	// $(`.output_info_company`).html(`
+	// 	<span>${objCompany.company}</span><br>
+	// 	<span>${objCompany.municipality}, ${objCompany.state}</span><br><br>
+	// 	<span class="">${objCompany.description}</span>
+	// `);
+	// $(`.output_area`).text(obj.area);
+	// $(`.output_description`).text(obj.description);
+	// $(`.output_min_salary`).text(formatCurrency(obj.min_salary));
+	// $(`.output_max_salary`).text(formatCurrency(obj.max_salary));
+	// $(`.output_job_type`).text(obj.job_type);
+	// $(`.output_schedules`).text(obj.schedules);
+	// $(`.output_more_info`).html(obj.more_info);
+	// btns_cancel.attr("data-id", obj.id);
+	// btns_cancel.attr("data-name", obj.vacancy);
 }
 
 async function changeStatus(status, vacancy_id) {

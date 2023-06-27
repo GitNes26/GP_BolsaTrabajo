@@ -19,6 +19,7 @@ const
    input_description = $("#input_description"),
    counter_description = $("#counter_description"),
    input_logo_path = $('#input_logo_path'), //este es un input_file
+   output_logo = $('#output_logo'),
    preview_logo = $('#preview_logo'),
    input_business_line_id = $("#input_business_line_id"),
    input_company_ranking_id = $("#input_company_ranking_id"),
@@ -31,7 +32,8 @@ const
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset")
 	;
-	
+let haveImg = false;
+let vLogoPath = null;
 //#endregion VARIABLES
 $(".select2").select2({ dropdownParent: $("#modal") });
 focusSelect2($(".select2"));
@@ -42,6 +44,7 @@ focusSelect2($(".select2"));
 
 init();
 async function init() {
+
 	fillTable();
 	counter_description.text(`0/${input_description.data("limit")}`);
    showStates();
@@ -50,6 +53,7 @@ async function init() {
    fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
    fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
    // fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
+	// resetImgPreview(preview_logo);
    input_company.focus();
 }
 
@@ -93,6 +97,7 @@ btn_reset.click(async (e) => {
 
 	// $('.note-editing-area .note-editable').html(null);
 	// $('.note-editing-area .note-placeholder').css("display","block");
+	resetImgPreview($(`#${input_logo_path.attr("data-preview")}`));
 	
 	id_modal.val("");
 	setTimeout(() => {
@@ -100,8 +105,42 @@ btn_reset.click(async (e) => {
 	}, 500);
 });
 
+
+// Agrega un evento change al elemento de entrada de archivo
+input_logo_path.on('change', function(event) {
+	// Obtén el archivo seleccionado
+	const file = event.target.files[0];
+	// Crea un objeto FileReader
+	const fileReader = new FileReader();
+	const preview = $(`#${input_logo_path.attr("data-preview")}`);
+
+	// Define la función de carga completada del lector
+	fileReader.onload = function(e) {
+		// Crea un elemento de imagen
+		const imagen = document.createElement('img');
+		imagen.src = e.target.result; // Asigna la imagen cargada como fuente
+		imagen.classList.add("img-fluid"); // Asignar clases
+		imagen.classList.add("pointer-sm"); // Asignar clases
+		//  imagen.classList.add("p-5"); // Asignar clases
+		imagen.classList.add("rounded-lg"); // Asignar clases
+		// imagen.classList.add("text-center"); // Asignar clases
+		imagen.style = "max-height: 200px !important";
+
+		// Agrega la imagen a la vista previa
+		preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+		preview.append(imagen);
+	};
+
+	if (file == undefined) resetImgPreview(preview);
+
+ // Lee el contenido del archivo como una URL de datos
+ fileReader.readAsDataURL(file);
+});
+
+
+
 // REGISTRAR O EDITAR OBJETO
-form.on("submit", async (e) => {
+form.on("submit", async function(e) {
 	e.preventDefault();
 	id_modal.addClass("not_validate");
 	op_modal.addClass("not_validate");
@@ -117,22 +156,36 @@ form.on("submit", async (e) => {
 		op_modal.val("edit");
 	}
 
-	let data = form.serializeArray();
+	// let data = form.serializeArray();
+	// console.log(typeof(data));
+
 	// return console.log(data);
 	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
-	// if (id_modal.val() <= 0) {
+	// const input_current_date = $('.note-editing-area .note-editable').html();
+	// addToArray("input_professional_info", input_current_date, data);
+
+	let data = new FormData(this);
+	// console.log(typeof(data));
+	// data.append("updated_at", current_date)
+	if (id_modal.val() <= 0) {
 	// 	//NUEVO
-	// 	addToArray("created_at", current_date, data);
-	// } else {
+		addToArray("created_at", current_date, data, true);
+		
+	} else {
 		//EDICION
-		addToArray("updated_at", current_date, data);
-	// }
+		addToArray("updated_at", current_date, data, true);
+
+		// addToArray("haveImg", haveImg, data);
+		if (haveImg) addToArray("haveImg", vLogoPath, data, true);
+	}
+	// console.log([...data]);
 	// console.log("disabled:",input_user_id.attr("disabled"));
 	// if (input_user_id.attr("disabled")) await input_user_id.removeAttr("disabled"); 
 	// console.log("disabled:",input_user_id.attr("disabled"));
 	// return console.log(data);
+	// const form_imagen = $("#form")[0];
 	
-	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
+	const ajaxResponse = await ajaxRequestFileAsync(URL_COMPANY_APP, data);
 	if (ajaxResponse.message == "duplicado") return;
 	if (id_modal.val() == id_cookie) fillSidebar();
 	fillTable();
@@ -153,6 +206,7 @@ async function fillTable() {
 	objResponse.map((obj) => {
 		//Campos
 		let 
+			column_logo = (obj.logo_path == "" || obj.logo_path == null)  ? `<img class="img-fluid rounded-lg" src="/assets/img/cargar_imagen.png" style="max-height: 150px !important;" />` : `<img class="img-fluid rounded-lg" src="/assets/img/${obj.logo_path}" style="max-height: 150px !important;" />`,
 			column_company = `
 				<b>${obj.company}</b><br>
 				${obj.municipality}, ${obj.state}<br><br>
@@ -178,7 +232,7 @@ async function fillTable() {
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Empresa' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-user-pen fa-lg i_edit'></i></button>`;
+				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Empresa' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-pen-to-square fa-lg i_edit'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
@@ -189,6 +243,7 @@ async function fillTable() {
          </td>`;
 
 		list.push([
+			column_logo,
 			column_company,
 			column_contact,
 			column_business_line,
@@ -251,6 +306,10 @@ async function editObj(btn_edit) {
 
 	//EXCLUIR INPUTS PARA VALIDAR
 
+
+	// btn_submit.attr("disabled",true);
+	// btn_reset.attr("disabled",true);
+	
 	let id_obj = btn_edit.attr("data-id");
 	let data = { id: id_obj, op: "show" };
 	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
@@ -261,19 +320,27 @@ async function editObj(btn_edit) {
 	id_modal.val(Number(obj.id));
 	await fillSelect2(URL_USER_APP, obj.user_id, input_user_id);
 	// input_user_id.attr("disabled", true);
-	
+	haveImg=false;
+	if (obj.logo_path == "" || obj.logo_path == null) resetImgPreview($(`#${input_logo_path.attr("data-preview")}`) );
+	else {
+		haveImg = true;
+		// console.log("tengo imagen guardada");
+ 		resetImgPreview($(`#${input_logo_path.attr("data-preview")}`),`/assets/img/${obj.logo_path}`);
+		vLogoPath = obj.logo_path;
+		// input_logo_path.val(obj.logo_path);
+	}
 	input_company.val(obj.company);
 	input_description.val(obj.description);
 	await fillSelect2(URL_BUSINESS_LINE_APP, obj.business_line_id, input_business_line_id);
 	await fillSelect2(URL_COMPANY_RANKING_APP, obj.company_ranking_id, input_company_ranking_id);
-	// await fillSelect2(, obj.municipality, input_municipality);
-	// await fillSelect2(, obj.state, input_state);
 	input_contact_name.val(obj.contact_name);
 	input_contact_phone.val(obj.contact_phone);
 	input_contact_email.val(obj.contact_email);
+	await showStates(obj.state, obj.municipality);
 	
-
 	setTimeout(() => {
+		// btn_submit.attr("disabled",false);
+		// btn_reset.attr("disabled",false);
 		input_company.focus();
 	}, 500);
 }

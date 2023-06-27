@@ -126,6 +126,58 @@ $current_page = "Solicitudes";
       </div>
    </div>
 
+   <!-- Modal Candidato -->
+   <div class="modal fade" id="candidate_modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+         <form class="modal-content" id="form" enctype="multipart/form-data">
+            <div class="modal-header">
+               <h5 class="modal-title fw-bold"><i class="fa-solid fa-user-tie"></i>&nbsp; INFORMACIÓN DEL POSTULADO</h5>
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-start scroll-y">
+               <input type="hidden" name="id" value="" class="id not_validate">
+               <p class="h5 fw-bolder output_vacancy">Vacante</p>
+               <p class="mb-3 output_info_company">
+                  <span>Empresa</span><br>
+                  <span>Ciudad, Estado</span><br><br>
+                  <span class="">Descripción de la empresa...</span>
+               </p>
+
+               <hr>
+
+               <!-- DETALLES DEL EMPELO -->
+               <p class="h6 fw-bolder">Detalles del empleo</p>
+               <p class="output_area">Área</p>
+               <p class="output_description">Descripción de la vacante...</p>
+               <div class="mb-2">
+                  <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; 
+                  <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span> 
+                  <span class="output_min_salary">$0</span> &nbsp;a&nbsp; 
+                  <span class="output_max_salary">$0</span>
+               </div>
+               <div class="mb-2">
+                  <i class="fa-solid fa-briefcase"></i>&nbsp; 
+                  <span class="fw-bolder">Tipo de empleo:&nbsp;</span> 
+                  <span class="output_job_type">...</span>
+               </div>
+               <div class="mb-2">
+                  <i class="fa-sharp fa-regular fa-timer"></i>&nbsp; 
+                  <span class="fw-bolder">Horario:&nbsp;</span> 
+                  <span class="output_schedules">...</span>
+               </div>
+
+               <hr>
+
+               <!-- MAS INFO -->
+               <div class="output_more_info"></div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" onclick="cancel(this)" class="btn btn-danger fw-bold btn_cancel">CANCELAR SOLICITUD</button>
+            </div>
+         </form>
+      </div>
+   </div>
+
 </div>
 <!-- /.content-wrapper -->
 

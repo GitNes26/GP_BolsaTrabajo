@@ -67,6 +67,7 @@ $current_page = "Módulos";
                   <div class="mb-3">
                      <label for="input_icon" class="form-label">Ícono:</label>
                      <input type="text" class="form-control not_validate" id="input_icon" name="input_icon" data-input-name="ÍCONO">
+                     <span class="text-xs fst-italic" title="Ir a fontawesome"><a href="https://fontawesome.com/search" target="_blank" rel="noopener noreferrer">página de iconos &nbsp;<i class="fa-regular fa-arrow-up-right-from-square"></i></a></span>
                   </div>
                   <!-- <div class="mb-3">
                      <label for="input_order" class="form-label">Orden: <span class="obligatory"></span></label>

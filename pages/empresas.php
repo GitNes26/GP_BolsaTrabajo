@@ -33,7 +33,7 @@ $current_page = "Empresas";
    <section class="content">
 
       <!-- card -->
-      <div class="card card-outline card-successess shadow">
+      <div class="card card-outline card-success shadow">
          <?php if ($permission_write ?? false): ?>
          <div class="container-fluid mt-2">
             <button id="btn_modal_form" class="float-end btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR EMPRESA</button>
@@ -45,6 +45,7 @@ $current_page = "Empresas";
               <table id="table" class="table table-hover text-center" style="width:100%">
                   <thead class="thead-dark">
                      <tr>
+                        <th scope="col">Logo</th>
                         <th scope="col">Empresa</th>
                         <th scope="col">Contacto</th>
                         <th scope="col">Giro</th>
@@ -57,6 +58,7 @@ $current_page = "Empresas";
                   </tbody>
                   <tfoot>
                      <tr class="thead-dark">
+                        <th scope="col">Logo</th>
                         <th scope="col">Empresa</th>
                         <th scope="col">Contacto</th>
                         <th scope="col">Giro</th>
@@ -87,26 +89,6 @@ $current_page = "Empresas";
             <div class="modal-body">
                <input type="hidden" id="op" name="op" value="" class="not_validate">
                <input type="hidden" id="id" name="id" value='' class="not_validate">
-               <!-- <div class="row">
-                  <div class="mb-3 col-md-6">
-                     <label for="input_name" class="form-label">Nombre(s): <span class="obligatory"></span></label>
-                     <input type="text" class="form-control" id="input_name" name="input_name" data-input-name="NOMBRES">
-                  </div>
-                  <div class="mb-3 col-md-6">
-                     <label for="input_last_name" class="form-label">Apellido(s): <span class="obligatory"></span></label>
-                     <input type="text" class="form-control" id="input_last_name" name="input_last_name" data-input-name="APELLIDOS">
-                  </div>
-               </div> -->
-               <!-- <div class="row">
-                  <div class="mb-3 col-md-6">
-                     <label for="input_cellphone" class="form-label">Celular: <span class="obligatory"></span></label>
-                     <input type="text" class="form-control" id="input_cellphone" name="input_cellphone" data-input-name="CELULAR">
-                  </div> 
-                  <div class="mb-3 col">
-                     <label for="input_email" class="form-label">Correo: <span class="obligatory"></span></label>
-                     <input type="email" class="form-control" id="input_email" name="input_email" data-input-name="CORREO">
-                  </div>
-               </div> -->
                <div class="row"> <!-- USUARIO -->
                   <div class="mb-3 col">
                      <label for="input_user_id" class="form-label">Usuario: <i>(con el que se registro al inicio)</i><span class="obligatory"></span></label>
@@ -116,11 +98,11 @@ $current_page = "Empresas";
                   </div>
                </di>
                <div class="row"> <!-- LOGO Y NOMBRE -->
-                  <div class="col-3 rounded-lg"> <!-- LOGO -->
-                     <input type="file" id="input_logo_path" name="input_logo_path" class="d-none" accept="image/*">
+                  <div class="col-3 rounded-lg text-center"> <!-- LOGO -->
+                     <input type="file" id="input_logo_path" name="input_logo_path" class="d-none" accept="image/*" data-preview="preview_logo">
                      <label for="input_logo_path">Logo
-                        <div id="preview" class="d-flex justify-content-center">
-                           <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar Logo" class="img-fluid pointer p-3 rounded-lg" for="input_logo_path" title="Haz clic aquí para cargar tu logo de empresa">
+                        <div id="preview_logo" class="d-flex justify-content-center">
+                           <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar Logo" id="output_logo" class="img-fluid pointer p-3 rounded-lg" for="input_logo_path" title="Haz clic aquí para cargar tu logo de empresa">
                         </div>
                      </label>
 

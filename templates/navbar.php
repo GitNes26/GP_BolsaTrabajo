@@ -22,9 +22,9 @@
       <li class='nav-item'>
          <div class='user-panel d-flex'>
             <div class='info'>
-               <span class='d-block text-decoration-none text-bold'>
-                  <i class=''><?php echo "$role:&nbsp; $_COOKIE[email]" ?></i>
-               </span>
+                  <span class='d-block text-decoration-none text-bold'>
+                     <i class=''><?php echo "$role:&nbsp; $_COOKIE[email]" ?></i>
+                  </span>
             </div>
          </div>
       </li>

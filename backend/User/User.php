@@ -147,7 +147,7 @@ class User extends Connection {
          $response = $this->defaultResponse();
          $query = "SELECT u.*, r.role
          FROM users u LEFT JOIN roles r ON u.role_id=r.id 
-         WHERE u.active=1 ORDER BY id DESC";
+         WHERE u.active=1 AND role_id >= $_COOKIE[role_id] ORDER BY id DESC";
          $result = $this->Select($query, true);
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -207,19 +207,15 @@ class User extends Connection {
       $response = $this->defaultResponse();
 
       try {
-         // if ($role_id == 3 ) {
-         //    $query = "SELECT u.*, r.id role_id, r.role, 
-         //    FROM users u 
-         //    LEFT JOIN roles r ON u.role_id=r.id 
-         //    LEFT JOIN candidates c ON c.user_id=u.id 
-         //    WHERE u.active=1 and u.id=$id";
-         // } elseif ($role_id == 4) {
-
-         // } else {
+         if ($role_id == 3 ) {
+            $query = "SELECT * FROM vw_companies WHERE user_id=$id";
+         } elseif ($role_id == 4) {
+            $query = "SELECT * FROM vw_candidates WHERE user_id=$id";
+         } else {
             $query = "SELECT u.*, r.id role_id, r.role
             FROM users u LEFT JOIN roles r ON u.role_id=r.id 
             WHERE u.active=1 and u.id=$id";
-         // }
+         }
          
          $result = $this->Select($query,false);
          $response = $this->correctResponse();

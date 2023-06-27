@@ -65,7 +65,7 @@ $current_page = "Vacantes";
                                  <div class="text-sm text-end text-muted" id="counter_vacancy"></div>
                               </div>
                               <!-- EMPRESA -->
-                              <?php if ($_COOKIE["role_id"] > 3): ?>
+                              <?php if ($_COOKIE["role_id"] < 3): ?>
                               <div class="mb-3">
                                  <label for="input_company_id" class="form-label">Empresa: <span class="obligatory"></span></label>
                                  <select class="select2 form-control" style="width:100%"
@@ -145,9 +145,9 @@ $current_page = "Vacantes";
                                  </div>
                               </div>
                               <!-- TAGS -->
-                              <div class="form-group" data-select2-id="29">
-                                 <label for="input_tags_ids">TAGS de busqueda:</label>
-                                 <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a la vacante" style="width: 100%;" data-select2-id="7" tabindex="-1" aria-hidden="true" id="input_tags_ids" data-input-name="TAGS">
+                              <div class="form-group">
+                                 <label for="input_tags_ids">TAGS de búsqueda:</label>
+                                 <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas relacionadas a la vacante" style="width: 100%;" tabindex="-1" aria-hidden="true" id="input_tags_ids" data-input-name="TAGS">
                                  </select>
                               </div>
                            </div>
@@ -163,7 +163,7 @@ $current_page = "Vacantes";
                      </div>
                      
                      <!-- VISTA A DETALLE -->
-                     <div class="col">
+                     <div class="col-md-6">
                         <div id="detail_vacancy" class="card shadow-lg card-detail">
                            <div class="card-header">
                               <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-regular fa-memo-circle-info"></i>&nbsp; VISTA PREVIA DE LA VACANTE</span>
@@ -174,7 +174,12 @@ $current_page = "Vacantes";
                               <p class="h5 fw-bolder" id="output_vacancy">Vacante</p>
                               <p class="mb-3" id="output_info_company">
                                  <span>Empresa</span><br>
-                                 <span>Ciudad, Estado</span><br><br>
+                                 <span>Ciudad, Estado</span><br>
+                                 <b>CONTACTO:</b>&nbsp;&nbsp;
+				                           <i class="fa-solid fa-user"></i>&nbsp; ${obj.contact_name} &nbsp; | &nbsp;
+                                       <i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.contact_phone)} &nbsp; | &nbsp;
+				                           <i class="fa-solid fa-at"></i>&nbsp; ${obj.contact_email}
+                                 <br><br>
                                  <span class="">Descripción de la empresa...</span>
                               </p>
 

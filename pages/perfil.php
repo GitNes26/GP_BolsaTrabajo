@@ -3,7 +3,7 @@ include "../templates/header.php";
 include "../templates/navbar.php";
 include "../templates/sidebar.php";
 
-$pagina_acutal = "Bolsa de Trabajo";
+$pagina_acutal = "Mi Perfil";
 ?>
 
 <!-- Content Wrapper. Contenido de la pagina -->
@@ -12,39 +12,82 @@ $pagina_acutal = "Bolsa de Trabajo";
 
   <!-- Main content -->
   <section class="content text-center">
-
-    <div class="content">
+    <form id="form_photo">
+      <input type="file" id="input_photo_path" name="input_photo_path" class="d-none" accept="image/*" data-preview="preview_photo">
+    </form>
+    <form id="form_cv">
+      <input type="file" id="input_cv_path" name="input_cv_path" class="d-none" accept=".pdf" data-preview="preview_cv" data-input-name="CURRICULUM VITAE">
+    </form>
+    <form class="content" id="form">
       <div class="card card-widget widget-user shadow">
 
-        <div class="widget-user-header bg-success">
-          <h3 class="widget-user-username" id="output_name">Alexander Pierce</h3>
-          <h5 class="widget-user-desc">26 Años</h5>
+        <div class="widget-user-header bg-success" id="div_header">
+          <h3 class="widget-user-username im_output" title="doble clic para editar" id="output_name">[Mi Nombre]</h3>
+          <input type="text" class="form-control-border-white text-white text-center d-none im_input" title="[Enter] para guardar" id="input_name" name="input_name" data-input-name="NOMBRES">
+          <input type="text" class="form-control-border-white text-white text-center d-none im_input" title="[Enter] para guardar" id="input_last_name" name="input_last_name" data-input-name="APELLIDOS">
+          <h5 class="widget-user-desc im_output" id="output_profession">[Mi Profesión]</h5>
+          <div class="mt-2">
+            <select class="select2 d-none im_input form-select" style="width:15vw; line-height:10px"
+            id="input_profession_id" name="input_profession_id"
+            data-input-name="PROFESIÓN">
+            </select>
+          </div>
+          <h1 class="text-end fw-bolder" id="output_enable">DISPONIBLE</h1>
         </div>
         <div class="widget-user-image">
-          <img class="img-circle elevation-2" src="/assets/img/logo_gomez_palacio.png" alt="Foto de perfil">
+          <label for="input_photo_path">
+              <div id="preview_photo" class="d-flex justify-content-center">
+                <!-- <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar foto" id="output_photo" class="img-pointer p-3 rounded-lg img-circle elevation-2 bg-white" for="input_photo_path" title="Haz clic aquí para cargar tu foto de perfil"> -->
+                <img class="img-circle elevation-2 bg-white pointer-sm opacity-100 d-none" id="output_photo" src="/assets/img/sin_perfil.webp" alt="Foto de perfil" for="input_photo_path" title="Haz clic aquí, si deseas cambiar tu foto de perfil">
+              </div>
+          </label>
         </div>
         <div class="card-footer">
           <div class="row">
-            <div class="col-sm-4 border-right">
+            <div class="col-sm-3 border-right">
               <div class="description-block">
-                <h5 class="description-header">micorreo@gmail.com</h5>
+                <p class="description-header im_output" id="output_email">[micorreo@gmail.com]</p>
+                <input type="text" class="form-control-border text-white text-center d-none im_input" title="[Enter] para guardar" id="input_email" name="input_email" data-input-name="CORREO">
                 <span class="description-text"><i class="fa-solid fa-envelope"></i></span>
               </div>
 
             </div>
 
-            <div class="col-sm-4 border-right">
+            <div class="col-sm-3 border-right">
               <div class="description-block">
-                <h5 class="description-header">871-526-5689</h5>
+                <p class="description-header im_output" id="output_cellphone">[Mi número celular]</p>
+                <input type="text" class="form-control-border text-white text-center d-none im_input" title="[Enter] para guardar" id="input_cellphone" name="input_cellphone" data-input-name="CELULAR">
                 <span class="description-text"><i class="fa-sharp fa-solid fa-phone"></i></span>
               </div>
 
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-3 border-right">
               <div class="description-block">
-                <h5 class="description-header">Inglés - Básico</h5>
+                <p class="description-header im_output" id="output_languages">[Mi nivel de ingles]</p>
+                <div class="mb-1 d-none im_input">
+                    <label for="input_languages">Domínio del inglés: <span class="obligatory"></span></label>
+                    <div class="btn-group ml-3" role="group">
+                      <input type="radio" class="btn-check not_validate" name="input_languages" id="input_languages_b" autocomplete="off" value="Inglés - Básico" checked>
+                      <label class="btn btn-outline-dark rounded-left" for="input_languages_b">Básico</label>
+
+                      <input type="radio" class="btn-check not_validate" name="input_languages" id="input_languages_i" autocomplete="off" value="Inglés - Intermedio">
+                      <label class="btn btn-outline-dark" for="input_languages_i" >Intermedio</label>
+
+                      <input type="radio" class="btn-check not_validate" name="input_languages" id="input_languages_a" autocomplete="off" value="Inglés - Avanzado">
+                      <label class="btn btn-outline-dark" for="input_languages_a" >Avanzado</label>
+                    </div>
+                </div>
                 <span class="description-text"><i class="fa-regular fa-language"></i></span>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class=" btn-group">
+                <button type="button" class="btn btn-outline-primary" id="btn_edit">Editar mi información</button>
+                <button type="submit" class="btn btn-outline-success d-none rounded-start" id="btn_submit">GUARDAR</button>
+                <button type="button" class="btn btn-outline-danger d-none rounded-end" id="btn_cancel">CANCELAR</button>
+                <button type="button" class="btn btn-outline-dark" id="btn_change_enable" data-enable=""></button>
               </div>
 
             </div>
@@ -61,92 +104,38 @@ $pagina_acutal = "Bolsa de Trabajo";
               <div class="text-center h2 fw-bolder">CURRICULUM VITAE</div>
               <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
               <p class="text-muted text-center">Software Engineer</p> -->
-              <input type="file" id="input_file" name="input_file" class="d-none" accept=".pdf" style="height: 50% !important">
-              <label for="input_file" id="label_input_file">
-                  <div id="preview_file" class="d-flex justify-content-center">
-                  <!-- <iframe frameborder="0"  src="/assets/img/elPDF.pdf" ></iframe> -->
-                    <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar Logo" class="img-fluid pointer p-3 rounded-lg" for="input_file" title="Haz clic aquí para cargar tu logo de empresa">
-                  </div>
+              <label for="input_cv_path" class="">
+                <div id="preview_cv" class="d-flex justify-content-center">
+                    <img src="<?=$IMG_PATH?>/cargar_archivo.png" alt="Cargar CV" id="output_cv" class="img-fluid pointer-sm p-5 rounded-lg" style="height: 250px !important;" for="input_cv_path" title="Haz clic aquí para cargar tu curriculum vitae">
+                </div>
+                <div class="btn btn-outline-secondary mt-2">Cambiar archivo</div>
               </label>
             </div>
-
           </div>
         </div>
 
         <!-- INFORMACION PROFESIONAL -->
         <div class="col">
-         <div class="card card-success card-outline">
-            <div class="card-body box-profile">
-              <div class="text-center h2 fw-bolder">DATOS PROFESIONALES</div>
+          <div class="card card-success card-outline">
+            <div class="card-body box-profile card-pdf">
+              <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONALES</div>
               <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
               <p class="text-muted text-center">Software Engineer</p> -->
-              <div id="output_professional_info"></div>
+              <div id="output_professional_info" class="text-start scroll-y im_output" style="max-height: 81%;"></div>
+              <div class="im_input d-none text-start">
+                <label for="input_professional_info" class="form-label">Más información: &nbsp;<i class="fa-duotone fa-circle-info" title="Escribir Habilidades, competencias, experiencias, observaciones, etc."></i></label>
+                <div class="summernote"></div>
+              </div>
             </div>
-
           </div>
         </div>
+
       </div>
 
-    </div>
+    </form>
 
   </section>
   <!-- /.content -->
-
-  <!-- Modal -->
-  <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-      <form id="form_modal" class="modal-content">
-        <div class="modal-header">
-          <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-regular fa-memo-circle-info"></i>&nbsp;
-            VISTA PREVIA DE LA VACANTE</span>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-start scroll-y">
-          <input type="hidden" name="id" value="" class="id not_validate">
-          <p class="h5 fw-bolder output_vacancy">Vacante</p>
-          <p class="mb-3 output_info_company">
-            <span>Empresa</span><br>
-            <span>Ciudad, Estado</span><br><br>
-            <span class="">Descripción de la empresa...</span>
-          </p>
-
-          <hr>
-
-          <!-- DETALLES DEL EMPELO -->
-          <p class="h6 fw-bolder">Detalles del empleo</p>
-          <p class="output_area">Área</p>
-          <p class="output_description">Descripción de la vacante...</p>
-          <div class="mb-2">
-            <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
-            <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
-            <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
-            <span class="output_max_salary">$0</span>
-          </div>
-          <div class="mb-2">
-            <i class="fa-solid fa-briefcase"></i>&nbsp;
-            <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
-            <span class="output_job_type">...</span>
-          </div>
-          <div class="mb-2">
-            <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
-            <span class="fw-bolder">Horario:&nbsp;</span>
-            <span class="output_schedules">...</span>
-          </div>
-
-          <hr>
-
-          <!-- MAS INFO -->
-          <div class="output_more_info"></div>
-        </div>
-        <div class="modal-footer">
-          <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-outline-success fw-bold grid btn_submit" disabled><i
-                class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
-            </button>
-          </div>
-        </div>
-    </div>
-  </div>
 
 </div>
 <!-- /.content-wrapper -->
@@ -154,41 +143,6 @@ $pagina_acutal = "Bolsa de Trabajo";
 
 </div>
 <!-- ./wrapper (este se abre en el Template-header) -->
-
-
-<template id="template_card_vacancy">
-  <div class="card card-success card-outline direct-chat direct-chat-success shadow-sm pointer-sm card_vacancy"
-    data-id="id">
-    <div class="card-header">
-      <span class="card-title fw-bolder vacancy">Vacante</span>
-      <div class="card-tools">
-        <span title="vacantes disponibles" class="badge bg-success vacancy_numbers">3</span>
-        <button type="button" class="btn btn-tool" title="Favoritos" data-widget="chat-pane-toggle">
-          <i class="fa-solid fa-star"></i>
-        </button>
-      </div>
-    </div>
-    <div class="card-body pb-2">
-      <div class="direct-chat-infos clearfix px-2">
-        <span class="direct-chat-timestamp float-right publication_date text-mini">Publicado el: </span>
-        <span class="float-left company">Empresa</span>
-        <br>
-        <span class="fst-italic float-left company_location">Ciudad, Estado</span>
-      </div>
-      <p>Area de aplicacion: <span class="area">Informatica</span></p>
-      <span class="badge bg-success">
-        <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; <span class="min_salary">$0</span> a <span
-          class="max_salary">$0</span>
-      </span>
-      <span class="badge bg-dark">
-        <i class="fa-solid fa-briefcase"></i>&nbsp; <span class="job_type">Tiempo completo</span>
-      </span>
-      <span class="badge bg-primary">
-        <i class="fa-sharp fa-regular fa-timer"></i>&nbsp; <span class="schedules">8 horas - Lunes a vienres</span>
-      </span>
-    </div>
-  </div>
-</template>
 
 
 

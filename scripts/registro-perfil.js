@@ -1,8 +1,7 @@
 $(document).ready(function() {
-   SUMMERNOTE_CONFIG.placeholder = "Escribir Habilidades, competencias, experiencias, observaciones, etc."
-   SUMMERNOTE_CONFIG.toolbar.push(['templates', ['template_candidate']]),
-
-	$('.summernote').summernote(SUMMERNOTE_CONFIG)
+   SUMMERNOTE_CONFIG.placeholder = "Escribir Habilidades, competencias, experiencias, observaciones, etc.";
+   SUMMERNOTE_CONFIG.toolbar.push(['templates', ['template_candidate']]);
+	$('.summernote').summernote(SUMMERNOTE_CONFIG);
 });
 
 $(".select2").select2();
@@ -35,12 +34,21 @@ const div_company = $("#div_company"),
 
 // /* INPUTS DE REGISTRO CANDIDATO */
 const div_candidate = $("#div_candidate"),
+   input_photo_path = $('#input_photo_path'), //este es un input_file
+   output_photo = $('#output_photo'),
+   preview_photo = $('#preview_photo'),
    input_name = $("#input_name"),
    input_last_name = $("#input_last_name"),
-   input_email = $("#input_email"),
+   input_cellphone = $("#input_cellphone"),
    input_age = $("#input_age"),
    input_profession_id = $("#input_profession_id"),
-   input_interest_tags_ids = $("#input_interest_tags_ids")
+   input_interest_tags_ids = $("#input_interest_tags_ids"),
+	input_languages_b = $("#input_languages_b"),
+	input_languages_i = $("#input_languages_i"),
+	input_languages_a = $("#input_languages_a"),
+	input_cv_path = $('#input_cv_path'), //este es un input_file
+   output_cv = $('#output_cv'),
+   preview_cv = $('#preview_cv')
    ;
 
 // email.focus();
@@ -83,6 +91,7 @@ btn_reset.click(async (e) => {
 
 	await resetSelect2(input_business_line_id);
 	await resetSelect2(input_company_ranking_id);
+	await resetSelect2(input_profession_id);
 	await resetSelect2(input_interest_tags_ids);
 	await resetSelect2(input_state);
 	await resetSelect2(input_municipality);
@@ -90,7 +99,8 @@ btn_reset.click(async (e) => {
 
 	$('.note-editing-area .note-editable').html(null);
 	$('.note-editing-area .note-placeholder').css("display","block");
-
+   resetImgPreview($(`#${input_photo_path.attr("data-preview")}`));
+	resetImgPreview($(`#${input_cv_path.attr("data-preview")}`), null, true);
 	
 	setTimeout(() => {
 		input_company.focus();
@@ -98,32 +108,65 @@ btn_reset.click(async (e) => {
 });
 
 // Agrega un evento change al elemento de entrada de archivo
-input_logo_path.on('change', function(event) {
-   // Obtén el archivo seleccionado
-   const file = event.target.files[0];
+input_photo_path.on('change', function(event) {
+	// Obtén el archivo seleccionado
+	const file = event.target.files[0];
+	// Crea un objeto FileReader
+	const fileReader = new FileReader();
+	const preview = $(`#${input_photo_path.attr("data-preview")}`);
 
-   // Crea un objeto FileReader
-   const fileReader = new FileReader();
+	// Define la función de carga completada del lector
+	fileReader.onload = function(e) {
+		// Crea un elemento de imagen
+		const imagen = document.createElement('img');
+		imagen.src = e.target.result; // Asigna la imagen cargada como fuente
+		imagen.classList.add("img-fluid"); // Asignar clases
+		imagen.classList.add("pointer-sm"); // Asignar clases
+		//  imagen.classList.add("p-5"); // Asignar clases
+		imagen.classList.add("rounded-lg"); // Asignar clases
+		imagen.style = "max-height: 200px !important";
 
-   // Define la función de carga completada del lector
-   fileReader.onload = function(e) {
+		// Agrega la imagen a la vista previa
+		preview.html(null); // Limpia la vista previa antes de agregar la nueva imagen
+		preview.append(imagen);
+	};
+
+	if (file == undefined) resetImgPreview(preview);
+
+ // Lee el contenido del archivo como una URL de datos
+ fileReader.readAsDataURL(file);
+});
+input_cv_path.on('change', function(event) {
+	// Obtén el archivo seleccionado
+	const file = event.target.files[0];
+	// Crea un objeto FileReader
+	const fileReader = new FileReader();
+	const preview = $(`#${input_cv_path.attr("data-preview")}`);
+
+	// Define la función de carga completada del lector
+	fileReader.onload = function(e) {
       // Crea un elemento de imagen
-      const imagen = document.createElement('img');
-      imagen.src = e.target.result; // Asigna la imagen cargada como fuente
-      imagen.classList.add("img-fluid"); // Asignar clases
-      imagen.classList.add("pointer"); // Asignar clases
-      //  imagen.classList.add("p-5"); // Asignar clases
-      imagen.classList.add("rounded-lg"); // Asignar clases
-      // imagen.classList.add("text-center"); // Asignar clases
-      imagen.style = "max-height: 200px !important";
+      const iframe = document.createElement('iframe');
+      iframe.src = e.target.result; // Asigna la iframe cargada como fuente
+      // canvas.getContext("2d") // Asigna la iframe cargada como fuente
+      iframe.classList.add("img-fluid"); // Asignar clases
+      iframe.classList.add("pointer-sm"); // Asignar clases
+      iframe.classList.add("rounded-lg"); // Asignar clases
+      // iframe.classList.add("text-center"); // Asignar clases
+      iframe.style = "height: 100% !important";
 
-      // Agrega la imagen a la vista previa
-      preview_logo.html(""); // Limpia la vista previa antes de agregar la nueva imagen
-      preview_logo.append(imagen);
+      // Agrega la iframe a la vista previa
+      preview.html(null); // Limpia la vista previa antes de agregar la nueva iframe
+      preview.append(iframe);
+		preview.parent().css("height","50vh");
+		// label_input_file.css("height","100%");
+		preview.css("height","100%");
    };
 
-  // Lee el contenido del archivo como una URL de datos
-  fileReader.readAsDataURL(file);
+	// if (file == undefined) resetImgPreview(preview);
+
+ // Lee el contenido del archivo como una URL de datos
+ fileReader.readAsDataURL(file);
 });
 
 
@@ -144,7 +187,6 @@ input_name_role.on("change",async function()  {
       $("#div_candidate select").addClass("not_validate");
       $("#div_candidate textarea").addClass("not_validate");
       input_profession_id.addClass("not_validate");
-
       // valido empresa
       $("#div_company input").removeClass("not_validate");
       $("#div_company select").removeClass("not_validate");
@@ -181,59 +223,25 @@ form_role.on("submit", async function(e) {
    console.log();
 	if (!validateInputs(form_role)) return;
 	// return console.log(form_role.serializeArray());
-   let data = form_role.serializeArray();
+   // let data = form_role.serializeArray();
+	let data = new FormData(this);
+
    let url_app = URL_COMPANY_APP;
 
    // si esta seleccionada la "Empresa"
    if (input_name_role[0].checked) {
       console.log("soy empresa");
-      // if (user_id.val() <= 0) {
-      // 	//NUEVO
-      // 	if (!permission_write) return;
-      // 	user_id.val("");
-      // 	op_modal.val("create");
-      // } else {
-      // 	//EDICION
-      // 	if (!permission_update) return;
-      // 	op_modal.val("edit");
-      // }
-
-      // return console.log(data);
-      // let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
-      // if (user_id.val() <= 0) {
-         //NUEVO
-         // addToArray("created_at", current_date, data);
-      // } else {
-      // 	//EDICION
-      // 	addToArray("updated_at", current_date, data);
-      // }
-
-      // const form_imagen = $("#form_role")[0];
-      // data = new FormData(form_imagen);
-      // console.log("input_name_role", input_name_role.val());
-      // return console.log([...data]);
-      // return console.log(data);
-      
-      // Crea un objeto FormData y agrega los datos del formulario
-      // const formData = new FormData(this);
-
-      // Agrega el archivo seleccionado al objeto FormData
-      const archivo = $('#input_logo_path')[0].files[0];
-      console.log(archivo);
-      // formData.append('archivo', archivo);
-      addToArray("input_logo_path", archivo, data);
    } else {
       console.log("soy candidato");
       url_app = URL_CANDIDATE_APP;
 
       const input_current_date = $('.note-editing-area .note-editable').html();
-      addToArray("input_professional_info", input_current_date, data);
-      addToArray("input_user_id", id_cookie, data);
+      addToArray("input_professional_info", input_current_date, data, true);
+      addToArray("input_user_id", id_cookie, data, true);
    }	
 
    // return console.log(url_app, data);
-	const ajaxResponse = await ajaxRequestAsync(url_app, data);
-	// const ajaxResponse = await ajaxRequestFileAsync(url_app, data);
+	const ajaxResponse = await ajaxRequestFileAsync(url_app, data);
 	if (ajaxResponse.message == "duplicado") return
    setTimeout(() => {
       location.reload();

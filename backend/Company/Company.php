@@ -18,12 +18,7 @@ class Company extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT c.*, bl.business_line, cr.company_ranking, cr.description cr_description, u.email, u.created_at
-         FROM companies c 
-         INNER JOIN users u ON c.user_id=u.id 
-         INNER JOIN business_lines bl ON c.business_line_id=bl.id
-         INNER JOIN company_rankings cr ON c.company_ranking_id=cr.id
-         WHERE u.active=1 ORDER BY c.id DESC;";
+         $query = "SELECT * FROM vw_companies";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -63,12 +58,7 @@ class Company extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT c.*, bl.business_line, cr.company_ranking, cr.description cr_description
-         FROM companies c 
-         INNER JOIN users u ON c.user_id=u.id 
-         INNER JOIN business_lines bl ON c.business_line_id=bl.id
-         INNER JOIN company_rankings cr ON c.company_ranking_id=cr.id
-         WHERE c.id=$id;";
+         $query = "SELECT * FROM vw_companies WHERE id=$id;";
          $result = $this->Select($query, false);
 
          $response = $this->CorrectResponse();
@@ -86,15 +76,15 @@ class Company extends Connection {
       die(json_encode($response));
    }
 
-   function create($company, $description, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id) {
+   function create($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id) {
       try {
          $response = $this->defaultResponse();
 
          $this->validateAvailableData($company, null);
 
          #Creamos el registro en la tabla compañias
-         $query = "INSERT INTO companies(company, description, contact_name, contact_phone, contact_email, state, municipality, business_line_id, company_ranking_id, user_id) VALUES(?,?,?,?,?,?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($company, $description, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id));
+         $query = "INSERT INTO companies(company, description, logo_path, contact_name, contact_phone, contact_email, state, municipality, business_line_id, company_ranking_id, user_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+         $this->ExecuteQuery($query, array($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id));
 
          #Le asignamos el rol de compañia al usuario
          $query = "UPDATE users SET role_id=3 WHERE id=?";
@@ -119,14 +109,14 @@ class Company extends Connection {
       die(json_encode($response));
    }
 
-   function edit($company, $description, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id, $updated_at) {
+   function edit($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id, $updated_at) {
       try {
          $response = $this->defaultResponse();
 
          $this->validateAvailableData($company, $id);
 
-         $query = "UPDATE companies SET company=?, description=?, contact_name=?, contact_phone=?, contact_email=?, state=?, municipality=?, business_line_id=?, company_ranking_id=?, user_id=? WHERE id=?";
-         $this->ExecuteQuery($query, array($company, $description, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id));
+         $query = "UPDATE companies SET company=?, description=?, logo_path=?, contact_name=?, contact_phone=?, contact_email=?, state=?, municipality=?, business_line_id=?, company_ranking_id=?, user_id=? WHERE id=?";
+         $this->ExecuteQuery($query, array($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id));
 
          $query = "UPDATE users SET updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($updated_at, $user_id));

@@ -5,7 +5,7 @@ const
 	URL_BASE = $("#url_base").val(),
 	BACKEND_PATH = `${URL_BASE}/backend`,
 	PAGES_PATH = `${URL_BASE}/pages`,
-	EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`,
+	EMAILS_PATH = `/emails/NewMemberEmail.php`,
 	URL_API_COUNTRIES = `https://www.universal-tutorial.com/api`,
 
 	URL_USER_APP = `${BACKEND_PATH}/User/App.php`,
@@ -108,32 +108,7 @@ const SUMMERNOTE_CONFIG = {
 					$('.note-editing-area .note-placeholder').css("display","none");
 
 					$('.note-editing-area .note-editable').html(null);
-					$('.note-editing-area .note-editable').html(`<p class="">
-						<span class="fw-bolder">Requisitos</span>
-						<ul class="" id="output_requirements">
-							<li>Requerimiento 1</li>
-							<li>Requerimiento 1</li>
-							<li>Requerimiento 1</li>
-						</ul>
-					</p>
-					<p class="">
-						<span class="fw-bolder">Expriencia necesaria</span>
-						<ul class="" id="output_necessary_experience">
-							<li>Experiencias 1</li>
-							<li>Experiencias 1</li>
-							<li>Experiencias 1</li>
-						</ul>
-					</p>
-					<!-- ./ DETALLES DEL EMPELO -->
-					<hr>
-					<p class="">
-						<span class="fw-bolder">Beneficios</span>
-						<ul class="" id="output_benefits">
-							<li>Beneficio 1</li>
-							<li>Beneficio 1</li>
-							<li>Beneficio 1</li>
-						</ul>
-					</p>`);
+					$('.note-editing-area .note-editable').html(`<p class=""><span class="fw-bolder">Requisitos</span><ul class="" id="output_requirements"><li>Requerimiento 1</li><li>Requerimiento 1</li><li>Requerimiento 1</li></ul></p><p class=""><span class="fw-bolder">Expriencia necesaria</span><ul class="" id="output_necessary_experience"><li>Experiencias 1</li><li>Experiencias 1</li><li>Experiencias 1</li></ul></p><hr><p class=""><span class="fw-bolder">Beneficios</span><ul class="" id="output_benefits"><li>Beneficio 1</li><li>Beneficio 1</li><li>Beneficio 1</li></ul></p>`);
 					// $('#summernote').summernote('pasteHTML', hr);
 				}
 			});
@@ -153,6 +128,11 @@ else if (location.pathname == '/registro-perfil.php') needCookies = false;
 if (!Cookies.get("session") && needCookies) location.reload();
 
 
+let inIndex = false;
+if (location.pathname == '/pages') inIndex = true;
+else if (location.pathname == '/pages/') inIndex = true;
+else if (location.pathname == '/pages/index.php') inIndex = true;
+
 
 const ajaxRequestAsync = async (
 	url,
@@ -170,7 +150,7 @@ const ajaxRequestAsync = async (
 			url: url,
 			data: data,
 			async: true,
-			dataType: "json"
+			dataType: "json",
 		});
 		// console.log(response);
 
@@ -183,10 +163,12 @@ const ajaxRequestAsync = async (
 
 		if (response.result) {
 			if (response.toast) {
-				if (show_toast)
-					showToast(response.alert_icon, response.alert_text);
-			}
-			else 
+				if (show_toast) {
+					// setTimeout(() => {
+						showToast(response.alert_icon, response.alert_text);
+					// }, 2000);
+				}
+			} else 
 				showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
 
 		} else {
@@ -272,9 +254,10 @@ const ajaxRequestFileAsync = async (
 			data: data,
 			async: true,
 			dataType: "json",
-			contentType:false,
 			enctype: "multipart/form-data",
-			processData:false,
+			contentType: false,
+			cache: false,
+			processData: false,
 		});
 		// console.log(response);
 
@@ -286,9 +269,13 @@ const ajaxRequestFileAsync = async (
 		};
 
 		if (response.result) {
-			if (response.toast)
-				if (show_toast)
-					showToast(response.alert_icon, response.alert_text);
+			if (response.toast) {
+				if (show_toast) {
+					// setTimeout(() => {
+						showToast(response.alert_icon, response.alert_text);
+					// }, 2000);
+				}
+			} else showAlert(response.alert_icon, response.alert_title, response.alert_text, false);
 		} else {
 			showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
 		}
@@ -354,6 +341,11 @@ function mayus(e) {
 	e.value = e.value.toUpperCase();
 }
 
+function Enter(e) {
+	const code = (e.keyCode ? e.keyCode : e.which);
+	return code == 13 ? true : false;
+}
+
 const accent_map = {'á':'a', 'é':'e', 'è':'e', 'í':'i','ó':'o','ú':'u','Á':'a', 'É':'e', 'è':'e', 'Í':'i','Ó':'o','Ú':'u'};
 function accentFold (s) {
   if (!s) { return ''; }
@@ -397,11 +389,50 @@ function countLetter(input, counter_name, letters, limit) {
 
 
 //AGREGAR DATO AL ARRAY
-function addToArray(name, value, array) {
+function addToArray(name, value, array, formData=false) {
 	//array obtenido de formulario_modal.serializeArray()
 	// console.log(nombre,valor,array);
 	const new_data = { name, value };
-	array.push(new_data);
+	if (formData) array.append(name, value);
+	else array.push(new_data);
+}
+
+function resetImgPreview(preview, img_path=null, iframe=false) {
+	if (!iframe || img_path==null) {
+		// Crea un elemento de imagen
+		const imagen = document.createElement('img');
+		iframe 
+		? imagen.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path // Asigna la imagen cargada como fuente
+		: imagen.src = img_path == null ? "/assets/img/cargar_imagen.png" : img_path; // Asigna la imagen cargada como fuente
+		imagen.classList.add("img-fluid"); // Asignar clases
+		imagen.classList.add("pointer-sm"); // Asignar clases
+		//  imagen.classList.add("p-5"); // Asignar clases
+		imagen.classList.add("rounded-lg"); // Asignar clases
+		// imagen.classList.add("text-center"); // Asignar clases
+		imagen.style = "max-height: 200px !important";
+
+		// Agrega la imagen a la vista previa
+		preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+		preview.append(imagen);
+	} else {
+		// Crea un elemento de imagen
+      const iframe = document.createElement('iframe');
+      iframe.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path; // Asigna la iframe cargada como fuente
+      // canvas.getContext("2d") // Asigna la iframe cargada como fuente
+      iframe.classList.add("img-fluid"); // Asignar clases
+      iframe.classList.add("pointer-sm"); // Asignar clases
+      //  iframe.classList.add("p-5"); // Asignar clases
+      iframe.classList.add("rounded-lg"); // Asignar clases
+      // iframe.classList.add("text-center"); // Asignar clases
+      iframe.style = "height: 100% !important";
+
+      // Agrega la iframe a la vista previa
+      preview.html(""); // Limpia la vista previa antes de agregar la nueva iframe
+      preview.append(iframe);
+		preview.parent().css("height","50vh");
+		// label_input_file.css("height","100%");
+		preview.css("height","100%");
+	}
 }
 
 
@@ -409,56 +440,78 @@ function addToArray(name, value, array) {
 
 //#region MENUS
 const sidebar_menus = $("#sidebar_menus");
-const fillSidebar = async (show_toast=false) => {
-	sidebar_menus.slideUp(1000);
+const navbar_menus = $("#navbar_menus");
+const fillSidebar = async (show_toast=false, navbar_side=false) => {
+	// sidebar_menus.slideUp(1000);
 	let role_id = Number(Cookies.get("role_id"));
 	// role_id=1;
 	let data = { op: "showMyMenus", role_id: role_id };
 	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP, data, false, true, show_toast);
-	sidebar_menus.html("");
+	sidebar_menus.html(null);
+	navbar_menus.html(null);
 	const objResponse = ajaxResponse.data;
 	// console.log(objResponse);
 	let menus = "";
 	let parent_menus = objResponse.filter((menu) => menu.belongs_to == 0);
 	parent_menus = parent_menus.sort().map((parent_menu) => {
-		menus += `
-        <li class="nav-item  mb-3">
-          <a href="#" class="nav-link">
-              <i class="nav-icon ${parent_menu.icon}"></i>
-              <p>
-                ${parent_menu.menu}
-                <i class="right fas fa-angle-left"></i>
-              </p>
-          </a>`;
-		let children_menus = objResponse.filter(
-			(menu) => menu.belongs_to == parent_menu.id
-		);
+		if (navbar_side) {
+			menus += ` <li class="nav-item dropdown text-light text-xs">
+			<a id="submenus${parent_menu.id}" href="#" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+				class="nav-link dropdown-toggle"><i class="nav-icon ${parent_menu.icon} mr-2"></i> ${parent_menu.menu}
+			</a>
+			<ul aria-labelledby="submenus${parent_menu.id}" class="dropdown-menu border-0 shadow">
+			`;
+		} else 
+		{
+			menus += `
+			<li class="nav-item mb-3">
+				<a href="#" class="nav-link">
+					<i class="nav-icon ${parent_menu.icon}"></i>
+					<p>
+						${parent_menu.menu}
+						<i class="right fas fa-angle-left"></i>
+					</p>
+				</a>`;
+		}
+		let children_menus = objResponse.filter((menu) => menu.belongs_to == parent_menu.id);
 		children_menus.sort((a, b) => b.order - a.order);
 		children_menus.map(async (child_menu) => {
-			menus += `
-              <ul class="nav nav-treeview text-sm">
-                <li class="nav-item">
-                    <a href="${PAGES_PATH}/${child_menu.file_path}" class="nav-link">
-                        <i class="nav-icon ${child_menu.icon} text-sm"></i>
-                        <p>
-									${child_menu.menu}`;
-                           if (Boolean(child_menu.show_counter)) {
-										// const data = {op: "counter"}
-										// const ajaxCount = await ajaxRequestAsync(URL_MENU_APP, data, null, null, false);
-										// const count = ajaxCount.data;
-										menus += `<span class="badge badge-info right notification">0</span>`;
-									}
-								menus += `</p>
-                    </a>
-                </li>
-              </ul>`;
+			if (navbar_side) {
+				menus += `
+				<li>
+					<a href="${PAGES_PATH}/${child_menu.file_path}" class="dropdown-item text-xs"><i class="nav-icon ${child_menu.icon} mr-2"></i> ${child_menu.menu}</a>
+				</li>
+				`;
+			} else {
+				menus += `
+				<ul class="nav nav-treeview text-sm">
+					<li class="nav-item">
+						<a href="${PAGES_PATH}/${child_menu.file_path}" class="nav-link">
+							<i class="nav-icon ${child_menu.icon} text-sm"></i>
+							<p>
+								${child_menu.menu}`;
+								if (child_menu.show_counter == 1) {
+									// const data = {op: "counter"}
+									// const ajaxCount = await ajaxRequestAsync(URL_MENU_APP, data, null, null, false);
+									// const count = ajaxCount.data;
+									menus += `<span class="badge badge-info right notification">0</span>`;
+								}
+							menus += `</p>
+						</a>
+					</li>
+				</ul>`;
+			}
 		});
+		if (navbar_side) menus += `</ul>`;
 		menus += `</li>`;
 	});
-	await sidebar_menus.append(menus);
-	sidebar_menus.slideDown(1000);
+	if (navbar_side) await navbar_menus.append(menus);
+	else await sidebar_menus.append(menus);
+	// sidebar_menus.slideDown(1000);
 };
 if (sidebar_menus.length > 0) fillSidebar();
+else if (inIndex) fillSidebar(false, true);
+
 //#endregion
 
 
@@ -607,6 +660,10 @@ function formatearCantidadDeRenglones(tds) {
 		td.html(`${cantidad_formateada}`);
 	});
 }
+
+function formatPhone(phone) {
+	return `(${phone.slice(0,3)})${phone.slice(3,6)}-${phone.slice(6,8)}-${phone.slice(-2)}`
+}
 //#endregion /** VALIDACIONES - INPUTS - FORMULARIOS */
 
 
@@ -668,6 +725,7 @@ async function fillSelect2(url_app, selected_index, selector, select_modules=fal
 	let options = /*HTML*/ `
       <option value="-1">Selecciona una opción...</option>
    `;
+	// console.log(selector.data().select2);
 	if (selector.data().select2.options.options.multiple) {
 		options = /*HTML*/ `
 			<option value="-1">Selecciona etiquetas...</option>
@@ -784,7 +842,7 @@ moment.locale("es-mx");
 
 
 //#region SELECTORES DE PAISES / CIUDADES
-async function showStates() {
+async function showStates(state = null, city = null) {
 	$("#input_state").attr("disabled",true)
 	$("#input_state").html("<option value=''>Cargando...</option>");
 
@@ -796,18 +854,19 @@ async function showStates() {
 		method: "GET",
 		headers: {
 			Accept: "application/json",
-			"api-token": "7-XEHwLCLzq7iaJRWwnkSI5GFfL4A8VCIczHNsc2mXrvlUO3VDUGu7ZIBY7dauhz-qA",
-			"user-email": "182310211@itslerdo.edu.mx",
+			"api-token": "9BlpaH5qgUCOZJjDtIvbDH9BFkZbt40BdC9VQlVEGwkmibb3ubtwPdKWi9ftc6qVENE",
+			"user-email": "deconomico@gomezpalacio.gob.mx",
 		}
 	});
+	// Desarollo Economico - correo y token
 
 	auth_token = requestToken.auth_token;
 	// console.log(auth_token);
 
 	// await estados_ciudades(output_estado.text(), output_ciudad.text());
-	await states_cities();
+	await states_cities(state, city);
 	// console.log("ESTADOS_CIUDADES");
-	async function states_cities(estado = null, ciudad = null) {
+	async function states_cities(state = null, city = null) {
 		let states = await $.ajax({
 			url: `${URL_API_COUNTRIES}/states/México`,
 			method: "GET",
@@ -828,19 +887,19 @@ async function showStates() {
 		}
 		let comboStates = "<option value=''>Seleccionar una opción...</option>";
 		states.forEach((element) => {
-			let seleccionar_estado = "";
-			if (estado != null) {
-				if (estado == element[`state_name`]) {
-					seleccionar_estado = "selected";
+			let selected_state = "";
+			if (state != null) {
+				if (state == element[`state_name`]) {
+					selected_state = "selected";
 				}
 			}
-			// console.log(estado);
+			// console.log(state);
 			// $("#input_state").click()
 			comboStates +=
 				'<option value="' +
 				element["state_name"] +
 				'" ' +
-				seleccionar_estado +
+				selected_state +
 				">" +
 				element["state_name"] +
 				"</option>";
@@ -848,8 +907,8 @@ async function showStates() {
 
 		$("#input_state").html(comboStates);
 		$("#input_state").attr("disabled",false)
+		if (city != null) await showCities(state, city);
 	}
-	// await estados_ciudades2(output_estado.text(), output_ciudad.text());
 }
 $("#input_state").on("change", async function () {
 	var state = this.value;
@@ -857,7 +916,7 @@ $("#input_state").on("change", async function () {
 	// console.log(state);
 	showCities(state);
 });
-async function showCities(state) {
+async function showCities(state, city=null) {
 	$("#input_municipality").attr("disabled",true);
 	$("#input_municipality").html("<option value=''>Cargando...</option>");
 
@@ -870,29 +929,20 @@ async function showCities(state) {
 			Accept: "application/json",
 		}
 	});
-	// while (cities.length < 1) {
-	// 	cities = await $.ajax({
-	// 		url: `${URL_API_COUNTRIES}/cities/${state}`,
-	// 		method: "GET",
-	// 		headers: {
-	// 			Authorization: `Bearer ${auth_token}`,
-	// 			Accept: "application/json",
-	// 		}
-	// 	});
-	// }
 	var comboCities = "<option value='' >Selecciona una opción...</option>";
 	cities.forEach((element) => {
-		let seleccionar_ciudad = "";
-		// if (ciudad != null) {
-		// 	if (estado == element[`state_name`]) {
-		// 		seleccionar_ciudad = "selected";
-		// 	}
-		// }
+		let selected_city = "";
+		if (city != null) {
+			// console.log("hay ciudad:", city);
+			if (city == element[`city_name`]) {
+				selected_city = "selected";
+			}
+		}
 		comboCities +=
 			'<option value="' +
 			element["city_name"] +
 			'" ' +
-			seleccionar_ciudad +
+			selected_city +
 			">" +
 			element["city_name"] +
 			"</option>";
@@ -903,7 +953,7 @@ async function showCities(state) {
 
 $(".reload_input").click(function() {
 	const input = $(`#${$(this).attr("data-input")}`);
-	if (input.attr("id") == "input_state") showStates();
+	if (input.attr("id") == "input_state") showStates(state=null, city=null);
 	else if (input.attr("id") == "input_municipality") showCities($("#input_state").val());
 })
 //#endregion SELECTORES DE PAISES / CIUDADES
