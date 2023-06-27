@@ -30,6 +30,7 @@ if (isset($_FILES['input_logo_path'])) {
   $file = $_FILES['input_logo_path'];
   $type = explode(".",$file["name"]);
   $type = strtoupper(trim(end($type)));
+  $type = "PNG";
 
   $dir = "../../$path_files/companies";
   $file_name = "$company.$type";

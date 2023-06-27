@@ -40,6 +40,7 @@ if (isset($_FILES['input_photo_path'])) {
   $file = $_FILES['input_photo_path'];
   $type = explode(".",$file["name"]);
   $type = strtoupper(trim(end($type)));
+  $type = "PNG";
 
   $dir = "../../$path_files/candidates";
   $file_name = "$user_id-$name.$type";
@@ -72,6 +73,7 @@ if (isset($_FILES['input_cv_path'])) {
    $file = $_FILES['input_cv_path'];
    $type = explode(".",$file["name"]);
    $type = strtoupper(trim(end($type)));
+   $type = "PNG";
  
    $dir = "../../$path_files/candidates";
    $file_name = "$user_id-$name"."-cv."."$type";

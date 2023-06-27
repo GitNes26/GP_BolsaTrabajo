@@ -165,7 +165,7 @@ class User extends Connection {
    function showSelect() {
       try {
          $response = $this->defaultResponse();
-         $query = "SELECT u.id value, u.email text FROM users u WHERE u.active=1";
+         $query = "SELECT u.id value, u.email text FROM users u WHERE u.active=1 ";
          $result = $this->Select($query, true);
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";

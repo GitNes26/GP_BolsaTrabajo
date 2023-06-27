@@ -129,13 +129,8 @@ async function fillTable(show_toas=true) {
 				<div class="mb-2">
                   <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; 
                   <span class="fw-bolder">&nbsp;</span> 
-<<<<<<< HEAD
                   <span class="">${formatCurrency(obj.min_salary)}</span> &nbsp;a&nbsp; 
                   <span class="">${formatCurrency(obj.max_salary)}</span>
-=======
-                  <span class="">${formatCurrency(obj.min_salary, true, false)}</span> &nbsp;a&nbsp; 
-                  <span class="">${formatCurrency(obj.max_salary, true, false)}</span>
->>>>>>> ca61f8262cba3e71eed4009e1d4beef3aa62cec9
                </div>
                <div class="mb-2">
                   <i class="fa-solid fa-briefcase"></i>&nbsp; 

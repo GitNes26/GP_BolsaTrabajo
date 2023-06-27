@@ -243,7 +243,7 @@ $current_page = "Candidatos";
       <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
          <form class="modal-content" id="form" enctype="multipart/form-data">
             <div class="modal-header">
-               <h5 class="modal-title fw-bold" id="modalLabel"><i class="fa-solid fa-circle-plus"></i>&nbsp; INFORMACIÓN DEL CANDIDATO</h5>
+               <h5 class="modal-titles fw-bold" id="modalLabel"><i class="fa-solid fa-info"></i>&nbsp; INFORMACIÓN DEL CANDIDATO</h5>
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body scroll-y">
@@ -279,7 +279,7 @@ $current_page = "Candidatos";
                                  </div>
                               </div>
 
-                              <div class="col-sm-4 border-right">
+                              <div class="col-sm-4">
                                  <div class="description-block">
                                     <p class="description-header im_output" id="d_output_languages">[Mi nivel de ingles]</p>
                                     <span class="description-text"><i class="fa-regular fa-language"></i></span>
@@ -309,7 +309,7 @@ $current_page = "Candidatos";
                      <div class="col">
                         <div class="card card-success card-outline">
                            <div class="card-body box-profile card-pdf">
-                              <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONALES</div>
+                              <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONAL</div>
                               <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
                               <p class="text-muted text-center">Software Engineer</p> -->
                               <div id="d_output_professional_info" class="text-start scroll-y im_output" style="max-height: 81%;"></div>

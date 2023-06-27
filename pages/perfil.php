@@ -118,7 +118,7 @@ $pagina_acutal = "Mi Perfil";
         <div class="col">
           <div class="card card-success card-outline">
             <div class="card-body box-profile card-pdf">
-              <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONALES</div>
+              <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONAL</div>
               <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
               <p class="text-muted text-center">Software Engineer</p> -->
               <div id="output_professional_info" class="text-start scroll-y im_output" style="max-height: 81%;"></div>

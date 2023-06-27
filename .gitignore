@@ -1,0 +1,6 @@
+# Ignorar la carpeta de configutacion de VScode
+.vscode
+
+# Ignorar variables de configuracion
+config.php
+
