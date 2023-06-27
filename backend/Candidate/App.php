@@ -43,8 +43,6 @@ if (isset($_FILES['input_photo_path'])) {
   $type = "PNG";
 
   $dir = "../../$path_files/candidates";
-  $file_name = "$user_id-$name.$type";
-  $dest = "$dir/$file_name";
 
   if (!is_dir($dir)) {
      @mkdir($dir,0755,true);
@@ -55,13 +53,55 @@ if (isset($_FILES['input_photo_path'])) {
      *         los mismos permisos.
      */
   }
-  if (move_uploaded_file($_FILES["input_photo_path"]["tmp_name"], $dest)) {
-     $photo_path = "candidates/$file_name";
-  } else {
-     $photo_path = "";
-     $type = "";
-     print(error_get_last());
-  }
+   $file_name = "$user_id-$name";
+   $dest = "$dir/$file_name.$type";
+
+   $permissions = 0777;
+   $type = $type == "PNG" ? "JPG" : "PNG";
+   if (file_exists($dest)) {
+      // Establecer permisos
+      if (chmod($dest, $permissions)) {
+         // echo 'Se han establecido los permisos correctamente.';
+         // echo "Type antes: $type";
+
+         $dist_new = "$dir/$file_name.$type";
+         // echo "Type antes: $type";
+
+         // echo "el dist: $dist_new";
+         // rename($dest, "$dir/$file_name.$type");
+         if (move_uploaded_file($_FILES["input_photo_path"]["tmp_name"], $dist_new)) {
+            $photo_path = "candidates/$file_name.$type";
+         } else {
+            $photo_path = "";
+            $type = "";
+            print(error_get_last());
+         }
+         @unlink($dest);
+
+         // $dir_drop = "$dir/drop";
+         // if (!is_dir($dir_drop)) @mkdir($dir_drop, 0777, true);
+         // $dest_drop = "$dir_drop/$file_name";
+
+         // rename($dest, "$dest-D");
+         // @unlink($dest_drop);
+         // sleep(1);
+      } else {
+         // echo 'Error al establecer los permisos.';
+      }
+   } else {
+      // echo 'El archivo no existe.';
+
+      if (move_uploaded_file($_FILES["input_photo_path"]["tmp_name"], $dest)) {
+         $photo_path = "candidates/$file_name.$type";
+      } else {
+         $photo_path = "";
+         $type = "";
+         print(error_get_last());
+      }
+   }
+  
+
+   
 } else {
   $photo_path = "";
   $type = "";
@@ -78,8 +118,9 @@ if (isset($_FILES['input_cv_path'])) {
    $file_name = "$user_id-$name"."-cv."."$type";
    $dest = "$dir/$file_name";
  
+
    if (!is_dir($dir)) {
-      @mkdir($dir,0755,true);
+      @mkdir($dir,07,true);
       /**
       * 0755 => PERMISOS CRUD de los arvhicos
       * true => es para hacerlo recursivo,
@@ -87,6 +128,20 @@ if (isset($_FILES['input_cv_path'])) {
       *         los mismos permisos.
       */
    }
+
+   $permissions = 0777;
+   if (file_exists($dest)) {
+      // Establecer permisos
+      if (chmod($dest, $permissions)) {
+         // echo 'Se han establecido los permisos correctamente.';
+         @unlink($dest);
+      } else {
+         // echo 'Error al establecer los permisos.';
+      }
+   } else {
+         // echo 'El archivo no existe.';
+   }
+   
    if (move_uploaded_file($_FILES["input_cv_path"]["tmp_name"], $dest)) {
       $cv_path = "candidates/$file_name";
    } else {

@@ -37,7 +37,7 @@ if (isset($_FILES['input_logo_path'])) {
   $dest = "$dir/$file_name";
 
   if (!is_dir($dir)) {
-     @mkdir($dir,0755,true);
+     @mkdir($dir,0777,true);
      /**
      * 0755 => PERMISOS CRUD de los arvhicos
      * true => es para hacerlo recursivo,
@@ -45,8 +45,22 @@ if (isset($_FILES['input_logo_path'])) {
      *         los mismos permisos.
      */
   }
+
+  $permissions = 0777;
+  if (file_exists($dest)) {
+    // Establecer permisos
+    if (chmod($dest, $permissions)) {
+      echo 'Se han establecido los permisos correctamente.';
+      @unlink($dest);
+    } else {
+        echo 'Error al establecer los permisos.';
+    }
+  } else {
+      echo 'El archivo no existe.';
+  }
+
   if (move_uploaded_file($_FILES["input_logo_path"]["tmp_name"], $dest)) {
-     $logo_path = "companies/$file_name";
+    $logo_path = "companies/$file_name";
   } else {
      $logo_path = "";
      $type = "";
