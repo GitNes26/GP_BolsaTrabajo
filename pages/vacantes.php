@@ -163,7 +163,7 @@ $current_page = "Vacantes";
                      </div>
                      
                      <!-- VISTA A DETALLE -->
-                     <div class="col">
+                     <div class="col-md-6">
                         <div id="detail_vacancy" class="card shadow-lg card-detail">
                            <div class="card-header">
                               <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-regular fa-memo-circle-info"></i>&nbsp; VISTA PREVIA DE LA VACANTE</span>

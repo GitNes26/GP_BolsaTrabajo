@@ -128,6 +128,11 @@ else if (location.pathname == '/registro-perfil.php') needCookies = false;
 if (!Cookies.get("session") && needCookies) location.reload();
 
 
+let inIndex = false;
+if (location.pathname == '/pages') inIndex = true;
+else if (location.pathname == '/pages/') inIndex = true;
+else if (location.pathname == '/pages/index.php') inIndex = true;
+
 
 const ajaxRequestAsync = async (
 	url,
@@ -436,56 +441,76 @@ function resetImgPreview(preview, img_path=null, iframe=false) {
 //#region MENUS
 const sidebar_menus = $("#sidebar_menus");
 const navbar_menus = $("#navbar_menus");
-const fillSidebar = async (show_toast=false) => {
+const fillSidebar = async (show_toast=false, navbar_side=false) => {
 	// sidebar_menus.slideUp(1000);
 	let role_id = Number(Cookies.get("role_id"));
 	// role_id=1;
 	let data = { op: "showMyMenus", role_id: role_id };
 	const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP, data, false, true, show_toast);
-	sidebar_menus.html("");
+	sidebar_menus.html(null);
+	navbar_menus.html(null);
 	const objResponse = ajaxResponse.data;
 	// console.log(objResponse);
 	let menus = "";
 	let parent_menus = objResponse.filter((menu) => menu.belongs_to == 0);
 	parent_menus = parent_menus.sort().map((parent_menu) => {
-		menus += `
-        <li class="nav-item  mb-3">
-          <a href="#" class="nav-link">
-              <i class="nav-icon ${parent_menu.icon}"></i>
-              <p>
-                ${parent_menu.menu}
-                <i class="right fas fa-angle-left"></i>
-              </p>
-          </a>`;
-		let children_menus = objResponse.filter(
-			(menu) => menu.belongs_to == parent_menu.id
-		);
+		if (navbar_side) {
+			menus += ` <li class="nav-item dropdown text-light text-xs">
+			<a id="submenus${parent_menu.id}" href="#" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+				class="nav-link dropdown-toggle"><i class="nav-icon ${parent_menu.icon} mr-2"></i> ${parent_menu.menu}
+			</a>
+			<ul aria-labelledby="submenus${parent_menu.id}" class="dropdown-menu border-0 shadow">
+			`;
+		} else 
+		{
+			menus += `
+			<li class="nav-item mb-3">
+				<a href="#" class="nav-link">
+					<i class="nav-icon ${parent_menu.icon}"></i>
+					<p>
+						${parent_menu.menu}
+						<i class="right fas fa-angle-left"></i>
+					</p>
+				</a>`;
+		}
+		let children_menus = objResponse.filter((menu) => menu.belongs_to == parent_menu.id);
 		children_menus.sort((a, b) => b.order - a.order);
 		children_menus.map(async (child_menu) => {
-			menus += `
-              <ul class="nav nav-treeview text-sm">
-                <li class="nav-item">
-                    <a href="${PAGES_PATH}/${child_menu.file_path}" class="nav-link">
-                        <i class="nav-icon ${child_menu.icon} text-sm"></i>
-                        <p>
-									${child_menu.menu}`;
-                           if (child_menu.show_counter == 1) {
-										// const data = {op: "counter"}
-										// const ajaxCount = await ajaxRequestAsync(URL_MENU_APP, data, null, null, false);
-										// const count = ajaxCount.data;
-										menus += `<span class="badge badge-info right notification">0</span>`;
-									}
-								menus += `</p>
-                    </a>
-                </li>
-              </ul>`;
+			if (navbar_side) {
+				menus += `
+				<li>
+					<a href="${PAGES_PATH}/${child_menu.file_path}" class="dropdown-item text-xs"><i class="nav-icon ${child_menu.icon} mr-2"></i> ${child_menu.menu}</a>
+				</li>
+				`;
+			} else {
+				menus += `
+				<ul class="nav nav-treeview text-sm">
+					<li class="nav-item">
+						<a href="${PAGES_PATH}/${child_menu.file_path}" class="nav-link">
+							<i class="nav-icon ${child_menu.icon} text-sm"></i>
+							<p>
+								${child_menu.menu}`;
+								if (child_menu.show_counter == 1) {
+									// const data = {op: "counter"}
+									// const ajaxCount = await ajaxRequestAsync(URL_MENU_APP, data, null, null, false);
+									// const count = ajaxCount.data;
+									menus += `<span class="badge badge-info right notification">0</span>`;
+								}
+							menus += `</p>
+						</a>
+					</li>
+				</ul>`;
+			}
 		});
+		if (navbar_side) menus += `</ul>`;
 		menus += `</li>`;
 	});
-	await sidebar_menus.append(menus);
+	if (navbar_side) await navbar_menus.append(menus);
+	else await sidebar_menus.append(menus);
 	// sidebar_menus.slideDown(1000);
 };
 if (sidebar_menus.length > 0) fillSidebar();
+else if (inIndex) fillSidebar(false, true);
 
 //#endregion
 

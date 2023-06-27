@@ -208,3 +208,16 @@ a:hover { color: #0c7827; }
    color: black !important;
    background: transparent;
 }
+
+/* .navbar-collapse .nav-item {
+   marker: none !important;
+   text-decoration: none !important;
+}
+.navbar-collapse .nav-item::before {
+   display: none !important;
+   marker: none !important;
+   text-decoration: none !important;
+}
+.navbar-collapse .nav-item::marker {
+   display: none !important;
+} */

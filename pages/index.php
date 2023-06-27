@@ -8,11 +8,11 @@ $pagina_acutal = "Bolsa de Trabajo";
 ?>
 
 <!-- Content Wrapper. Contenido de la pagina -->
-<div class="content-wrapper text-sm">
+<div class="content-wrapper text-sm pt-6">
    <!-- Content Header (Encabezado en el contenido de la pagina) -->
    <section class="content-header">
       <div class="container-fluid">
-         <div class="row mb-2">
+         <div class="row mb-2 mt-3">
             <div class="col text-center">
                <h1 class="fw-bolder text-uppercase">
                <i class="fa-regular fa-sack-dollar"></i>&nbsp; <?= $pagina_acutal ?>

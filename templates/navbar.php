@@ -16,10 +16,6 @@
 
    </ul> -->
 
-   <ul id="sidebar_menus" class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
-      <!-- CATÁLOGOS -->
-   </ul>
-
    <!-- Right navbar links -->
    <ul class="navbar-nav ml-auto">
       <!-- Perfil -->
