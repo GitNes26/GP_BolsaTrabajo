@@ -24,7 +24,7 @@ $URL_BASE = "";
 // $PROTOCOL = $_SERVER["HTTPS"] == "on" ? "https" : "http";
 $URL_MAIN = "http://$_SERVER[HTTP_HOST]$URL_BASE";
 // $ICONO = "$URL_BASE/favicon.ico";
-$ICONO = "URL_BASE/assets/img/logo_gomez_palacio.png"; #"https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
+$ICONO = "$URL_BASE/assets/img/logo_gomez_palacio.png"; #"https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
 // $LOGO = "$URL_BASE/logo.ico";
 $LOGO = "$URL_BASE/assets/img/logo_gomez_palacio.png";
 // $LOGO = "https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
