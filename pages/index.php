@@ -133,7 +133,7 @@ $pagina_acutal = "Bolsa de Trabajo";
             <form id="form_vacancy" enctype="multipart/form-data" class="card shadow-lg sticky-top card-detail">
                <div class="card-header">
                   <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-regular fa-memo-circle-info"></i>&nbsp; DETALLE DE LA VACANTE</span>
-                  <div class="card-tools">
+                  <div class="card-tools mt-2">
                      <button type="button" id="btn_close_detail" class="btn btn-tool" data-card-widget="collapse">
                      <i class="fas fa-minus"></i>
                      </button>
@@ -193,7 +193,7 @@ $pagina_acutal = "Bolsa de Trabajo";
    <!-- /.content -->
 
    <!-- Modal -->
-   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" data-bs-backdrop="static">
       <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
          <form id="form_modal" class="modal-content">         
             <div class="modal-header">

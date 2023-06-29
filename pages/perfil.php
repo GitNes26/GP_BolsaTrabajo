@@ -115,21 +115,6 @@ $pagina_acutal = "Mi Perfil";
           </div>
         </div>
 
-        <!-- INFORMACION PROFESIONAL -->
-        <div class="col col-md-6">
-          <div class="card card-success card-outline">
-            <div class="card-body box-profile card-pdf">
-              <div class="text-center h2 fw-bolder">DESCRIPCIÓN DE LA EMPRESA</div>
-              <div id="output_description" class="text-start scroll-y im_output" style="max-height: 81%;"></div>
-              <div class="im_input d-none text-start">
-                <label for="input_description" class="form-label">Más información: &nbsp;<i class="fa-duotone fa-circle-info" title="Describa brevemente a su empresa."></i></label>
-                <textarea type="text" class="form-control counter" id="input_description" name="input_description" data-input-name="ACERCA DE" rows="4" data-limit="150" data-counter="counter_description"></textarea>
-                <div class="text-sm text-end text-muted" id="counter_description"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
 
     </form>

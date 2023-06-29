@@ -2,5 +2,5 @@
 .vscode
 
 # Ignorar variables de configuracion
-config.php
+/config.php
 

@@ -20,8 +20,9 @@ const
 	form = $("#form"),
 	modal_title = $(".modal-title"),
 	id_modal = $("#id"),
-	op_modal = $("#op"),
+	op_modal = $("#op");
 
+const 
 	input_user_id = $("#input_user_id"),
    input_photo_path = $('#input_photo_path'), //este es un input_file
    output_photo = $('#output_photo'),
@@ -48,23 +49,46 @@ const
    output_cv = $('#output_cv'),
    preview_cv = $('#preview_cv'),
 	
-	
-	
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset"),
 	btn_cancel = $("#btn_cancel"),
 	btn_edit = $("#btn_edit"),
-	btn_change_enable = $("#btn_change_enable"),
+	btn_change_enable = $("#btn_change_enable")
 
 	
-	input_logo_path = $('#input_logo_path'), //este es un input_file
-	label_input_file = $("#label_input_file"),
-   preview_logo = $('#preview_logo'),
-	input_business_line = $("#input_business_line"),
+	// input_logo_path = $('#input_logo_path'), //este es un input_file
+	// label_input_file = $("#label_input_file"),
+  //  preview_logo = $('#preview_logo'),
+	// input_business_line = $("#input_business_line"),
 	
-	input_file = $('#input_file'), //este es un input_file
-   preview_file = $('#preview_file')
 	;
+
+
+// /* INPUTS DE REGISTRO EMPRESA */
+const 
+   input_company = $("#input_company"),
+   output_company = $("#output_company"),
+   input_description = $("#input_description"),
+   output_description = $("#output_description"),
+   counter_description = $("#counter_description"),
+   input_logo_path = $('#input_logo_path'), //este es un input_file
+   output_logo_path = $('#output_logo_path'), //este es un input_file
+   preview_logo = $('#preview_logo'),
+   input_business_line_id = $("#input_business_line_id"),
+   output_business_line = $("#output_business_line"),
+   input_company_ranking_id = $("#input_company_ranking_id"),
+   output_company_ranking = $("#output_company_ranking"),
+   input_state = $("#input_state"),
+   output_state = $("#output_state"),
+   input_municipality = $("#input_municipality"),
+   output_municipality = $("#output_municipality"),
+   input_contact_name = $("#input_contact_name"),
+   output_contact_name = $("#output_contact_name"),
+   input_contact_phone = $("#input_contact_phone"),
+   output_contact_phone = $("#output_contact_phone"),
+   input_contact_email = $("#input_contact_email"),
+   output_contact_email = $("#output_contact_email")
+   ;
 	
 let vProfession_id = null;
 
@@ -78,6 +102,8 @@ focusSelect2($(".select2"));
 
 init();
 async function init() {
+	counter_description.text(`0/${input_description.data("limit")}`);
+
 	fillInfo(false);
 	// setTimeout(() => {
    //    input_business_line.focus();
