@@ -38,8 +38,9 @@ if (isset($_POST['haveCv'])) { $haveCv = $_POST['haveCv']; } else { $haveCv = nu
 if (isset($_FILES['input_photo_path'])) {
   $path_files = "assets/img";
   $file = $_FILES['input_photo_path'];
-//   $type = explode(".",$file["name"]);
-//   $type = strtoupper(trim(end($type)));
+   //   $type = explode(".",$file["name"]);
+   //   $type = strtoupper(trim(end($type)));
+   $type = "PNG";
 
   $dir = "../../$path_files/candidates";
 
@@ -52,19 +53,21 @@ if (isset($_FILES['input_photo_path'])) {
      *         los mismos permisos.
      */
   }
+
+  
    $file_name = "$user_id-$name";
    $permissions = 0777;
    if (file_exists("$dir/$file_name.PNG")) {
       // Establecer permisos
-      if (chmod($dest, $permissions)) {
-         @unlink("$dir/$file_name.$type");
+      if (chmod("$dir/$file_name.PNG", $permissions)) {
+         @unlink("$dir/$file_name.PNG");
       }
       $type = "JPG";
    }
    elseif (file_exists("$dir/$file_name.JPG")) {
       // Establecer permisos
-      if (chmod($dest, $permissions)) {
-         @unlink("$dir/$file_name.$type");
+      if (chmod("$dir/$file_name.JPG", $permissions)) {
+         @unlink("$dir/$file_name.JPG");
       }
       $type = "PNG";
 
@@ -72,48 +75,13 @@ if (isset($_FILES['input_photo_path'])) {
 
    $dest = "$dir/$file_name.$type";
 
-   // $type = $type == "PNG" ? "JPG" : "PNG";
-   // if (file_exists($dest)) {
-   //    // Establecer permisos
-   //    if (chmod($dest, $permissions)) {
-   //       // echo 'Se han establecido los permisos correctamente.';
-   //       // echo "Type antes: $type";
-
-   //       $dist_new = "$dir/$file_name.$type";
-   //       // echo "Type antes: $type";
-
-   //       // echo "el dist: $dist_new";
-   //       // rename($dest, "$dir/$file_name.$type");
-   //       if (move_uploaded_file($_FILES["input_photo_path"]["tmp_name"], $dist_new)) {
-   //          $photo_path = "candidates/$file_name.$type";
-   //       } else {
-   //          $photo_path = "";
-   //          $type = "";
-   //          print(error_get_last());
-   //       }
-   //       @unlink($dest);
-
-   //       // $dir_drop = "$dir/drop";
-   //       // if (!is_dir($dir_drop)) @mkdir($dir_drop, 0777, true);
-   //       // $dest_drop = "$dir_drop/$file_name";
-
-   //       // rename($dest, "$dest-D");
-   //       // @unlink($dest_drop);
-   //       // sleep(1);
-   //    } else {
-   //       // echo 'Error al establecer los permisos.';
-   //    }
-   // } else {
-      // echo 'El archivo no existe.';
-
-      if (move_uploaded_file($_FILES["input_photo_path"]["tmp_name"], $dest)) {
-         $photo_path = "candidates/$file_name.$type";
-      } else {
-         $photo_path = "";
-         $type = "";
-         print(error_get_last());
-      }
-   // }
+   if (move_uploaded_file($_FILES["input_photo_path"]["tmp_name"], $dest)) {
+      $photo_path = "candidates/$file_name.$type";
+   } else {
+      $photo_path = "";
+      $type = "";
+      print(error_get_last());
+   }
   
 
    

@@ -28,13 +28,13 @@ if (isset($_POST['haveImg'])) { $haveImg = $_POST['haveImg']; } else { $haveImg 
 if (isset($_FILES['input_logo_path'])) {
   $path_files = "assets/img";
   $file = $_FILES['input_logo_path'];
-  $type = explode(".",$file["name"]);
-  $type = strtoupper(trim(end($type)));
+  // $type = explode(".",$file["name"]);
+  // $type = strtoupper(trim(end($type)));
   $type = "PNG";
 
   $dir = "../../$path_files/companies";
-  $file_name = "$company.$type";
-  $dest = "$dir/$file_name";
+  // $file_name = "$company.$type";
+  // $dest = "$dir/$file_name";
 
   if (!is_dir($dir)) {
      @mkdir($dir,0777,true);
@@ -46,31 +46,39 @@ if (isset($_FILES['input_logo_path'])) {
      */
   }
 
+
+  $file_name = "$user_id-$company";
   $permissions = 0777;
-  if (file_exists($dest)) {
+  if (file_exists("$dir/$file_name.PNG")) {
     // Establecer permisos
-    if (chmod($dest, $permissions)) {
-      echo 'Se han establecido los permisos correctamente.';
-      @unlink($dest);
-    } else {
-        echo 'Error al establecer los permisos.';
+    if (chmod("$dir/$file_name.PNG", $permissions)) {
+        @unlink("$dir/$file_name.PNG");
     }
-  } else {
-      echo 'El archivo no existe.';
+    $type = "JPG";
+  }
+  elseif (file_exists("$dir/$file_name.JPG")) {
+    // Establecer permisos
+    if (chmod("$dir/$file_name.JPG", $permissions)) {
+        @unlink("$dir/$file_name.JPG");
+    }
+    $type = "PNG";
   }
 
+  $dest = "$dir/$file_name.$type";
+
   if (move_uploaded_file($_FILES["input_logo_path"]["tmp_name"], $dest)) {
-    $logo_path = "companies/$file_name";
+    $logo_path = "companies/$file_name.$type";
   } else {
-     $logo_path = "";
-     $type = "";
-     print(error_get_last());
+    $logo_path = "";
+    $type = "";
+    print(error_get_last());
   }
+
 } else {
   $logo_path = "";
   $type = "";
 }
-if ($haveImg != null) $logo_path = $haveImg;
+if ($logo_path == "" && $haveImg != null) $logo_path = $haveImg;
 
 
 #PETICIONES
