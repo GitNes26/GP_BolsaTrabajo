@@ -243,7 +243,7 @@ $current_page = "Candidatos";
       <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
          <form class="modal-content" id="form" enctype="multipart/form-data">
             <div class="modal-header">
-               <h5 class="modal-titles fw-bold" id="modalLabel"><i class="fa-solid fa-info"></i>&nbsp; INFORMACIÓN DEL CANDIDATO</h5>
+               <h5 class="modal-titles fw-bold" id="modalLabel"><i class="fa-solid fa-user-tie"></i>&nbsp; INFORMACIÓN DEL CANDIDATO</h5>
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body scroll-y">

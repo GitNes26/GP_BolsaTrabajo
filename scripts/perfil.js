@@ -3,7 +3,7 @@ var table;
 table = $("#table").DataTable(DT_CONFIG);
 
 $(document).ready(() => {
-	$(`span[aria-labelledby='select2-input_profession_id-container']`).addClass("d-none");
+	// $(`span[aria-labelledby='select2-input_profession_id-container']`).addClass("d-none");
 
 	SUMMERNOTE_CONFIG.placeholder = "Escribir Habilidades, competencias, experiencias, observaciones, etc.";
 	SUMMERNOTE_CONFIG.toolbar.push(['templates', ['template_candidate']]);
@@ -419,27 +419,8 @@ async function editObj(btn_edit) {
 	}, 500);
 }
 
-//ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
-async function deleteObj(btn_delete) {
-	let title = `¿Estas seguro de eliminar el giro <br> ${btn_delete.attr("data-name")}?`;
-	let text = ``;
 
-	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
-	let data = {
-		op: "delete",
-		id: Number(btn_delete.attr("data-id")),
-		deleted_at: current_date,
-	};
-
-	ajaxRequestQuestionAsync(
-		title,
-		text,
-		URL_BUSINESS_LINE_APP,
-		data,
-		"fillTable()"
-	);
-}
-
+// CAMBIAR STATUS CON EL SWITCH
 async function changeEnable(enable) {
 	btn_change_enable.attr("data-enable", enable)
 	if (enable == "1") {

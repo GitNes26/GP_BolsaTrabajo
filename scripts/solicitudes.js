@@ -19,6 +19,22 @@ const
 	// btn_submit = $("#btn_submit"),
 	// btn_reset = $("#btn_reset"),
 	btns_cancel = $(".btn_cancel");
+
+const
+	d_output_photo = $("#d_output_photo"),
+	d_div_header = $("#d_div_header"),
+	d_output_enable = $("#d_output_enable"),
+	d_preview_photo = $("#d_preview_photo"),
+	d_output_name = $("#d_output_name"),
+	d_output_email = $("#d_output_email"),
+	d_output_cellphone = $("#d_output_cellphone"),
+	d_output_age = $("#d_output_age"),
+	d_output_profession = $("#d_output_profession"),
+	d_output_interest_tags_ids = $("#d_output_interest_tags_ids"),
+	d_output_professional_info = $("#d_output_professional_info"),
+	d_output_languages = $("#d_output_languages"),
+	d_preview_cv = $("#d_preview_cv")
+	;
 	
 //#endregion VARIABLES
 // $(".select2").select2();
@@ -232,34 +248,99 @@ async function showDetail(id) {
 	btns_cancel.attr("data-name", obj.vacancy);
 }
 
-async function showCandidate(id) {
-	modalLabel.html("<i class='fa-solid fa-memo-circle-info'></i>&nbsp; DETALLE DE LA VACANTE");
+//MOSTRAR INFORMAICON
+function resetImgPreviewProfile(preview, img_path=null, iframe=false, pointer=true) {
+	if (!iframe || img_path==null) {
+		// Crea un elemento de imagen
+		const imagen = document.createElement('img');
+		iframe 
+		? imagen.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path // Asigna la imagen cargada como fuente
+		: imagen.src = img_path == null ? "/assets/img/sin_perfil.webp" : img_path; // Asigna la imagen cargada como fuente
+		if (iframe) {
+			imagen.classList.add("img-fluid"); // Asignar clases
+			pointer ? imagen.classList.add("pointer-sm") : imagen.classList.remove("pointer-sm")  // sAsignar clases
+			//  imagen.classList.add("p-5"); // Asignar clases
+			imagen.classList.add("rounded-lg"); // Asignar clases
+			// imagen.classList.add("text-center"); // Asignar clases
+			imagen.style = "max-height: 200px !important";
+		} else {
+			imagen.classList.add("img-circle"); // Asignar clases
+			imagen.classList.add("elevation-2"); // Asignar clases
+			imagen.classList.add("bg-white"); // Asignar clases
+			pointer ? imagen.classList.add("pointer-sm") : imagen.classList.remove("pointer-sm")  // sAsignar clases
+			imagen.classList.add("opacity-100"); // Asignar clases
+			imagen.title = "Haz clic aquí, si deseas cambiar tu foto de perfil";
+			
+			imagen.setAttribute("style","width: 100px !important; height: 100px !important; object-fit: contain");
+		}
 
+		// Agrega la imagen a la vista previa
+		preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+		preview.append(imagen);
+	} else {
+		// Crea un elemento de imagen
+      const iframe = document.createElement('iframe');
+      iframe.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path; // Asigna la iframe cargada como fuente
+      // canvas.getContext("2d") // Asigna la iframe cargada como fuente
+      iframe.classList.add("img-fluid"); // Asignar clases
+      pointer ? iframe.classList.add("pointer-sm") : iframe.classList.remove("pointer-sm")  // sAsignar clases
+      //  iframe.classList.add("p-5"); // Asignar clases
+      iframe.classList.add("rounded-lg"); // Asignar clases
+      iframe.classList.add("opacity-100"); // Asignar clases
+      iframe.style = "height: 100% !important";
+
+      // Agrega la iframe a la vista previa
+      preview.html(""); // Limpia la vista previa antes de agregar la nueva iframe
+      preview.append(iframe);
+		preview.parent().css("height","50vh");
+		// label_input_file.css("height","100%");
+		preview.css("height","100%");
+	}
+}
+
+async function showCandidate(id) {
 	let data = { id, op: "show" };
 	const ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
-
 	const obj = ajaxResponse.data;
-	console.log(obj);
+	// console.log(obj);
 
-	// PREVIEW
-	// $(`.output_vacancy`).text(obj.vacancy);
-	// data = { op: "show", id: obj.company_id }
-	// const ajaxResponseCompany = await ajaxRequestAsync(URL_COMPANY_APP, data);
-	// const objCompany = ajaxResponseCompany.data
-	// $(`.output_info_company`).html(`
-	// 	<span>${objCompany.company}</span><br>
-	// 	<span>${objCompany.municipality}, ${objCompany.state}</span><br><br>
-	// 	<span class="">${objCompany.description}</span>
-	// `);
-	// $(`.output_area`).text(obj.area);
-	// $(`.output_description`).text(obj.description);
-	// $(`.output_min_salary`).text(formatCurrency(obj.min_salary));
-	// $(`.output_max_salary`).text(formatCurrency(obj.max_salary));
-	// $(`.output_job_type`).text(obj.job_type);
-	// $(`.output_schedules`).text(obj.schedules);
-	// $(`.output_more_info`).html(obj.more_info);
-	// btns_cancel.attr("data-id", obj.id);
-	// btns_cancel.attr("data-name", obj.vacancy);
+	if (obj.enable == 0) {
+		d_div_header.removeClass("bg-success");
+		d_div_header.addClass("bg-primary");
+		d_output_enable.text("CONTRATADO");
+	}
+
+	haveImg=false;
+	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreviewProfile(d_preview_photo, `/assets/img/sin_perfil.webp`, false, false);
+	else {
+		haveImg = true;
+		// console.log("tengo imagen guardada");
+ 		resetImgPreviewProfile(d_preview_photo,`/assets/img/${obj.photo_path}`, false, false);
+		vLogoPath = obj.photo_path;
+		// input_photo_path.val(obj.photo_path);
+		d_output_photo.attr("src", `/assets/img/${obj.photo_path}`)
+	}
+	d_output_name.text(`${obj.name} ${obj.last_name}`);
+	d_output_email.text(obj.email);
+	d_output_cellphone.text(formatPhone(obj.cellphone));
+	// input_age.val(obj.age);
+	d_output_age.text(obj.age);
+	
+	d_output_profession.text(obj.profession)
+	d_output_professional_info.html(obj.professional_info);
+
+	d_output_languages.text(obj.languages);
+	// await showStates(obj.state, obj.municipality);
+	haveCv=false; 
+	if (obj.cv_path == "" || obj.cv_path == null) resetImgPreviewProfile(d_preview_cv, null, true, false);
+	else {
+		haveCv = true;
+		// console.log("tengo imagen guardada");
+ 		resetImgPreviewProfile(d_preview_cv,`/assets/img/${obj.cv_path}`, true, false);
+		vCvPath = obj.cv_path;
+		// input_cv_path.val(obj.cv_path);
+	}
+	// changeEnable(obj.enable);
 }
 
 async function changeStatus(status, vacancy_id) {
