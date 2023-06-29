@@ -4,3 +4,7 @@
 # Ignorar variables de configuracion
 /config.php
 
+#no importar imagenes de usuarios
+/assets/img/candidates
+/assets/img/companies
+
