@@ -134,6 +134,60 @@ class Company extends Connection {
       }
       die(json_encode($response));
    }
+   function editInfo($user_id, $company, $description, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $email, $updated_at) {
+      try {
+         $response = $this->defaultResponse();
+
+         $id = $this->_getIdByUserId($user_id);
+         if ($id == 0) die(json_encode($response));
+
+         $this->validateAvailableData($cellphone, $id);
+
+         $query = "UPDATE companies SET company=?, description=?, contact_name=?, contact_phone=?, contact_email=?, state=?, municipality=?, business_line_id=?, company_ranking_id=?, updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($company, $description, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $updated_at, $id));
+
+         $query = "UPDATE users SET email=?, updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($email, $updated_at, $user_id));
+         
+         $response = $this->CorrectResponse();
+         $response["message"] = "Peticion satisfactoria | registro actualizado.";
+         $response["alert_title"] = "Información actualizada";
+         $response["alert_text"] = "Información actualizada";
+         $this->Close();
+   
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->CatchResponse($error_message);
+      }
+      die(json_encode($response));
+   }
+   function editLogo($user_id, $logo_path, $updated_at) {
+      try {
+         $response = $this->defaultResponse();
+
+         $id = $this->_getIdByUserId($user_id);
+         if ($id == 0) die(json_encode($response));
+
+         $query = "UPDATE companies SET logo_path=? WHERE id=?";
+         $this->ExecuteQuery($query, array($logo_path, $id));
+
+         $query = "UPDATE users SET updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($updated_at, $user_id));
+         
+         $response = $this->CorrectResponse();
+         $response["message"] = "Peticion satisfactoria | registro actualizado.";
+         $response["alert_title"] = "Foto actualizada";
+         $response["alert_text"] = "Foto actualizada";
+         $this->Close();
+   
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->CatchResponse($error_message);
+      }
+      die(json_encode($response));
+   }
 
    function delete($deleted_at, $user_id) {
       try {
@@ -168,5 +222,14 @@ class Company extends Connection {
       $company = $this->Select($query, false);
       if (!$company) die(json_encode(array("data" => 0)));
       else die(json_encode(array("data" => $company["id"]))); 
+   }
+
+
+
+   private function _getIdByUserId($user_id) {
+      $query = "SELECT id FROM companies WHERE user_id=$user_id;";
+      $company = $this->Select($query, false);
+      if (!$company) return 0;
+      else return $company["id"]; 
    }
 }

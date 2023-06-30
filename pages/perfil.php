@@ -91,24 +91,51 @@ $pagina_acutal = "Mi Perfil";
               <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
               <p class="text-muted text-center">Software Engineer</p> -->
               <div class="row"> <!-- GIRO Y CLASIFICACION -->
+              
                 <div class="mb-3 col">
-                  <label for="input_business_line_id" class="form-label">Giro: <span class="obligatory"></span></label>
-                  <select class="select2 form-control" style="width:100%"
-                  id="input_business_line_id" name="input_business_line_id" data-input-name="GIRO">
-                  </select>
+                  <div class="im_output">
+                    <i class="fa-solid fa-briefcase"></i> &nbsp; Giro Empresarial
+                    <p class="fw-bolder" id="output_business_line">[Giro Empresarial]</p>
+                  </div>
+                  <div class="mt-2 d-none im_input">
+                    <label for="input_business_line_id" class="form-label">Giro: <span class="obligatory"></span></label>
+                    <select class="select2 form-control d-none im_input" style="width:100%"
+                    id="input_business_line_id" name="input_business_line_id" data-input-name="GIRO">
+                    </select>
+                  </div>
                 </div>
                 <div class="mb-3 col">
-                  <label for="input_company_ranking_id" class="form-label">Clasificacón: <span class="obligatory"></span></label>
-                  <select class="select2 form-control" style="width:100%"
-                  id="input_company_ranking_id" name="input_company_ranking_id" data-input-name="ACERCA DE">
-                  </select>
+                  <div class="im_output">
+                    <i class="far fa-circle"></i> &nbsp; Clasificacion de Empresa
+                    <p class="fw-bolder" id="output_company_ranking">[Clasificacion de Empresa]</p>
+                  </div>
+                  <div class="mt-2 d-none im_input">
+                    <label for="input_company_ranking_id" class="form-label">Clasificacón: <span class="obligatory"></span></label>
+                    <select class="select2 form-control d-none im_input" style="width:100%"
+                    id="input_company_ranking_id" name="input_company_ranking_id" data-input-name="ACERCA DE">
+                    </select>
+                  </div>
                 </div>
               </div>
               <div class="row">
                 <div class="mb-3 col">
+                  <div class="im_output">
+                    <i class="fa-regular fa-memo-circle-info"></i>&nbsp; Acerca de mi empresa
+                    <p class="fw-bolder" id="output_description">...</p>
+                  </div>
+                  <div class="mt-2 d-none im_input">
                   <label for="input_description" class="form-label">Acerca de mí empresa: <span class="obligatory"></span></label>
                   <textarea type="text" class="form-control counter" id="input_description" name="input_description" data-input-name="ACERCA DE" rows="4" data-limit="150" data-counter="counter_description"></textarea>
                   <div class="text-sm text-end text-muted" id="counter_description"></div>
+                </div>
+              </div>
+              <div class="row border rounded-lg"> <!-- CORREO DE USUARIO -->
+                <div class="col-12 h3 fw-bolder">CORREO DE USUARIO</div>
+                <p class="description-header im_output" id="output_email">[correo_de_usuario@gmail.com]</p>
+                <div class="mb-3 d-none im_input">
+                  <label for="input_email " class="form-label">Correo Electronico: <span class="obligatory"></span></label>
+                  <input class="form-control" id="input_email" name="input_email" data-input-name="EMAIL DE USUARIO">
+                  </input>
                 </div>
               </div>
             </div>
