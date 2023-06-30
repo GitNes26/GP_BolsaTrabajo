@@ -1,4 +1,3 @@
-
 //#region VARIABLES
 const
 	vacancies_enabled = $("#vacancies_enabled"),
@@ -335,3 +334,16 @@ async function applyVacancy(form_js) {
 // 	$(".notification").text(num);
 // 	console.log("Refrescando");
 // }, 1000);
+
+
+//#region BANNERS
+// SLICE PARA BANNERS
+$('.fade').slick({
+	dots: true,
+	infinite: true,
+	speed: 500,
+	fade: true,
+	cssEase: 'linear'
+ });
+
+//#endregion BANNERS

@@ -12,6 +12,13 @@ $pagina_acutal = "Mi Perfil";
 
   <!-- Main content -->
   <section class="content text-center">
+    <?php if ($_COOKIE["role_id"] <= 2): ?>
+    <div class="callout callout-info mt-2">
+      <h5>ESTA PAGINA NO ES FUNCIONAL PARA LOS ADMINISTRADORES.</h5>
+      <p>Esta pagina es solo para que los candidatos o las empresas puedan modificar su informacion si asi lo desean.</p>
+    </div>
+    <?php endif; ?>
+
     <?php if ($_COOKIE["role_id"] == 3): ?>
     <form id="form_logo">
       <input type="file" id="input_logo_path" name="input_logo_path" class="d-none" accept="image/*" data-preview="preview_logo">

@@ -65,6 +65,10 @@
 <script src="/plugins/summernote-0.8.18/summernote-bs4.min.js"></script>
 <script src="/plugins/summernote-0.8.18/lang/summernote-es-ES.min.js"></script>
 
+<!-- slick-carousel 1.8.1 -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+
 <!-- bs-stepper- formularios en pasos -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js" charset="utf-8"></script> -->
 
