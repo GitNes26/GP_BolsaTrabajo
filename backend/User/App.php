@@ -25,12 +25,15 @@ if(isset($_POST['created_at'])) $created_at = $_POST['created_at'];
 if(isset($_POST['updated_at'])) $updated_at = $_POST['updated_at'];
 if(isset($_POST['deleted_at'])) $deleted_at = $_POST['deleted_at'];
 
+if(isset($_POST['role'])) $role = $_POST['role'];
+
+
 // #region PETICIONES
 if ($op == 'index') $User->index();
 
 elseif ($op == 'show') $User->show($id);
 elseif ($op == 'showInfo') $User->showInfo($id, $role_id);
-elseif ($op == 'showSelect') $User->showSelect();
+elseif ($op == 'showSelect') $User->showSelect($role);
 
 elseif ($op == 'register') $User->register($email,$password,$created_at);
 elseif ($op == 'create') $User->create($email,$password,$role_id,$created_at);

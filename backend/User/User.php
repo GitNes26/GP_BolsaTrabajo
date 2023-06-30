@@ -162,11 +162,28 @@ class User extends Connection {
       die(json_encode($response));
    }
 
-   function showSelect() {
+   function showSelect($role) {
       try {
          $response = $this->defaultResponse();
-         $query = "SELECT u.id value, u.email text FROM users u WHERE u.active=1 ";
+         $query = "SELECT u.id value, u.email text, u.role_id FROM users u WHERE u.active=1";
          $result = $this->Select($query, true);
+         $result = array_filter($result, function ($k, $v) {
+            return $k['role_id'] != 1;
+         }, ARRAY_FILTER_USE_BOTH);
+         $result = array_filter($result, function ($k, $v) {
+            return $k['role_id'] != 2;
+         }, ARRAY_FILTER_USE_BOTH);
+
+         if ($role == "company") {
+            $result = array_filter($result, function ($k, $v) {
+               return $k['role_id'] != 4;
+            }, ARRAY_FILTER_USE_BOTH);
+         } elseif ($role == "candidate") {
+            $result = array_filter($result, function ($k, $v) {
+               return $k['role_id'] != 3;
+            }, ARRAY_FILTER_USE_BOTH);
+         }
+         
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;

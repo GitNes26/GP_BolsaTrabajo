@@ -224,7 +224,6 @@ $pagina_acutal = "Mi Perfil";
                 <button type="submit" class="btn btn-outline-success d-none rounded-start" id="btn_submit">GUARDAR</button>
                 <button type="button" class="btn btn-outline-danger d-none rounded-end" id="btn_cancel">CANCELAR</button>
                 <button type="button" class="btn btn-outline-dark" id="btn_change_enable" data-enable="" title=""></button>
-                <button type="button" class="btn btn-outline-dark" id="btn_change_enable" data-enable="">Cambiar estatus</button>
               </div>
               <button type="button" class="btn btn-outline-info m-2" id="btn_change_password" data-bs-toggle="modal" data-bs-target="#password_modal">Cambiar Contraseña</button>
 
