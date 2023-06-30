@@ -18,6 +18,7 @@ if (isset($_POST['input_business_line_id'])) { $business_line_id = $_POST['input
 if (isset($_POST['input_company_ranking_id'])) { $company_ranking_id = $_POST['input_company_ranking_id']; }
 if (isset($_POST['input_user_id'])) { $user_id = $_POST['input_user_id']; }
 if (isset($_POST['user_id'])) { $user_id = $_POST['user_id']; }
+if (isset($_POST['input_email'])) { $email = $_POST['input_email']; }
 
 if (isset($_POST['created_at'])) { $created_at = $_POST['created_at']; }
 if (isset($_POST['updated_at'])) { $updated_at = $_POST['updated_at']; }

@@ -339,7 +339,6 @@ form.on("submit", async (e) => {
 		addToArray("op", "editInfo", data);
 		addToArray("updated_at", moment().format("YYYY-MM-DD hh:mm:ss"), data);
 		addToArray("user_id", id_cookie, data);
-		console.log(data);
 
 		ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
 	}
@@ -354,8 +353,7 @@ async function fillInfo(show_toas=true) {
 	const ajaxResponse = await ajaxRequestAsync(URL_USER_APP, data, null, true, show_toas);
 
 	let obj = ajaxResponse.data;
-	console.log(obj);
-
+	// console.log(obj);
 
 	if (role_cookie == 4) {
 		if (obj.enable == 0) {
@@ -458,10 +456,6 @@ async function fillInfo(show_toas=true) {
 
 		input_email.val(obj.email);
 		output_email.text(obj.email);
-
-
-		
-
 	}
 	
 }

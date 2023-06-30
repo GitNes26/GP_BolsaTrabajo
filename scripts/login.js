@@ -183,7 +183,7 @@ function ajaxRequestRegister(url,data) {
       dataType: "json",
       success: (ajaxResponse) => {
          if (ajaxResponse.result) {
-         //   console.log(data);
+           console.log(data);
            ajaxRequestEmail(data);
 
             Swal.fire({
@@ -241,7 +241,7 @@ function ajaxRequestRegister(url,data) {
 }
 
 function ajaxRequestEmail(data) {
-   console.log(data);
+   // console.log(data);
    // $.ajax({
    //    url: EMAILS_PATH,
    //    type: "POST",

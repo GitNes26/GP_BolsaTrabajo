@@ -220,7 +220,7 @@ async function showDetail(id) {
 	const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data);
 
 	const obj = ajaxResponse.data;
-	console.log(obj);
+	// console.log(obj);
 
 	// PREVIEW
 	$(`.output_vacancy`).text(obj.vacancy);
@@ -372,6 +372,5 @@ async function cancel(btn_cancel_js) {
 		deleted_at: current_date,
 	};
 
-	console.log(data);
 	ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable()");
 }

@@ -214,7 +214,6 @@ async function showDetail(id, status) {
 	$(`.output_more_info`).html(obj.more_info);
 	btns_cancel.attr("data-id", obj.id);
 	btns_cancel.attr("data-name", obj.vacancy);
-	console.log(status);
 	if (status == "Aceptada" || status == "Rechazada" || status == "Cancelada") btns_cancel.addClass("d-none")
 	else btns_cancel.removeClass("d-none")
 }

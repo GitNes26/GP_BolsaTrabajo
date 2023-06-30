@@ -141,10 +141,10 @@ class Company extends Connection {
          $id = $this->_getIdByUserId($user_id);
          if ($id == 0) die(json_encode($response));
 
-         $this->validateAvailableData($cellphone, $id);
+         $this->validateAvailableData($company, $id);
 
-         $query = "UPDATE companies SET company=?, description=?, contact_name=?, contact_phone=?, contact_email=?, state=?, municipality=?, business_line_id=?, company_ranking_id=?, updated_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($company, $description, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $updated_at, $id));
+         $query = "UPDATE companies SET company=?, description=?, contact_name=?, contact_phone=?, contact_email=?, state=?, municipality=?, business_line_id=?, company_ranking_id=? WHERE id=?";
+         $this->ExecuteQuery($query, array($company, $description, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $id));
 
          $query = "UPDATE users SET email=?, updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($email, $updated_at, $user_id));
