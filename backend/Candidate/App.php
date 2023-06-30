@@ -38,13 +38,11 @@ if (isset($_POST['haveCv'])) { $haveCv = $_POST['haveCv']; } else { $haveCv = nu
 if (isset($_FILES['input_photo_path'])) {
   $path_files = "assets/img";
   $file = $_FILES['input_photo_path'];
-  $type = explode(".",$file["name"]);
-  $type = strtoupper(trim(end($type)));
-  $type = "PNG";
+   //   $type = explode(".",$file["name"]);
+   //   $type = strtoupper(trim(end($type)));
+   $type = "PNG";
 
   $dir = "../../$path_files/candidates";
-  $file_name = "$user_id-$name.$type";
-  $dest = "$dir/$file_name";
 
   if (!is_dir($dir)) {
      @mkdir($dir,0755,true);
@@ -55,13 +53,38 @@ if (isset($_FILES['input_photo_path'])) {
      *         los mismos permisos.
      */
   }
-  if (move_uploaded_file($_FILES["input_photo_path"]["tmp_name"], $dest)) {
-     $photo_path = "candidates/$file_name";
-  } else {
-     $photo_path = "";
-     $type = "";
-     print(error_get_last());
-  }
+
+  
+   $file_name = "$user_id-$name";
+   $permissions = 0777;
+   if (file_exists("$dir/$file_name.PNG")) {
+      // Establecer permisos
+      if (chmod("$dir/$file_name.PNG", $permissions)) {
+         @unlink("$dir/$file_name.PNG");
+      }
+      $type = "JPG";
+   }
+   elseif (file_exists("$dir/$file_name.JPG")) {
+      // Establecer permisos
+      if (chmod("$dir/$file_name.JPG", $permissions)) {
+         @unlink("$dir/$file_name.JPG");
+      }
+      $type = "PNG";
+
+   }
+
+   $dest = "$dir/$file_name.$type";
+
+   if (move_uploaded_file($_FILES["input_photo_path"]["tmp_name"], $dest)) {
+      $photo_path = "candidates/$file_name.$type";
+   } else {
+      $photo_path = "";
+      $type = "";
+      print(error_get_last());
+   }
+  
+
+   
 } else {
   $photo_path = "";
   $type = "";
@@ -78,8 +101,9 @@ if (isset($_FILES['input_cv_path'])) {
    $file_name = "$user_id-$name"."-cv."."$type";
    $dest = "$dir/$file_name";
  
+
    if (!is_dir($dir)) {
-      @mkdir($dir,0755,true);
+      @mkdir($dir,07,true);
       /**
       * 0755 => PERMISOS CRUD de los arvhicos
       * true => es para hacerlo recursivo,
@@ -87,6 +111,20 @@ if (isset($_FILES['input_cv_path'])) {
       *         los mismos permisos.
       */
    }
+
+   $permissions = 0777;
+   if (file_exists($dest)) {
+      // Establecer permisos
+      if (chmod($dest, $permissions)) {
+         // echo 'Se han establecido los permisos correctamente.';
+         @unlink($dest);
+      } else {
+         // echo 'Error al establecer los permisos.';
+      }
+   } else {
+         // echo 'El archivo no existe.';
+   }
+   
    if (move_uploaded_file($_FILES["input_cv_path"]["tmp_name"], $dest)) {
       $cv_path = "candidates/$file_name";
    } else {
@@ -110,7 +148,7 @@ elseif ($op == 'showSelect') $Candidate->showSelect();
 elseif ($op == "create") $Candidate->create($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id);
 
 elseif ($op == "edit") $Candidate->edit($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id);
-elseif ($op == "editInfo") $Candidate->editInfo($name, $last_name, $cellphone, $professional_info, $languages, $profession_id, $user_id, $email, $updated_at);
+elseif ($op == "editInfo") $Candidate->editInfo($user_id, $name, $last_name, $cellphone, $professional_info, $languages, $profession_id, $email, $updated_at);
 elseif ($op == "editPhoto") $Candidate->editPhoto($user_id, $photo_path, $updated_at);
 elseif ($op == "editCv") $Candidate->editCv($user_id, $cv_path, $updated_at);
 elseif ($op == "editName") $Candidate->editName($user_id, $name, $last_name, $updated_at);

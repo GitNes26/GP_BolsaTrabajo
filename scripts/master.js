@@ -5,7 +5,7 @@ const
 	URL_BASE = $("#url_base").val(),
 	BACKEND_PATH = `${URL_BASE}/backend`,
 	PAGES_PATH = `${URL_BASE}/pages`,
-	EMAILS_PATH = `/emails/NewMemberEmail.php`,
+	EMAILS_PATH = `/emails/NewMemberEmail_copy.php`,
 	URL_API_COUNTRIES = `https://www.universal-tutorial.com/api`,
 
 	URL_USER_APP = `${BACKEND_PATH}/User/App.php`,

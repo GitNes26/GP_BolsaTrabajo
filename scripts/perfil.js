@@ -3,7 +3,7 @@ var table;
 table = $("#table").DataTable(DT_CONFIG);
 
 $(document).ready(() => {
-	$(`span[aria-labelledby='select2-input_profession_id-container']`).addClass("d-none");
+	// $(`span[aria-labelledby='select2-input_profession_id-container']`).addClass("d-none");
 
 	SUMMERNOTE_CONFIG.placeholder = "Escribir Habilidades, competencias, experiencias, observaciones, etc.";
 	SUMMERNOTE_CONFIG.toolbar.push(['templates', ['template_candidate']]);
@@ -20,8 +20,9 @@ const
 	form = $("#form"),
 	modal_title = $(".modal-title"),
 	id_modal = $("#id"),
-	op_modal = $("#op"),
+	op_modal = $("#op");
 
+const 
 	input_user_id = $("#input_user_id"),
    input_photo_path = $('#input_photo_path'), //este es un input_file
    output_photo = $('#output_photo'),
@@ -48,22 +49,11 @@ const
    output_cv = $('#output_cv'),
    preview_cv = $('#preview_cv'),
 	
-	
-	
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset"),
 	btn_cancel = $("#btn_cancel"),
 	btn_edit = $("#btn_edit"),
-	btn_change_enable = $("#btn_change_enable"),
-
-	
-	input_logo_path = $('#input_logo_path'), //este es un input_file
-	label_input_file = $("#label_input_file"),
-   preview_logo = $('#preview_logo'),
-	input_business_line = $("#input_business_line"),
-	
-	input_file = $('#input_file'), //este es un input_file
-   preview_file = $('#preview_file')
+	btn_change_enable = $("#btn_change_enable")
 	;
 
 const
@@ -73,6 +63,32 @@ const
 	input_confirm_password = $("#input_confirm_password"),
 	feedback_confirm_password = $("#feedback_confirm_password")
 ;	
+
+// /* INPUTS DE REGISTRO EMPRESA */
+const 
+   input_company = $("#input_company"),
+   output_company = $("#output_company"),
+   input_description = $("#input_description"),
+   output_description = $("#output_description"),
+   counter_description = $("#counter_description"),
+   input_logo_path = $('#input_logo_path'), //este es un input_file
+   output_logo = $('#output_logo'), //este es un input_file
+   preview_logo = $('#preview_logo'),
+   input_business_line_id = $("#input_business_line_id"),
+   output_business_line = $("#output_business_line"),
+   input_company_ranking_id = $("#input_company_ranking_id"),
+   output_company_ranking = $("#output_company_ranking"),
+   input_state = $("#input_state"),
+   input_municipality = $("#input_municipality"),
+   output_location = $("#output_location"),
+   input_contact_name = $("#input_contact_name"),
+   output_contact_name = $("#output_contact_name"),
+   input_contact_phone = $("#input_contact_phone"),
+   output_contact_phone = $("#output_contact_phone"),
+   input_contact_email = $("#input_contact_email"),
+   output_contact_email = $("#output_contact_email")
+   ;
+	
 let vProfession_id = null;
 
 //#endregion VARIABLES
@@ -85,10 +101,13 @@ focusSelect2($(".select2"));
 
 init();
 async function init() {
+	counter_description.text(`0/${input_description.data("limit")}`);
+
 	fillInfo(false);
-	// setTimeout(() => {
-   //    input_business_line.focus();
-   // }, 500);
+	showStates();
+
+	fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
+	fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
 }
 
 // Agrega un evento change a la foto de perfil
@@ -170,6 +189,47 @@ input_cv_path.on('change', async function(event) {
   // Lee el contenido del archivo como una URL de datos
   fileReader.readAsDataURL(file);
 });
+
+// Agrega un evento change a la foto de perfil
+input_logo_path.on('change', async function(event) {
+	// Obtén el archivo seleccionado
+	const file = event.target.files[0];
+
+	// Crea un objeto FileReader
+	const fileReader = new FileReader();
+
+	// Define la función de carga completada del lector
+	fileReader.onload = function(e) {
+		 // Crea un elemento de imagen
+		 const imagen = document.createElement('img');
+		 imagen.src = e.target.result; // Asigna la imagen cargada como fuente
+		 // canvas.getContext("2d") // Asigna la imagen cargada como fuente
+		 imagen.classList.add("img-circle"); // Asignar clases
+		 imagen.classList.add("elevation-2"); // Asignar clases
+		 imagen.classList.add("bg-white"); // Asignar clases
+		 imagen.classList.add("pointer-sm"); // Asignar clases
+		 imagen.classList.add("opacity-100"); // Asignar clases
+		imagen.title = "Haz clic aquí, si deseas cambiar tu foto de perfil";
+		imagen.setAttribute("style","width: 100px !important; height: 100px !important; object-fit: contain");
+		 // Agrega la imagen a la vista previa
+		 preview_logo.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+		 preview_logo.append(imagen);
+	};
+
+ //PETICION
+ const form_logo = $("#form_logo")[0];
+ const data = new FormData(form_logo);
+ addToArray("op", "editLogo", data, true);
+ addToArray("input_company", input_company.val(), data, true); //para darle nombre al archivo
+ addToArray("user_id", id_cookie, data, true);
+ addToArray("updated_at", moment().format("YYYY-MM-DD hh:mm:ss"), data, true);
+ await ajaxRequestFileAsync(URL_COMPANY_APP, data);
+
+ // Lee el contenido del archivo como una URL de datos
+ fileReader.readAsDataURL(file);
+});
+
+
 function resetImgPreviewProfile(preview, img_path=null, iframe=false) {
 	if (!iframe || img_path==null) {
 		// Crea un elemento de imagen
@@ -243,8 +303,6 @@ btn_edit.click(function () {
 	btn_cancel.addClass("d-none");
 	$(".im_output").removeClass('d-none');
 	$(".im_input").addClass("d-none");
-	$(`span[aria-labelledby='select2-input_profession_id-container']`).addClass("d-none");
-	//Resetear form
 });
 
 // CAMBIAR ENTRRE ESTATUS DISPONIBLE Y CONTRATADO
@@ -269,19 +327,29 @@ form.on("submit", async (e) => {
 	// console.log(form.serializeArray());
 
 	if (!validateInputs(form)) return;
-	const input_professional_info = $('.note-editing-area .note-editable').html();
-
-	//EDICION
-
+	let ajaxResponse; 
 	let data = form.serializeArray();
-	// return console.log(data);
-	addToArray("op", "editInfo", data);
-	addToArray("updated_at", moment().format("YYYY-MM-DD hh:mm:ss"), data);
-	addToArray("input_professional_info", input_professional_info, data);
-	addToArray("user_id", id_cookie, data);
+	
+	if (role_cookie == 4) { // CANDIDATO
+		const input_professional_info = $('.note-editing-area .note-editable').html();
 
-	// return console.log(data);
-	const ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
+		// return console.log(data);
+		addToArray("op", "editInfo", data);
+		addToArray("updated_at", moment().format("YYYY-MM-DD hh:mm:ss"), data);
+		addToArray("input_professional_info", input_professional_info, data);
+		addToArray("user_id", id_cookie, data);
+
+		// return console.log(data);
+		ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
+	}
+	else if (role_cookie == 3) {
+		addToArray("op", "editInfo", data);
+		addToArray("updated_at", moment().format("YYYY-MM-DD hh:mm:ss"), data);
+		addToArray("user_id", id_cookie, data);
+
+		ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
+	}
+	
 	if (ajaxResponse.message == "duplicado") return
 	btn_cancel.click();
 	await fillInfo(false);
@@ -293,111 +361,111 @@ async function fillInfo(show_toas=true) {
 
 	let obj = ajaxResponse.data;
 	// console.log(obj);
-	if (obj.enable == 0) {
-		div_header.removeClass("bg-success");
-		div_header.addClass("bg-primary");
-		output_enable.text("CONTRATADO");
-	}
 
-	haveImg=false;
-	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreviewProfile($(`#${input_photo_path.attr("data-preview")}`), `/assets/img/sin_perfil.webp`);
-	else {
-		haveImg = true;
-		// console.log("tengo imagen guardada");
- 		resetImgPreviewProfile($(`#${input_photo_path.attr("data-preview")}`),`/assets/img/${obj.photo_path}`);
-		vLogoPath = obj.photo_path;
-		// input_photo_path.val(obj.photo_path);
-		output_photo.attr("src", `/assets/img/${obj.photo_path}`)
-	}
-	input_name.val(obj.name);
-	input_last_name.val(obj.last_name);
-	output_name.text(`${obj.name} ${obj.last_name}`);
-	input_email.val(obj.email);
-	output_email.text(obj.email);
-	input_cellphone.val(obj.cellphone);
-	output_cellphone.text(formatPhone(obj.cellphone));
-	// input_age.val(obj.age);
-	output_age.text(obj.age);
+	if (role_cookie == 4) {
+		if (obj.enable == 0) {
+			div_header.removeClass("bg-success");
+			div_header.addClass("bg-primary");
+			output_enable.text("CONTRATADO");
+		}
 	
-	await fillSelect2(URL_PROFESSION_APP, obj.profession_id, input_profession_id);
-	output_profession.text(obj.profession)
-	// await fillSelect2(URL_TAG_APP, obj.interest_tags_ids, input_interest_tags_ids);
-	// output_interest_tags_ids.text(obj.)
-	// if (obj.professional_info == "<p><br></p>" || obj.professional_info.length < 1)
-	// 	$('.note-editing-area .note-placeholder').css("display","block");
-	// else {
-	// 	$('.note-editing-area .note-placeholder').css("display","none");
-	// 	$('.note-editing-area .note-editable').html(obj.professional_info);
-	// }
-	$('.note-editing-area .note-placeholder').css("display","none");
-	$('.note-editing-area .note-editable').html(obj.professional_info);
-	output_professional_info.html(obj.professional_info);
+		haveImg=false;
+		if (obj.photo_path == "" || obj.photo_path == null) resetImgPreviewProfile($(`#${input_photo_path.attr("data-preview")}`), `/assets/img/sin_perfil.webp`);
+		else {
+			haveImg = true;
+			// console.log("tengo imagen guardada");
+			 resetImgPreviewProfile($(`#${input_photo_path.attr("data-preview")}`),`/assets/img/${obj.photo_path}`);
+			vLogoPath = obj.photo_path;
+			// input_photo_path.val(obj.photo_path);
+			output_photo.attr("src", `/assets/img/${obj.photo_path}`)
+		}
+		input_name.val(obj.name);
+		input_last_name.val(obj.last_name);
+		output_name.text(`${obj.name} ${obj.last_name}`);
+		input_email.val(obj.email);
+		output_email.text(obj.email);
+		input_cellphone.val(obj.cellphone);
+		output_cellphone.text(formatPhone(obj.cellphone));
+		// input_age.val(obj.age);
+		output_age.text(obj.age);
+		
+		await fillSelect2(URL_PROFESSION_APP, obj.profession_id, input_profession_id);
+		output_profession.text(obj.profession)
+		// await fillSelect2(URL_TAG_APP, obj.interest_tags_ids, input_interest_tags_ids);
+		// output_interest_tags_ids.text(obj.)
+		// if (obj.professional_info == "<p><br></p>" || obj.professional_info.length < 1)
+		// 	$('.note-editing-area .note-placeholder').css("display","block");
+		// else {
+		// 	$('.note-editing-area .note-placeholder').css("display","none");
+		// 	$('.note-editing-area .note-editable').html(obj.professional_info);
+		// }
+		$('.note-editing-area .note-placeholder').css("display","none");
+		$('.note-editing-area .note-editable').html(obj.professional_info);
+		output_professional_info.html(obj.professional_info);
+	
+		switch (obj.languages) {
+			case "Inglés - Básico":
+				input_languages_b.click();
+				break;
+			case "Inglés - Intermedio":
+				input_languages_i.click();
+				break;
+			case "Inglés - Avanzado":
+				input_languages_a.click();
+			default:
+				break;
+		}
+		output_languages.text(obj.languages);
+		// await showStates(obj.state, obj.municipality);
+		haveCv=false;
+		if (obj.cv_path == "" || obj.cv_path == null) resetImgPreviewProfile($(`#${input_cv_path.attr("data-preview")}`), null, true );
+		else {
+			haveCv = true;
+			// console.log("tengo imagen guardada");
+			 resetImgPreviewProfile($(`#${input_cv_path.attr("data-preview")}`),`/assets/img/${obj.cv_path}`, true);
+			vCvPath = obj.cv_path;
+			// input_cv_path.val(obj.cv_path);
+		}
+		changeEnable(obj.enable);
+	}
+	else if (role_cookie == 3) {
+		haveImg=false;
+		if (obj.logo_path == "" || obj.logo_path == null) resetImgPreviewProfile($(`#${input_logo_path.attr("data-preview")}`), `/assets/img/sin_perfil.webp`);
+		else {
+			haveImg = true;
+			// console.log("tengo imagen guardada");
+			 resetImgPreviewProfile($(`#${input_logo_path.attr("data-preview")}`),`/assets/img/${obj.logo_path}`);
+			vLogoPath = obj.logo_path;
+			// input_logo_path.val(obj.logo_path);
+			output_logo.attr("src", `/assets/img/${obj.logo_path}`)
+		}
+		input_company.val(obj.company);
+		output_company.text(`${obj.company}`);
 
-	switch (obj.languages) {
-		case "Inglés - Básico":
-			input_languages_b.click();
-			break;
-		case "Inglés - Intermedio":
-			input_languages_i.click();
-			break;
-		case "Inglés - Avanzado":
-			input_languages_a.click();
-		default:
-			break;
-	}
-	output_languages.text(obj.languages);
-	// await showStates(obj.state, obj.municipality);
-	haveCv=false;
-	if (obj.cv_path == "" || obj.cv_path == null) resetImgPreviewProfile($(`#${input_cv_path.attr("data-preview")}`), null, true );
-	else {
-		haveCv = true;
-		// console.log("tengo imagen guardada");
- 		resetImgPreviewProfile($(`#${input_cv_path.attr("data-preview")}`),`/assets/img/${obj.cv_path}`, true);
-		vCvPath = obj.cv_path;
-		// input_cv_path.val(obj.cv_path);
-	}
-	changeEnable(obj.enable);
-	
+		output_location.text(`${obj.municipality}, ${obj.state}`);
+		await showStates(obj.state, obj.municipality);
 
+		input_contact_name.val(obj.contact_name);
+		output_contact_name.text(obj.contact_name);
+		input_contact_phone.val(obj.contact_phone);
+		output_contact_phone.text(formatPhone(obj.contact_phone));
+		input_contact_email.val(obj.contact_email);
+		output_contact_email.text(obj.contact_email);
+		input_email.val(obj.email);
+		
+		await fillSelect2(URL_BUSINESS_LINE_APP, obj.business_line_id, input_business_line_id);
+		output_business_line.text(obj.business_line);
+		await fillSelect2(URL_COMPANY_RANKING_APP, obj.company_ranking_id, input_company_ranking_id);
+		output_company_ranking.text(obj.company_ranking);
+
+		input_description.val(obj.description);
+		output_description.text(obj.description);
+
+		input_email.val(obj.email);
+		output_email.text(obj.email);
+	}
 	
-	// tbody.slideDown("slow");
-	// btn_reset.click();
 }
-
-//ACCIONES EN BOTONES DE LA TABLA
-tbody.click((e) => {
-	// console.log(e.target);
-	e.preventDefault();
-
-	//EDITAR OBJETO
-	if ($(e.target).hasClass("btn_edit") || $(e.target).hasClass("i_edit")) {
-		let btn_edit;
-
-		if ($(e.target).hasClass("i_edit")) {
-			btn_edit = $(e.target).parent();
-		} else {
-			btn_edit = $(e.target);
-		}
-
-		editObj(btn_edit);
-	}
-
-	//ELIMINAR OBJETO
-	if (
-		$(e.target).hasClass("btn_delete") ||
-		$(e.target).hasClass("i_delete")
-	) {
-		let btn_delete;
-
-		if ($(e.target).hasClass("i_delete")) {
-			btn_delete = $(e.target).parent();
-		} else {
-			btn_delete = $(e.target);
-		}
-
-		deleteObj(btn_delete);
-	}
-});
 
 //EDITAR OBJETO
 async function editObj(btn_edit) {
@@ -426,27 +494,8 @@ async function editObj(btn_edit) {
 	}, 500);
 }
 
-//ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
-async function deleteObj(btn_delete) {
-	let title = `¿Estas seguro de eliminar el giro <br> ${btn_delete.attr("data-name")}?`;
-	let text = ``;
 
-	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
-	let data = {
-		op: "delete",
-		id: Number(btn_delete.attr("data-id")),
-		deleted_at: current_date,
-	};
-
-	ajaxRequestQuestionAsync(
-		title,
-		text,
-		URL_BUSINESS_LINE_APP,
-		data,
-		"fillTable()"
-	);
-}
-
+// CAMBIAR STATUS CON EL SWITCH
 async function changeEnable(enable) {
 	btn_change_enable.attr("data-enable", enable)
 	if (enable == "1") {

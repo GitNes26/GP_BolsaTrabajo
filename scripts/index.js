@@ -325,7 +325,6 @@ async function applyVacancy(form_js) {
 		user_id: id_cookie,
 		created_at: moment().format("YYYY-MM-DD hh:mm:ss")
 	}
-	console.log("data",data);
 	await ajaxRequestAsync(URL_APPLICATION_APP, data);
 	btns_submit.attr("disabled",false);
 

@@ -220,7 +220,6 @@ input_name_role.on("change",async function()  {
 form_role.on("submit", async function(e) {
 	e.preventDefault();
 
-   console.log();
 	if (!validateInputs(form_role)) return;
 	// return console.log(form_role.serializeArray());
    // let data = form_role.serializeArray();
@@ -230,9 +229,9 @@ form_role.on("submit", async function(e) {
 
    // si esta seleccionada la "Empresa"
    if (input_name_role[0].checked) {
-      console.log("soy empresa");
+      // console.log("soy empresa");
    } else {
-      console.log("soy candidato");
+      // console.log("soy candidato");
       url_app = URL_CANDIDATE_APP;
 
       const input_current_date = $('.note-editing-area .note-editable').html();

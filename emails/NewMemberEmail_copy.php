@@ -10,23 +10,34 @@ $date    = $_POST["created_at"];
 // echo "$email";
 // echo "$date";
 
-require_once("../plugins/PHPMailer/PHPMailerAutoload.php");
+require_once("../plugins/PHPMailer-Obsoleto/PHPMailerAutoload.php");
 // use PHPMailer\PHPMailer\PHPMailer;
 $mail = new PHPMailer;
 $mail->isSendmail();
 
-// $mail->isSMTP();                                      // Set mailer to use SMTP
-$mail->Host = 'Smtpout.secureserver.net';  // Specify main and backup SMTP servers
-$mail->SMTPAuth = true;                               // Enable SMTP authentication
-$mail->Username = ' info@gmail.com';                 // SMTP username
-$mail->Password = 'Google.95';                           // SMTP password
-$mail->SMTPSecure = 'none';                           // Enable TLS encryption, `ssl` also accepted
-$mail->Port = 587;
+$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+
+$mail->isSMTP();                                      // Set mailer to use SMTP
+// $mail->Host = 'Smtpout.secureserver.net';  // Specify main and backup SMTP servers
+// $mail->SMTPAuth = true;                               // Enable SMTP authentication
+// $mail->Username = ' info@gmail.com';                 // SMTP username
+// $mail->Password = 'Google.95';                           // SMTP password
+// $mail->SMTPSecure = 'none';                           // Enable TLS encryption, `ssl` also accepted
+// $mail->Port = 587;
+$mail->Host       = 'secure.emailsrvr.com';                     //Set the SMTP server to send through
+$mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+$mail->Username   = 'info@gomezpalacio.gob.mx';                     //SMTP username
+$mail->Password   = 'Informes@r4gp';                               //SMTP password
+$mail->SMTPSecure = 'none'; //PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+$mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+
+
 $mail->IsHTML(true);
 $mail->setFrom('info@gmail.com', 'Bolsa de trabajo GP');
 // $mail->addAddress($email, 'Bienvenido a la Bolsa de Trabajo de Gomez Palacio');
-$mail->addAddress('samuel.garza29@hotmail.com', 'Bolsa de Trabajo');
-// $mail->addAddress('nestorpuentesin@gmail.com', 'DPN Stash');
+// $mail->addAddress('samuel.garza29@hotmail.com', 'Bolsa de Trabajo');
+$mail->addAddress('nestorpuentesin@gmail.com', 'Bolsa de Trabajo');
 $mail->Subject = 'Bolsa de Trabajo GP | nuevo usuario';
 
   $messageBody="

@@ -13,7 +13,7 @@ require_once('../plugins/PHPMailer/src/Exception.php');
 require_once('../plugins/PHPMailer/src/PHPMailer.php');
 require_once('../plugins/PHPMailer/src/SMTP.php');
 
-// require_once("../plugins/PHPMailer/PHPMailerAutoload.php");
+// require_once("../plugins/PHPMailer-Obsoleto/PHPMailerAutoload.php");
 $mail = new PHPMailer(true);
 // print_r($mail);
 

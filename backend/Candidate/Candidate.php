@@ -130,7 +130,7 @@ class Candidate extends Connection {
       }
       die(json_encode($response));
    }
-   function editInfo($name, $last_name, $cellphone, $professional_info, $languages, $profession_id, $user_id, $email, $updated_at) {
+   function editInfo($user_id, $name, $last_name, $cellphone, $professional_info, $languages, $profession_id, $email, $updated_at) {
       try {
          $response = $this->defaultResponse();
 
