@@ -294,6 +294,30 @@ class User extends Connection {
       }
       die(json_encode($response));
    }
+   function changePassword($password, $updated_at, $id) {
+      try {         
+         $response = $this->defaultResponse();
+
+         // #VALIDACION DE DATOS REPETIDOS
+
+         $password_hash = password_hash($password,PASSWORD_DEFAULT);
+         $query = "UPDATE users SET password=?, updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($password_hash, $updated_at, $id));
+
+         $response = $this->correctResponse();
+         $response["message"] = "Peticion satisfactoria | registro actualizado.";
+         $response["alert_title"] = "Contraseña actualizada";
+         $response["alert_text"] = "";
+         $response["toast"] = false;
+         $this->Close();
+
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->catchResponse($error_message);
+      }
+      die(json_encode($response));
+   }
 
    function delete($deleted_at, $id) {
       try {

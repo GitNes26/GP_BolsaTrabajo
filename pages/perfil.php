@@ -87,8 +87,9 @@ $pagina_acutal = "Mi Perfil";
                 <button type="button" class="btn btn-outline-primary" id="btn_edit">Editar mi información</button>
                 <button type="submit" class="btn btn-outline-success d-none rounded-start" id="btn_submit">GUARDAR</button>
                 <button type="button" class="btn btn-outline-danger d-none rounded-end" id="btn_cancel">CANCELAR</button>
-                <button type="button" class="btn btn-outline-dark" id="btn_change_enable" data-enable=""></button>
+                <button type="button" class="btn btn-outline-dark" id="btn_change_enable" data-enable="" title=""></button>
               </div>
+              <button type="button" class="btn btn-outline-info m-2" id="btn_change_password" data-bs-toggle="modal" data-bs-target="#password_modal">Cambiar Contraseña</button>
 
             </div>
 
@@ -137,7 +138,40 @@ $pagina_acutal = "Mi Perfil";
   </section>
   <!-- /.content -->
 
-</div>
+  <!-- Modal para cambio de contraseña | data-bs-backdrop="static"-->
+  <div class="modal fade" id="password_modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+        <form class="modal-content" id="form_password" enctype="multipart/form-data">
+          <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="modalLabel"><i class="fa-duotone fa-lock-keyhole"></i>&nbsp; CAMBIAR CONTRASEÑA</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3 row">
+              <div class="col-12">
+                <label for="input_password" class="form-label">Nueva Contraseña: <span class="obligatory"></span></label>
+                <div class="input-icon">
+                  <input type="password" class="form-control" id="input_password" name="input_password" data-input-name="NUEVA CONTRASEÑA">
+                  <i class="fa-duotone fa-eye-slash eye_icon" data-input="input_password"></i>
+                </div>
+              </div>
+              <div class="col-12">
+                <label for="input_confirm_password" class="form-label">Confirmar Contraseña: <span class="obligatory"></span></label>
+                <div class="input-icon">
+                  <input type="password" class="form-control" id="input_confirm_password" name="input_confirm_password" data-input-name="CONFIRMAR CONTRASEÑA">
+                  <i class="fa-duotone fa-eye-slash eye_icon" data-input="input_confirm_password"></i>
+                </div>
+                <span class="fst-italic" id="feedback_confirm_password"></span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" id="btn_submit_passwrod" class="btn btn-success fw-bold">ACEPTAR</button>
+            <button type="reset" class="btn btn-secondary">LIMPIAR</button>
+          </div>
+        </form>
+    </div>
+  </div>
 <!-- /.content-wrapper -->
 
 

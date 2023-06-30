@@ -65,7 +65,14 @@ const
 	input_file = $('#input_file'), //este es un input_file
    preview_file = $('#preview_file')
 	;
-	
+
+const
+	btn_change_password = $("#btn_change_password"),
+	form_password = $("#form_password"),
+	input_password = $("#input_password"),
+	input_confirm_password = $("#input_confirm_password"),
+	feedback_confirm_password = $("#feedback_confirm_password")
+;	
 let vProfession_id = null;
 
 //#endregion VARIABLES
@@ -240,7 +247,7 @@ btn_edit.click(function () {
 	//Resetear form
 });
 
-//RESETEAR FORMULARIOS
+// CAMBIAR ENTRRE ESTATUS DISPONIBLE Y CONTRATADO
 btn_change_enable.click(async (e) => {
 	try {
 		const enable = btn_change_enable.attr("data-enable");
@@ -447,12 +454,14 @@ async function changeEnable(enable) {
 		div_header.addClass("bg-success");
 		output_enable.text("DISPONIBLE");
 		btn_change_enable.text("Fui Contratado");
+		btn_change_enable.attr("title","Click para mostrar en tú perfíl que estás CONTRATADO");
 		return;
 	}
 	div_header.removeClass("bg-success");
 	div_header.addClass("bg-primary");
 	output_enable.text("CONTRATADO");
 	btn_change_enable.text("Disponible");
+	btn_change_enable.attr("title","Click para mostrar en tú perfíl que estás DISPONIBLE");
 }
 
 
@@ -482,3 +491,41 @@ input_cellphone.keypress((e) => { if (Enter(e)) input_languages_b.focus() });
 // 	input_profession_id.focus();
 // });
 
+
+
+btn_change_password.click(() => {
+	setTimeout(() => {
+		input_password.focus();
+	}, 500);
+});
+
+// CONFIRMAR CONTRASEÑA
+input_confirm_password.on('input',function() {
+   var pwd1 = input_password.val();
+   var pwd2 = input_confirm_password.val();
+
+   if (pwd1 === pwd2) {
+      feedback_confirm_password.addClass('text-success').text('Las contraseñas coinciden').removeClass('text-danger');
+      input_password.addClass('is-valid').removeClass('is-invalid');
+      input_confirm_password.addClass('is-valid').removeClass('is-invalid');
+   } else {
+      feedback_confirm_password.addClass('text-danger').text("Las contraseñas no coinciden").removeClass('text-success');
+      input_password.addClass('is-invalid').removeClass('is-valid');
+      input_confirm_password.addClass('is-invalid').removeClass('is-valid');
+   }
+});
+form_password.on("submit", async function(e) {
+	e.preventDefault();
+
+	if (!validateInputs(form_password)) return;
+
+	const data = form_password.serializeArray();
+	addToArray("op", "changePassword", data);
+	addToArray("id", id_cookie, data);
+	addToArray("updated_at", moment().format("YYYY-MM-DD hh:mm:ss"), data);
+
+	await ajaxRequestAsync(URL_USER_APP, data);
+
+	// enviar correo 
+
+})

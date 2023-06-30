@@ -42,7 +42,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                      <label for="input_filter_search" class="form-label">Buscador General</label>
                      <input type="search" class="form-control not_validate" id="input_filter_search" name="input_filter_search" data-input-name="BUSCADOR GENERAL" placeholder="Puesto | Empresa">
                   </div>
-                  <div class="card-tools">
+                  <div class="card-tools mt-2">
                      <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Filtros de búsqueda" id="btn_show_filters">
                      <i class="fas fa-minus"></i>
                      <i class="fa-solid fa-filter-list"></i>
@@ -193,7 +193,7 @@ $pagina_acutal = "Bolsa de Trabajo";
    <!-- /.content -->
 
    <!-- Modal -->
-   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" data-bs-backdrop="static">
       <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
          <form id="form_modal" class="modal-content">         
             <div class="modal-header">

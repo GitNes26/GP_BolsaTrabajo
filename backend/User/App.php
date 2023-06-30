@@ -32,7 +32,7 @@ elseif ($op == 'show') $User->show($id);
 elseif ($op == 'showInfo') $User->showInfo($id, $role_id);
 elseif ($op == 'showSelect') $User->showSelect();
 
-elseif ($op == 'register') { $User->register($email,$password,$created_at); }
+elseif ($op == 'register') $User->register($email,$password,$created_at);
 elseif ($op == 'create') $User->create($email,$password,$role_id,$created_at);
 
 elseif ($op == 'edit') {
@@ -43,6 +43,7 @@ elseif ($op == 'edit') {
   }
   $User->edit($email,$password,$role_id,$updated_at,$change_password,$id);
 }
+elseif ($op == 'changePassword') $User->changePassword($password, $updated_at, $id);
 
 elseif ($op == "delete") $User->delete($deleted_at, $id);
 // #endregion PETICIONES
