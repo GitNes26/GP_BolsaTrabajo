@@ -83,7 +83,7 @@
       <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto text-light">
          <li class="nav-item dropdown">
             <span class='d-block text-decoration-none text-bold'>
-               <i class=''><?php echo "$role:&nbsp; $_COOKIE[email]" ?></i>
+               <a href="/pages/perfil.php" title="Ir a mi perfil"><i class=''><?php echo "$role:&nbsp; $_COOKIE[email]" ?></i></a>
             </span>
          </li>
          <li class="nav-item ml-2">

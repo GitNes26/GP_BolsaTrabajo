@@ -162,11 +162,28 @@ class User extends Connection {
       die(json_encode($response));
    }
 
-   function showSelect() {
+   function showSelect($role) {
       try {
          $response = $this->defaultResponse();
-         $query = "SELECT u.id value, u.email text FROM users u WHERE u.active=1 ";
+         $query = "SELECT u.id value, u.email text, u.role_id FROM users u WHERE u.active=1";
          $result = $this->Select($query, true);
+         $result = array_filter($result, function ($k, $v) {
+            return $k['role_id'] != 1;
+         }, ARRAY_FILTER_USE_BOTH);
+         $result = array_filter($result, function ($k, $v) {
+            return $k['role_id'] != 2;
+         }, ARRAY_FILTER_USE_BOTH);
+
+         if ($role == "company") {
+            $result = array_filter($result, function ($k, $v) {
+               return $k['role_id'] != 4;
+            }, ARRAY_FILTER_USE_BOTH);
+         } elseif ($role == "candidate") {
+            $result = array_filter($result, function ($k, $v) {
+               return $k['role_id'] != 3;
+            }, ARRAY_FILTER_USE_BOTH);
+         }
+         
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
@@ -285,6 +302,30 @@ class User extends Connection {
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
          $response["alert_title"] = "Usuario actualizado";
          $response["alert_text"] = "Usuario actualizado";
+         $this->Close();
+
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->catchResponse($error_message);
+      }
+      die(json_encode($response));
+   }
+   function changePassword($password, $updated_at, $id) {
+      try {         
+         $response = $this->defaultResponse();
+
+         // #VALIDACION DE DATOS REPETIDOS
+
+         $password_hash = password_hash($password,PASSWORD_DEFAULT);
+         $query = "UPDATE users SET password=?, updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($password_hash, $updated_at, $id));
+
+         $response = $this->correctResponse();
+         $response["message"] = "Peticion satisfactoria | registro actualizado.";
+         $response["alert_title"] = "Contraseña actualizada";
+         $response["alert_text"] = "";
+         $response["toast"] = false;
          $this->Close();
 
       } catch (Exception $e) {

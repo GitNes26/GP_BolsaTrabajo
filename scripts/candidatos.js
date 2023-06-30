@@ -67,7 +67,7 @@ async function init() {
 
 	fillTable();
    // showStates();
-   fillSelect2(URL_USER_APP, -1, input_user_id, false);
+   fillSelect2(URL_USER_APP, -1, input_user_id, false, "candidate");
 
    fillSelect2(URL_PROFESSION_APP, -1, input_profession_id, false);
    fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
@@ -355,7 +355,7 @@ async function editObj(btn_edit) {
 
 	//form
 	id_modal.val(Number(obj.id));
-	await fillSelect2(URL_USER_APP, obj.user_id, input_user_id);
+	await fillSelect2(URL_USER_APP, obj.user_id, input_user_id, false, "candidate");
 	// input_user_id.attr("disabled", true);
 	haveImg=false;
 	if (obj.photo_path == "" || obj.photo_path == null) resetImgPreview($(`#${input_photo_path.attr("data-preview")}`));

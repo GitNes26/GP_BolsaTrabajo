@@ -48,7 +48,7 @@ async function init() {
 	fillTable();
 	counter_description.text(`0/${input_description.data("limit")}`);
    showStates();
-   fillSelect2(URL_USER_APP, -1, input_user_id, false);
+   fillSelect2(URL_USER_APP, -1, input_user_id, false, "company");
 
    fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
    fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
@@ -318,7 +318,7 @@ async function editObj(btn_edit) {
 	// console.log(obj);
 	//form
 	id_modal.val(Number(obj.id));
-	await fillSelect2(URL_USER_APP, obj.user_id, input_user_id);
+	/* await */ fillSelect2(URL_USER_APP, obj.user_id, input_user_id, false, "company");
 	// input_user_id.attr("disabled", true);
 	haveImg=false;
 	if (obj.logo_path == "" || obj.logo_path == null) resetImgPreview($(`#${input_logo_path.attr("data-preview")}`) );
@@ -331,12 +331,12 @@ async function editObj(btn_edit) {
 	}
 	input_company.val(obj.company);
 	input_description.val(obj.description);
-	await fillSelect2(URL_BUSINESS_LINE_APP, obj.business_line_id, input_business_line_id);
-	await fillSelect2(URL_COMPANY_RANKING_APP, obj.company_ranking_id, input_company_ranking_id);
+	/* await */ fillSelect2(URL_BUSINESS_LINE_APP, obj.business_line_id, input_business_line_id);
+	/* await */ fillSelect2(URL_COMPANY_RANKING_APP, obj.company_ranking_id, input_company_ranking_id);
 	input_contact_name.val(obj.contact_name);
 	input_contact_phone.val(obj.contact_phone);
 	input_contact_email.val(obj.contact_email);
-	await showStates(obj.state, obj.municipality);
+	/* await */ showStates(obj.state, obj.municipality);
 	
 	setTimeout(() => {
 		// btn_submit.attr("disabled",false);

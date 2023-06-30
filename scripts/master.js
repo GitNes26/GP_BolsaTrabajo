@@ -712,8 +712,9 @@ function resetSelect2(selector) {
 	// iconos(url, data, -1, select2[0].name);
 }
 
-async function fillSelect2(url_app, selected_index, selector, select_modules=false) {
-	const data = { op: "showSelect" };
+async function fillSelect2(url_app, selected_index, selector, select_modules=false, role=null) {
+	let data = { op: "showSelect" };
+	if (role != null)  data = { op: "showSelect", role};
 	const ajaxResponse = await ajaxRequestAsync(url_app, data, null, null, null);
 
 	const objResponse = ajaxResponse.data;
