@@ -178,9 +178,20 @@ a:hover { color: #0c7827; }
    top: 6.5%;
 }
 */
+.pt_sm_5{
+   top: 0%;
+}
 @media screen and (max-width: 767px) {
    .sticky-top {
       top: 10%;
+   }
+   .pt_sm_10{
+      margin-top: 10%;
+   }
+}
+@media screen and (max-width: 720px) {
+   .pt_sm_10{
+      margin-top: 15%;
    }
 }
 
@@ -207,6 +218,27 @@ a:hover { color: #0c7827; }
    border-color: black;
    color: black !important;
    background: transparent;
+}
+
+.div-banners {
+   height: 55vh;
+}
+
+.swiper {
+   /* width: 600px; */
+   height: 100%;
+ }
+
+.carrusel {
+   height: 50%;
+   background-color: #0c7827;
+}
+.img-carrusel {
+   object-fit: cover !important;
+   overflow: hidden !important;
+   height: 60%;
+   
+   /* border: #343A40 solid 5px; */
 }
 
 /* .navbar-collapse .nav-item {

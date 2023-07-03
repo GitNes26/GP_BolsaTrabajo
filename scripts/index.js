@@ -338,12 +338,36 @@ async function applyVacancy(form_js) {
 
 //#region BANNERS
 // SLICE PARA BANNERS
-$('.fade').slick({
-	dots: true,
-	infinite: true,
-	speed: 500,
-	fade: true,
-	cssEase: 'linear'
+// $('.carrusel').slick({
+// 	dots: false,
+// 	infinite: true,
+// 	speed: 500,
+// 	fade: true,
+// 	cssEase: 'linear',
+// 	autoplay: true,
+//   	autoplaySpeed: 2000,
+//  });
+
+const swiper = new Swiper('.swiper', {
+	// Optional parameters
+	direction: 'vertical',
+	loop: true,
+ 
+	// If we need pagination
+	pagination: {
+	  el: '.swiper-pagination',
+	},
+ 
+	// Navigation arrows
+	navigation: {
+	  nextEl: '.swiper-button-next',
+	  prevEl: '.swiper-button-prev',
+	},
+ 
+	// And if we need scrollbar
+	scrollbar: {
+	  el: '.swiper-scrollbar',
+	},
  });
 
 //#endregion BANNERS

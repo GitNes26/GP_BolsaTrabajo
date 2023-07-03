@@ -8,9 +8,9 @@ $pagina_acutal = "Bolsa de Trabajo";
 ?>
 
 <!-- Content Wrapper. Contenido de la pagina -->
-<div class="content-wrapper text-sm pt-6">
+<div class="content-wrapper text-sm">
    <!-- Content Header (Encabezado en el contenido de la pagina) -->
-   <section class="content-header">
+   <section class="content-header pt_sm_10">
       <div class="container-fluid">
          <div class="row mb-2 mt-3">
             <div class="col text-center">
@@ -123,41 +123,37 @@ $pagina_acutal = "Bolsa de Trabajo";
                </button>
                </div>
             </form>
-            <div class="">
-               <div class="carrusel">
-                  <div>your content</div>
-                  <div>your content</div>
-                  <div>your content</div>
+            <div class="bg-warning div-banners p-1">
+               <!-- Slider main container -->
+               <div class="swiper">
+               <!-- Additional required wrapper -->
+               <div class="swiper-wrapper">
+                  <!-- Slides -->
+                  <div class="swiper-slide">
+                     <img class="img-carrusel" src="/assets/img/candidates/14-Samuel.PNG" alt="img 1">
+                  </div>
+                  <div class="swiper-slide">
+                     <img class="img-carrusel" src="/assets/img/candidates/22-Soy el Nuevos.JPG" alt="img 2">
+                  </div>
+                  <div class="swiper-slide">
+                     <img class="img-carrusel" src="/assets/img/candidates/24-Lateral.JPG" alt="img 3">
+                  </div>
+                  ...
                </div>
-               <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                  <ol class="carousel-indicators">
-                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class=""></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="1" class=""></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="2" class="active"></li>
-                  </ol>
-                  <div class="carousel-inner">
-                  <div class="carousel-item">
-                  <img class="d-block w-100" src="https://placehold.it/900x500/39CCCC/ffffff&amp;text=I+Love+Bootstrap" alt="First slide">
-                  </div>
-                  <div class="carousel-item">
-                  <img class="d-block w-100" src="https://placehold.it/900x500/3c8dbc/ffffff&amp;text=I+Love+Bootstrap" alt="Second slide">
-                  </div>
-                  <div class="carousel-item active">
-                  <img class="d-block w-100" src="https://placehold.it/900x500/f39c12/ffffff&amp;text=I+Love+Bootstrap" alt="Third slide">
-                  </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                  <span class="carousel-control-custom-icon" aria-hidden="true">
-                  <i class="fas fa-chevron-left"></i>
-                  </span>
-                  <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                  <span class="carousel-control-custom-icon" aria-hidden="true">
-                  <i class="fas fa-chevron-right"></i>
-                  </span>
-                  <span class="sr-only">Next</span>
-                  </a>
+               <!-- If we need pagination -->
+               <div class="swiper-pagination"></div>
+
+               <!-- If we need navigation buttons -->
+               <div class="swiper-button-prev"></div>
+               <div class="swiper-button-next"></div>
+
+               <!-- If we need scrollbar -->
+               <div class="swiper-scrollbar"></div>
+               </div>
+               <!-- <div class="carrusel">
+                  <img class="img-carrusel" style="object-fit: scale-down !important; overflow: hidden !important; max-height: 50%;" src="/assets/img/candidates/14-Samuel.PNG" alt="img 1">
+                  <img class="img-carrusel" style="object-fit: scale-down !important; overflow: hidden !important; max-height: 50%;" src="/assets/img/candidates/22-Soy el Nuevos.JPG" alt="img 2">
+                  <img class="img-carrusel" style="object-fit: scale-down !important; overflow: hidden !important; max-height: 50%;" src="/assets/img/candidates/24-Lateral.JPG" alt="img 3">
                </div> -->
             </div>
          </div>

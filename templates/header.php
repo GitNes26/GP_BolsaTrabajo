@@ -68,8 +68,10 @@ elseif ($URL_SERVER == "/pages/index.php") $classBody = "layout-top-nav";
   <link rel="stylesheet" href="/plugins/summernote-0.8.18/summernote.min.css">
 
   <!-- slick-carousel 1.8.1 -->
-  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/> -->
 
+  <!-- SwiperJS - Carrusel -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
 
   <!-- bs-stepper- formularios en pasos -->
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css"> -->
