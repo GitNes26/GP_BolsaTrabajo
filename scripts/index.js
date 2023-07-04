@@ -338,20 +338,11 @@ async function applyVacancy(form_js) {
 
 //#region BANNERS
 // SLICE PARA BANNERS
-// $('.carrusel').slick({
-// 	dots: false,
-// 	infinite: true,
-// 	speed: 500,
-// 	fade: true,
-// 	cssEase: 'linear',
-// 	autoplay: true,
-//   	autoplaySpeed: 2000,
-//  });
-
 const swiper = new Swiper('.swiper', {
 	// Optional parameters
 	direction: 'vertical',
 	loop: true,
+	autoplay: true,
  
 	// If we need pagination
 	pagination: {

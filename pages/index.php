@@ -138,7 +138,6 @@ $pagina_acutal = "Bolsa de Trabajo";
                   <div class="swiper-slide">
                      <img class="img-carrusel" src="/assets/img/candidates/24-Lateral.JPG" alt="img 3">
                   </div>
-                  ...
                </div>
                <!-- If we need pagination -->
                <div class="swiper-pagination"></div>
@@ -150,11 +149,6 @@ $pagina_acutal = "Bolsa de Trabajo";
                <!-- If we need scrollbar -->
                <div class="swiper-scrollbar"></div>
                </div>
-               <!-- <div class="carrusel">
-                  <img class="img-carrusel" style="object-fit: scale-down !important; overflow: hidden !important; max-height: 50%;" src="/assets/img/candidates/14-Samuel.PNG" alt="img 1">
-                  <img class="img-carrusel" style="object-fit: scale-down !important; overflow: hidden !important; max-height: 50%;" src="/assets/img/candidates/22-Soy el Nuevos.JPG" alt="img 2">
-                  <img class="img-carrusel" style="object-fit: scale-down !important; overflow: hidden !important; max-height: 50%;" src="/assets/img/candidates/24-Lateral.JPG" alt="img 3">
-               </div> -->
             </div>
          </div>
 

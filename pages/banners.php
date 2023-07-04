@@ -88,36 +88,38 @@ $current_page = "Banners";
                <input type="hidden" id="op" name="op" value="" class="not_validate">
                <input type="hidden" id="id" name="id" value='' class="not_validate">
 
-               <div class="mb-3">
-                  <label for="input_date_init" class="form-label">Fecha inicial: <span class="obligatory"></span></label>
-                  <input class="form-control" type="date" id="input_date_init" name="input_date_init" data-input-name="FECHA DE INICIO">
-               </div>
-               <div class="mb-3">
-                  <label for="input_date_end" class="form-label">Fecha final: <span class="obligatory"></span></label>
-                  <input class="form-control" type="date" id="input_date_end" name="input_date_end" data-input-name="FECHA FINAL">
+               <div class="row">
+                  <div class="mb-3 col">
+                     <label for="input_date_init" class="form-label">Fecha inicial: <span class="obligatory"></span></label>
+                     <input class="form-control" type="date" id="input_date_init" name="input_date_init" data-input-name="FECHA DE INICIO">
+                  </div>
+                  <div class="mb-3 col">
+                     <label for="input_date_end" class="form-label">Fecha final: <span class="obligatory"></span></label>
+                     <input class="form-control" type="date" id="input_date_end" name="input_date_end" data-input-name="FECHA FINAL">
+                  </div>
                </div>
                <!-- DIV CARGAR IMAGEN -->
                <div class="mb-3" id="div_file">
-                  <label for="input_file" class="form-label">Cargar banner: <span class="obligatory"></span></label>
-                  <input class="form-control" type="file" id="input_file" name="input_file" data-input-name="IMAGEN" accept="image/*">
+                  <label for="input_file_path" class="form-label">Cargar banner: <span class="obligatory"></span></label>
+                  <input class="form-control" type="file" id="input_file_path" name="input_file_path" data-input-name="IMAGEN" accept="image/*">
                   <!-- <div class="form-text">Subir archivo con un peso máximo de <b id="peso_archivo"></b><b>MB</b>.</div> -->
                </div>
                <!-- DIV CARGAR IMAGEN -->
                <!-- DIV IMAGEN CARGADO -->
                <div class="mb-3" id="div_file_upload">
                   <label for="preview_file" class="form-label">Banner cargado:</label><br>
-                  <img src="/assets/img/cargar_archivo.png" controls preview="true" class="" id="preview_file" height="250px"></img>
-                  <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button>
+                  <img src="/assets/img/cargar_archivo.png" controls preview="true" class="rounded-lg" id="preview_file" height="250px"></img>
+                  <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
                </div>
                <!-- DIV IMAGEN CARGADO -->
                <div class="row g-3 align-items-center">
                   <div class="col-auto">
-                     <label for="input_status" class="col-form-label h4">STATUS:</label>
+                     <label for="input_active" class="col-form-label h4">STATUS:</label>
                   </div>
                   <div class="col-auto mx-2">
                      <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="input_status" name="input_status" value="1" data-activo="1" checked>
-                        <label class="form-check-label fst-italic" id="label_input_status" for="input_status">Activo</label>
+                        <input class="form-check-input" type="checkbox" role="switch" id="input_active" name="input_active" value="1" data-activo="1" checked>
+                        <label class="form-check-label fst-italic" id="label_input_active" for="input_active">Activo</label>
                      </div>
                   </div>
                </div>

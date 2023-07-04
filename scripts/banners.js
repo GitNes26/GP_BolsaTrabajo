@@ -33,7 +33,7 @@ $(document).ready(() => {
    });
    // Arrastrar renglón
 
-   $("#div_file").hide();
+   // $("#div_file_upload").hide();
 
    // function formatearFechaHora(la_fecha) {
    //    // fecha = new Date(parseInt(la_fecha.substr(6)));
@@ -62,18 +62,18 @@ $(document).ready(() => {
 
    //RECARGAR Y ACTUALIZAR STATUS DE LOS REGISTROS SI VENCIO SU FECHA FINAL
 
-   tds_status = document.querySelectorAll(".td_status");
+   tds_active = document.querySelectorAll(".td_active");
    function actualizarStatusRegistros() {
       let ids = "";
       por_actualizar = false;
-      query = "UPDATE imagen_vertical SET img_status='0', img_order=1000000 WHERE img_id IN (";
-      tds_status.forEach(td_status => {
+      query = "UPDATE imagen_vertical SET img_active='0', img_order=1000000 WHERE {obj.id} IN (";
+      tds_active.forEach(td_active => {
          let hoy = moment().format("YYYY-MM-DD HH:mm:ss");
          let momento_actual = moment(hoy)
-         id_registro = Number(td_status.getAttribute("data-id"));
-         status_td = Number(td_status.getAttribute("data-status"));
-         fecha_final = moment(td_status.getAttribute("data-fecha-final"));
-         if (td_status.getAttribute("data-fecha-final").length <= 11) {
+         id_registro = Number(td_active.getAttribute("data-id"));
+         active_td = Number(td_active.getAttribute("data-active"));
+         fecha_final = moment(td_active.getAttribute("data-date-end"));
+         if (td_active.getAttribute("data-date-end").length <= 11) {
             fecha_final = moment(fecha_final).format("YYYY-MM-DD 23:59:59");
             fecha_final = moment(fecha_final)
             let hoy = moment().format("YYYY-MM-DD 23:59:59");
@@ -81,7 +81,7 @@ $(document).ready(() => {
          }
          fecha_vencida = momento_actual.isAfter(fecha_final);
          // if (fecha_vencida) {
-         if (fecha_vencida && status_td==1) {
+         if (fecha_vencida && active_td==1) {
             por_actualizar = true;
             query += `${id_registro},`;
             ids += id_registro+'.,'
@@ -91,7 +91,7 @@ $(document).ready(() => {
       query += ");";
       ids = ids.slice(0,-1);
       let datos = {
-         accion: "actualizar_status",
+         accion: "actualizar_active",
          ids,
          query
       }
@@ -100,26 +100,54 @@ $(document).ready(() => {
    }
    function cambioDeEstado(ajaxResponse) {
       objResponse =  ajaxResponse.Datos;
-      tds_status.forEach(td_status => {
-         id_registro = td_status.getAttribute("data-id");
+      tds_active.forEach(td_active => {
+         id_registro = td_active.getAttribute("data-id");
          comparacion = `${id_registro}.`;
 
          if (objResponse.includes(id_registro)) {
-            td_status.setAttribute("data-status", 0);
-            td_status.classList.remove("fa-circle-check");
-            td_status.classList.add("fa-circle-xmark");
+            td_active.setAttribute("data-active", 0);
+            td_active.classList.remove("fa-circle-check");
+            td_active.classList.add("fa-circle-xmark");
 
-            // obtener su td_orden, quitarle su numero y poner su letra color muted
-            var td_orden = $(`td[data-id='${id_registro}'].td_orden`);
-            td_orden.attr("data-orden",1000000)
-            td_orden.removeClass("handle");
-            if (!td_orden.hasClass("text-muted")) {td_orden.addClass("text-muted");}
-            td_orden.html("&nbsp;<i class='fa-solid fa-grip-vertical'></i>");
+            // obtener su td_order_view, quitarle su numero y poner su letra color muted
+            var td_order_view = $(`td[data-id='${id_registro}'].td_order_view`);
+            td_order_view.attr("data-order_view",1000000)
+            td_order_view.removeClass("handle");
+            if (!td_order_view.hasClass("text-muted")) {td_order_view.addClass("text-muted");}
+            td_order_view.html("&nbsp;<i class='fa-solid fa-grip-vertical'></i>");
          }
       });
    }
    actualizarStatusRegistros();   
    //RECARGAR Y ACTUALIZAR STATUS DE LOS REGISTROS SI VENCIO SU FECHA FINAL
+
+	$(".td_img").hover(function () {
+		// over
+		console.log("dentro");
+		let id = $(this).attr("data-id");
+		let tooltip_imagen = $(`img[data-id='${id}'].tooltip_imagen`)
+		tooltip_imagen.fadeIn("fast");
+	}, function () {
+		// out
+		console.log("fuera");
+		let id = $(this).attr("data-id");
+		let tooltip_imagen = $(`img[data-id='${id}'].tooltip_imagen`)
+		tooltip_imagen.fadeOut("fast");
+	});
+	
+	$(".td_video").hover(function () {
+		// over
+		// console.log("dentro video");
+		let id = $(this).attr("data-id");
+		let tooltip_video = $(`video[data-id='${id}'].tooltip_video`)
+		tooltip_video.fadeIn("fast");
+	}, function () {
+		// out
+		// console.log("fuera video");
+		let id = $(this).attr("data-id");
+		let tooltip_video = $(`video[data-id='${id}'].tooltip_video`)
+		tooltip_video.fadeOut("fast");
+	})
 });
 
 const 
@@ -132,12 +160,12 @@ const
 	input_date_init = $("#input_date_init"),
 	input_date_end = $("#input_date_end"),
 	div_file = $("#div_file"),
-	input_file = $("#input_file"),
+	input_file_path = $("#input_file_path"),
 	div_file_upload = $("#div_file_upload"),
 	preview_file = $("#preview_file"),
 	btn_quit_file = $("#btn_quit_file"),
-	input_status = $("#input_status"),
-	label_input_status = $("#label_input_status"),
+	input_active = $("#input_active"),
+	label_input_active = $("#label_input_active"),
 
 	btn_submit = $("#btn_submit"),
 	btn_reset = $("#btn_reset"),
@@ -162,13 +190,13 @@ $(`.tooltip_video`).fadeOut(1);
 
 $(".td_img").hover(function () {
 	// over
-	// console.log("dentro");
+	console.log("dentro");
 	let id = $(this).attr("data-id");
 	let tooltip_imagen = $(`img[data-id='${id}'].tooltip_imagen`)
 	tooltip_imagen.fadeIn("fast");
 }, function () {
 	// out
-	// console.log("fuera");
+	console.log("fuera");
 	let id = $(this).attr("data-id");
 	let tooltip_imagen = $(`img[data-id='${id}'].tooltip_imagen`)
 	tooltip_imagen.fadeOut("fast");
@@ -217,11 +245,13 @@ btn_reset.click(async (e) => {
 	console.log("btnsa");
 
 	console.log(input_date_init);
-	input_date_init[0].value="2023-01-01"
-	console.log(input_date_init);
+	preview_file.attr("src","/assets/img/cargar_archivo.png");
+	preview_file.addClass("rounded-lg");
 
 	setTimeout(() => {
 		input_date_init.focus();
+		input_date_init.val(moment().format("YYYY-MM-DD"));
+		console.log(input_date_init);
 	}, 500);
 });
 
@@ -229,9 +259,36 @@ btn_modal_form.click(async (e) => {
 	btn_reset.click();
 });
 
+//ESTADO ACTIVO E INACTIVO
+input_active.click(() => {
+   estado = input_active.prop("checked")
+   if (estado) { label_input_active.text("Activo"); input_active.attr("data-activo",1); }
+   else { label_input_active.text("Inactivo"); input_active.attr("data-activo",0); }
+});
+
+// Agrega un evento change a la foto de perfil
+input_file_path.on('change', async function(event) {
+   // Obtén el archivo seleccionado
+   const file = event.target.files[0];
+
+   // Crea un objeto FileReader
+   const fileReader = new FileReader();
+
+   // Define la función de carga completada del lector
+   fileReader.onload = function(e) {
+      // Agrega la imagen a la vista previa
+      preview_file.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+      preview_file.attr("src",e.target.result);
+		preview_file.addClass("rounded-lg");
+   };
+
+  // Lee el contenido del archivo como una URL de datos
+  fileReader.readAsDataURL(file);
+});
+
 
 // REGISTRAR O EDITAR OBJETO
-form.on("submit", async (e) => {
+form.on("submit", async function(e) {
 	e.preventDefault();
 	// console.log(form.serializeArray());
 
@@ -248,19 +305,19 @@ form.on("submit", async (e) => {
 		op_modal.val("edit");
 	}
 
-	let data = form.serializeArray();
+	let data = new FormData(this);
 	// return console.log(data);
 	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
 	if (id_modal.val() <= 0) {
 		//NUEVO
-		addToArray("created_at", current_date, data);
+		addToArray("created_at", current_date, data, true);
 	} else {
 		//EDICION
-		addToArray("updated_at", current_date, data);
+		addToArray("updated_at", current_date, data, true);
 	}
 
-	// return console.log(data);
-	const ajaxResponse = await ajaxRequestAsync(URL_AREA_APP, data);
+	// return console.log([...data]);
+	const ajaxResponse = await ajaxRequestFileAsync(URL_BANNER_APP, data);
 	if (ajaxResponse.message == "duplicado") return
 	btn_cancel.click();
 	await fillTable();
@@ -268,7 +325,7 @@ form.on("submit", async (e) => {
 
 async function fillTable(show_toas=true) {
 	let data = { op: "index" };
-	const ajaxResponse = await ajaxRequestAsync(URL_AREA_APP, data, null, true, show_toas);
+	const ajaxResponse = await ajaxRequestAsync(URL_BANNER_APP, data, null, true, show_toas);
 
 	//Limpiar table
 	tbody.slideUp();
@@ -279,27 +336,53 @@ async function fillTable(show_toas=true) {
 	// console.log(objResponse);
 
 	objResponse.map((obj) => {
+		console.log(obj);
+
+		let
+			class_handle = "handle"
+			;
+
+			if (obj.active == false ) {order_view = 1000000;}
+			if (obj.order_view == 1000000) { class_handle = "text-muted"; obj.order_view = ""; }
+		
 		//Campos
 		let 
-			column_area = `${obj.area}`;
+			column_date_init = `${formatDatetime(obj.date_init)}`,
+			column_date_end = `${formatDatetime(obj.date_end)}`,
+			column_file_path = `
+				<td class='align-middle'>
+					<img src='/assets/img/${obj.file_path}' class='img-fluid rounded shadow tooltip_imagen tt_banvertical' data-id='${obj.id}'></img>
+					<img src='/assets/img/${obj.file_path}' width='50' preload='true' class='td_img rounded' data-id='${obj.id}'></img>
+				</td>`;
+
+			column_order_view = `
+				<td class='align-middle td_order fw-bold text-lg ${class_handle}' data-id='${obj.id}' data-order_view='${obj.order_view}'>${obj.order_view} &nbsp;<i class='fa-solid fa-grip-vertical'></i></td>`,
+
+			column_active = Boolean(obj.active) == true 
+				? `<i class='fa-regular fa-circle-check fa-2xl td_active' data-id='${obj.id}' data-active='${obj.active}' data-date-end='${obj.date_end}'></i>` 
+				: `<i class='fa-regular fa-circle-xmark fa-2xl td_active' data-id='${obj.id}' data-active='${obj.active}' data-date-end='${obj.date_end}'></i>`;
 
 		let column_buttons = `<td class='align-middle'>
             <div class='btn-group' role='group'>`;
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Área'><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
+				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Banner'><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Área' data-name='${obj.area}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
+				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Banner' data-name='${obj.area}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
 		}
 		column_buttons += `</div>
 					</td>`;
 
 		list.push([
-			column_area,
+			column_date_init,
+			column_date_end,
+			column_file_path,
+			column_order_view,
+			column_active,
 			column_buttons,
 		]);		
 	});
@@ -308,6 +391,8 @@ async function fillTable(show_toas=true) {
 	.add(list)
 	.draw();
 	await table.columns.adjust().draw();
+	$(`.tooltip_imagen`).fadeOut(1);
+	$(`.tooltip_video`).fadeOut(1);
 	tbody.slideDown("slow");
 	btn_reset.click();
 }
@@ -362,12 +447,12 @@ async function editObj(btn_edit) {
 
 	let id_obj = btn_edit.attr("data-id");
 	let data = { id: id_obj, op: "show" };
-	const ajaxResponse = await ajaxRequestAsync(URL_AREA_APP, data);
+	const ajaxResponse = await ajaxRequestAsync(URL_BANNER_APP, data);
 
 	const obj = ajaxResponse.data;
 	//form
 	id_modal.val(Number(obj.id));
-	input_date_init.val(obj.area);
+	input_date_init.val(obj.input_date_init);
 
 	setTimeout(() => {
 		input_date_init.focus();
@@ -389,7 +474,7 @@ async function deleteObj(btn_delete) {
 	ajaxRequestQuestionAsync(
 		title,
 		text,
-		URL_AREA_APP,
+		URL_BANNER_APP,
 		data,
 		"fillTable()"
 	);

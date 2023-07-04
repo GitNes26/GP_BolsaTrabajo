@@ -1,0 +1,41 @@
+.fa-circle-check {
+   color: green;
+ }
+ .fa-circle-xmark {
+   color: red;
+ }
+ .handle {
+   cursor: move;
+ }
+ .handle:hover {
+   cursor: move;
+ }
+ 
+ /* .td_img {
+   /* cursor: zoom-in 
+ } */
+ 
+ .p-absolute{
+   position: absolute;
+ }
+ .tooltip_imagen, .tooltip_video {
+   /* opacity:.5; */
+   position: absolute;
+   z-index: 99;
+ }
+ .tt_bancompleto {
+   width: 15em;
+   transform: translateY(-8.5em) translateX(-5.5em); /*arriba de la imagen*/
+ }
+ .tt_banhorizontal {
+   height: 5em;
+   transform: translateY(-4.5em) translateX(-17em); /*arriba de la imagen*/
+ }
+ .tt_banvertical {
+   width: 10em;
+   transform: translateY(-6.5em) translateX(5.5em); /*arriba de la imagen*/
+ }
+ .tt_video {
+   width: 15em;
+   transform: translateY(-8.5em) translateX(-5.5em); /*arriba de la imagen*/
+ }

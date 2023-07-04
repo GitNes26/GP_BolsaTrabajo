@@ -17,9 +17,8 @@ class Banner extends Connection {
    function index() {
       try {
          $response = $this->defaultResponse();
-   
-         // $query = "SELECT c.cli_id,iv.img_id,c.cli_nom_empresa,iv.img_fecha_ini,iv.img_fecha_fin,iv.img_ruta,iv.img_status, iv.img_order FROM imagen_vertical as iv INNER JOIN clientes as c ON c.cli_id=iv.cli_id ORDER BY iv.img_order ASC";         
-         $query = "SELECT * FROM banners ORDER BY order ASC;";
+           
+         $query = "SELECT * FROM banners ORDER BY order_view ASC;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -77,14 +76,18 @@ class Banner extends Connection {
       die(json_encode($response));
    }
 
-   function create($date_init, $date_end, $file_path, $type, $order, $created_at) {
+   function create($date_init, $date_end, $file_path, $type_file, $order_view, $created_at) {
       try {
          $response = $this->defaultResponse();
 
          $this->validateAvailableData($file_path, null);
 
-         $query = "INSERT INTO banners(date_init, date_end, file_path, type, order, created_at) VALUES(?,?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($date_init, $date_end, $file_path, $type, $order, $created_at));
+         if ($order_view == 0) $order_view = (int)$this->countRegisters() + 1;
+
+         // echo "$date_init  |  $date_end  |  $file_path  |  $type  |  $order_view  |  $created_at";
+
+         $query = "INSERT INTO banners(date_init, date_end, file_path, type_file, order_view,  created_at) VALUES(?,?,?,?,?,?)";
+         $this->ExecuteQuery($query, array($date_init, $date_end, $file_path, $type_file, $order_view, $created_at));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
@@ -100,14 +103,14 @@ class Banner extends Connection {
       die(json_encode($response));
    }
 
-   function edit($date_init, $date_end, $file_path, $type, $order, $updated_at, $id) {
+   function edit($date_init, $date_end, $file_path, $type_file, $order_view, $active, $updated_at, $id) {
       try {
          $response = $this->defaultResponse();
 
          $this->validateAvailableData($file_path, $id);
 
-         $query = "UPDATE banners SET date_init=?, date_end=?, file_path=?, type=?, order=?, updated_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($date_init, $date_end, $file_path, $type, $order, $updated_at, $id));
+         $query = "UPDATE banners SET date_init=?, date_end=?, file_path=?, type_file=?, order_view=?, active=?, updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($date_init, $date_end, $file_path, $type_file, $order_view, $active, $updated_at, $id));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
@@ -144,12 +147,35 @@ class Banner extends Connection {
       die(json_encode($response));
    }
 
-   function editOrder($id, $order) {
+   function editActive($id, $active) {
       try {
          $response = $this->defaultResponse();
 
-         $query = "UPDATE banners SET order=? WHERE img_id=?";
-         $this->ExecuteQuery($query, array($order, $id));
+         $query = "UPDATE banners SET active=? WHERE img_id=?";
+         $this->ExecuteQuery($query, array($active, $id));
+
+         $status = $active == "1" ? "Activado" : "Desactivado";
+         
+         $response = $this->CorrectResponse();
+         $response["message"] = "Peticion satisfactoria | registro actualizado.";
+         $response["alert_title"] = "Banner $status";
+         $response["alert_text"] = "Banner $status";
+         $this->Close();
+   
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->CatchResponse($error_message);
+      }
+      die(json_encode($response));
+   }
+
+   function editOrder($id, $order_view) {
+      try {
+         $response = $this->defaultResponse();
+
+         $query = "UPDATE banners SET order_view=? WHERE img_id=?";
+         $this->ExecuteQuery($query, array($order_view, $id));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
@@ -171,11 +197,11 @@ class Banner extends Connection {
       if ($duplicate["result"] == true) die(json_encode($duplicate));
    }
 
-   function contarRegistrosConLaMismaRuta($file_path) {
+   function countRegisters() {
       try {
-         $query = "SELECT COUNT(*) as duplicated FROM banners WHERE file_path='$file_path'";
+         $query = "SELECT COUNT(*) as register FROM banners WHERE active=1";
          $result = $this->Select($query, false);
-         return $result["duplicated"];
+         return $result["register"];
       } catch (Exception $e) {
          echo "Error: ".$e->getMessage();
       }
