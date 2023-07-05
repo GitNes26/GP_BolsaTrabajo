@@ -36,7 +36,7 @@ $current_page = "Banners";
       <div class="card card-outline card-success shadow">
          <?php if ($permission_write ?? false): ?>
          <div class="container-fluid mt-2">
-            <i class="text-muted h6">Medidas: <b>274px</b> ancho &nbsp; <i class="fas fa-times"></i> &nbsp; <b>554px</b> alto</i>
+            <i class="text-muted h6 text-sm">Medidas: <b>1400px</b> largo &nbsp; <i class="fas fa-times"></i> &nbsp; <b>132px</b> alto</i>
             <button id="btn_modal_form" class="float-end btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR BANNER</button>
          </div>
          <?php endif ?>
@@ -48,6 +48,7 @@ $current_page = "Banners";
                      <tr>
                         <th scope="col">Fecha inicial</th>
                         <th scope="col">Fecha final</th>
+                        <th scope="col">Enlace</th>
                         <th scope="col">Imagen</th>
                         <th scope="col">Orden</th>
                         <th scope="col">Activo</th>
@@ -60,6 +61,7 @@ $current_page = "Banners";
                      <tr class="thead-dark">
                         <th scope="col">Fecha inicial</th>
                         <th scope="col">Fecha final</th>
+                        <th scope="col">Enlace</th>
                         <th scope="col">Imagen</th>
                         <th scope="col">Orden</th>
                         <th scope="col">Activo</th>
@@ -98,21 +100,23 @@ $current_page = "Banners";
                      <input class="form-control" type="date" id="input_date_end" name="input_date_end" data-input-name="FECHA FINAL">
                   </div>
                </div>
+               <div class="mb-3 col">
+                  <label for="input_link" class="form-label">Enlace:</span></label>
+                  <input class="form-control not_validate" type="text" id="input_link" name="input_link" data-input-name="ENLACE">
+               </div>
                <!-- DIV CARGAR IMAGEN -->
-               <div class="mb-3" id="div_file">
+               <div class="mb-3">
                   <label for="input_file_path" class="form-label">Cargar banner: <span class="obligatory"></span></label>
                   <input class="form-control" type="file" id="input_file_path" name="input_file_path" data-input-name="IMAGEN" accept="image/*">
                   <!-- <div class="form-text">Subir archivo con un peso máximo de <b id="peso_archivo"></b><b>MB</b>.</div> -->
+                  <!-- DIV IMAGEN CARGADO -->
+                  <div class="text-center">
+                     <label for="preview_file" class="form-label">Banner cargado:</label><br>
+                     <img src="/assets/img/cargar_imagen.png" controls preview="true" class="rounded-lg img-fluid" id="preview_file" height="250px"></img>
+                     <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
+                  </div>
                </div>
-               <!-- DIV CARGAR IMAGEN -->
-               <!-- DIV IMAGEN CARGADO -->
-               <div class="mb-3" id="div_file_upload">
-                  <label for="preview_file" class="form-label">Banner cargado:</label><br>
-                  <img src="/assets/img/cargar_archivo.png" controls preview="true" class="rounded-lg" id="preview_file" height="250px"></img>
-                  <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
-               </div>
-               <!-- DIV IMAGEN CARGADO -->
-               <div class="row g-3 align-items-center">
+               <!-- <div class="row g-3 align-items-center">
                   <div class="col-auto">
                      <label for="input_active" class="col-form-label h4">STATUS:</label>
                   </div>
@@ -122,7 +126,7 @@ $current_page = "Banners";
                         <label class="form-check-label fst-italic" id="label_input_active" for="input_active">Activo</label>
                      </div>
                   </div>
-               </div>
+               </div> -->
             </div>
             <div class="modal-footer">
                <button type="submit" id="btn_submit" class="btn btn-success fw-bold">AGREGAR</button>

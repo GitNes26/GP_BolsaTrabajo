@@ -123,28 +123,6 @@ $pagina_acutal = "Bolsa de Trabajo";
                </button>
                </div>
             </form>
-            <div class="bg-warning div-banners p-1">
-               <!-- Slider main container -->
-               <div class="swiper">
-               <!-- Additional required wrapper -->
-               <div class="swiper-wrapper" id="swipper_banners"></div>
-               <!-- Slide Template -->
-               <template id="template_banner">
-                  <div class="swiper-slide">
-                     <img class="img-carrusel" src="/assets/img/cargar_imagen.png" alt="img">
-                  </div>
-               </template>
-               <!-- If we need pagination -->
-               <div class="swiper-pagination"></div>
-
-               <!-- If we need navigation buttons -->
-               <div class="swiper-button-prev"></div>
-               <div class="swiper-button-next"></div>
-
-               <!-- If we need scrollbar -->
-               <div class="swiper-scrollbar"></div>
-               </div>
-            </div>
          </div>
 
          <!-- LISTA DE EMPELOS -->
@@ -208,6 +186,31 @@ $pagina_acutal = "Bolsa de Trabajo";
                   </div>
                </div>
             </form>
+         </div>
+      </div>
+
+      <div class="div-banners p-1">
+         <!-- Slider main container -->
+         <div class="swiper">
+         <!-- Additional required wrapper -->
+         <div class="swiper-wrapper" id="swipper_banners"></div>
+         <!-- Slide Template -->
+         <template id="template_banner">
+            <div class="swiper-slide">
+               <a target="_blank" rel="noopener noreferrer">
+                  <img class="img-carrusel" src="/assets/img/cargar_imagen.png" alt="img">
+               </a>
+            </div>
+         </template>
+         <!-- If we need pagination -->
+         <div class="swiper-pagination"></div>
+
+         <!-- If we need navigation buttons -->
+         <div class="swiper-button-prev"></div>
+         <div class="swiper-button-next"></div>
+
+         <!-- If we need scrollbar -->
+         <div class="swiper-scrollbar"></div>
          </div>
       </div>
 

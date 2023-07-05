@@ -253,8 +253,8 @@ async function fillTable() {
 				<i>(${obj.age} años)</i>
 			`,
 			column_contact = `
-				<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.cellphone)}<br>
-				<i class="fa-solid fa-at"></i>&nbsp; ${obj.email}
+				<p><i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.cellphone)}</p>
+				<p><i class="fa-solid fa-at"></i>&nbsp; ${obj.email}</p>
 			`,
 			column_profession = `
 				${obj.profession}
@@ -296,6 +296,7 @@ async function fillTable() {
 	.draw();
 	table.columns.adjust().draw();
 	tbody.slideDown("slow");
+	$("tr td").css("vertical-align", "middle");
 }
 
 //ACCIONES EN BOTONES DE LA TABLA

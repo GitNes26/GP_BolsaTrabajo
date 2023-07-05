@@ -5,6 +5,7 @@
 /config.php
 
 #no importar imagenes de usuarios
+/assets/img/banners
 /assets/img/candidates
 /assets/img/companies
 

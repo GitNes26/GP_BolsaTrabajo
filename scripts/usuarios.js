@@ -223,6 +223,7 @@ async function fillTable() {
 	.draw();
 	table.columns.adjust().draw();
 	tbody.slideDown("slow");
+	$("tr td").css("vertical-align", "middle");
 }
 
 //ACCIONES EN BOTONES DE LA TABLA

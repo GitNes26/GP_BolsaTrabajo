@@ -214,9 +214,9 @@ async function fillTable() {
 				<b>${obj.email}</b>
 			`,
 			column_contact = `
-				<i class="fa-solid fa-id-badge"></i>&nbsp; <b>${obj.contact_name}</b><br>
-				<i class="fa-solid fa-phone-office"></i>&nbsp; ${obj.contact_phone}<br>
-				<i class="fa-solid fa-at"></i>&nbsp; ${obj.contact_email}
+				<p><i class="fa-solid fa-id-badge"></i>&nbsp; <b>${obj.contact_name}</b></p>
+				<p><i class="fa-solid fa-phone-office"></i>&nbsp; ${formatPhone(obj.contact_phone)}</p>
+				<p><i class="fa-solid fa-at"></i>&nbsp; ${obj.contact_email}</p>
 			`,
 			column_business_line = `
 				${obj.business_line}
@@ -258,6 +258,7 @@ async function fillTable() {
 	.draw();
 	table.columns.adjust().draw();
 	tbody.slideDown("slow");
+	$("tr td").css("vertical-align", "middle");
 }
 
 //ACCIONES EN BOTONES DE LA TABLA

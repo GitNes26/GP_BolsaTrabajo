@@ -88,11 +88,11 @@ async function fillTable(show_toas=true) {
 		switch (obj.status) {
 			case 'Pendiente':
 				bg_badge = "bg-secondary";
-				icon = `<i class="fa-thin fa-paper-plane"></i>`;
+				icon = `<i class="fa-regular fa-paper-plane"></i>`;
 				break;
 			case 'Recibida':
 				bg_badge = "bg-info";
-				icon = `<i class="fa-thin fa-check-to-slot"></i>`;
+				icon = `<i class="fa-regular fa-check-to-slot"></i>`;
 				break;
 			case 'En evaluación':
 				bg_badge = "bg-primary";
@@ -100,12 +100,12 @@ async function fillTable(show_toas=true) {
 				break;
 			case 'Aceptada':
 				bg_badge = "bg-success";
-				icon = `<i class="fa-thin fa-file-check"></i>`;
-				icon = `<i class="fa-thin fa-thumbs-up"></i>`;
+				icon = `<i class="fa-regular fa-file-check"></i>`;
+				icon = `<i class="fa-regular fa-thumbs-up"></i>`;
 				break;
 			case 'Rechazada':
 				bg_badge = "bg-danger";
-				icon = `<i class="fa-thin fa-thumbs-down"></i>`;
+				icon = `<i class="fa-regular fa-thumbs-down"></i>`;
 				break;
 			case 'Cancelada':
 				bg_badge = "bg-danger";
@@ -178,6 +178,7 @@ async function fillTable(show_toas=true) {
 	.draw();
 	await table.columns.adjust().draw();
 	tbody.slideDown("slow");
+	$("tr td").css("vertical-align", "middle");
 }
 
 //EDITAR OBJETO

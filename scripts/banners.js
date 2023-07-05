@@ -159,9 +159,8 @@ const
 	op_modal = $("#op"),
 	input_date_init = $("#input_date_init"),
 	input_date_end = $("#input_date_end"),
-	div_file = $("#div_file"),
+	input_link = $("#input_link"),
 	input_file_path = $("#input_file_path"),
-	div_file_upload = $("#div_file_upload"),
 	preview_file = $("#preview_file"),
 	btn_quit_file = $("#btn_quit_file"),
 	input_active = $("#input_active"),
@@ -245,7 +244,7 @@ $(".td_video").hover(function () {
 btn_reset.click(async (e) => {
 	id_modal.val("");
 
-	preview_file.attr("src","/assets/img/cargar_archivo.png");
+	preview_file.attr("src","/assets/img/cargar_imagen.png");
 	preview_file.addClass("rounded-lg");
 
 	setTimeout(() => {
@@ -269,22 +268,26 @@ input_active.click(() => {
 input_file_path.on('change', async function(event) {
    // Obtén el archivo seleccionado
    const file = event.target.files[0];
-	 resetImgPreviewBanner(file);
-});
-function resetImgPreviewBanner(file) {
+
 	// Crea un objeto FileReader
 	const fileReader = new FileReader();
 
 	// Define la función de carga completada del lector
 	fileReader.onload = function(e) {
 		// Agrega la imagen a la vista previa
-		preview_file.html(""); // Limpia la vista previa antes de agregar la nueva imagen
-		preview_file.attr("src",e.target.result);
-		preview_file.addClass("rounded-lg");
+		resetImgPreviewBanner(e.target.result);
 	};
 
   // Lee el contenido del archivo como una URL de datos
   fileReader.readAsDataURL(file);
+});
+function resetImgPreviewBanner(file_path) {
+	const file = file_path ?? "/assets/img/cargar_imagen.png";
+	// Agrega la imagen a la vista previa
+	preview_file.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+	preview_file.attr("src", file);
+	preview_file.addClass("rounded-lg");
+	preview_file.addClass("img-fluid");
 }
 
 
@@ -293,6 +296,7 @@ form.on("submit", async function(e) {
 	e.preventDefault();
 	// console.log(form.serializeArray());
 
+	if (!validateRangeDates("create", input_date_init, input_date_end)) return;
 	if (!validateInputs(form)) return;
 
 	if (id_modal.val() <= 0) {
@@ -317,7 +321,8 @@ form.on("submit", async function(e) {
 		if (haveImg) addToArray("haveImg", vImgPath, data, true);
 		addToArray("updated_at", current_date, data, true);
 	}
-
+	current_date = moment().format("YYYYMMDD_hhmmssms");
+	addToArray("current_date", current_date, data, true);
 	// return console.log([...data]);
 	const ajaxResponse = await ajaxRequestFileAsync(URL_BANNER_APP, data);
 	if (ajaxResponse.message == "duplicado") return
@@ -346,11 +351,27 @@ async function fillTable(show_toas=true) {
 
 			if (obj.active == false ) {order_view = 1000000;}
 			if (obj.order_view == 1000000) { class_handle = "text-muted"; obj.order_view = ""; }
+
+		let active_icon = "fa-solid fa-circle-check";
+      let icon_color = "green";
+      let switch_enabled = {
+         color: "success",
+         title: "Activo",
+         icon: "fa-solid fa-toggle-on"
+      }
+
+		if(!Boolean(obj.active)) {
+         active_icon="fa-solid fa-circle-xmark"; icon_color="red"
+         switch_enabled.color="secondary"
+         switch_enabled.title="No Activo"
+         switch_enabled.icon="fa-solid fa-toggle-off"
+      }
 		
 		//Campos
 		let 
 			column_date_init = `${formatDatetime(obj.date_init)}`,
 			column_date_end = `${formatDatetime(obj.date_end)}`,
+			column_link = `<a href="${obj.link}" target="_blank" rel="noopener noreferrer">${obj.link}</a>`,
 			column_file_path = `
 				<td class='align-middle'>
 					<img src='/assets/img/${obj.file_path}' class='img-fluid rounded shadow tooltip_imagen tt_banvertical' data-id='${obj.id}'></img>
@@ -369,12 +390,13 @@ async function fillTable(show_toas=true) {
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Banner' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
+				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Banner' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>
+				<button class='btn btn-outline-${switch_enabled.color}' type='button' onclick="activeDesactive(${obj.id}, ${obj.active})" title='${switch_enabled.title}'><i class='${switch_enabled.icon} fa-2x'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Banner' data-name='${obj.area}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
+				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Banner' data-name='${obj.order_view}' data-file-path="${obj.file_path}"><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
 		}
 		column_buttons += `</div>
 					</td>`;
@@ -382,6 +404,7 @@ async function fillTable(show_toas=true) {
 		list.push([
 			column_date_init,
 			column_date_end,
+			column_link,
 			column_file_path,
 			column_order_view,
 			column_active,
@@ -457,19 +480,13 @@ async function editObj(btn_edit) {
 	id_modal.val(Number(obj.id));
 	input_date_init.val(obj.date_init);
 	input_date_end.val(obj.date_end);
+	input_link.val(obj.link);
 	haveImg=false;
-	if (obj.file_path == "" || obj.file_path == null) {
-		preview_file.html(""); // Limpia la vista previa antes de agregar la nueva imagen
-		preview_file.attr("src","/assets/img/cargar_imagen.webp");
-		preview_file.addClass("rounded-lg");
-	}
+	if (obj.file_path == "" || obj.file_path == null) resetImgPreviewBanner(null);
 	else {
 		haveImg = true;
 		// console.log("tengo imagen guardada");
-		preview_file.html(""); // Limpia la vista previa antes de agregar la nueva imagen
-		preview_file.attr("src",`/assets/img/${obj.file_path}`);
-		preview_file.addClass("rounded-lg");
-
+		resetImgPreviewBanner(`/assets/img/${obj.file_path}`);
 		vImgPath = obj.file_path;
 		// input_file_path.val(obj.file_path);
 	}
@@ -484,13 +501,14 @@ async function editObj(btn_edit) {
 
 //ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
 async function deleteObj(btn_delete) {
-	let title = `¿Estas seguro de eliminar el banner <br> ${btn_delete.attr("data-name")}?`;
+	let title = `¿Estas seguro de eliminar el banner <br> No.${btn_delete.attr("data-name")}?`;
 	let text = ``;
 
 	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
 	let data = {
 		op: "delete",
 		id: Number(btn_delete.attr("data-id")),
+		file_path: btn_delete.attr("data-file-path"),
 		deleted_at: current_date,
 	};
 
@@ -501,4 +519,16 @@ async function deleteObj(btn_delete) {
 		data,
 		"fillTable()"
 	);
+}
+
+//CAMBIAR STATUS CON EL SWITCH
+async function activeDesactive(id, active) {
+	const status = active == "1" ? "0" : "1";
+   const data = {
+      op: "activeDesactive",
+      id: id,
+      input_active: status
+   }
+   await ajaxRequestAsync(URL_BANNER_APP, data);
+   fillTable(false);
 }

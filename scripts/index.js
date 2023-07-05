@@ -345,13 +345,16 @@ const
 	;
 	
 async function fillBanners() {
-	const data = { op: "index" };
-	const ajaxResponse = await ajaxRequestAsync(URL_BANNER_APP, data)
+	const data = { op: "fillBanners", current_date: moment().format("YYYY-MM-DD") };
+	const ajaxResponse = await ajaxRequestAsync(URL_BANNER_APP, data, null, false, false)
 	// console.log(ajaxResponse);
 	ajaxResponse.data.map(obj => {
 		//busco los elementos que existen en mi template y le asigno valores a sus atributos y contenido...
 		template_banner.querySelector("img").src = `/assets/img/${obj.file_path}`;
 		template_banner.querySelector("img").alt = `${obj.file_path.split("/").reverse()[0]}`;
+		if (obj.link != null) {
+			if (obj.link.length > 1) template_banner.querySelector("a").href = obj.link;
+		}
 
 		// ya que termine de asignarle valores a mis elementos de la plantilla, creo un nodo llamado clone ya que duplicara el contenido de mi template
 		let $clone = document.importNode(template_banner, true); //el primer parametro es el elemento a cloonar y el segundo parametro es para indicar que si quiero que se duplique  su contenid

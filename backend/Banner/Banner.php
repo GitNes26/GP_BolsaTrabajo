@@ -35,11 +35,11 @@ class Banner extends Connection {
       die(json_encode($response));
    }
 
-   function showSelect() {
+   function fillBanners($current_date) {
       try {
          $response = $this->defaultResponse();
-   
-         $query = "SELECT id value, file_path text FROM banners WHERE active=1;";
+
+         $query = "SELECT * FROM banners WHERE active=1 AND date_init <= '$current_date' AND date_end >= '$current_date' ORDER BY order_view ASC;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -76,7 +76,7 @@ class Banner extends Connection {
       die(json_encode($response));
    }
 
-   function create($date_init, $date_end, $file_path, $type_file, $order_view, $created_at) {
+   function create($date_init, $date_end, $link, $file_path, $type_file, $order_view, $created_at) {
       try {
          $response = $this->defaultResponse();
 
@@ -84,10 +84,10 @@ class Banner extends Connection {
 
          if ($order_view == 0) $order_view = (int)$this->countRegisters() + 1;
 
-         // echo "$date_init  |  $date_end  |  $file_path  |  $type  |  $order_view  |  $created_at";
+         // echo "$date_init  |  $date_end  |  $file_path  |  $type_file  |  $order_view  |  $created_at";
 
-         $query = "INSERT INTO banners(date_init, date_end, file_path, type_file, order_view,  created_at) VALUES(?,?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($date_init, $date_end, $file_path, $type_file, $order_view, $created_at));
+         $query = "INSERT INTO banners(date_init, date_end, link, file_path, type_file, order_view,  created_at) VALUES(?,?,?,?,?,?,?)";
+         $this->ExecuteQuery($query, array($date_init, $date_end, $link, $file_path, $type_file, $order_view, $created_at));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
@@ -103,14 +103,15 @@ class Banner extends Connection {
       die(json_encode($response));
    }
 
-   function edit($date_init, $date_end, $file_path, $type_file, $order_view, $active, $updated_at, $id) {
+   function edit($date_init, $date_end, $link, $file_path, $type_file, $updated_at, $id) {
       try {
          $response = $this->defaultResponse();
 
          $this->validateAvailableData($file_path, $id);
+         // echo "$date_init | $date_end | $link | $file_path | $type_file | $updated_at | $id";
 
-         $query = "UPDATE banners SET date_init=?, date_end=?, file_path=?, type_file=?, order_view=?, active=?, updated_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($date_init, $date_end, $file_path, $type_file, $order_view, $active, $updated_at, $id));
+         $query = "UPDATE banners SET date_init=?, date_end=?, link=?, file_path=?, type_file=?, updated_at=? WHERE id=?";
+         $this->ExecuteQuery($query, array($date_init, $date_end, $link, $file_path, $type_file, $updated_at, $id));
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
@@ -126,12 +127,19 @@ class Banner extends Connection {
       die(json_encode($response));
    }
 
-   function delete($deleted_at, $id) {
+   function delete($id, $file_path) {
       try {
         $response = $this->defaultResponse();
 
-         $query = "UPDATE banners SET active=0, deleted_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($deleted_at, $id));
+         $query = "DELETE FROM banners WHERE id=?";
+         $this->ExecuteQuery($query, array($id));
+
+         if (file_exists("../../assets/img/$file_path")) {
+            // Establecer permisos
+            $permissions = 0777;
+            if (chmod("../../assets/img/$file_path", $permissions))
+               unlink("../../assets/img/$file_path");
+         }
 
          $response = $this->correctResponse();
          $response["message"] = "Peticion satisfactoria | registro eliminado.";
@@ -147,11 +155,11 @@ class Banner extends Connection {
       die(json_encode($response));
    }
 
-   function editActive($id, $active) {
+   function activeDesactive($active, $id) {
       try {
          $response = $this->defaultResponse();
 
-         $query = "UPDATE banners SET active=? WHERE img_id=?";
+         $query = "UPDATE banners SET active=? WHERE id=?";
          $this->ExecuteQuery($query, array($active, $id));
 
          $status = $active == "1" ? "Activado" : "Desactivado";
