@@ -1,4 +1,3 @@
-
 //#region VARIABLES
 const
 	vacancies_enabled = $("#vacancies_enabled"),
@@ -41,6 +40,7 @@ focusSelect2($(".select2"));
 init();
 async function init() {
    fillVacancies();
+	 fillBanners();
    
 	fillSelect2(URL_BUSINESS_LINE_APP, -1, input_filter_business_line_id);
 	fillSelect2(URL_AREA_APP, -1, input_filter_area_id);
@@ -335,3 +335,66 @@ async function applyVacancy(form_js) {
 // 	$(".notification").text(num);
 // 	console.log("Refrescando");
 // }, 1000);
+
+
+//#region BANNERS
+const 
+	swipper_banners = document.querySelector("#swipper_banners"),
+	template_banner = document.querySelector("#template_banner").content,
+	fragment_banner = document.createDocumentFragment()
+	;
+	
+async function fillBanners() {
+	const data = { op: "fillBanners", current_date: moment().format("YYYY-MM-DD") };
+	const ajaxResponse = await ajaxRequestAsync(URL_BANNER_APP, data, null, false, false)
+	// console.log(ajaxResponse);
+	ajaxResponse.data.map(obj => {
+		//busco los elementos que existen en mi template y le asigno valores a sus atributos y contenido...
+		template_banner.querySelector("img").src = `/assets/img/${obj.file_path}`;
+		template_banner.querySelector("img").alt = `${obj.file_path.split("/").reverse()[0]}`;
+		if (obj.link != null) {
+			if (obj.link.length > 1) template_banner.querySelector("a").href = obj.link;
+		}
+
+		// ya que termine de asignarle valores a mis elementos de la plantilla, creo un nodo llamado clone ya que duplicara el contenido de mi template
+		let $clone = document.importNode(template_banner, true); //el primer parametro es el elemento a cloonar y el segundo parametro es para indicar que si quiero que se duplique  su contenid
+		fragment_banner.appendChild($clone); //lo agego al fragmento
+	});
+	swipper_banners.innerHTML = null; //si se va a sustituir, se recomienda vaciar el contenido de nuestra seccion antes de agregar nuestro fragment
+	swipper_banners.appendChild(fragment_banner); //ya que termino el recorrido y todo esta el fragment, agregamos todo a la seccion  seleccionada
+
+	// SLICE PARA BANNERS
+	const swiper = new Swiper('.swiper', {
+		// Optional parameters
+		direction: 'horizontal',
+		loop: true,
+		autoplay: {
+			delay: 5000,
+		},
+		parallax: true,
+		// effect: 'slide',
+		a11y: {
+			prevSlideMessage: 'Anterior',
+			nextSlideMessage: 'Siguiente',
+		},
+	
+		// If we need pagination
+		pagination: {
+			el: '.swiper-pagination',
+		},
+		
+		// Navigation arrows
+		navigation: {
+			nextEl: '.swiper-button-next',
+			prevEl: '.swiper-button-prev',
+		},
+	
+		// And if we need scrollbar
+		scrollbar: {
+			el: '.swiper-scrollbar',
+		},
+	});
+}
+
+
+//#endregion BANNERS

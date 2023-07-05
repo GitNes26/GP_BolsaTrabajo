@@ -17,6 +17,7 @@ const
 	URL_PROFESSION_APP = `${BACKEND_PATH}/Profession/App.php`,
 	URL_AREA_APP = `${BACKEND_PATH}/Area/App.php`,
 	URL_COMPANY_RANKING_APP = `${BACKEND_PATH}/CompanyRanking/App.php`,
+	URL_BANNER_APP = `${BACKEND_PATH}/Banner/App.php`,
 
 	URL_VACANCY_APP = `${BACKEND_PATH}/Vacancy/App.php`,
 	URL_CANDIDATE_APP = `${BACKEND_PATH}/Candidate/App.php`,
@@ -540,7 +541,8 @@ if (btn_logout != null) {
 
 
 //#region /** FECHAS - FORMATEADO */
-function validateRangeDates(action) {
+function validateRangeDates(action, input_initial_date, input_final_date) {
+	debugger
 	let current_date = new Date();
 	yesterday = new Date(current_date.setDate(current_date.getDate() - 1));
 	yesterday = new Date(yesterday.setHours(23, 59, 59));
@@ -556,7 +558,7 @@ function validateRangeDates(action) {
 	date2 = new Date(date2.setHours(11, 59, 59));
 	data_date2 = new Date(date2).getTime();
 
-	if (action == "crear") {
+	if (action == "create") {
 		if (data_date1 <= yesterday) {
 			showToast(
 				"warning",

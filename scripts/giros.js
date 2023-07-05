@@ -144,6 +144,7 @@ async function fillTable(show_toas=true) {
 	await table.columns.adjust().draw();
 	tbody.slideDown("slow");
 	btn_reset.click();
+	$("tr td").css("vertical-align", "middle");
 }
 
 //ACCIONES EN BOTONES DE LA TABLA

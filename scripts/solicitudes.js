@@ -106,11 +106,11 @@ async function fillTable(show_toas=true) {
 		switch (obj.status) {
 			case 'Pendiente':
 				bg_badge = "bg-secondary";
-				icon = `<i class="fa-thin fa-paper-plane"></i>`;
+				icon = `<i class="fa-regular fa-paper-plane"></i>`;
 				break;
 			case 'Recibida':
 				bg_badge = "bg-info";
-				icon = `<i class="fa-thin fa-check-to-slot"></i>`;
+				icon = `<i class="fa-regular fa-check-to-slot"></i>`;
 				break;
 			case 'En evaluación':
 				bg_badge = "bg-primary";
@@ -118,12 +118,12 @@ async function fillTable(show_toas=true) {
 				break;
 			case 'Aceptada':
 				bg_badge = "bg-success";
-				icon = `<i class="fa-thin fa-file-check"></i>`;
-				icon = `<i class="fa-thin fa-thumbs-up"></i>`;
+				icon = `<i class="fa-regular fa-file-check"></i>`;
+				icon = `<i class="fa-regular fa-thumbs-up"></i>`;
 				break;
 			case 'Rechazada':
 				bg_badge = "bg-danger";
-				icon = `<i class="fa-thin fa-thumbs-down"></i>`;
+				icon = `<i class="fa-regular fa-thumbs-down"></i>`;
 				break;
 			case 'Cancelada':
 				bg_badge = "bg-danger";
@@ -181,7 +181,7 @@ async function fillTable(show_toas=true) {
 				<button class='btn btn-sm btn-outline-secondary m-1' type='button' onclick="changeStatus('Pendiente', ${obj.a_id})" title='Pasar a status PENDIENTE'>PENDIENTE</button>
 				<button class='btn btn-sm btn-outline-info m-1' type='button' onclick="changeStatus('Recibida', ${obj.a_id})" title='Pasar a status RECIBIDA'>RECIBIDA</button>
 				<br>
-				<button class='btn btn-sm btn-outline-primary m-1' type='button' onclick="changeStatus('En evaluación', ${obj.a_id})" title='Pasar a status EN'>EN EVALUACIÓN</button>
+				<button class='btn btn-sm btn-outline-primary m-1' type='button' onclick="changeStatus('En evaluación', ${obj.a_id})" title='Pasar a status EN EVALUACIÓN'>EN EVALUACIÓN</button>
 				<button class='btn btn-sm btn-outline-success m-1' type='button' onclick="changeStatus('Aceptada', ${obj.a_id})" title='Pasar a status ACEPTAR'>ACEPTAR</button>
 				<button class='btn btn-sm btn-outline-danger m-1' type='button' onclick="changeStatus('Rechazada',${obj.a_id})" title='Pasar a status RECHAZAR'>RECHAZAR</button>`;
 		}
@@ -209,6 +209,7 @@ async function fillTable(show_toas=true) {
 	.draw();
 	await table.columns.adjust().draw();
 	tbody.slideDown("slow");
+	$("tr td").css("vertical-align", "middle");
 }
 
 

@@ -139,7 +139,7 @@ async function fillTable(show_toas=true) {
 	// console.log(objResponse);
 
 	objResponse.map((obj) => {
-		let active_icon = "fa-light fa-circle-check";
+		let active_icon = "fa-solid fa-circle-check";
       let icon_color = "green";
       let switch_enabled = {
          color: "success",
@@ -148,10 +148,10 @@ async function fillTable(show_toas=true) {
       }
 
 		if(!Boolean(obj.active)) {
-         active_icon="fa-light fa-circle-xmark"; icon_color="red"
+         active_icon="fa-solid fa-circle-xmark"; icon_color="red"
          switch_enabled.color="secondary"
          switch_enabled.title="No Activo"
-         switch_enabled.icon="fa-light fa-toggle-off"
+         switch_enabled.icon="fa-solid fa-toggle-off"
       }
 
 		//Campos
@@ -211,6 +211,7 @@ async function fillTable(show_toas=true) {
 	table.columns.adjust().draw();
 	tbody.slideDown("slow");
 	btn_reset.click();
+	$("tr td").css("vertical-align", "middle");
 }
 
 //ACCIONES EN BOTONES DE LA TABLA

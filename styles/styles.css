@@ -1,3 +1,6 @@
+@import url(normalize.css);
+@import url(bannerList.css);
+
 /* --------------------------------SCROLLBAR------------------------------------------ */
 /*font-family: 'Poppins', sans-serif;*/
 *{
@@ -36,6 +39,15 @@
 }
 /* --------------------------------SCROLLBAR------------------------------------------ */
 
+.wrapper, body, html {
+    min-height: 97% !important;
+    height: 97.25% !important;
+}
+
+
+tr td {
+   vertical-align: middle;
+}
 
 
 
@@ -110,7 +122,7 @@ a { color: #2aa549; }
 a:hover { color: #0c7827; }
 
 .content-index, #vacancy_container {
-   max-height: 88.8vh !important;
+   max-height: 67vh !important; /* 88.8vh */
    overflow-y: auto;
    overflow-x: hidden;
 }
@@ -120,7 +132,7 @@ a:hover { color: #0c7827; }
 .card-detail {
    border: 5px solid #0c7827;
    border-radius: 20px;
-   max-height: 85vh;
+   max-height: 67vh;
 }
 .scroll-y {
    overflow-y: auto;
@@ -178,11 +190,10 @@ a:hover { color: #0c7827; }
    top: 6.5%;
 }
 */
-@media screen and (max-width: 767px) {
-   .sticky-top {
-      top: 10%;
-   }
+.pt_sm_5{
+   top: 0%;
 }
+
 
 /* .index-height {
    max-height: 50vh !important;
@@ -209,6 +220,26 @@ a:hover { color: #0c7827; }
    background: transparent;
 }
 
+.div-banners {
+   height: 15vh;
+   width: 98.5%;
+   position: absolute;
+   bottom: 0;
+   background-color: #c0bfbf18;
+}
+
+.swiper {
+   /* width: 600px; */
+   height: 100%;
+}
+
+.img-carrusel {
+   /* object-fit: cover !important;
+   overflow: hidden !important; */
+   max-width: 100%;
+   height: auto;
+}
+
 /* .navbar-collapse .nav-item {
    marker: none !important;
    text-decoration: none !important;
@@ -221,3 +252,58 @@ a:hover { color: #0c7827; }
 .navbar-collapse .nav-item::marker {
    display: none !important;
 } */
+
+ 
+/* @media screen and (max-width: 1270) {
+   .img-carrusel {
+      max-width: 80%;
+   }
+} */
+.swiper-button-next:after, .swiper-button-prev:after {
+   font-weight: bolder;
+}
+
+@media screen and (max-width: 800) {
+   .div-banners {
+      height: 12vh;
+   }
+}
+
+
+@media screen and (max-width: 767px) {
+   .sticky-top {
+      top: 10%;
+   }
+   /* .pt_sm_10{
+      margin-top: 10%;
+   } */
+   .content-index, #vacancy_container, .card-detail {
+      max-height: 52.5vh !important; /* 88.8vh */ 
+   }
+   
+   .div-banners {
+      height: 10.5vh;
+   }
+
+   .swiper-button-next:after, .swiper-button-prev:after {
+      font-size: 20px;
+      font-weight: bolder;
+   }
+   /* .img-carrusel {
+      width: 75vw;
+   } */
+}
+@media screen and (max-width: 720px) {
+   /* .pt_sm_10{
+      margin-top: 15%;
+   } */
+
+   .div-banners {
+      height: 7.5vh;
+   }
+}
+@media screen and (max-width: 550px) {
+   .wrapper{
+      top: 2% !important;
+   }
+}

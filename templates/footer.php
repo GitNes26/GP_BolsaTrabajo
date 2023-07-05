@@ -37,6 +37,8 @@
 <script type="text/javascript" src="<?=$PLUGINS_PATH?>/dataTables/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="<?=$PLUGINS_PATH?>/dataTables/js/jszip.min.js"></script>
 <script type="text/javascript" src="<?=$PLUGINS_PATH?>/dataTables/js/buttons.html5.min.js"></script>
+<!-- DATTABLE ARRASTRE -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <!-- Moment JS -->
 <script src="<?=$PLUGINS_PATH?>/moment-js/moment.min.js"></script>
@@ -64,6 +66,13 @@
 <script src="/plugins/summernote-0.8.18/summernote.min.js"></script>
 <script src="/plugins/summernote-0.8.18/summernote-bs4.min.js"></script>
 <script src="/plugins/summernote-0.8.18/lang/summernote-es-ES.min.js"></script>
+
+<!-- slick-carousel 1.8.1 -->
+<!-- <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> -->
+
+<!-- SwiperJS - Carrusel -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
 
 <!-- bs-stepper- formularios en pasos -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js" charset="utf-8"></script> -->

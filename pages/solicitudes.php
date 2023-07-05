@@ -16,7 +16,7 @@ $current_page = "Solicitudes";
          <div class="row mb-2">
             <div class="col-sm-6">
                <h1 class="fw-bolder text-uppercase">
-                  <i class="fa-solid fa-kaaba"></i>&nbsp; <?= $current_page ?>
+                  <i class="fa-solid fa-memo-circle-check"></i>&nbsp; <?= $current_page ?>
                   <em class="fw-ligth text-muted lead text-sm">| Gestión de Solicitudes</em>
                </h1>
             </div>

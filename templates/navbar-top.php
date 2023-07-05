@@ -5,8 +5,8 @@
             style="opacity: .8">
          <span class="brand-text">Bolsa de trabajo</span>
       </a>
-      <button class="navbar-toggler order-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler order-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbar_menus"
+         aria-controls="navbar_menus" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
       </button>
       
