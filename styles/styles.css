@@ -38,6 +38,9 @@
   border-radius: 5px;
 }
 /* --------------------------------SCROLLBAR------------------------------------------ */
+body, html {
+   background-color: #F4F6F9;
+}
 
 .wrapper, body, html {
     min-height: 97% !important;
