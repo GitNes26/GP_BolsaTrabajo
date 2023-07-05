@@ -127,18 +127,13 @@ $pagina_acutal = "Bolsa de Trabajo";
                <!-- Slider main container -->
                <div class="swiper">
                <!-- Additional required wrapper -->
-               <div class="swiper-wrapper">
-                  <!-- Slides -->
+               <div class="swiper-wrapper" id="swipper_banners"></div>
+               <!-- Slide Template -->
+               <template id="template_banner">
                   <div class="swiper-slide">
-                     <img class="img-carrusel" src="/assets/img/candidates/14-Samuel.PNG" alt="img 1">
+                     <img class="img-carrusel" src="/assets/img/cargar_imagen.png" alt="img">
                   </div>
-                  <div class="swiper-slide">
-                     <img class="img-carrusel" src="/assets/img/candidates/22-Soy el Nuevos.JPG" alt="img 2">
-                  </div>
-                  <div class="swiper-slide">
-                     <img class="img-carrusel" src="/assets/img/candidates/24-Lateral.JPG" alt="img 3">
-                  </div>
-               </div>
+               </template>
                <!-- If we need pagination -->
                <div class="swiper-pagination"></div>
 

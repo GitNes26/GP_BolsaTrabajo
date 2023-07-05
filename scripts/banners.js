@@ -171,6 +171,7 @@ const
 	btn_reset = $("#btn_reset"),
 	btn_cancel = $("#btn_cancel");
 	
+let haveImg = false, vImgPath = null;
 //#endregion VARIABLES
 // $(".select2").select2();
 // focusSelect2($(".select2"));
@@ -187,6 +188,7 @@ async function init() {
 //Mostrar imagen en grande en hover
 $(`.tooltip_imagen`).fadeOut(1);
 $(`.tooltip_video`).fadeOut(1);
+
 
 $(".td_img").hover(function () {
 	// over
@@ -242,16 +244,13 @@ $(".td_video").hover(function () {
 //RESETEAR FORMULARIOS
 btn_reset.click(async (e) => {
 	id_modal.val("");
-	console.log("btnsa");
 
-	console.log(input_date_init);
 	preview_file.attr("src","/assets/img/cargar_archivo.png");
 	preview_file.addClass("rounded-lg");
 
 	setTimeout(() => {
 		input_date_init.focus();
 		input_date_init.val(moment().format("YYYY-MM-DD"));
-		console.log(input_date_init);
 	}, 500);
 });
 
@@ -270,21 +269,23 @@ input_active.click(() => {
 input_file_path.on('change', async function(event) {
    // Obtén el archivo seleccionado
    const file = event.target.files[0];
+	 resetImgPreviewBanner(file);
+});
+function resetImgPreviewBanner(file) {
+	// Crea un objeto FileReader
+	const fileReader = new FileReader();
 
-   // Crea un objeto FileReader
-   const fileReader = new FileReader();
-
-   // Define la función de carga completada del lector
-   fileReader.onload = function(e) {
-      // Agrega la imagen a la vista previa
-      preview_file.html(""); // Limpia la vista previa antes de agregar la nueva imagen
-      preview_file.attr("src",e.target.result);
+	// Define la función de carga completada del lector
+	fileReader.onload = function(e) {
+		// Agrega la imagen a la vista previa
+		preview_file.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+		preview_file.attr("src",e.target.result);
 		preview_file.addClass("rounded-lg");
-   };
+	};
 
   // Lee el contenido del archivo como una URL de datos
   fileReader.readAsDataURL(file);
-});
+}
 
 
 // REGISTRAR O EDITAR OBJETO
@@ -313,6 +314,7 @@ form.on("submit", async function(e) {
 		addToArray("created_at", current_date, data, true);
 	} else {
 		//EDICION
+		if (haveImg) addToArray("haveImg", vImgPath, data, true);
 		addToArray("updated_at", current_date, data, true);
 	}
 
@@ -336,7 +338,7 @@ async function fillTable(show_toas=true) {
 	// console.log(objResponse);
 
 	objResponse.map((obj) => {
-		console.log(obj);
+		// console.log(obj);
 
 		let
 			class_handle = "handle"
@@ -367,7 +369,7 @@ async function fillTable(show_toas=true) {
 		if (permission_update) {
 			column_buttons +=
 				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Banner'><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
+				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Banner' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
 		}
 		if (permission_delete) {
 			column_buttons +=
@@ -395,6 +397,7 @@ async function fillTable(show_toas=true) {
 	$(`.tooltip_video`).fadeOut(1);
 	tbody.slideDown("slow");
 	btn_reset.click();
+	$("tr td").css("vertical-align", "middle");
 }
 
 //ACCIONES EN BOTONES DE LA TABLA
@@ -452,7 +455,27 @@ async function editObj(btn_edit) {
 	const obj = ajaxResponse.data;
 	//form
 	id_modal.val(Number(obj.id));
-	input_date_init.val(obj.input_date_init);
+	input_date_init.val(obj.date_init);
+	input_date_end.val(obj.date_end);
+	haveImg=false;
+	if (obj.file_path == "" || obj.file_path == null) {
+		preview_file.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+		preview_file.attr("src","/assets/img/cargar_imagen.webp");
+		preview_file.addClass("rounded-lg");
+	}
+	else {
+		haveImg = true;
+		// console.log("tengo imagen guardada");
+		preview_file.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+		preview_file.attr("src",`/assets/img/${obj.file_path}`);
+		preview_file.addClass("rounded-lg");
+
+		vImgPath = obj.file_path;
+		// input_file_path.val(obj.file_path);
+	}
+	// const check_active = Boolean(obj.active);
+	input_active.attr("checked", Boolean(obj.active))
+	
 
 	setTimeout(() => {
 		input_date_init.focus();
@@ -461,7 +484,7 @@ async function editObj(btn_edit) {
 
 //ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
 async function deleteObj(btn_delete) {
-	let title = `¿Estas seguro de eliminar el área <br> ${btn_delete.attr("data-name")}?`;
+	let title = `¿Estas seguro de eliminar el banner <br> ${btn_delete.attr("data-name")}?`;
 	let text = ``;
 
 	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
