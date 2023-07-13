@@ -456,7 +456,7 @@ const fillSidebar = async (show_toast=false, navbar_side=false) => {
 	let parent_menus = objResponse.filter((menu) => menu.belongs_to == 0);
 	parent_menus = parent_menus.sort().map((parent_menu) => {
 		if (navbar_side) {
-			menus += ` <li class="nav-item dropdown text-light text-xs">
+			menus += ` <li class="nav-item dropdown text-light">
 			<a id="submenus${parent_menu.id}" href="#" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 				class="nav-link dropdown-toggle"><i class="nav-icon ${parent_menu.icon} mr-2"></i> ${parent_menu.menu}
 			</a>
@@ -542,7 +542,6 @@ if (btn_logout != null) {
 
 //#region /** FECHAS - FORMATEADO */
 function validateRangeDates(action, input_initial_date, input_final_date) {
-	debugger
 	let current_date = new Date();
 	yesterday = new Date(current_date.setDate(current_date.getDate() - 1));
 	yesterday = new Date(yesterday.setHours(23, 59, 59));
