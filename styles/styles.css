@@ -266,6 +266,18 @@ a:hover { color: #0c7827; }
    font-weight: bolder;
 }
 
+#img-logo-menu {
+   height:54px;
+}
+
+
+
+@media screen and (max-width: 990px) {
+   #img-logo-menu {
+      height:35px;
+   }
+}
+
 @media screen and (max-width: 800) {
    .div-banners {
       height: 12vh;

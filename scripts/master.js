@@ -456,7 +456,7 @@ const fillSidebar = async (show_toast=false, navbar_side=false) => {
 	let parent_menus = objResponse.filter((menu) => menu.belongs_to == 0);
 	parent_menus = parent_menus.sort().map((parent_menu) => {
 		if (navbar_side) {
-			menus += ` <li class="nav-item dropdown text-light text-xs">
+			menus += ` <li class="nav-item dropdown text-light">
 			<a id="submenus${parent_menu.id}" href="#" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 				class="nav-link dropdown-toggle"><i class="nav-icon ${parent_menu.icon} mr-2"></i> ${parent_menu.menu}
 			</a>
