@@ -8,7 +8,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 ?>
 
 <!-- Content Wrapper. Contenido de la pagina -->
-<div class="content-wrapper text-sm">
+<div class="content-wrapper text-sm" style="margin-top: calc(4.5rem + 1px);">
    <!-- Content Header (Encabezado en el contenido de la pagina) -->
    <section class="content-header pt_sm_10">
       <div class="container-fluid">
@@ -123,6 +123,32 @@ $pagina_acutal = "Bolsa de Trabajo";
                </button>
                </div>
             </form>
+
+            <div class="div-banners-complete p-1 d-none d-sm-none d-md-block">
+               <!-- Slider main container -->
+               <div class="swiper">
+               <!-- Additional required wrapper -->
+               <div class="swiper-wrapper"></div>
+               <!-- Slide Template -->
+               <template id="template_banner">
+                  <div class="swiper-slide">
+                     <a target="_blank" rel="noopener noreferrer">
+                        <img class="img-carrusel" src="/assets/img/cargar_imagen.png" alt="img">
+                     </a>
+                  </div>
+               </template>
+               <!-- If we need pagination -->
+               <div class="swiper-pagination"></div>
+
+               <!-- If we need navigation buttons -->
+               <div class="swiper-button-prev"></div>
+               <div class="swiper-button-next"></div>
+
+               <!-- If we need scrollbar -->
+               <div class="swiper-scrollbar"></div>
+               </div>
+            </div>
+            
          </div>
 
          <!-- LISTA DE EMPELOS -->
@@ -187,14 +213,43 @@ $pagina_acutal = "Bolsa de Trabajo";
                </div>
             </form>
          </div>
+         <div class="col col-md-4 d-block d-sm-block d-md-none">
+            <div class="div-banners-complete p-1">
+               <!-- Slider main container -->
+               <div class="swiper">
+               <!-- Additional required wrapper -->
+               <div class="swiper-wrapper"></div>
+               <!-- Slide Template -->
+               <template id="template_banner">
+                  <div class="swiper-slide">
+                     <a target="_blank" rel="noopener noreferrer">
+                        <img class="img-carrusel" src="/assets/img/cargar_imagen.png" alt="img">
+                     </a>
+                  </div>
+               </template>
+               <!-- If we need pagination -->
+               <div class="swiper-pagination"></div>
+
+               <!-- If we need navigation buttons -->
+               <div class="swiper-button-prev"></div>
+               <div class="swiper-button-next"></div>
+
+               <!-- If we need scrollbar -->
+               <div class="swiper-scrollbar"></div>
+               </div>
+            </div>
+         </div>
       </div>
 
-      <div class="div-banners p-1">
-         <!-- Slider main container -->
+ 
+      <!-- <div class="div-banners"></div> -->
+      
+      <!-- <div class="div-banners p-1">
+         Slider main container
          <div class="swiper">
-         <!-- Additional required wrapper -->
+         Additional required wrapper
          <div class="swiper-wrapper" id="swipper_banners"></div>
-         <!-- Slide Template -->
+         Slide Template
          <template id="template_banner">
             <div class="swiper-slide">
                <a target="_blank" rel="noopener noreferrer">
@@ -202,17 +257,17 @@ $pagina_acutal = "Bolsa de Trabajo";
                </a>
             </div>
          </template>
-         <!-- If we need pagination -->
+         If we need pagination
          <div class="swiper-pagination"></div>
 
-         <!-- If we need navigation buttons -->
+         If we need navigation buttons
          <div class="swiper-button-prev"></div>
          <div class="swiper-button-next"></div>
 
-         <!-- If we need scrollbar -->
+         If we need scrollbar
          <div class="swiper-scrollbar"></div>
          </div>
-      </div>
+      </div> -->
 
    </section>
    <!-- /.content -->
