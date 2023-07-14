@@ -3,15 +3,16 @@
       <a href="<?php echo($URL_BASE) ?>/pages" class="navbar-brand">
          <img src="<?php echo($ICONO) ?>" alt="Logo" class="brand-image"
             style="opacity: .8;" id="img-logo-menu">
-         <span class="brand-text">Bolsa de trabajo</span>
+         <span class="brand-text d-md-inline d-none">Bolsa de trabajo</span>
+         <!-- <span class="brand-text d-sm-inline d-md-none">BT</span> -->
       </a>
-      <button class="navbar-toggler order-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbar_menus"
-         aria-controls="navbar_menus" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler order-1" type="button" data-bs-toggle="collapse" data-bs-target="#div_navbar_menus"
+         aria-controls="div_navbar_menus" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
       </button>
       
       
-      <div class="collapse navbar-collapse order-3 justify-content-center">
+      <div class="collapse navbar-collapse order-3 justify-content-center" id="div_navbar_menus">
          <ul class="navbar-nav" id="navbar_menus">
             <li class="nav-item dropdown">
                <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"

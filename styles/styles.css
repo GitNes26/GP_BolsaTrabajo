@@ -125,7 +125,7 @@ a { color: #2aa549; }
 a:hover { color: #0c7827; }
 
 .content-index, #vacancy_container {
-   max-height: 67vh !important; /* 88.8vh */
+   max-height: 82vh !important; /* 75vh */  /* 88.8vh */
    overflow-y: auto;
    overflow-x: hidden;
 }
@@ -135,7 +135,7 @@ a:hover { color: #0c7827; }
 .card-detail {
    border: 5px solid #0c7827;
    border-radius: 20px;
-   max-height: 67vh;
+   max-height: 82vh;
 }
 .scroll-y {
    overflow-y: auto;
@@ -223,12 +223,28 @@ a:hover { color: #0c7827; }
    background: transparent;
 }
 
+.div-banners-complete {
+   /* height: 15vh;
+   width: 98.5%; */
+   width: 97%;
+   height: 40vh;
+   margin-inline: auto;
+   /* border: 2px solid black; */
+   /* position: absolute;
+   bottom: 50px; */
+   /* background-color: #c0bfbf18; */
+}
 .div-banners {
-   height: 15vh;
+   height: 10vh;
    width: 98.5%;
    position: absolute;
    bottom: 0;
-   background-color: #c0bfbf18;
+   /* background-color: #c0bfbf18; */
+   background-image: url(../assets/img/logo_gomez_palacio.png);
+   background-position: left;
+   background-size: 15%;
+   background-repeat: no-repeat;
+   background-attachment: scroll;
 }
 
 .swiper {
@@ -267,18 +283,29 @@ a:hover { color: #0c7827; }
 }
 
 #img-logo-menu {
-   height:54px;
+   height:75px;
 }
 
+#content-wrapper-index {
+   background-image: url(../assets/img/logo_gomez_palacio.png);
+   background-position: center;
+   background-size: auto;
+   background-repeat: no-repeat;
+   background-clip: border-box;
+   background-attachment: fixed;
+}
 
 
 @media screen and (max-width: 990px) {
    #img-logo-menu {
-      height:35px;
+      height:50px;
    }
 }
 
 @media screen and (max-width: 800) {
+   .div-banners-complete {
+      width: 65%;
+   }
    .div-banners {
       height: 12vh;
    }
@@ -293,7 +320,12 @@ a:hover { color: #0c7827; }
       margin-top: 10%;
    } */
    .content-index, #vacancy_container, .card-detail {
-      max-height: 52.5vh !important; /* 88.8vh */ 
+      max-height: 60vh !important; /* 88.8vh */ 
+   }
+
+   .div-banners-complete {
+      width: 60%;
+      height: 92%;
    }
    
    .div-banners {
@@ -313,6 +345,9 @@ a:hover { color: #0c7827; }
       margin-top: 15%;
    } */
 
+   /* .div-banners-complete {
+      height: 7.5vh;
+   } */
    .div-banners {
       height: 7.5vh;
    }
@@ -320,5 +355,12 @@ a:hover { color: #0c7827; }
 @media screen and (max-width: 550px) {
    .wrapper{
       top: 2% !important;
+   }
+
+   .content-index, #vacancy_container, .card-detail {
+      max-height: 52vh !important; /* 88.8vh */ 
+   }
+   .div-banners-complete {
+      height: 30vh;
    }
 }

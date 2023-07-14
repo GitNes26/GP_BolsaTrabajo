@@ -36,7 +36,8 @@ $current_page = "Banners";
       <div class="card card-outline card-success shadow">
          <?php if ($permission_write ?? false): ?>
          <div class="container-fluid mt-2">
-            <i class="text-muted h6 text-sm">Medidas: <b>1400px</b> largo &nbsp; <i class="fas fa-times"></i> &nbsp; <b>132px</b> alto</i>
+            <!-- <i class="text-muted h6 text-sm">Medidas: <b>1400px</b> largo &nbsp; <i class="fas fa-times"></i> &nbsp; <b>132px</b> alto</i> -->
+            <i class="text-muted h6 text-sm">Medidas: <b>350px-400px</b> largo &nbsp; <i class="fas fa-times"></i> &nbsp; <b>340px</b> alto</i> 
             <button id="btn_modal_form" class="float-end btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR BANNER</button>
          </div>
          <?php endif ?>
