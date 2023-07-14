@@ -1,10 +1,10 @@
-<nav class="main-header navbar navbar-expand-md navbar-light shadow">
+<nav class="main-header navbar navbar-expand-md navbar-light ">
    <div class="container-fluid">
       <a href="<?php echo($URL_BASE) ?>/pages" class="navbar-brand">
          <img src="<?php echo($ICONO) ?>" alt="Logo" class="brand-image"
             style="opacity: .8;" id="img-logo-menu">
-         <span class="brand-text d-md-inline d-none fw-bolder">Bolsa de trabajo</span>
          <!-- <span class="brand-text d-sm-inline d-md-none">BT</span> -->
+         <span class="brand-text d-md-inline d-none fw-bolder h3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bolsa de Trabajo</span>
       </a>
       <button class="navbar-toggler order-1" type="button" data-bs-toggle="collapse" data-bs-target="#div_navbar_menus"
          aria-controls="div_navbar_menus" aria-expanded="false" aria-label="Toggle navigation">

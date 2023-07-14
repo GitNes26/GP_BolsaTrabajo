@@ -43,8 +43,8 @@ body, html {
 }
 
 .wrapper, body, html {
-    min-height: 97% !important;
-    height: 97.25% !important;
+    min-height: 96% !important;
+    height: 96% !important;
 }
 
 
@@ -125,7 +125,7 @@ a { color: #2aa549; }
 a:hover { color: #0c7827; }
 
 .content-index, #vacancy_container {
-   max-height: 82vh !important; /* 75vh */  /* 88.8vh */
+   max-height: 80vh !important; /* 75vh */  /* 88.8vh */
    overflow-y: auto;
    overflow-x: hidden;
 }
@@ -135,7 +135,7 @@ a:hover { color: #0c7827; }
 .card-detail {
    border: 5px solid #0c7827;
    border-radius: 20px;
-   max-height: 82vh;
+   max-height: 80vh;
 }
 .scroll-y {
    overflow-y: auto;
@@ -283,7 +283,7 @@ a:hover { color: #0c7827; }
 }
 
 #img-logo-menu {
-   height:120px;
+   height:75px;
 }
 
 #content-wrapper-index {
@@ -298,7 +298,7 @@ a:hover { color: #0c7827; }
 
 @media screen and (max-width: 990px) {
    #img-logo-menu {
-      height:60px;
+      height:50px;
    }
 }
 
