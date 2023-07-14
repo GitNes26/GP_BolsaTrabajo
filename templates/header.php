@@ -5,6 +5,8 @@ $classBody = "hold-transition sidebar-mini layout-fixed";
 if ($URL_SERVER == "/pages") $classBody = "layout-top-nav";
 elseif ($URL_SERVER == "/pages/") $classBody = "layout-top-nav";
 elseif ($URL_SERVER == "/pages/index.php") $classBody = "layout-top-nav";
+
+if (strpos($classBody, 'layout-top-nav') !== 0) $classBody.= "layout-navbar-fixed";
 ?>
 
 <!DOCTYPE html>
@@ -84,6 +86,6 @@ elseif ($URL_SERVER == "/pages/index.php") $classBody = "layout-top-nav";
 </head>
 
 
-<body class="<?= $classBody ?> layout-navbar-fixed text-sm" style="height: auto;">
+<body class="<?= $classBody ?>  text-sm" style="height: auto;">
   <input type="hidden" id="url_base" value="<?=$URL_BASE?>">
   <div class="wrapper">

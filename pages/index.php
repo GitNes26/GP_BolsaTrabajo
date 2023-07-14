@@ -8,7 +8,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 ?>
 
 <!-- Content Wrapper. Contenido de la pagina -->
-<div class="content-wrapper text-sm" style="margin-top: calc(7.5rem + 1px);">
+<div class="content-wrapper text-sm">
    <!-- Content Header (Encabezado en el contenido de la pagina) -->
    <section class="content-header pt_sm_10">
       <div class="container-fluid">
