@@ -283,7 +283,7 @@ a:hover { color: #0c7827; }
 }
 
 #img-logo-menu {
-   height:75px;
+   height:120px;
 }
 
 #content-wrapper-index {
@@ -298,7 +298,7 @@ a:hover { color: #0c7827; }
 
 @media screen and (max-width: 990px) {
    #img-logo-menu {
-      height:50px;
+      height:60px;
    }
 }
 
