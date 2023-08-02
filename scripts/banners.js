@@ -360,7 +360,7 @@ async function fillTable(show_toas=true) {
          icon: "fa-solid fa-toggle-on"
       }
 
-		if(!Boolean(obj.active)) {
+		if(obj.active == "0") {
          active_icon="fa-solid fa-circle-xmark"; icon_color="red"
          switch_enabled.color="secondary"
          switch_enabled.title="No Activo"
@@ -490,8 +490,8 @@ async function editObj(btn_edit) {
 		vImgPath = obj.file_path;
 		// input_file_path.val(obj.file_path);
 	}
-	// const check_active = Boolean(obj.active);
-	input_active.attr("checked", Boolean(obj.active))
+	const check_active = obj.active == "1" ? true : false;
+	input_active.attr("checked", check_active)
 	
 
 	setTimeout(() => {
