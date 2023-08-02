@@ -43,8 +43,8 @@ body, html {
 }
 
 .wrapper, body, html {
-    min-height: 96% !important;
-    height: 96% !important;
+    min-height: 94% !important;
+    height: 94% !important;
 }
 
 
@@ -255,8 +255,9 @@ a:hover { color: #0c7827; }
 .img-carrusel {
    /* object-fit: cover !important;
    overflow: hidden !important; */
-   max-width: 100%;
+   max-width: 70%; /* 100%; */
    height: auto;
+   max-height: 96%;
 }
 
 /* .navbar-collapse .nav-item {
