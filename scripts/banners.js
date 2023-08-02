@@ -381,7 +381,7 @@ async function fillTable(show_toas=true) {
 			column_order_view = `
 				<td class='align-middle td_order fw-bold text-lg ${class_handle}' data-id='${obj.id}' data-order_view='${obj.order_view}'>${obj.order_view} &nbsp;<i class='fa-solid fa-grip-vertical'></i></td>`,
 
-			column_active = Boolean(obj.active) == true 
+			column_active = obj.active == "1" 
 				? `<i class='fa-regular fa-circle-check fa-2xl td_active' data-id='${obj.id}' data-active='${obj.active}' data-date-end='${obj.date_end}'></i>` 
 				: `<i class='fa-regular fa-circle-xmark fa-2xl td_active' data-id='${obj.id}' data-active='${obj.active}' data-date-end='${obj.date_end}'></i>`;
 
