@@ -255,7 +255,7 @@ a:hover { color: #0c7827; }
 .img-carrusel {
    /* object-fit: cover !important;
    overflow: hidden !important; */
-   max-width: 70%; /* 100%; */
+   max-width: 85%; /* 100%; */
    height: auto;
    max-height: 96%;
 }
