@@ -20,6 +20,22 @@ if (isset($_COOKIE["session"])) {
 // if (isset($_COOKIE["dpnstash_tema_oscuro"]))
 //    $dark_mode = (bool)$_COOKIE["dpnstash_tema_oscuro"] ? "dark-mode" : "";
 
+#Esta validacion es para cuando le dan "atras" y la pagina se sigue viendo
+echo "
+<!-- Cookies -->
+<script src='/plugins/js-cookie/js.cookie.min.js'></script>
+<script>
+   const validateNeedCookies = () => {
+      let needCookies = true;
+      if (location.pathname == '/') needCookies = false;
+      else if (location.pathname == '/index.php') needCookies = false;
+      else if (location.pathname == '/registro-perfil.php') needCookies = false;
+      
+      if (!Cookies.get('session') && needCookies) location.reload();
+   };
+   validateNeedCookies();
+</script>
+";
 ?>
 
 
