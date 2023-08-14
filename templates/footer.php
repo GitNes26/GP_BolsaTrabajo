@@ -24,15 +24,14 @@
 <script src="<?=$ADMINLTE_PATH?>/js/adminlte.min.js"></script>
 
 <!-- JQUERY -->
-<script src="/plugins/jquery-validation/jquery.numeric.js"></script>
+<script src="<?=$PLUGINS_PATH ?>/jquery-validation/jquery.numeric.js"></script>
 <!-- <script src="<? /* =$PLUGINS_PATH */?>/jquery-validation/jquery.validate.min.js"></script>
   <script src="<? /* =$PLUGINS_PATH */?>/jquery-validation/additional-methods.min.js"></script> -->
 
 <!-- DataTables -->
 <script type="text/javascript" src="<?=$PLUGINS_PATH?>/dataTables/js/pdfmake.min.js"></script>
 <script type="text/javascript" src="<?=$PLUGINS_PATH?>/dataTables/js/vfs_fonts.js"></script>
-<script type="text/javascript"
-  src="<?=$PLUGINS_PATH?>/dataTables/js/datatables.min.js">
+<script type="text/javascript" src="<?=$PLUGINS_PATH?>/dataTables/js/datatables.min.js">
 </script>
 <script type="text/javascript" src="<?=$PLUGINS_PATH?>/dataTables/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="<?=$PLUGINS_PATH?>/dataTables/js/jszip.min.js"></script>
