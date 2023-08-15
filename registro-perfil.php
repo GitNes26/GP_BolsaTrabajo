@@ -222,7 +222,7 @@ echo "
                               <label for="input_description" class="form-label">Acerca de mí empresa: <span
                                     class="obligatory"></span></label>
                               <textarea type="text" class="form-control counter" id="input_description"
-                                 name="input_description" data-input-name="ACERCA DE" rows="4" data-limit="150"
+                                 name="input_description" data-input-name="ACERCA DE" rows="6" data-limit="500"
                                  data-counter="counter_description"></textarea>
                               <div class="text-sm text-end text-muted" id="counter_description"></div>
                            </div>
@@ -365,7 +365,7 @@ echo "
                         <!-- <div class="row">
                               <div class="mb-3 col">
                                  <label for="input_about_me" class="form-label">Acerca de mí: <span class="obligatory"></span></label>
-                                 <textarea type="text" class="form-control" id="input_about_me" name="input_about_me" data-input-name="ACERCA DE" rows="4" data-limit="150"></textarea>
+                                 <textarea type="text" class="form-control" id="input_about_me" name="input_about_me" data-input-name="ACERCA DE" rows="4" data-limit="500"></textarea>
                                  <div class="text-sm text-end text-muted" id="counter_description">0/150</div>
                               </div>
                            </div> -->
@@ -411,7 +411,7 @@ echo "
                            <div class="mb-3 col">
                               <label for="input_profession_id" class="form-label">Profesión/Oficio: <span
                                     class="obligatory"></span></label>
-                              <select class="select2 form-control" style="width:100%; line-height:10px"
+                              <select class="select2 form-control not_validate" style="width:100%; line-height:10px"
                                  id="input_profession_id" name="input_profession_id" data-input-name="PROFESIÓN">
                               </select>
                            </div>
