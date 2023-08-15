@@ -37,7 +37,7 @@ class CompanyRanking extends Connection {
       try {
          $response = $this->defaultResponse();
    
-         $query = "SELECT id value, company_ranking text FROM company_rankings WHERE active=1;";
+         $query = "SELECT id value, CONCAT(company_ranking,' - ', description) text FROM company_rankings WHERE active=1;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";

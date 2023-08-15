@@ -202,7 +202,7 @@ class Application extends Connection {
    }
 
 
-   private function checkAlreadyApplied($vacancy_id, $user_id) {
+   function checkAlreadyApplied($vacancy_id, $user_id) {
       try {
          $response = $this->defaultResponse();
 

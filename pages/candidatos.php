@@ -166,7 +166,7 @@ $current_page = "Candidatos";
                   <!-- <div class="row">
                      <div class="mb-3 col">
                         <label for="input_about_me" class="form-label">Acerca de mí: <span class="obligatory"></span></label>
-                        <textarea type="text" class="form-control" id="input_about_me" name="input_about_me" data-input-name="ACERCA DE" rows="4" data-limit="150"></textarea>
+                        <textarea type="text" class="form-control" id="input_about_me" name="input_about_me" data-input-name="ACERCA DE" rows="4" data-limit="500"></textarea>
                         <div class="text-sm text-end text-muted" id="counter_description">0/150</div>
                      </div>
                   </div> -->

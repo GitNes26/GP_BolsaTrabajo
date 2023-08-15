@@ -88,7 +88,7 @@ class Candidate extends Connection {
          
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
-         $response["alert_title"] = "Candidato registrada";
+         $response["alert_title"] = "Candidato registrado";
          $response["alert_text"] = "Bienvenido $name";
          $response["toast"] = false;
          $this->Close();
