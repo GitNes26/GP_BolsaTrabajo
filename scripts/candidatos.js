@@ -237,11 +237,17 @@ async function fillTable() {
    // console.log(objResponse);
 
    objResponse.map((obj) => {
+		console.log(obj);
       let enable = {
          badgeColor: "badge-success",
          text: "DISPONIBLE",
       };
-      obj.enable;
+      if (obj.enable == 0) {
+			enable = {
+				badgeColor: "badge-primary",
+				text: "CONTRATADO",
+			};
+		}
 
       //Campos
       let column_photo =
