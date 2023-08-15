@@ -51,7 +51,8 @@ $current_page = "Candidatos";
                         <th scope="col">Candidato</th>
                         <th scope="col">Contacto</th>
                         <th scope="col">Profesión</th>
-                        <th scope="col">Miembro desde</th>
+                        <th scope="col">Status</th>
+                        <?php if ((int)$_COOKIE["role_id"] <= 2): ?> <th scope="col">Miembro desde</th> <?php endif ?>
                         <th scope="col">Acciones</th>
                      </tr>
                   </thead>
@@ -63,7 +64,8 @@ $current_page = "Candidatos";
                         <th scope="col">Candidato</th>
                         <th scope="col">Contacto</th>
                         <th scope="col">Profesión</th>
-                        <th scope="col">Miembro desde</th>
+                        <th scope="col">Status</th>
+                        <?php if ((int)$_COOKIE["role_id"] <= 2): ?> <th scope="col">Miembro desde</th> <?php endif ?>
                         <th scope="col">Acciones</th>
                      </tr>
                   </tfoot>
