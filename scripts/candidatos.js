@@ -237,7 +237,6 @@ async function fillTable() {
    // console.log(objResponse);
 
    objResponse.map((obj) => {
-		console.log(obj);
       let enable = {
          badgeColor: "badge-success",
          text: "DISPONIBLE",
