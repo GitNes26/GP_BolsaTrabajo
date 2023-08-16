@@ -6,8 +6,13 @@ class Connection{
 	function __construct() {
 		// echo "Connection.php";
 		$ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
-		// echo "<br>ROOT: $ROOT";
-		include "https://gomezconnect.com/empleos/config.php";
+		if (file_exists("https://gomezconnect.com/empleos/config.php")) {
+			echo "aqui esta: https://gomezconnect.com/empleos/config.php";
+		} else {
+			if (file_exists("../config.php")) {
+				echo "aqui esta: ../config.php";
+		}
+		include "../config.php";
 		$CONN_OBJ = $CONN_DB;
 		$this->conn = null;
 
