@@ -14,7 +14,7 @@ $CONN_DB_WEB = array(
   "DB_PWD" => "Sxm4r31~1",
   "DB_NAME" => "bd_bolsa_trabajo",
 );
-$CONN_DB = $CONN_DB_LOCAL;
+$CONN_DB = $CONN_DB_WEB;
 #endregion CONSTANTES DE CONFIGURACION
 
 #region CONSTANTES RUTAS
