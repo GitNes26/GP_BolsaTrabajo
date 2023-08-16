@@ -11,12 +11,13 @@ if (file_exists("../backend/Connection.php")) {
       require_once("../../backend/Connection.php");
    }
 }
-echo "hola mundo4";
 
 class User extends Connection {
 
    #region SECCION DE LOGIN
    function login($email,$password) {
+      echo "hola mundo5";
+
       $response = $this->defaultResponse();
       $response["alert_text"] = "Credenciales incorrectas, verifica tú información.";
       
