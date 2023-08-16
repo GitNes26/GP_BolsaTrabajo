@@ -1,4 +1,5 @@
 <?php
+echo "hola mundo";
 // var_dump($_POST);
 include ("./User.php");
 $User = new User();
@@ -50,4 +51,3 @@ elseif ($op == 'changePassword') $User->changePassword($password, $updated_at, $
 
 elseif ($op == "delete") $User->delete($deleted_at, $id);
 // #endregion PETICIONES
-
