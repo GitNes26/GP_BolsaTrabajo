@@ -1,5 +1,4 @@
 <?php
-echo "hola mundo3";
 
 if (file_exists("../backend/Connection.php")) {
    require_once("../backend/Connection.php");
@@ -12,6 +11,7 @@ if (file_exists("../backend/Connection.php")) {
       require_once("../../backend/Connection.php");
    }
 }
+echo "hola mundo4";
 
 class User extends Connection {
 
