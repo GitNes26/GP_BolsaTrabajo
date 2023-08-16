@@ -2,7 +2,7 @@
 .vscode
 
 # Ignorar variables de configuracion
-/config.php
+config.php
 
 #no importar imagenes de usuarios
 /assets/img/banners
