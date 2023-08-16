@@ -6,7 +6,7 @@ class Connection{
 	function __construct() {
 		$ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
 
-		include "$ROOT/config.php";
+		include "$ROOT/empleos/config.php";
 		$CONN_OBJ = $CONN_DB;
 		$this->conn = null;
 

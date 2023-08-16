@@ -1,20 +1,15 @@
 <?php
 
 if (file_exists("../backend/Connection.php")) {
-   echo "existe aqui";
    require_once("../backend/Connection.php");
 } else {
    if (file_exists("./backend/Connection.php")) {
-      echo "NO existe aqui 1";
       require_once("./backend/Connection.php");
    } else if (file_exists("../backend/Connection.php")) {
-      echo "NO existe aqui 2";
       require_once("../backend/Connection.php");
    } else if (file_exists("../../backend/Connection.php")) {
-      echo "NO existe aqui 3";
       require_once("../../backend/Connection.php");
    }
-   echo "NO existe aqui NADITA";
 }
 
 
