@@ -124,16 +124,17 @@ const SUMMERNOTE_CONFIG = {
 
 // console.log("Cookies",Cookies.get());
 let needCookies = true;
-if (location.pathname == "/") needCookies = false;
-else if (location.pathname == "/index.php") needCookies = false;
-else if (location.pathname == "/registro-perfil.php") needCookies = false;
+if (location.pathname == "/empleos/") needCookies = false;
+else if (location.pathname == "/empleos/index.php") needCookies = false;
+else if (location.pathname == "/empleos/registro-perfil.php")
+   needCookies = false;
 
 if (!Cookies.get("session") && needCookies) location.reload();
 
 let inIndex = false;
-if (location.pathname == "/pages") inIndex = true;
-else if (location.pathname == "/pages/") inIndex = true;
-else if (location.pathname == "/pages/index.php") inIndex = true;
+if (location.pathname == "/empleos/pages") inIndex = true;
+else if (location.pathname == "/empleos/pages/") inIndex = true;
+else if (location.pathname == "/empleos/pages/index.php") inIndex = true;
 
 const ajaxRequestAsync = async (
    url,
