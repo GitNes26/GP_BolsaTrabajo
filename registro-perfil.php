@@ -52,7 +52,7 @@ echo "
    <!-- keywords -->
    <meta name="keywords" content="">
    <!-- title -->
-   <title>Bolsa de trabajo GP | Login</title>
+   <title>Bolsa de trabajo GP | Registro de Perfil</title>
    <link href="<?=$ICONO ?>" rel="shortcut icon" type="image/x-icon" />
 
 
