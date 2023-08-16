@@ -1,4 +1,6 @@
 <?php
+echo "hola mundo3";
+
 if (file_exists("../backend/Connection.php")) {
    require_once("../backend/Connection.php");
 } else {

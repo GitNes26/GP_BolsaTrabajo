@@ -2,7 +2,6 @@
 // var_dump($_POST);
 include ("./User.php");
 $User = new User();
-echo "hola mundo2";
 
 if(isset($_POST['op'])) $op = $_POST['op']; else $op = null;
 
