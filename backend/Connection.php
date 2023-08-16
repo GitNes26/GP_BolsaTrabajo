@@ -11,6 +11,7 @@ class Connection{
 		} else {
 			if (file_exists("../config.php")) {
 				echo "aqui esta: ../config.php";
+			}
 		}
 		include "../config.php";
 		$CONN_OBJ = $CONN_DB;
