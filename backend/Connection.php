@@ -7,7 +7,7 @@ class Connection{
 		// echo "Connection.php";
 		$ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
 		// echo "<br>ROOT: $ROOT";
-		include "/empleos/config.php";
+		include "https://gomezconnect.com/empleos/config.php";
 		$CONN_OBJ = $CONN_DB;
 		$this->conn = null;
 
