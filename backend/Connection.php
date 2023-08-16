@@ -4,8 +4,9 @@ class Connection{
 	private $conn;
   	// private $database;
 	function __construct() {
+		echo "Connection.php";
 		$ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
-
+		echo "<br>ROOT: $ROOT";
 		include "$ROOT/empleos/config.php";
 		$CONN_OBJ = $CONN_DB;
 		$this->conn = null;
