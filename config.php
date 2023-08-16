@@ -10,7 +10,7 @@ $CONN_DB_LOCAL = array(
 $CONN_DB_WEB = array(
   "HOST_NAME" => "132.148.76.141",
   "DB_PORT" => "3306",
-  "DB_USER" => "usr_bolsatrabajo",
+  "DB_USER" => "usr_bolsatrabajo_gp",
   "DB_PWD" => "Sxm4r31~1",
   "DB_NAME" => "bd_bolsa_trabajo",
 );
