@@ -41,7 +41,7 @@ if (isset($_GET["p"])) {
    <!-- keywords -->
    <meta name="keywords" content="">
    <!-- title -->
-   <title>Bolsa de trabajo GP | Login</title>
+   <title>Bolsa de trabajo GP-gp | Login</title>
    <link href="<?=$ICONO ?>" rel="shortcut icon" type="image/x-icon" />
 
 
@@ -70,10 +70,10 @@ if (isset($_GET["p"])) {
    <script src="<?=$PLUGINS_PATH?>/moment-js/moment.min.js"></script>
 
    <!-- SweetAlert2 -->
-   <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/sweetAlert2/css/sweetalert2.min.css"/>
+   <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/sweetAlert2/css/sweetalert2.min.css" />
 
    <!-- MisEstilos -->
-   <link rel="stylesheet" href="<?=$STYLES_PATH ?>/styles.css"/>
+   <link rel="stylesheet" href="<?=$STYLES_PATH ?>/styles.css" />
    <link rel="stylesheet" href="<?=$STYLES_PATH?>/responsive.css">
 
 </head>
@@ -117,12 +117,14 @@ if (isset($_GET["p"])) {
                               <input type="hidden" id="op" name="op" value="login">
                               <div class="form-floating mb-3">
                                  <input type="email" class="form-control rounded-lg" id='email' name='email'
-                                    placeholder="Correo Electronico" autofocus="autofocus" data-input-name="Correo" value="<?=$e?>"/>
+                                    placeholder="Correo Electronico" autofocus="autofocus" data-input-name="Correo"
+                                    value="<?=$e?>" />
                                  <label for="email">Correo Electrónico</label>
                               </div>
                               <div class="form-floating mb-3">
                                  <input type="password" class="form-control" id='password' name='password'
-                                    placeholder="Contraseña" autocomplete="off" data-input-name="CONTRASEÑA" value="<?=$p?>"/>
+                                    placeholder="Contraseña" autocomplete="off" data-input-name="CONTRASEÑA"
+                                    value="<?=$p?>" />
                                  <label for="password">Contraseña</label>
                                  <i class="fa-duotone fa-eye-slash eye_icon" data-input="password"></i>
                               </div>
@@ -150,15 +152,13 @@ if (isset($_GET["p"])) {
 
                            <form id="form_register">
                               <div class="form-floating mb-3">
-                                 <input type="email" class="form-control rounded-lg" id='input_email'
-                                    name='input_email' placeholder="Correo Electrónico" autofocus="autofocus"
-                                    data-input-name="CORREO" />
+                                 <input type="email" class="form-control rounded-lg" id='input_email' name='input_email'
+                                    placeholder="Correo Electrónico" autofocus="autofocus" data-input-name="CORREO" />
                                  <label for="input_email">Correo Electrónico</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="password" class="form-control" id='input_password'
-                                    name='input_password' placeholder="Contraseña" autocomplete="off"
-                                    data-input-name="CONTRASEÑA" />
+                                 <input type="password" class="form-control" id='input_password' name='input_password'
+                                    placeholder="Contraseña" autocomplete="off" data-input-name="CONTRASEÑA" />
                                  <label for="input_password">Contraseña</label>
                                  <i class="fa-duotone fa-eye-slash eye_icon" tittle="show text"
                                     data-input="input_password"></i>
@@ -173,7 +173,7 @@ if (isset($_GET["p"])) {
                                  <i class="fa-duotone fa-eye-slash eye_icon" tittle="show text"
                                     data-input="input_confirm_password"></i>
                               </div>
-                              
+
                               <div class="row">
                                  <div class="col">
                                     <button type="submit" id="btn_register"
