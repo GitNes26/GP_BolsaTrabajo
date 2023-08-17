@@ -7,7 +7,7 @@ class Connection{
 		// echo "Connection.php ";
 		
 		// Cargar autoload.php
-		require_once '/empleos/vendor/autoload.php';
+		require_once '../vendor/autoload.php';
 		echo "autoload cargado";
 		// Cargar variables de entorno desde el archivo .env
 		$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
