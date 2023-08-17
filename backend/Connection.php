@@ -4,33 +4,28 @@ class Connection{
 	private $conn;
   	// private $database;
 	function __construct() {
-		echo "Connection.php <br>";
+		// echo "Connection.php <br>";
 		$root = dirname(__DIR__);
-		echo "La ruta del root es: $root <br>";
-		
 		// Cargar autoload.php
 		require_once "$root/vendor/autoload.php";
-		echo "autoload cargado";
 		// Cargar variables de entorno desde el archivo .env
 		$dotenv = Dotenv\Dotenv::createImmutable($root);
-		echo "-el dot";
 		$dotenv->load();
 
-		echo "--tenemos dotenv:  $_ENV[HOST_NAME]";
 		
-		$CONN_OBJ = $CONN_DB;
+		// $CONN_OBJ = $CONN_DB;
 		$this->conn = null;
 
-		$connString = "mysql:host=$CONN_OBJ[HOST_NAME];dbname=$CONN_OBJ[DB_NAME];charset=utf8mb4";
-		// $connString = "sqlsrv:Server=$CONN_OBJ[HOST_NAME];Database=$CONN_OBJ[DB_NAME];";
+		$connString = "mysql:host=$_ENV[HOST_NAME];dbname=$_ENV[DB_NAME];charset=utf8mb4";
+		// $connString = "sqlsrv:Server=$_ENV[HOST_NAME];Database=$_ENV[DB_NAME];";
 		$options = [
 			PDO::ATTR_EMULATE_PREPARES   => false,
 			PDO::ATTR_EMULATE_PREPARES => true,
 			PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
 			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 		];
-		$this->conn = new PDO($connString, $CONN_OBJ["DB_USER"], $CONN_OBJ["DB_PWD"], $options);
-		// $this->conn = new PDO($connString, $CONN_OBJ["DB_USER"], $CONN_OBJ["DB_PWD"], $options);
+		$this->conn = new PDO($connString, $_ENV["DB_USER"], $_ENV["DB_PWD"], $options);
+		// $this->conn = new PDO($connString, $_ENV["DB_USER"], $_ENV["DB_PWD"], $options);
 	}
 
 
