@@ -4,11 +4,13 @@ class Connection{
 	private $conn;
   	// private $database;
 	function __construct() {
-		// echo "Connection.php";
+		echo "Connection.php";
 		// Cargar autoload.php
 		require_once __DIR__ . '/vendor/autoload.php';
+		echo "se cargo el autoload";
 		// Cargar variables de entorno desde el archivo .env
 		$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+		echo "el dot";
 		$dotenv->load();
 
 		echo "tenemos dotenv:  $_ENV[HOST_NAME]";
