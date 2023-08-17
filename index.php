@@ -1,8 +1,7 @@
 <?php
 require_once "config.php";
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-echo "tenemos dotenv:  $_ENV[HOST_NAME]";
+
+
 if (isset($_COOKIE["session"])) {
    if ($_COOKIE["session"] == "active") {
       // if ($_COOKIE["profile_id"] == 2)
