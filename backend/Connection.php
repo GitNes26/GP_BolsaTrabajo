@@ -21,6 +21,7 @@ class Connection{
 		// echo "se encontro?";
 		include "/empleos/config.php";
 		$CONN_OBJ = $CONN_DB;
+		print_r($CONN_DB);
 		$this->conn = null;
 
 		$connString = "mysql:host=$CONN_OBJ[HOST_NAME];dbname=$CONN_OBJ[DB_NAME];charset=utf8mb4";
