@@ -17,8 +17,6 @@ class User extends Connection {
 
    #region SECCION DE LOGIN
    function login($email,$password) {
-      echo "hola mundo5";
-
       $response = $this->defaultResponse();
       $response["alert_text"] = "Credenciales incorrectas, verifica tú información.";
       

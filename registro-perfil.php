@@ -23,17 +23,18 @@ if (isset($_COOKIE["session"])) {
 #Esta validacion es para cuando le dan "atras" y la pagina se sigue viendo
 echo "
 <!-- Cookies -->
-<script src='/plugins/js-cookie/js.cookie.min.js'></script>
+<script src='<?=$PLUGINS_PATH?>/js-cookie/js.cookie.min.js'></script>
 <script>
-   const validateNeedCookies = () => {
-      let needCookies = true;
-      if (location.pathname == '/') needCookies = false;
-      else if (location.pathname == '/index.php') needCookies = false;
-      else if (location.pathname == '/registro-perfil.php') needCookies = false;
-      
-      if (!Cookies.get('session') && needCookies) location.reload();
-   };
-   validateNeedCookies();
+console.log('validateNeedCookies');
+const validateNeedCookies = () => {
+   let needCookies = true;
+   if (location.pathname == '/') needCookies = false;
+   else if (location.pathname == '/index.php') needCookies = false;
+   else if (location.pathname == '/registro-perfil.php') needCookies = false;
+
+   if (!Cookies.get('session') && needCookies) location.reload();
+};
+validateNeedCookies();
 </script>
 ";
 ?>
@@ -90,7 +91,7 @@ echo "
 
    <!-- SUMMERNOTE - EDITOR DE TEXTO -->
    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">  -->
-   <link rel="stylesheet" href="/plugins/summernote-0.8.18/summernote.min.css">
+   <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/summernote-0.8.18/summernote.min.css">
 
 
    <!-- MisEstilos -->
@@ -509,9 +510,9 @@ echo "
    <script src="<?=$PLUGINS_PATH?>/js-cookie/js.cookie.min.js"></script>
 
    <!-- SUMMERNOTE - EDITOR DE TEXTO -->
-   <script src="/plugins/summernote-0.8.18/summernote.min.js"></script>
-   <script src="/plugins/summernote-0.8.18/summernote-bs4.min.js"></script>
-   <script src="/plugins/summernote-0.8.18/lang/summernote-es-ES.min.js"></script>
+   <script src="<?=$PLUGINS_PATH?>/summernote-0.8.18/summernote.min.js"></script>
+   <script src="<?=$PLUGINS_PATH?>/summernote-0.8.18/summernote-bs4.min.js"></script>
+   <script src="<?=$PLUGINS_PATH?>/summernote-0.8.18/lang/summernote-es-ES.min.js"></script>
 
 
    <script src="<?=$SCRIPTS_PATH ?>/master.js"></script>
