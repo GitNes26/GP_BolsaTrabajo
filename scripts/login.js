@@ -174,9 +174,9 @@ function ajaxRequest(url, data, register = false) {
                   // if (role == 2) window.location.href = `${PATH_CLIENTE}`;
                   // else if (role > 2) window.location.href = `${PATH_PAYMENT}`;
                   // else window.location.href = `${PAGES_PATH}`;
-                  window.location.href = `${PAGES_PATH}`;
+                  // window.location.href = `${PAGES_PATH}`;
                }
-               location.reload();
+               // location.reload();
             }
          } else {
             Swal.fire({
