@@ -5,16 +5,14 @@ class Connection{
   	// private $database;
 	function __construct() {
 		echo "Connection.php <br>";
-		$padre = dirname(__DIR__);
-		echo "La ruta del padre es: $padre <br>";
-		$root = dirname($padre);
+		$root = dirname(__DIR__);
 		echo "La ruta del root es: $root <br>";
 		
 		// Cargar autoload.php
-		require_once "$padre/vendor/autoload.php";
+		require_once "$root/vendor/autoload.php";
 		echo "autoload cargado";
 		// Cargar variables de entorno desde el archivo .env
-		$dotenv = Dotenv\Dotenv::createImmutable(dirname($root));
+		$dotenv = Dotenv\Dotenv::createImmutable($root);
 		echo "-el dot";
 		$dotenv->load();
 
