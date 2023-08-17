@@ -4,7 +4,12 @@ class Connection{
 	private $conn;
   	// private $database;
 	function __construct() {
-		// echo "Connection.php ";
+		echo "Connection.php <br>";
+		echo "\nEste script se ejecuta en: " . __DIR__;
+		$padre = dirname(__DIR__);
+		echo "\nLa ruta del padre es: $padre";
+		$masArriba = dirname($padre);
+		echo "\nUna ruta más arriba es: $masArriba";
 		
 		// Cargar autoload.php
 		require_once '../vendor/autoload.php';
