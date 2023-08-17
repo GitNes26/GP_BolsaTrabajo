@@ -6,20 +6,21 @@ class Connection{
 	function __construct() {
 		// echo "Connection.php";
 		$ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
-		if (file_exists("https://gomezconnect.com/empleos/config.php")) {
-			echo "aqui esta: https://gomezconnect.com/empleos/config.php";
-		} 
-		else if (file_exists("../config.php")) {
-			echo "aqui esta: ../config.php";
-		}
-		else if (file_exists("/config.php")) {
-			echo "aqui esta: /config.php";
-		}
-		else if (file_exists("/empleos/config.php")) {
-			echo "aqui esta: /empleos/config.php";
-		}
-		echo "se encontro?";
+		// if (file_exists("https://gomezconnect.com/empleos/config.php")) {
+		// 	echo "aqui esta: https://gomezconnect.com/empleos/config.php";
+		// } 
+		// else if (file_exists("../config.php")) {
+		// 	echo "aqui esta: ../config.php";
+		// }
+		// else if (file_exists("/config.php")) {
+		// 	echo "aqui esta: /config.php";
+		// }
+		// else if (file_exists("/empleos/config.php")) {
+		// 	echo "aqui esta: /empleos/config.php";
+		// }
+		// echo "se encontro?";
 		include "/empleos/config.php";
+		echo "se incluyo";
 		$CONN_OBJ = $CONN_DB;
 		$this->conn = null;
 
