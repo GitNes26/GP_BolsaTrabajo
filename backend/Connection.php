@@ -20,7 +20,6 @@ class Connection{
 		// }
 		// echo "se encontro?";
 		include "/empleos/config.php";
-		echo "se incluyo";
 		$CONN_OBJ = $CONN_DB;
 		$this->conn = null;
 
