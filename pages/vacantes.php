@@ -87,17 +87,17 @@ $current_page = "Vacantes";
                                  <label class="">Modo de publicación: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <div class="form-check form-check-inline">
                                        <input class="form-check-input" type="radio" name="input_info_img"
-                                          id="input_info_img_info" value="Info" checked>
+                                          id="input_info_img_info" value="info" checked>
                                        <label class="form-check-label" for="input_info_img_info">Información</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                        <input class="form-check-input" type="radio" name="input_info_img"
-                                          id="input_info_img_img" value="Img">
+                                          id="input_info_img_img" value="img">
                                        <label class="form-check-label" for="input_info_img_img">Imagen</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                        <input class="form-check-input" type="radio" name="input_info_img"
-                                          id="input_info_img_infoimg" value="InfoImg">
+                                          id="input_info_img_infoimg" value="infoImg">
                                        <label class="form-check-label" for="input_info_img_infoimg">Información +
                                           Imagen</label>
                                     </div>
@@ -106,82 +106,94 @@ $current_page = "Vacantes";
 
                               <hr>
 
+                              <!-- DIV CARGAR IMAGEN -->
+                              <div class="mb-3 div_img">
+                                 <label for="input_img_path" class="form-label">Cargar imagen: <span
+                                       class="obligatory"></span></label>
+                                 <input class="form-control" type="file" id="input_img_path" name="input_img_path"
+                                    data-input-name="IMAGEN" accept="image/*">
+                                 <!-- <div class="form-text">Subir archivo con un peso máximo de <b id="peso_archivo"></b><b>MB</b>.</div> -->
+                              </div>
+
                               <!-- AREA -->
-                              <div class="mb-3">
-                                 <label for="input_area_id" class="form-label">Área: <span
-                                       class="obligatory"></span></label>
-                                 <select class="select2 form-control" style="width:100%" id="input_area_id"
-                                    name="input_area_id" data-input-name="ÁREA" data-output="output_area">
-                                 </select>
-                              </div>
-                              <!-- DESCRIPCION DE VACANTE -->
-                              <div class="mb-3">
-                                 <label for="input_description" class="form-label">Descripción de la vacante: <span
-                                       class="obligatory"></span></label>
-                                 <textarea type="text" class="form-control counter" id="input_description"
-                                    name="input_description" data-input-name="DESCRIPCIÓN" rows="5" data-limit="150"
-                                    data-counter="counter_description" data-output="output_description"></textarea>
-                                 <div class="text-sm text-end text-muted" id="counter_description"></div>
-                              </div>
-                              <!-- SUELDO -->
-                              <div class="mb-3">
-                                 <label for="input_min_salary" class="form-label">Sueldo: <i>(mensual en pesos
-                                       mexicanos)</i> <span class="obligatory"></span></label>
-                                 <div class="row">
-                                    <div class="col input-group">
-                                       <span class="input-group-text">$</span>
-                                       <input type="text" class="form-control numeric" id="input_min_salary"
-                                          name="input_min_salary" data-input-name="SUELDO MÍNIMO" placeholder="Mínimo"
-                                          data-output="output_min_salary">
+                              <div id="div_info">
+                                 <div class="mb-3">
+                                    <label for="input_area_id" class="form-label">Área: <span
+                                          class="obligatory"></span></label>
+                                    <select class="select2 form-control" style="width:100%" id="input_area_id"
+                                       name="input_area_id" data-input-name="ÁREA" data-output="output_area">
+                                    </select>
+                                 </div>
+                                 <!-- DESCRIPCION DE VACANTE -->
+                                 <div class="mb-3">
+                                    <label for="input_description" class="form-label">Descripción de la vacante: <span
+                                          class="obligatory"></span></label>
+                                    <textarea type="text" class="form-control counter" id="input_description"
+                                       name="input_description" data-input-name="DESCRIPCIÓN" rows="5" data-limit="150"
+                                       data-counter="counter_description" data-output="output_description"></textarea>
+                                    <div class="text-sm text-end text-muted" id="counter_description"></div>
+                                 </div>
+                                 <!-- SUELDO -->
+                                 <div class="mb-3">
+                                    <label for="input_min_salary" class="form-label">Sueldo: <i>(mensual en pesos
+                                          mexicanos)</i> <span class="obligatory"></span></label>
+                                    <div class="row">
+                                       <div class="col input-group">
+                                          <span class="input-group-text">$</span>
+                                          <input type="text" class="form-control numeric" id="input_min_salary"
+                                             name="input_min_salary" data-input-name="SUELDO MÍNIMO"
+                                             placeholder="Mínimo" data-output="output_min_salary">
+                                       </div>
+                                       <div class="col input-group">
+                                          <span class="input-group-text">$</span>
+                                          <input type="text" class="form-control numeric" id="input_max_salary"
+                                             name="input_max_salary" data-input-name="SUELDO MÁXIMO"
+                                             placeholder="Máximo" data-output="output_max_salary">
+                                       </div>
                                     </div>
-                                    <div class="col input-group">
-                                       <span class="input-group-text">$</span>
-                                       <input type="text" class="form-control numeric" id="input_max_salary"
-                                          name="input_max_salary" data-input-name="SUELDO MÁXIMO" placeholder="Máximo"
-                                          data-output="output_max_salary">
+                                 </div>
+
+                                 <hr>
+                                 <!-- TIPO DE EMPLEO -->
+                                 <div class="mb-3">
+                                    <label for="input_job_type">Tipo de empleo: <span class="obligatory"></span></label>
+                                    <div class="btn-group ml-3" role="group">
+                                       <input type="radio" class="btn-check not_validate" name="input_job_type"
+                                          id="input_job_type_tc" value="Tiempo completo" autocomplete="off"
+                                          data-output="output_job_type" checked>
+                                       <label class="btn btn-outline-dark rounded-left" for="input_job_type_tc">Tiempo
+                                          completo</label>
+
+                                       <input type="radio" class="btn-check not_validate" name="input_job_type"
+                                          id="input_job_type_mt" value="Medio tiempo" autocomplete="off"
+                                          data-output="output_job_type">
+                                       <label class="btn btn-outline-dark" for="input_job_type_mt">Medio tiempo</label>
+
+                                       <input type="radio" class="btn-check not_validate" name="input_job_type"
+                                          id="input_job_type_p" value="Prácticas" autocomplete="off"
+                                          data-output="output_job_type">
+                                       <label class="btn btn-outline-dark" for="input_job_type_p">Prácticas</label>
                                     </div>
+                                 </div>
+                                 <!-- HORARIO -->
+                                 <div class="mb-3">
+                                    <label for="input_schedules" class="form-label">Horarios: <span
+                                          class="obligatory"></span></label>
+                                    <input type="text" class="form-control" id="input_schedules" name="input_schedules"
+                                       data-input-name="HORARIO" placeholder="8 horas - Lunes a viernes"
+                                       data-output="output_schedules">
+                                 </div>
+                                 <!-- MAS INFORMACION -->
+                                 <div class="mb-3">
+                                    <label for="input_more_info" class="form-label">Más información: </label>
+                                    <div class="summernote"></div>
                                  </div>
                               </div>
 
-                              <hr>
-                              <!-- TIPO DE EMPLEO -->
-                              <div class="mb-3">
-                                 <label for="input_job_type">Tipo de empleo: <span class="obligatory"></span></label>
-                                 <div class="btn-group ml-3" role="group">
-                                    <input type="radio" class="btn-check not_validate" name="input_job_type"
-                                       id="input_job_type_tc" value="Tiempo completo" autocomplete="off"
-                                       data-output="output_job_type" checked>
-                                    <label class="btn btn-outline-dark rounded-left" for="input_job_type_tc">Tiempo
-                                       completo</label>
-
-                                    <input type="radio" class="btn-check not_validate" name="input_job_type"
-                                       id="input_job_type_mt" value="Medio tiempo" autocomplete="off"
-                                       data-output="output_job_type">
-                                    <label class="btn btn-outline-dark" for="input_job_type_mt">Medio tiempo</label>
-
-                                    <input type="radio" class="btn-check not_validate" name="input_job_type"
-                                       id="input_job_type_p" value="Prácticas" autocomplete="off"
-                                       data-output="output_job_type">
-                                    <label class="btn btn-outline-dark" for="input_job_type_p">Prácticas</label>
-                                 </div>
-                              </div>
-                              <!-- HORARIO -->
-                              <div class="mb-3">
-                                 <label for="input_schedules" class="form-label">Horarios: <span
-                                       class="obligatory"></span></label>
-                                 <input type="text" class="form-control" id="input_schedules" name="input_schedules"
-                                    data-input-name="HORARIO" placeholder="8 horas - Lunes a viernes"
-                                    data-output="output_schedules">
-                              </div>
-                              <!-- MAS INFORMACION -->
-                              <div class="mb-3">
-                                 <label for="input_more_info" class="form-label">Más información: </label>
-                                 <div class="summernote"></div>
-                              </div>
                               <!-- TIEMPO DE PUBLICACION -->
                               <div class="mb-3">
-                                 <label for="input_publication_date" class="form-label">Tiempo de publicación:</i> <span
-                                       class="obligatory"></span></label>
+                                 <label for="input_publication_date" class="form-label">Tiempo de publicación:</i>
+                                    <span class="obligatory"></span></label>
                                  <div class="row">
                                     <div class="col input-group mb-3" title="Iniciar publicación">
                                        <span class="input-group-text"><i class="fa-regular fa-clock"></i></span>
@@ -208,21 +220,6 @@ $current_page = "Vacantes";
                                  </select>
                               </div>
 
-                              <!-- DIV CARGAR IMAGEN -->
-                              <div class="mb-3">
-                                 <label for="input_file_path" class="form-label">Cargar imagen: <span
-                                       class="obligatory"></span></label>
-                                 <input class="form-control" type="file" id="input_file_path" name="input_file_path"
-                                    data-input-name="IMAGEN" accept="image/*">
-                                 <!-- <div class="form-text">Subir archivo con un peso máximo de <b id="peso_archivo"></b><b>MB</b>.</div> -->
-                                 <!-- DIV IMAGEN CARGADO -->
-                                 <div class="text-center">
-                                    <label for="preview_file" class="form-label">Imagen cargada:</label><br>
-                                    <img src="/assets/img/cargar_imagen.png" controls preview="true"
-                                       class="rounded-lg img-fluid" id="preview_file" height="250px"></img>
-                                    <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
-                                 </div>
-                              </div>
                            </div>
                            <div class="card-footer">
                               <button type="reset" id="btn_cancel"
@@ -262,6 +259,14 @@ $current_page = "Vacantes";
                               </p>
 
                               <hr>
+
+                              <!-- DIV IMAGEN CARGADO -->
+                              <div class="text-center div_img">
+                                 <label for="preview_img" class="form-label">Imagen cargada:</label><br>
+                                 <img src="/assets/img/cargar_imagen.png" controls preview="true"
+                                    class="rounded-lg img-fluid" id="preview_img" height="250px"></img>
+                                 <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
+                              </div>
 
                               <!-- DETALLES DEL EMPELO -->
                               <p class="h6 fw-bolder">Detalles del empleo</p>
