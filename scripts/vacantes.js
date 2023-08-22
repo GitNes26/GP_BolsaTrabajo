@@ -20,8 +20,11 @@ const tbody = $("#table tbody"),
    input_vacancy = $("#input_vacancy"),
    counter_vacancy = $("#counter_vacancy"),
    input_company_id = $("#input_company_id"),
-   input_name_info_img = $("input[name='input_info_img'"),
-   div_info = $("#div_info"),
+   input_name_publication_mode = $("input[name='input_publication_mode'"),
+   input_publication_mode_info = $("#input_publication_mode_info"),
+   input_publication_mode_img = $("#input_publication_mode_img"),
+   input_publication_mode_infoimg = $("#input_publication_mode_infoimg"),
+   div_info = $(".div_info"),
    div_img = $(".div_img"),
    input_img_path = $("#input_img_path"), //este es un input_file
    preview_img = $("#preview_img"),
@@ -174,7 +177,7 @@ btn_reset.click(async (e) => {
 });
 
 // AGREGAR O EDITAR OBJETO
-form.on("submit", async (e) => {
+form.on("submit", async function (e) {
    e.preventDefault();
    const input_more_info = $(".note-editing-area .note-editable").html();
    // console.log(form.serializeArray());
@@ -192,30 +195,55 @@ form.on("submit", async (e) => {
       op_modal.val("edit");
    }
 
-   let data = form.serializeArray();
+   // let data = form.serializeArray();
+   let form_data = new FormData(this);
    // return console.log(data);
    let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
    if (id_modal.val() <= 0) {
       //NUEVO
-      addToArray("created_at", current_date, data);
+      addToArray("created_at", current_date, form_data, true);
    } else {
       //EDICION
-      addToArray("updated_at", current_date, data);
+      addToArray("updated_at", current_date, form_data, true);
+      if (haveImg) addToArray("haveImg", vImgPath, data, true);
    }
    if (role_cookie == 3) {
-      addToArray("input_company_id", company_id, data);
+      addToArray("input_company_id", company_id, form_data, true);
    }
-   addToArray("input_more_info", input_more_info, data);
-   addToArray("input_tags_ids", input_tags_ids.val().join(","), data);
-   data.map((d) => {
-      if (d.name == "input_publication_date")
-         d.value = moment(d.value).format("YYYY-MM-DD 00:00:00");
-      if (d.name == "input_expiration_date")
-         d.value = moment(d.value).format("YYYY-MM-DD 23:59:59");
+   addToArray("input_more_info", input_more_info, form_data, true);
+   addToArray(
+      "input_tags_ids",
+      input_tags_ids.val().join(","),
+      form_data,
+      true,
+   );
+   // data.map((d) => {
+   //    if (d.name == "input_publication_date")
+   //       d.value = moment(d.value).format("YYYY-MM-DD hh:mm:ss");
+   //    if (d.name == "input_expiration_date")
+   //       d.value = moment(d.value).format("YYYY-MM-DD 23:59:59");
+   // });
+   const hour = moment().format("hh:mm:ss");
+   const date_publicate = `${input_publication_date.val()} ${hour}`;
+   const data = new FormData();
+   form_data.forEach((v, k) => {
+      if (k == "input_publication_date") v = date_publicate;
+      if (k == "input_expiration_date")
+         v = moment(v).format("YYYY-MM-DD 23:59:59");
+      if (input_publication_mode_img.is(":checked") && k == "input_area_id")
+         v = 1;
+      if (input_publication_mode_img.is(":checked") && k == "input_min_salary")
+         v = 0.0;
+      if (input_publication_mode_img.is(":checked") && k == "input_max_salary")
+         v = 0.0;
+      if (input_publication_mode_img.is(":checked") && k == "input_description")
+         v = " ";
+      console.log(k + " : " + v);
+      addToArray(k, v, data, true);
    });
-
-   // return console.log(data);
-   const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data);
+   // return console.log(...data);
+   const ajaxResponse = await ajaxRequestFileAsync(URL_VACANCY_APP, data);
+   // const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data);
    if (ajaxResponse.message == "duplicado") return;
    btn_cancel.click();
    await fillTable(false);
@@ -333,11 +361,22 @@ async function editObj(btn_edit) {
    const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data);
 
    const obj = ajaxResponse.data;
-   // console.log(obj);
+   console.log(obj);
 
    //form
    id_modal.val(Number(obj.id));
    input_vacancy.val(obj.vacancy);
+   switch (obj.publication_mode) {
+      case "info":
+         input_publication_mode_info.click();
+         break;
+      case "img":
+         input_publication_mode_img.click();
+      case "infoImg":
+         input_publication_mode_infoimg.click();
+      default:
+         break;
+   }
    countLetter(
       input_vacancy,
       input_vacancy.attr("data-counter"),
@@ -374,17 +413,6 @@ async function editObj(btn_edit) {
    input_expiration_date.val(moment(obj.expiration_date).format("Y-MM-DD"));
    input_tags_ids.val(4);
 
-   haveImg = false;
-   if (obj.file_path == "" || obj.file_path == null)
-      resetImgPreviewBanner(null);
-   else {
-      haveImg = true;
-      // console.log("tengo imagen guardada");
-      resetImgPreviewBanner(`/assets/img/${obj.file_path}`);
-      vImgPath = obj.file_path;
-      // input_file_path.val(obj.file_path);
-   }
-
    // PREVIEW
    $(`#${input_vacancy.attr("data-output")}`).text(obj.vacancy);
 
@@ -406,6 +434,15 @@ async function editObj(btn_edit) {
 			<br><br>
 			<span class="">${objCompany.description}</span>
 		`);
+   }
+   haveImg = false;
+   if (obj.img_path == "" || obj.img_path == null) resetImgPreviewVacancy(null);
+   else {
+      haveImg = true;
+      // console.log("tengo imagen guardada");
+      resetImgPreviewVacancy(`/assets/img/${obj.img_path}`);
+      vImgPath = obj.img_path;
+      // input_img_path.val(obj.img_path);
    }
    $(`#${input_area_id.attr("data-output")}`).text(
       $(`#input_area_id option:selected`).text(),
@@ -542,20 +579,34 @@ form.on("input change", function () {
 
 // #endregion EDICION DE LA VISTA PREVIA EN TIEMPO REAL
 
-input_name_info_img.click(function (e) {
+input_name_publication_mode.click(function (e) {
    const value = this.value;
    switch (value) {
       case "info":
          div_info.slideDown();
          div_img.slideUp();
+         $("form .div_info input").removeClass("not_validate");
+         $("form .div_info select").removeClass("not_validate");
+         $("form .div_info textarea").removeClass("not_validate");
+         input_img_path.addClass("not_validate");
          break;
       case "img":
          div_info.slideUp();
          div_img.slideDown();
+         $("form .div_info input").addClass("not_validate");
+         $("form .div_info select").addClass("not_validate");
+         $("form .div_info textarea").addClass("not_validate");
+         input_img_path.removeClass("not_validate");
+         input_area_id.val(1);
+
          break;
       case "infoImg":
          div_info.slideDown();
          div_img.slideDown();
+         $("form .div_info input").removeClass("not_validate");
+         $("form .div_info select").removeClass("not_validate");
+         $("form .div_info textarea").removeClass("not_validate");
+         input_img_path.addClass("not_validate");
          break;
 
       default:

@@ -72,7 +72,7 @@ $current_page = "Vacantes";
                                  <div class="text-sm text-end text-muted" id="counter_vacancy"></div>
                               </div>
                               <!-- EMPRESA -->
-                              <?php if ($_COOKIE["role_id"] < 3): ?>
+                              <?php if ($_COOKIE["role_id"] < 2): ?>
                               <div class="mb-3">
                                  <label for="input_company_id" class="form-label">Empresa: <span
                                        class="obligatory"></span></label>
@@ -86,19 +86,21 @@ $current_page = "Vacantes";
                               <div class="text-center mb-4">
                                  <label class="">Modo de publicación: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <div class="form-check form-check-inline">
-                                       <input class="form-check-input" type="radio" name="input_info_img"
-                                          id="input_info_img_info" value="info" checked>
-                                       <label class="form-check-label" for="input_info_img_info">Información</label>
+                                       <input class="form-check-input" type="radio" name="input_publication_mode"
+                                          id="input_publication_mode_info" value="info" checked>
+                                       <label class="form-check-label"
+                                          for="input_publication_mode_info">Información</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                       <input class="form-check-input" type="radio" name="input_info_img"
-                                          id="input_info_img_img" value="img">
-                                       <label class="form-check-label" for="input_info_img_img">Imagen</label>
+                                       <input class="form-check-input" type="radio" name="input_publication_mode"
+                                          id="input_publication_mode_img" value="img">
+                                       <label class="form-check-label" for="input_publication_mode_img">Imagen</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                       <input class="form-check-input" type="radio" name="input_info_img"
-                                          id="input_info_img_infoimg" value="infoImg">
-                                       <label class="form-check-label" for="input_info_img_infoimg">Información +
+                                       <input class="form-check-input" type="radio" name="input_publication_mode"
+                                          id="input_publication_mode_infoimg" value="infoImg">
+                                       <label class="form-check-label" for="input_publication_mode_infoimg">Información
+                                          +
                                           Imagen</label>
                                     </div>
                                  </label>
@@ -116,7 +118,7 @@ $current_page = "Vacantes";
                               </div>
 
                               <!-- AREA -->
-                              <div id="div_info">
+                              <div class="div_info">
                                  <div class="mb-3">
                                     <label for="input_area_id" class="form-label">Área: <span
                                           class="obligatory"></span></label>
@@ -126,8 +128,10 @@ $current_page = "Vacantes";
                                  </div>
                                  <!-- DESCRIPCION DE VACANTE -->
                                  <div class="mb-3">
-                                    <label for="input_description" class="form-label">Descripción de la vacante: <span
-                                          class="obligatory"></span></label>
+                                    <label for="input_description" class="form-label">Descripción de la vacante:
+                                       &nbsp;<i class="fa-duotone fa-circle-info"
+                                          title="Si deseas dejar sin descripción las responsabilidades de la vacante, escribe un espacio en blanco [tecla escape]."></i>
+                                       <span class="obligatory"></span></label>
                                     <textarea type="text" class="form-control counter" id="input_description"
                                        name="input_description" data-input-name="DESCRIPCIÓN" rows="5" data-limit="150"
                                        data-counter="counter_description" data-output="output_description"></textarea>
@@ -185,7 +189,9 @@ $current_page = "Vacantes";
                                  </div>
                                  <!-- MAS INFORMACION -->
                                  <div class="mb-3">
-                                    <label for="input_more_info" class="form-label">Más información: </label>
+                                    <label for="input_more_info" class="form-label">Más información: &nbsp;<i
+                                          class="fa-duotone fa-circle-info"
+                                          title="Recuerda usar los ultimos iconos del editor, que es para borrar todo o crear una plantilla recomendada. Si deseas dejar sin texto 'más información', escribe un espacio en blanco [tecla escape]."></i></label>
                                     <div class="summernote"></div>
                                  </div>
                               </div>
@@ -262,66 +268,70 @@ $current_page = "Vacantes";
 
                               <!-- DIV IMAGEN CARGADO -->
                               <div class="text-center div_img">
-                                 <label for="preview_img" class="form-label">Imagen cargada:</label><br>
+                                 <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
                                  <img src="/assets/img/cargar_imagen.png" controls preview="true"
                                     class="rounded-lg img-fluid" id="preview_img" height="250px"></img>
                                  <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
                               </div>
 
                               <!-- DETALLES DEL EMPELO -->
-                              <p class="h6 fw-bolder">Detalles del empleo</p>
-                              <p class="" id="output_area">Área</p>
-                              <p class="" id="output_description">Descripción de la vacante...</p>
-                              <div class="mb-2">
-                                 <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
-                                 <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
-                                 <span id="output_min_salary">$0</span> &nbsp;a&nbsp;
-                                 <span id="output_max_salary">$0</span>
-                              </div>
-                              <div class="mb-2">
-                                 <i class="fa-solid fa-briefcase"></i>&nbsp;
-                                 <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
-                                 <span id="output_job_type">Tiempo completo</span>
-                              </div>
-                              <div class="mb-2">
-                                 <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
-                                 <span class="fw-bolder">Horario:&nbsp;</span>
-                                 <span id="output_schedules">8 horas &nbsp;-&nbsp; Lunes a viernes</span>
-                              </div>
+                              <div class="div_info">
+                                 <p class="h6 fw-bolder">Detalles del empleo</p>
+                                 <p class="" id="output_area">Área</p>
+                                 <p class="" id="output_description">Descripción de la vacante...</p>
+                                 <div class="mb-2">
+                                    <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
+                                    <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
+                                    <span id="output_min_salary">$0</span> &nbsp;a&nbsp;
+                                    <span id="output_max_salary">$0</span>
+                                 </div>
+                                 <div class="mb-2">
+                                    <i class="fa-solid fa-briefcase"></i>&nbsp;
+                                    <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
+                                    <span id="output_job_type">Tiempo completo</span>
+                                 </div>
+                                 <div class="mb-2">
+                                    <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
+                                    <span class="fw-bolder">Horario:&nbsp;</span>
+                                    <span id="output_schedules">8 horas &nbsp;-&nbsp; Lunes a viernes</span>
+                                 </div>
 
-                              <hr>
-
-                              <!-- MAS INFO -->
-                              <div id="output_more_info">
-                                 <i>LA INFORMACION A CONTINUACIÓN ES SOLO DE EJEMPLO,
-                                    NO SE GUARDARA A MENOS QUE ESCRIBA ALGO EN EL APARTADO DE <b>Más información</b></i>
-                                 <p class="">
-                                    <span class="fw-bolder">Requisitos</span>
-                                 <ul class="" id="output_requirements">
-                                    <li>Requerimiento 1</li>
-                                    <li>Requerimiento 1</li>
-                                    <li>Requerimiento 1</li>
-                                 </ul>
-                                 </p>
-                                 <p class="">
-                                    <span class="fw-bolder">Expriencia necesaria</span>
-                                 <ul class="" id="output_necessary_experience">
-                                    <li>Experiencias 1</li>
-                                    <li>Experiencias 1</li>
-                                    <li>Experiencias 1</li>
-                                 </ul>
-                                 </p>
-                                 <!-- ./ DETALLES DEL EMPELO -->
                                  <hr>
-                                 <p class="">
-                                    <span class="fw-bolder">Beneficios</span>
-                                 <ul class="" id="output_benefits">
-                                    <li>Beneficio 1</li>
-                                    <li>Beneficio 1</li>
-                                    <li>Beneficio 1</li>
-                                 </ul>
-                                 </p>
+
+                                 <!-- MAS INFO -->
+                                 <div id="output_more_info">
+                                    <i>LA INFORMACION A CONTINUACIÓN ES SOLO DE EJEMPLO,
+                                       NO SE GUARDARA A MENOS QUE ESCRIBA ALGO EN EL APARTADO DE <b>Más
+                                          información</b></i>
+                                    <p class="">
+                                       <span class="fw-bolder">Requisitos</span>
+                                    <ul class="" id="output_requirements">
+                                       <li>Requerimiento 1</li>
+                                       <li>Requerimiento 1</li>
+                                       <li>Requerimiento 1</li>
+                                    </ul>
+                                    </p>
+                                    <p class="">
+                                       <span class="fw-bolder">Expriencia necesaria</span>
+                                    <ul class="" id="output_necessary_experience">
+                                       <li>Experiencias 1</li>
+                                       <li>Experiencias 1</li>
+                                       <li>Experiencias 1</li>
+                                    </ul>
+                                    </p>
+                                    <!-- ./ DETALLES DEL EMPELO -->
+                                    <hr>
+                                    <p class="">
+                                       <span class="fw-bolder">Beneficios</span>
+                                    <ul class="" id="output_benefits">
+                                       <li>Beneficio 1</li>
+                                       <li>Beneficio 1</li>
+                                       <li>Beneficio 1</li>
+                                    </ul>
+                                    </p>
+                                 </div>
                               </div>
+
                            </div>
                         </div>
                      </div>
