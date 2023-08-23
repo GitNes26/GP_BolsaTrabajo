@@ -47,7 +47,8 @@ const tbody = $("#table tbody"),
    btn_cancel = $("#btn_cancel");
 
 let company_id = null;
-let haveImg = false;
+let haveImg = false,
+   vImgPath = null;
 //#endregion VARIABLES
 $(".select2").select2();
 focusSelect2($(".select2"));
@@ -130,7 +131,9 @@ btn_reset.click(async (e) => {
 		<span>Ciudad, Estado</span><br><br>
 		<span class="">Descripción de la empresa...</span>
 	`);
+   input_img_path.removeClass("is-invalid");
    $(`#${input_area_id.attr("data-output")}`).text("Área");
+   resetImgPreviewVacancy(null);
    $(`#${input_description.attr("data-output")}`).text(
       "Descripción de la vacante...",
    );
@@ -170,6 +173,7 @@ btn_reset.click(async (e) => {
 			</ul>
 		</p>
 	`);
+   input_publication_mode_info.click();
 
    // setTimeout(() => {
    // 	input_area.focus();
@@ -180,10 +184,15 @@ btn_reset.click(async (e) => {
 form.on("submit", async function (e) {
    e.preventDefault();
    const input_more_info = $(".note-editing-area .note-editable").html();
+   let deleteImg = null;
    // console.log(form.serializeArray());
-
    if (!validateInputs(form)) return;
-
+   if (
+      !input_publication_mode_info.is(":checked") &&
+      input_img_path.val() == "" &&
+      haveImg == false
+   )
+      return validateInput(input_img_path);
    if (id_modal.val() <= 0) {
       //NUEVO
       if (!permission_write) return;
@@ -198,14 +207,20 @@ form.on("submit", async function (e) {
    // let data = form.serializeArray();
    let form_data = new FormData(this);
    // return console.log(data);
-   let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
+   let current_date = moment().format("YYYY-MM-DD HH:mm:ss");
    if (id_modal.val() <= 0) {
       //NUEVO
       addToArray("created_at", current_date, form_data, true);
    } else {
       //EDICION
       addToArray("updated_at", current_date, form_data, true);
-      if (haveImg) addToArray("haveImg", vImgPath, data, true);
+      if (haveImg) addToArray("haveImg", vImgPath, form_data, true);
+      if (
+         !input_publication_mode_info.is(":checked") &&
+         input_img_path.val() != ""
+      )
+         deleteImg = 1;
+      addToArray("deleteImg", deleteImg, form_data, true);
    }
    if (role_cookie == 3) {
       addToArray("input_company_id", company_id, form_data, true);
@@ -219,11 +234,11 @@ form.on("submit", async function (e) {
    );
    // data.map((d) => {
    //    if (d.name == "input_publication_date")
-   //       d.value = moment(d.value).format("YYYY-MM-DD hh:mm:ss");
+   //       d.value = moment(d.value).format("YYYY-MM-DD HH:mm:ss");
    //    if (d.name == "input_expiration_date")
    //       d.value = moment(d.value).format("YYYY-MM-DD 23:59:59");
    // });
-   const hour = moment().format("hh:mm:ss");
+   const hour = moment().format("HH:mm:ss");
    const date_publicate = `${input_publication_date.val()} ${hour}`;
    const data = new FormData();
    form_data.forEach((v, k) => {
@@ -238,6 +253,12 @@ form.on("submit", async function (e) {
          v = 0.0;
       if (input_publication_mode_img.is(":checked") && k == "input_description")
          v = " ";
+
+      // if (k == "input_publication_mode") {
+      //    if (input_publication_mode_info.is(":checked")) v = "info";
+      //    else if (input_publication_mode_img.is(":checked")) v = "img";
+      //    else if (input_publication_mode_infoimg.is(":checked")) v = "infoImg";
+      // }
       console.log(k + " : " + v);
       addToArray(k, v, data, true);
    });
@@ -270,6 +291,22 @@ async function fillTable(show_toas = true) {
    // console.log(objResponse);
 
    objResponse.map((obj) => {
+      const today = moment(),
+         date_publicate = moment(obj.date_publicate),
+         expiration_date = moment(obj.expiration_date);
+      const active_icon =
+         date_publicate.isSameOrBefore(today) &&
+         expiration_date.isSameOrAfter(today)
+            ? {
+                 icon: "fa-solid fa-circle-check",
+                 color: "green",
+                 text: "Activa",
+              }
+            : {
+                 icon: "fa-solid fa-circle-xmark",
+                 color: "red",
+                 text: "Finalizada",
+              };
       //Campos
       let column_vacancy = `${obj.vacancy}`;
       column_company = `${obj.company}`;
@@ -278,6 +315,22 @@ async function fillTable(show_toas = true) {
       )} &nbsp;-&nbsp; ${formatCurrency(obj.max_salary)}`;
       column_job_type = `${obj.job_type}`;
 
+      let column_active = `
+         <div class="text-center align-middle">
+            Desde: <b>${date_publicate.format("DD-MM-YYYY")}</b><br>
+            Hasta: <b>${expiration_date.format("DD-MM-YYYY")}</b><br>
+				<i class="${active_icon.icon} fa-1x icono " style="color:${
+         active_icon.color
+      }">&nbsp; ${active_icon.text}</i>
+			</div>
+         `;
+      let column_img =
+         obj.img_path.length > 1
+            ? `<img src="../assets/img/${obj.img_path}" class="img-fluid rounded-lg" style="max-height: 120px;"/>`
+            : `<img src="../assets/img/cargar_imagen.png" class="img-fluid rounded-lg" style="max-height: 120px;"/>`;
+      // : ` <div class="text-center align-middle">
+      //       <i class="fa-solid fa-circle-xmark fa-2x icono" style="color:red"></i>
+      //    </div> `;
       let column_buttons = `<td class='align-middle'>
             <div class='btn-group' role='group'>`;
       if (permission_update) {
@@ -298,6 +351,8 @@ async function fillTable(show_toas = true) {
          column_company,
          column_salary,
          column_job_type,
+         column_active,
+         column_img,
          column_buttons,
       ]);
    });
@@ -366,14 +421,17 @@ async function editObj(btn_edit) {
    //form
    id_modal.val(Number(obj.id));
    input_vacancy.val(obj.vacancy);
+   // input_img_path.val(obj.img_path);
    switch (obj.publication_mode) {
       case "info":
          input_publication_mode_info.click();
          break;
       case "img":
          input_publication_mode_img.click();
+         break;
       case "infoImg":
          input_publication_mode_infoimg.click();
+         break;
       default:
          break;
    }
@@ -470,7 +528,7 @@ async function deleteObj(btn_delete) {
    )}?`;
    let text = ``;
 
-   let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
+   let current_date = moment().format("YYYY-MM-DD HH:mm:ss");
    let data = {
       op: "delete",
       id: Number(btn_delete.attr("data-id")),

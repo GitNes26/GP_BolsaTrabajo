@@ -113,7 +113,7 @@ $current_page = "Vacantes";
                                  <label for="input_img_path" class="form-label">Cargar imagen: <span
                                        class="obligatory"></span></label>
                                  <input class="form-control" type="file" id="input_img_path" name="input_img_path"
-                                    data-input-name="IMAGEN" accept="image/*">
+                                    data-input-name="CARGAR IMAGEN" accept="image/*">
                                  <!-- <div class="form-text">Subir archivo con un peso máximo de <b id="peso_archivo"></b><b>MB</b>.</div> -->
                               </div>
 
@@ -355,6 +355,8 @@ $current_page = "Vacantes";
                               <th scope="col">Empresa</th>
                               <th scope="col">Sueldo</th>
                               <th scope="col">Tipo de empleo</th>
+                              <th scope="col">Publicidad</th>
+                              <th scope="col">Imagen</th>
                               <th scope="col">Acciones</th>
                            </tr>
                         </thead>
@@ -366,6 +368,8 @@ $current_page = "Vacantes";
                               <th scope="col">Empresa</th>
                               <th scope="col">Sueldo</th>
                               <th scope="col">Tipo de empleo</th>
+                              <th scope="col">Publicidad</th>
+                              <th scope="col">Imagen</th>
                               <th scope="col">Acciones</th>
                            </tr>
                         </tfoot>

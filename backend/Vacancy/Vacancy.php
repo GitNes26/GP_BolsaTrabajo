@@ -72,7 +72,7 @@ class Vacancy extends Connection {
          FROM vacancies v 
          INNER JOIN companies c ON v.company_id=c.id 
          INNER JOIN areas a ON v.area_id=a.id
-         WHERE v.publication_date <= Date_format(now(),'%Y-%m-%d 00:00:00') AND v.expiration_date >= Date_format(now(),'%Y-%m-%d 23:59:59') AND v.active=1 ORDER BY v.id DESC;";
+         WHERE v.publication_date <= Date_format(now(),'%Y-%m-%d 23:59:59') AND v.expiration_date >= Date_format(now(),'%Y-%m-%d 23:59:59') AND v.active=1 ORDER BY v.id DESC;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -143,8 +143,8 @@ class Vacancy extends Connection {
             $query = "INSERT INTO vacancies(vacancy, description, company_id, area_id, schedules, job_type, min_salary, max_salary, more_info, tags_ids, publication_date, publication_mode, img_path, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $img_path, $created_at));
          } else {
-            $query = "INSERT INTO vacancies(vacancy, description, company_id, area_id, schedules, job_type, min_salary, max_salary, more_info, tags_ids, publication_date, expiration_date, img_path, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $img_path, $created_at));
+            $query = "INSERT INTO vacancies(vacancy, description, company_id, area_id, schedules, job_type, min_salary, max_salary, more_info, tags_ids, publication_date, expiration_date, publication_mode, img_path, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $publication_mode, $img_path, $created_at));
          }         
          
          $response = $this->CorrectResponse();
