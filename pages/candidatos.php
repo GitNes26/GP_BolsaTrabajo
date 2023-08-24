@@ -143,9 +143,12 @@ $current_page = "Candidatos";
                               name="input_cellphone" data-input-name="CELULAR" maxlength="10">
                         </div>
                         <div class="mb-3 col-md-6">
-                           <label for="input_age" class="form-label">Edad: <span class="obligatory"></span></label>
-                           <input type="number" class="form-control not_validate" id="input_age" name="input_age"
-                              data-input-name="CORREO">
+                           <label for="input_birthdate" class="form-label">Fecha de Nacimiento: <span
+                                 class="obligatory"></span></label>
+                           <input type="date" class="form-control not_validate" id="input_birthdate"
+                              name="input_birthdate" data-input-name="FECHA DE NACIMIENTO">
+                           <!-- <input type="number" class="form-control not_validate" id="input_age" name="input_age"
+                              data-input-name="CORREO"> -->
                         </div>
                      </div>
                   </div>
@@ -283,8 +286,9 @@ $current_page = "Candidatos";
                      <div class="card card-widget widget-user shadow">
 
                         <div class="widget-user-header bg-success" id="d_div_header">
-                           <h3 class="widget-user-username im_output" title="doble clic para editar" id="d_output_name">
-                              [Mi Nombre]</h3>
+                           <h3 class="widget-user-username im_output">
+                              <span id="d_output_name">[Mi Nombre]</span> - <span class="h6 fst-italic" id="d_output_birthdate">[Mi edad]</span>
+                           </h3>
                            <h5 class="widget-user-desc im_output" id="d_output_profession">[Mi Profesión]</h5>
                            <h1 class="text-end fw-bolder" id="d_output_enable">DISPONIBLE</h1>
                         </div>

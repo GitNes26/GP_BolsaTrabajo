@@ -15,9 +15,7 @@ const vacancies_enabled = $("#vacancies_enabled"),
    inputs_id = $(".id"),
    btns_submit = $(".btn_submit"),
    vacancy_container = $("#vacancy_container"), //donde voy a agregar los templates
-   template_card_vacancy = document.getElementById(
-      "template_card_vacancy",
-   ).content, //obtener el contenido (la estructura) de mi templeate
+   template_card_vacancy = document.getElementById("template_card_vacancy").content, //obtener el contenido (la estructura) de mi templeate
    fragment_card_vacancy = document.createDocumentFragment(), //es donde guardamos temporalmente el contenido
    btn_close_detail = $("#btn_close_detail"),
    form_vacancy = $("#form_vacancy"),
@@ -25,6 +23,7 @@ const vacancies_enabled = $("#vacancies_enabled"),
 
 let card_vacancy = $(".card_vacancy");
 let dataVacancies = [];
+let vacanciesApplied = [];
 //#endregion VARIABLES
 $(".select2").select2();
 focusSelect2($(".select2"));
@@ -35,6 +34,7 @@ focusSelect2($(".select2"));
 
 init();
 async function init() {
+   await applicationsByCanidate();
    fillVacancies();
    fillBanners();
 
@@ -84,6 +84,27 @@ btn_reset.click(async (e) => {
    input_filter_search.val("");
    searchVacancies(input_filter_search);
 
+   // PREVIEW
+   $(`.output_vacancy`).text("Vacante");
+   $(`.output_info_company`).html(`
+      <span>Empresa</span><br>
+      <span>Ciudad, Estado</span><br>
+      <b>CONTACTO:</b>&nbsp;&nbsp;
+            <i class="fa-solid fa-user"></i>&nbsp; Contacto &nbsp; | &nbsp;
+            <i class="fa-solid fa-phone"></i>&nbsp; (871)-000-00-00 &nbsp; | &nbsp;
+            <i class="fa-solid fa-at"></i>&nbsp; correo@contacto.com
+      <br><br>
+      <span class="">Descripción de la empresa...</span>
+   `);
+   $(`.div_img`).addClass("d-none");
+   $(`.output_area`).text("Área");
+   $(`.output_description`).text("Descripción de la vacante...");
+   $(`.output_min_salary`).text(formatCurrency("$0"));
+   $(`.output_max_salary`).text(formatCurrency("$0"));
+   $(`.output_job_type`).text("...");
+   $(`.output_schedules`).text("...");
+   $(`.output_more_info`).html("");
+
    setTimeout(() => {
       input_filter_search.focus();
    }, 500);
@@ -91,9 +112,7 @@ btn_reset.click(async (e) => {
 
 // ACCION PARA LLENAR EL DETALLE
 vacancy_container.click(async (e) => {
-   $(".card_vacancy_selected").addClass(
-      "card_vacancy_selected card-success card-outline",
-   );
+   $(".card_vacancy_selected").addClass("card_vacancy_selected card-success card-outline");
    $(".card_vacancy_selected").removeClass("card_vacancy_selected");
 
    if (e.target.matches(".card_vacancy *")) {
@@ -111,21 +130,14 @@ vacancy_container.click(async (e) => {
          // PREVIEW
          $(`.output_vacancy`).text(obj.vacancy);
          data = { op: "show", id: obj.company_id };
-         const ajaxResponseCompany = await ajaxRequestAsync(
-            URL_COMPANY_APP,
-            data,
-         );
+         const ajaxResponseCompany = await ajaxRequestAsync(URL_COMPANY_APP, data);
          const objCompany = ajaxResponseCompany.data;
          $(`.output_info_company`).html(`
 				<span>${objCompany.company}</span><br>
 				<span>${objCompany.municipality}, ${objCompany.state}</span><br>
 				<b>CONTACTO:</b>&nbsp;&nbsp;
-						<i class="fa-solid fa-user"></i>&nbsp; ${
-                     objCompany.contact_name
-                  } &nbsp; | &nbsp;
-						<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(
-                     objCompany.contact_phone,
-                  )} &nbsp; | &nbsp;
+						<i class="fa-solid fa-user"></i>&nbsp; ${objCompany.contact_name} &nbsp; | &nbsp;
+						<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(objCompany.contact_phone)} &nbsp; | &nbsp;
 						<i class="fa-solid fa-at"></i>&nbsp; ${objCompany.contact_email}
 				<br><br>
 				<span class="">${objCompany.description}</span>
@@ -136,9 +148,8 @@ vacancy_container.click(async (e) => {
             $(`.preview_img`).attr("src", `../assets/img/${obj.img_path}`);
          }
          $(`.div_info`).addClass("d-none");
-         if (obj.publication_mode.includes("info"))
-            $(`.div_info`).removeClass("d-none");
-         $(`.output_area`).text("obj.area");
+         if (obj.publication_mode.includes("info")) $(`.div_info`).removeClass("d-none");
+         $(`.output_area`).text(obj.area);
          $(`.output_description`).text(obj.description);
          $(`.output_min_salary`).text(formatCurrency(obj.min_salary));
          $(`.output_max_salary`).text(formatCurrency(obj.max_salary));
@@ -160,13 +171,7 @@ vacancy_container.click(async (e) => {
 
 async function fillVacancies(show_toas = true) {
    let data = { op: "indexJobBag" };
-   const ajaxResponse = await ajaxRequestAsync(
-      URL_VACANCY_APP,
-      data,
-      null,
-      true,
-      show_toas,
-   );
+   const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data, null, true, show_toas);
 
    //Limpiar table
    // vacancy_container.slideUp();
@@ -181,70 +186,19 @@ async function fillVacancies(show_toas = true) {
 	`);
 
    dataVacancies = objResponse; // aqui estamos pasando la data a una variable global para usarla en el buscador
-   await objResponse.map((obj) => {
-      // console.log(obj);
-      //busco los elementos que existen en mi template y le asigno valores a sus atributos y contenido...
-      template_card_vacancy
-         .querySelector(".card_vacancy")
-         .setAttribute("data-id", obj.id);
-      template_card_vacancy.querySelector(
-         ".vacancy",
-      ).innerText = `${obj.vacancy}`;
-      // template_card_vacancy.querySelector(".vacancy_numbers").innerText = `1`;
-      template_card_vacancy.querySelector(
-         ".publication_date",
-      ).innerText = `Publicado ${moment(
-         obj.publication_date,
-         "YYYYMMDD",
-      ).fromNow()}`;
-      template_card_vacancy.querySelector(
-         ".company",
-      ).innerText = `${obj.company}`;
-      template_card_vacancy.querySelector(
-         ".company_location",
-      ).innerText = `${obj.municipality}, ${obj.state}`;
-      // template_card_vacancy.querySelector(".include_img").setAttribute("data-include-img-id",obj.id);
-      console.log(obj.id);
-
-      template_card_vacancy
-         .querySelector(".have_img")
-         .classList.remove("d-none");
-      if (obj.publication_mode != "info")
-         template_card_vacancy
-            .querySelector(".div_info_vacancy")
-            .classList.add("d-none");
-      // template_card_vacancy.querySelector(".have_img").innerText = obj.area;
-
-      // if (obj.publication_mode == "img") template_card_vacancy.querySelector(`[data-include-img-id="${obj.id}"]`).classList.remove("d-none");
-      console.log(template_card_vacancy.querySelector(".have_img"));
-
-      template_card_vacancy.querySelector(".area").innerText = ``;
-      template_card_vacancy.querySelector(
-         ".min_salary",
-      ).innerText = `${formatCurrency(obj.min_salary, true, false)}`;
-      template_card_vacancy.querySelector(
-         ".max_salary",
-      ).innerText = `${formatCurrency(obj.max_salary, true, false)}`;
-      template_card_vacancy.querySelector(
-         ".job_type",
-      ).innerText = `${obj.job_type}`;
-      template_card_vacancy.querySelector(
-         ".schedules",
-      ).innerText = `${obj.schedules}`;
-
-      // ya que termine de asignarle valores a mis elementos de la plantilla, creo un nodo llamado clone ya que duplicara el contenido de mi template
-      let clone = document.importNode(template_card_vacancy, true); //el primer parametro es el elemento a cloonar y el segundo parametro es para indicar que si quiero que se duplique  su contenido
-      fragment_card_vacancy.appendChild(clone); //lo agego al fragmento
-   });
-   vacancy_container.html(null); //si se va a sustituir, se recomienda vaciar el contenido de nuestra seccion antes de agregar nuestro fragment
-   vacancy_container.append(fragment_card_vacancy); //ya que termino el recorrido y todo esta el fragment, agregamos todo a la seccion  seleccionada
-   //Dibujar Tabla
-   vacancy_container.slideDown("slow");
-   btn_reset.click();
-   card_vacancy = $(".card_vacancy");
+   displayResults(dataVacancies);
 
    adaptDetail();
    vacancies_enabled.text(dataVacancies.length);
+}
+
+// TRAERSE SOLICITUDES APLICADAS POR EL CANDIDATO
+async function applicationsByCanidate() {
+   if (role_cookie != 4) return;
+   vacanciesApplied = [];
+   const data = { op: "getVacanciesAppliedByCandidate", user_id: id_cookie };
+   const ajaxResponse = await ajaxRequestAsync(URL_APPLICATION_APP, data);
+   ajaxResponse.data.ids.map((d) => vacanciesApplied.push(d.id));
 }
 
 // #region FUNCIONES DEL BUSCADOR
@@ -271,20 +225,16 @@ async function searchVacancies(input) {
    // console.log(filtered_cards);
 
    if (search == "" || search == undefined) {
-      displayResults(filtered_vacancies);
+      displayResults(filtered_vacancies, true);
       leyend_job_found.text("¡Busca tú empleo ideal!");
       return;
    }
    const filtered_results = dataVacancies.filter(function (item) {
       // Lógica de búsqueda, por ejemplo:
-      if (accentFold(item.vacancy).toLowerCase().includes(search.toLowerCase()))
-         return item;
-      else if (
-         accentFold(item.company).toLowerCase().includes(search.toLowerCase())
-      )
-         return item;
+      if (accentFold(item.vacancy).toLowerCase().includes(search.toLowerCase())) return item;
+      else if (accentFold(item.company).toLowerCase().includes(search.toLowerCase())) return item;
    });
-   displayResults(filtered_results);
+   displayResults(filtered_results, true);
 }
 
 input_state.on("input change click", function (e) {
@@ -303,71 +253,55 @@ async function searchVacancies(input_js) {
    // console.log(search);
 
    if (search == "") {
-      displayResults(filtered_vacancies);
+      displayResults(filtered_vacancies, true);
       leyend_job_found.text("¡Busca tú empleo ideal!");
       return;
    }
    const filtered_results = dataVacancies.filter(function (item) {
       // Lógica de búsqueda, por ejemplo:
-      if (accentFold(item.vacancy).toLowerCase().includes(search.toLowerCase()))
-         return item;
-      else if (
-         accentFold(item.company).toLowerCase().includes(search.toLowerCase())
-      )
-         return item;
+      if (accentFold(item.vacancy).toLowerCase().includes(search.toLowerCase())) return item;
+      else if (accentFold(item.company).toLowerCase().includes(search.toLowerCase())) return item;
    });
-   displayResults(filtered_results);
+   displayResults(filtered_results, true);
    setTimeout(() => {
       vacancy_container.click();
    }, 1000);
 }
 
-function displayResults(results) {
+function displayResults(results, filter) {
    vacancy_container.html(null); // Limpia los resultados anteriores
    if (results.length < 1) {
       vacancy_container.html(`
 			<h3 class="text-center fst-italic">NO HAY VACANTES DISPONIBLES CON ESTOS FILTROS</h3>
 		`);
-      leyend_job_found.text("¡0 coincidencias!");
+      if (filter) leyend_job_found.text("¡0 coincidencias!");
       return;
    }
-   results.forEach(function (obj) {
+   results.map((obj) => {
       //busco los elementos que existen en mi template y le asigno valores a sus atributos y contenido...
-      template_card_vacancy
-         .querySelector(".card_vacancy")
-         .setAttribute("data-id", obj.id);
-      template_card_vacancy
-         .querySelector(".ribbon-wrapper")
-         .classList.add("d-none");
-      template_card_vacancy.querySelector(
-         ".vacancy",
-      ).innerText = `${obj.vacancy}`;
+      template_card_vacancy.querySelector(".card_vacancy").setAttribute("data-id", obj.id);
+      template_card_vacancy.querySelector(".ribbon-wrapper").classList.add("d-none");
+      if (vacanciesApplied.includes(obj.id)) template_card_vacancy.querySelector(".ribbon-wrapper").classList.remove("d-none");
+      template_card_vacancy.querySelector(".vacancy").innerText = `${obj.vacancy}`;
       // template_card_vacancy.querySelector(".vacancy_numbers").innerText = `1`;
-      template_card_vacancy.querySelector(
-         ".publication_date",
-      ).innerText = `Publicado ${moment(
-         obj.publication_date,
-         "YYYYMMDD",
-      ).fromNow()}`;
-      template_card_vacancy.querySelector(
-         ".company",
-      ).innerText = `${obj.company}`;
-      template_card_vacancy.querySelector(
-         ".company_location",
-      ).innerText = `${obj.municipality}, ${obj.state}`;
+      template_card_vacancy.querySelector(".publication_date").innerText = `Publicado ${moment(obj.publication_date, "YYYYMMDD").fromNow()}`;
+      template_card_vacancy.querySelector(".company").innerText = `${obj.company}`;
+      template_card_vacancy.querySelector(".company_location").innerText = `${obj.municipality}, ${obj.state}`;
+      template_card_vacancy.querySelector(".have_img").classList.add("d-none");
+      template_card_vacancy.querySelector(".div_info_vacancy").classList.remove("d-none");
+      if (obj.publication_mode == "img") {
+         template_card_vacancy.querySelector(".have_img").classList.remove("d-none");
+         template_card_vacancy.querySelector(".div_info_vacancy").classList.add("d-none");
+      }
+      if (obj.publication_mode == "infoImg") {
+         template_card_vacancy.querySelector(".have_img").classList.remove("d-none");
+         template_card_vacancy.querySelector(".div_info_vacancy").classList.remove("d-none");
+      }
       template_card_vacancy.querySelector(".area").innerText = `${obj.area}`;
-      template_card_vacancy.querySelector(
-         ".min_salary",
-      ).innerText = `${formatCurrency(obj.min_salary, true, false)}`;
-      template_card_vacancy.querySelector(
-         ".max_salary",
-      ).innerText = `${formatCurrency(obj.max_salary, true, false)}`;
-      template_card_vacancy.querySelector(
-         ".job_type",
-      ).innerText = `${obj.job_type}`;
-      template_card_vacancy.querySelector(
-         ".schedules",
-      ).innerText = `${obj.schedules}`;
+      template_card_vacancy.querySelector(".min_salary").innerText = `${formatCurrency(obj.min_salary, true, false)}`;
+      template_card_vacancy.querySelector(".max_salary").innerText = `${formatCurrency(obj.max_salary, true, false)}`;
+      template_card_vacancy.querySelector(".job_type").innerText = `${obj.job_type}`;
+      template_card_vacancy.querySelector(".schedules").innerText = `${obj.schedules}`;
 
       // ya que termine de asignarle valores a mis elementos de la plantilla, creo un nodo llamado clone ya que duplicara el contenido de mi template
       let clone = document.importNode(template_card_vacancy, true); //el primer parametro es el elemento a cloonar y el segundo parametro es para indicar que si quiero que se duplique  su contenido
@@ -377,10 +311,11 @@ function displayResults(results) {
    vacancy_container.append(fragment_card_vacancy); //ya que termino el recorrido y todo esta el fragment, agregamos todo a la seccion  seleccionada
    //Dibujar Tabla
    vacancy_container.slideDown("slow");
+   // btn_reset.click();
    card_vacancy = $(".card_vacancy");
 
    // adaptDetail();
-   leyend_job_found.text(`¡${results.length} empleos para ti!`);
+   if (filter) leyend_job_found.text(`¡${results.length} empleos para ti!`);
    searching = false;
    setTimeout(() => {
       vacancy_container.click();
@@ -402,15 +337,9 @@ async function applyVacancy(form_js) {
    let data = {
       op: "checkAlreadyApplied",
       input_vacancy_id: inputs_id.val(),
-      user_id: id_cookie,
+      user_id: id_cookie
    };
-   const ajaxApplied = await ajaxRequestAsync(
-      URL_APPLICATION_APP,
-      data,
-      null,
-      true,
-      false,
-   );
+   const ajaxApplied = await ajaxRequestAsync(URL_APPLICATION_APP, data, null, true, false);
    //validar cuando no sea candidato! o quitar el boton de postularse
    if (ajaxApplied.data.applied > 0) {
       showToast(ajaxApplied.alert_icon, ajaxApplied.alert_title, "bottom-end");
@@ -422,7 +351,7 @@ async function applyVacancy(form_js) {
       op: "apply",
       input_vacancy_id: inputs_id.val(),
       user_id: id_cookie,
-      created_at: moment().format("YYYY-MM-DD hh:mm:ss"),
+      created_at: moment().format("YYYY-MM-DD hh:mm:ss")
    };
    await ajaxRequestAsync(URL_APPLICATION_APP, data);
    btns_submit.attr("disabled", false);
@@ -445,26 +374,17 @@ async function fillBanners() {
    const swipers_wrapper = document.querySelectorAll(".swiper-wrapper");
    const data = {
       op: "fillBanners",
-      current_date: moment().format("YYYY-MM-DD"),
+      current_date: moment().format("YYYY-MM-DD")
    };
-   const ajaxResponse = await ajaxRequestAsync(
-      URL_BANNER_APP,
-      data,
-      null,
-      false,
-      false,
-   );
+   const ajaxResponse = await ajaxRequestAsync(URL_BANNER_APP, data, null, false, false);
    // console.log(ajaxResponse);
    ajaxResponse.data.map((obj) => {
       //busco los elementos que existen en mi template y le asigno valores a sus atributos y contenido...
       template_banner.querySelector("img").src = `/assets/img/${obj.file_path}`;
       template_banner.querySelector("img").style = `border-radius: 10px;`;
-      template_banner.querySelector("img").alt = `${
-         obj.file_path.split("/").reverse()[0]
-      }`;
+      template_banner.querySelector("img").alt = `${obj.file_path.split("/").reverse()[0]}`;
       if (obj.link != null) {
-         if (obj.link.length > 1)
-            template_banner.querySelector("a").href = obj.link;
+         if (obj.link.length > 1) template_banner.querySelector("a").href = obj.link;
       }
 
       // ya que termine de asignarle valores a mis elementos de la plantilla, creo un nodo llamado clone ya que duplicara el contenido de mi template
@@ -493,30 +413,30 @@ async function fillBanners() {
       direction: "horizontal",
       loop: true,
       autoplay: {
-         delay: 5000,
+         delay: 5000
       },
       parallax: true,
       // effect: 'slide',
       a11y: {
          prevSlideMessage: "Anterior",
-         nextSlideMessage: "Siguiente",
+         nextSlideMessage: "Siguiente"
       },
 
       // If we need pagination
       pagination: {
-         el: ".swiper-pagination",
+         el: ".swiper-pagination"
       },
 
       // Navigation arrows
       navigation: {
          nextEl: ".swiper-button-next",
-         prevEl: ".swiper-button-prev",
+         prevEl: ".swiper-button-prev"
       },
 
       // And if we need scrollbar
       scrollbar: {
-         el: ".swiper-scrollbar",
-      },
+         el: ".swiper-scrollbar"
+      }
    });
 }
 

@@ -93,31 +93,41 @@ $current_page = "Solicitudes";
 
                <hr>
 
+               <!-- DIV IMAGEN CARGADA -->
+               <div class="text-center div_img d-none">
+                  <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
+                  <img src="/assets/img/cargar_imagen.png" controls preview="true"
+                     class="rounded-lg img-fluid preview_img" height="250px"></img>
+                  <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
+               </div>
+
                <!-- DETALLES DEL EMPELO -->
-               <p class="h6 fw-bolder">Detalles del empleo</p>
-               <p class="output_area">Área</p>
-               <p class="output_description">Descripción de la vacante...</p>
-               <div class="mb-2">
-                  <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; 
-                  <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span> 
-                  <span class="output_min_salary">$0</span> &nbsp;a&nbsp; 
-                  <span class="output_max_salary">$0</span>
-               </div>
-               <div class="mb-2">
-                  <i class="fa-solid fa-briefcase"></i>&nbsp; 
-                  <span class="fw-bolder">Tipo de empleo:&nbsp;</span> 
-                  <span class="output_job_type">...</span>
-               </div>
-               <div class="mb-2">
-                  <i class="fa-sharp fa-regular fa-timer"></i>&nbsp; 
-                  <span class="fw-bolder">Horario:&nbsp;</span> 
-                  <span class="output_schedules">...</span>
-               </div>
+               <div class="div_info">
+                  <p class="h6 fw-bolder">Detalles del empleo</p>
+                  <p class="output_area">Área</p>
+                  <p class="output_description">Descripción de la vacante...</p>
+                  <div class="mb-2">
+                     <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; 
+                     <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span> 
+                     <span class="output_min_salary">$0</span> &nbsp;a&nbsp; 
+                     <span class="output_max_salary">$0</span>
+                  </div>
+                  <div class="mb-2">
+                     <i class="fa-solid fa-briefcase"></i>&nbsp; 
+                     <span class="fw-bolder">Tipo de empleo:&nbsp;</span> 
+                     <span class="output_job_type">...</span>
+                  </div>
+                  <div class="mb-2">
+                     <i class="fa-sharp fa-regular fa-timer"></i>&nbsp; 
+                     <span class="fw-bolder">Horario:&nbsp;</span> 
+                     <span class="output_schedules">...</span>
+                  </div>
 
-               <hr>
+                  <hr>
 
-               <!-- MAS INFO -->
-               <div class="output_more_info"></div>
+                  <!-- MAS INFO -->
+                  <div class="output_more_info"></div>
+               </div>
             </div>
             <div class="modal-footer">
                <button type="button" onclick="cancel(this)" class="btn btn-danger fw-bold btn_cancel">CANCELAR SOLICITUD</button>
@@ -141,7 +151,9 @@ $current_page = "Solicitudes";
                      <div class="card card-widget widget-user shadow">
 
                         <div class="widget-user-header bg-success" id="d_div_header">
-                           <h3 class="widget-user-username im_output" title="doble clic para editar" id="d_output_name">[Mi Nombre]</h3>
+                           <h3 class="widget-user-username im_output">
+                              <span id="d_output_name">[Mi Nombre]</span> - <span class="h6 fst-italic" id="d_output_birthdate">[Mi edad]</span>
+                           </h3>
                            <h5 class="widget-user-desc im_output" id="d_output_profession">[Mi Profesión]</h5>
                            <h1 class="text-end fw-bolder" id="d_output_enable">DISPONIBLE</h1>
                         </div>

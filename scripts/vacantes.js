@@ -4,10 +4,8 @@ table = $("#table").DataTable(DT_CONFIG);
 
 $(document).ready(function () {
    $(".div_img").slideUp();
-   SUMMERNOTE_CONFIG.placeholder =
-      "Escribir requisitos, expreiencias necesarias, beneficios,  prestaciones, observaciones, etc.";
-   SUMMERNOTE_CONFIG.toolbar.push(["templates", ["template_vacancy"]]),
-      $(".summernote").summernote(SUMMERNOTE_CONFIG);
+   SUMMERNOTE_CONFIG.placeholder = "Escribir requisitos, expreiencias necesarias, beneficios,  prestaciones, observaciones, etc.";
+   SUMMERNOTE_CONFIG.toolbar.push(["templates", ["template_vacancy"]]), $(".summernote").summernote(SUMMERNOTE_CONFIG);
 });
 
 // btn_modal_form = $("#btn_modal_form"),
@@ -74,12 +72,8 @@ async function init() {
 			<span>${objCompany.company}</span><br>
 			<span>${objCompany.municipality}, ${objCompany.state}</span><br>
 			<b>CONTACTO:</b>&nbsp;&nbsp;
-					<i class="fa-solid fa-user"></i>&nbsp; ${
-                  objCompany.contact_name
-               } &nbsp; | &nbsp;
-					<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(
-                  objCompany.contact_phone,
-               )} &nbsp; | &nbsp;
+					<i class="fa-solid fa-user"></i>&nbsp; ${objCompany.contact_name} &nbsp; | &nbsp;
+					<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(objCompany.contact_phone)} &nbsp; | &nbsp;
 					<i class="fa-solid fa-at"></i>&nbsp; ${objCompany.contact_email}
 			<br><br>
 			<span class="">${objCompany.description}</span>
@@ -99,9 +93,7 @@ async function init() {
 //CLICK EN BTN CANCELAR PARA CREAR UNO NUEVO
 btn_cancel.click((e) => {
    e.preventDefault();
-   modal_vacancy.html(
-      "<i class='fa-regular fa-circle-plus'></i>&nbsp; AGREGAR VACANTE",
-   );
+   modal_vacancy.html("<i class='fa-regular fa-circle-plus'></i>&nbsp; AGREGAR VACANTE");
    btn_submit.removeClass("btn-primary");
    btn_submit.addClass("btn-success");
    btn_submit.text("AGREGAR");
@@ -134,15 +126,11 @@ btn_reset.click(async (e) => {
    input_img_path.removeClass("is-invalid");
    $(`#${input_area_id.attr("data-output")}`).text("Área");
    resetImgPreviewVacancy(null);
-   $(`#${input_description.attr("data-output")}`).text(
-      "Descripción de la vacante...",
-   );
+   $(`#${input_description.attr("data-output")}`).text("Descripción de la vacante...");
    $(`#${input_min_salary.attr("data-output")}`).text("$0");
    $(`#${input_max_salary.attr("data-output")}`).text("$0");
    $(`#${input_name_job_type.attr("data-output")}`).text("Tiempo completo");
-   $(`#${input_schedules.attr("data-output")}`).html(
-      "8 horas &nbsp;-&nbsp; Lunes a viernes",
-   );
+   $(`#${input_schedules.attr("data-output")}`).html("8 horas &nbsp;-&nbsp; Lunes a viernes");
    $(`#output_more_info`).html(`
 		<i>LA INFORMACION A CONTINUACIÓIN ES SOLO DE EJEMPLO, 
 		NO SE GUARDARA A MENOS QUE ESCRIBA ALGO EN EL APARTADO DE <b>Más información</b></i>
@@ -187,12 +175,7 @@ form.on("submit", async function (e) {
    let deleteImg = null;
    // console.log(form.serializeArray());
    if (!validateInputs(form)) return;
-   if (
-      !input_publication_mode_info.is(":checked") &&
-      input_img_path.val() == "" &&
-      haveImg == false
-   )
-      return validateInput(input_img_path);
+   if (!input_publication_mode_info.is(":checked") && input_img_path.val() == "" && haveImg == false) return validateInput(input_img_path);
    if (id_modal.val() <= 0) {
       //NUEVO
       if (!permission_write) return;
@@ -215,23 +198,14 @@ form.on("submit", async function (e) {
       //EDICION
       addToArray("updated_at", current_date, form_data, true);
       if (haveImg) addToArray("haveImg", vImgPath, form_data, true);
-      if (
-         !input_publication_mode_info.is(":checked") &&
-         input_img_path.val() != ""
-      )
-         deleteImg = 1;
+      if (!input_publication_mode_info.is(":checked") && input_img_path.val() != "") deleteImg = 1;
       addToArray("deleteImg", deleteImg, form_data, true);
    }
    if (role_cookie == 3) {
       addToArray("input_company_id", company_id, form_data, true);
    }
    addToArray("input_more_info", input_more_info, form_data, true);
-   addToArray(
-      "input_tags_ids",
-      input_tags_ids.val().join(","),
-      form_data,
-      true,
-   );
+   addToArray("input_tags_ids", input_tags_ids.val().join(","), form_data, true);
    // data.map((d) => {
    //    if (d.name == "input_publication_date")
    //       d.value = moment(d.value).format("YYYY-MM-DD HH:mm:ss");
@@ -243,23 +217,12 @@ form.on("submit", async function (e) {
    const data = new FormData();
    form_data.forEach((v, k) => {
       if (k == "input_publication_date") v = date_publicate;
-      if (k == "input_expiration_date")
-         v = moment(v).format("YYYY-MM-DD 23:59:59");
-      if (input_publication_mode_img.is(":checked") && k == "input_area_id")
-         v = 1;
-      if (input_publication_mode_img.is(":checked") && k == "input_min_salary")
-         v = 0.0;
-      if (input_publication_mode_img.is(":checked") && k == "input_max_salary")
-         v = 0.0;
-      if (input_publication_mode_img.is(":checked") && k == "input_description")
-         v = " ";
-
-      // if (k == "input_publication_mode") {
-      //    if (input_publication_mode_info.is(":checked")) v = "info";
-      //    else if (input_publication_mode_img.is(":checked")) v = "img";
-      //    else if (input_publication_mode_infoimg.is(":checked")) v = "infoImg";
-      // }
-      console.log(k + " : " + v);
+      if (k == "input_expiration_date") v = moment(v).format("YYYY-MM-DD 23:59:59");
+      if (input_publication_mode_img.is(":checked") && k == "input_area_id") v = 1;
+      if (input_publication_mode_img.is(":checked") && k == "input_min_salary") v = 0.0;
+      if (input_publication_mode_img.is(":checked") && k == "input_max_salary") v = 0.0;
+      if (input_publication_mode_img.is(":checked") && k == "input_description") v = " ";
+      // console.log(k + " : " + v);
       addToArray(k, v, data, true);
    });
    // return console.log(...data);
@@ -272,15 +235,8 @@ form.on("submit", async function (e) {
 
 async function fillTable(show_toas = true) {
    let data = { op: "index" };
-   if (role_cookie == 3)
-      data = { op: "indexByCompany", input_company_id: company_id };
-   const ajaxResponse = await ajaxRequestAsync(
-      URL_VACANCY_APP,
-      data,
-      null,
-      true,
-      show_toas,
-   );
+   if (role_cookie == 3) data = { op: "indexByCompany", input_company_id: company_id };
+   const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data, null, true, show_toas);
 
    //Limpiar table
    tbody.slideUp();
@@ -295,33 +251,28 @@ async function fillTable(show_toas = true) {
          date_publicate = moment(obj.date_publicate),
          expiration_date = moment(obj.expiration_date);
       const active_icon =
-         date_publicate.isSameOrBefore(today) &&
-         expiration_date.isSameOrAfter(today)
+         date_publicate.isSameOrBefore(today) && expiration_date.isSameOrAfter(today)
             ? {
                  icon: "fa-solid fa-circle-check",
                  color: "green",
-                 text: "Activa",
+                 text: "Activa"
               }
             : {
                  icon: "fa-solid fa-circle-xmark",
                  color: "red",
-                 text: "Finalizada",
+                 text: "Finalizada"
               };
       //Campos
       let column_vacancy = `${obj.vacancy}`;
       column_company = `${obj.company}`;
-      column_salary = `${formatCurrency(
-         obj.min_salary,
-      )} &nbsp;-&nbsp; ${formatCurrency(obj.max_salary)}`;
+      column_salary = `${formatCurrency(obj.min_salary)} &nbsp;-&nbsp; ${formatCurrency(obj.max_salary)}`;
       column_job_type = `${obj.job_type}`;
 
       let column_active = `
          <div class="text-center align-middle">
             Desde: <b>${date_publicate.format("DD-MM-YYYY")}</b><br>
             Hasta: <b>${expiration_date.format("DD-MM-YYYY")}</b><br>
-				<i class="${active_icon.icon} fa-1x icono " style="color:${
-         active_icon.color
-      }">&nbsp; ${active_icon.text}</i>
+				<i class="${active_icon.icon} fa-1x icono " style="color:${active_icon.color}">&nbsp; ${active_icon.text}</i>
 			</div>
          `;
       let column_img =
@@ -346,15 +297,7 @@ async function fillTable(show_toas = true) {
       column_buttons += `</div>
 					</td>`;
 
-      list.push([
-         column_vacancy,
-         column_company,
-         column_salary,
-         column_job_type,
-         column_active,
-         column_img,
-         column_buttons,
-      ]);
+      list.push([column_vacancy, column_company, column_salary, column_job_type, column_active, column_img, column_buttons]);
    });
    //Dibujar Tabla
    await table.rows.add(list).draw();
@@ -398,9 +341,7 @@ tbody.click((e) => {
 
 //EDITAR OBJETO
 async function editObj(btn_edit) {
-   modal_vacancy.html(
-      "<i class='fa-light fa-pen-to-square'></i>&nbsp; EDITAR VACANTE",
-   );
+   modal_vacancy.html("<i class='fa-light fa-pen-to-square'></i>&nbsp; EDITAR VACANTE");
    btn_submit.removeClass("btn-success");
    btn_submit.addClass("btn-primary");
    btn_submit.text("GUARDAR");
@@ -416,7 +357,7 @@ async function editObj(btn_edit) {
    const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data);
 
    const obj = ajaxResponse.data;
-   console.log(obj);
+   // console.log(obj);
 
    //form
    id_modal.val(Number(obj.id));
@@ -435,22 +376,11 @@ async function editObj(btn_edit) {
       default:
          break;
    }
-   countLetter(
-      input_vacancy,
-      input_vacancy.attr("data-counter"),
-      input_vacancy.val().length,
-      Number(input_vacancy.data("limit")),
-   );
-   if (role_cookie < 3)
-      fillSelect2(URL_COMPANY_APP, obj.company_id, input_company_id);
+   countLetter(input_vacancy, input_vacancy.attr("data-counter"), input_vacancy.val().length, Number(input_vacancy.data("limit")));
+   if (role_cookie < 3) fillSelect2(URL_COMPANY_APP, obj.company_id, input_company_id);
    fillSelect2(URL_AREA_APP, obj.area_id, input_area_id);
    input_description.val(obj.description);
-   countLetter(
-      input_description,
-      input_description.attr("data-counter"),
-      input_description.val().length,
-      Number(input_description.data("limit")),
-   );
+   countLetter(input_description, input_description.attr("data-counter"), input_description.val().length, Number(input_description.data("limit")));
    input_min_salary.val(obj.min_salary);
    input_max_salary.val(obj.max_salary);
    switch (obj.job_type) {
@@ -482,12 +412,8 @@ async function editObj(btn_edit) {
 			<span>${objCompany.company}</span><br>
 			<span>${objCompany.municipality}, ${objCompany.state}</span><br>
 			<b>CONTACTO:</b>&nbsp;&nbsp;
-					<i class="fa-solid fa-user"></i>&nbsp; ${
-                  objCompany.contact_name
-               } &nbsp; | &nbsp;
-					<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(
-                  objCompany.contact_phone,
-               )} &nbsp; | &nbsp;
+					<i class="fa-solid fa-user"></i>&nbsp; ${objCompany.contact_name} &nbsp; | &nbsp;
+					<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(objCompany.contact_phone)} &nbsp; | &nbsp;
 					<i class="fa-solid fa-at"></i>&nbsp; ${objCompany.contact_email}
 			<br><br>
 			<span class="">${objCompany.description}</span>
@@ -502,16 +428,10 @@ async function editObj(btn_edit) {
       vImgPath = obj.img_path;
       // input_img_path.val(obj.img_path);
    }
-   $(`#${input_area_id.attr("data-output")}`).text(
-      $(`#input_area_id option:selected`).text(),
-   );
+   $(`#${input_area_id.attr("data-output")}`).text($(`#input_area_id option:selected`).text());
    $(`#${input_description.attr("data-output")}`).text(obj.description);
-   $(`#${input_min_salary.attr("data-output")}`).text(
-      formatCurrency(obj.min_salary),
-   );
-   $(`#${input_max_salary.attr("data-output")}`).text(
-      formatCurrency(obj.max_salary),
-   );
+   $(`#${input_min_salary.attr("data-output")}`).text(formatCurrency(obj.min_salary));
+   $(`#${input_max_salary.attr("data-output")}`).text(formatCurrency(obj.max_salary));
    $(`#${input_name_job_type.attr("data-output")}`).text(obj.job_type);
    $(`#${input_schedules.attr("data-output")}`).text(obj.schedules);
    $(`#output_more_info`).html(obj.more_info);
@@ -523,16 +443,14 @@ async function editObj(btn_edit) {
 
 //ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
 async function deleteObj(btn_delete) {
-   let title = `¿Estas seguro de eliminar la vacante de <br> ${btn_delete.attr(
-      "data-name",
-   )}?`;
+   let title = `¿Estas seguro de eliminar la vacante de <br> ${btn_delete.attr("data-name")}?`;
    let text = ``;
 
    let current_date = moment().format("YYYY-MM-DD HH:mm:ss");
    let data = {
       op: "delete",
       id: Number(btn_delete.attr("data-id")),
-      deleted_at: current_date,
+      deleted_at: current_date
    };
 
    ajaxRequestQuestionAsync(title, text, URL_VACANCY_APP, data, "fillTable()");
@@ -554,9 +472,7 @@ input_company_id.on("input change", async function () {
 		<span>${obj.municipality}, ${obj.state}</span><br>
 		<b>CONTACTO:</b>&nbsp;&nbsp;
 				<i class="fa-solid fa-user"></i>&nbsp; ${obj.contact_name} &nbsp; | &nbsp;
-				<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(
-               obj.contact_phone,
-            )} &nbsp; | &nbsp;
+				<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.contact_phone)} &nbsp; | &nbsp;
 				<i class="fa-solid fa-at"></i>&nbsp; ${obj.contact_email}
 		<br><br>
 		<span class="">${obj.description}</span>

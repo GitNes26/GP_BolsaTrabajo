@@ -10,6 +10,7 @@ if(isset($_POST['input_name'])) $name = $_POST['input_name'];
 if(isset($_POST['input_last_name'])) $last_name = $_POST['input_last_name'];
 if(isset($_POST['input_cellphone'])) $cellphone = $_POST['input_cellphone']; else $input_cellphone = '';
 if (isset($_POST['input_age'])) { $age = $_POST['input_age']; }
+if (isset($_POST['input_birthdate'])) { $birthdate = $_POST['input_birthdate']; }
 if (isset($_POST['input_professional_info'])) { $professional_info = $_POST['input_professional_info']; }
 // if (isset($_POST['input_cv_path'])) { $cv_path = $_POST['input_cv_path']; }
 if (isset($_POST['input_languages'])) { $languages = $_POST['input_languages']; }
@@ -145,9 +146,9 @@ if ($op == "index") $Candidate->index();
 elseif ($op == "show") $Candidate->show($id);
 elseif ($op == 'showSelect') $Candidate->showSelect();
 
-elseif ($op == "create") $Candidate->create($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id);
+elseif ($op == "create") $Candidate->create($name, $last_name, $cellphone, $birthdate, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id);
 
-elseif ($op == "edit") $Candidate->edit($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id);
+elseif ($op == "edit") $Candidate->edit($name, $last_name, $cellphone, $birthdate, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id);
 elseif ($op == "editInfo") $Candidate->editInfo($user_id, $name, $last_name, $cellphone, $professional_info, $languages, $profession_id, $email, $updated_at);
 elseif ($op == "editPhoto") $Candidate->editPhoto($user_id, $photo_path, $updated_at);
 elseif ($op == "editCv") $Candidate->editCv($user_id, $cv_path, $updated_at);
@@ -157,4 +158,4 @@ elseif ($op == "changeEnable") $Candidate->changeEnable($user_id, $enable, $upda
 
 elseif ($op == "delete") $Candidate->delete($deleted_at, $user_id);
 
-elseif ($op == "getIdByUserId") $Candidate->getIdByUserId($user_id);
+elseif ($op == "getIdByUserId") $Candidate->getIdByUserId($user_id, false);

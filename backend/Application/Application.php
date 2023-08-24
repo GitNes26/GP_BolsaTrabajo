@@ -231,6 +231,35 @@ class Application extends Connection {
       die(json_encode($response));
    }
 
+   function getVacanciesAppliedByCandidate($user_id) {
+      try {
+         $response = $this->defaultResponse();
+
+         #OBTENER EL CANDIDATO SEGUN EL USUARIO
+         $candidate_id = $this->getCandidateIdByUserId($user_id);
+         $data = [];
+         if ($candidate_id > 0) {
+            $query = "SELECT vacancy_id as id FROM applications WHERE candidate_id=$candidate_id AND status IN ('Pendiente', 'Recibida', 'En evaluación', 'Aceptada');";
+            $result = $this->Select($query, true);
+            $data = array("ids" => $result);
+         }
+
+         $response = $this->CorrectResponse();
+         $response["message"] = "Peticion satisfactoria | registros encontrados.";
+         $response["alert_icon"] = "success";
+         $response["alert_title"] = "Tienes postulaciones activas";
+         $response["alert_text"] = "Tienes postulaciones activas";
+         $response["data"] = $data;
+         $this->Close();
+   
+      } catch (Exception $e) {
+         $this->Close();
+         $error_message = "Error: ".$e->getMessage();
+         $response = $this->CatchResponse($error_message);
+      }
+      die(json_encode($response));
+   }
+
    private function getCandidateIdByUserId($user_id) {
       $query = "SELECT id FROM candidates WHERE user_id=$user_id;";
       $candidate = $this->Select($query, false);

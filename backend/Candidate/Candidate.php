@@ -72,15 +72,15 @@ class Candidate extends Connection {
       die(json_encode($response));
    }
 
-   function create($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id) {
+   function create($name, $last_name, $cellphone, $birthdate, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id) {
       try {
          $response = $this->defaultResponse();
 
          $this->validateAvailableData($cellphone, null);
 
          #Creamos el registro en la tabla candidatos
-         $query = "INSERT INTO candidates(name, last_name, cellphone, age, professional_info, photo_path, cv_path, languages, profession_id, interest_tags_ids, user_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id));
+         $query = "INSERT INTO candidates(name, last_name, cellphone, birthdate, professional_info, photo_path, cv_path, languages, profession_id, interest_tags_ids, user_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $birthdate, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id));
 
          #Le asignamos el rol de compañia al usuario
          $query = "UPDATE users SET role_id=4 WHERE id=?";
@@ -105,14 +105,14 @@ class Candidate extends Connection {
       die(json_encode($response));
    }
 
-   function edit($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id) {
+   function edit($name, $last_name, $cellphone, $birthdate, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id) {
       try {
          $response = $this->defaultResponse();
 
          $this->validateAvailableData($cellphone, $id);
 
-         $query = "UPDATE candidates SET name=?, last_name=?, cellphone=?, age=?, professional_info=?, photo_path=?, cv_path=?, languages=?, profession_id=?, interest_tags_ids=?, user_id=? WHERE id=?";
-         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $age, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $id));
+         $query = "UPDATE candidates SET name=?, last_name=?, cellphone=?, birthdate=?, professional_info=?, photo_path=?, cv_path=?, languages=?, profession_id=?, interest_tags_ids=?, user_id=? WHERE id=?";
+         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $birthdate, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $id));
 
          $query = "UPDATE users SET updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($updated_at, $user_id));
@@ -291,10 +291,17 @@ class Candidate extends Connection {
       if ($duplicate["result"] == true) die(json_encode($duplicate));
    }
 
-   function getIdByUserId($user_id) {
+   function getIdByUserId($user_id, $private=true) {
       $query = "SELECT id FROM candidates WHERE user_id=$user_id;";
       $candidate = $this->Select($query, false);
-      if (!$candidate) return 0;
-      else return $candidate["id"]; 
+      if ($private) {
+         echo "ando privado";
+         if (!$candidate) return 0;
+         else return $candidate["id"]; 
+      } else {
+         echo "ando publico";
+         if (!$candidate) die(json_encode(array("data" => 0)));
+         else die(json_encode(array("data" => $candidate["id"]))); 
+      }
    }
 }
