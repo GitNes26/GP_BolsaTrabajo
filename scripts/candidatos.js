@@ -3,10 +3,8 @@ var table;
 table = $("#table").DataTable(DT_CONFIG);
 
 $(document).ready(function () {
-   SUMMERNOTE_CONFIG.placeholder =
-      "Escribir Habilidades, competencias, experiencias, observaciones, etc.";
-   SUMMERNOTE_CONFIG.toolbar.push(["templates", ["template_candidate"]]),
-      $(".summernote").summernote(SUMMERNOTE_CONFIG);
+   SUMMERNOTE_CONFIG.placeholder = "Escribir Habilidades, competencias, experiencias, observaciones, etc.";
+   SUMMERNOTE_CONFIG.toolbar.push(["templates", ["template_candidate"]]), $(".summernote").summernote(SUMMERNOTE_CONFIG);
 });
 
 const btn_modal_form = $("#btn_modal_form"),
@@ -23,7 +21,8 @@ const btn_modal_form = $("#btn_modal_form"),
    input_name = $("#input_name"),
    input_last_name = $("#input_last_name"),
    input_cellphone = $("#input_cellphone"),
-   input_age = $("#input_age"),
+   // input_age = $("#input_age"),
+   input_birthdate = $("#input_birthdate"),
    input_profession_id = $("#input_profession_id"),
    input_interest_tags_ids = $("#input_interest_tags_ids"),
    input_languages_b = $("#input_languages_b"),
@@ -41,7 +40,8 @@ const btn_modal_form = $("#btn_modal_form"),
    d_output_name = $("#d_output_name"),
    d_output_email = $("#d_output_email"),
    d_output_cellphone = $("#d_output_cellphone"),
-   d_output_age = $("#d_output_age"),
+   // d_output_age = $("#d_output_age"),
+   d_output_birthdate = $("#d_output_birthdate"),
    d_output_profession = $("#d_output_profession"),
    d_output_interest_tags_ids = $("#d_output_interest_tags_ids"),
    d_output_professional_info = $("#d_output_professional_info"),
@@ -75,9 +75,7 @@ async function init() {
 btn_modal_form.click((e) => {
    e.preventDefault();
 
-   modal_title.html(
-      "<i class='fa-solid fa-circle-plus'></i></i>&nbsp; REGISTRAR CANDIDATO",
-   );
+   modal_title.html("<i class='fa-solid fa-circle-plus'></i></i>&nbsp; REGISTRAR CANDIDATO");
    btn_submit.removeClass("btn-primary");
    btn_submit.addClass("btn-success");
    btn_submit.text("AGREGAR");
@@ -202,9 +200,7 @@ form.on("submit", async function (e) {
 
    // return console.log(data);
    let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
-   const input_professional_info = $(
-      ".note-editing-area .note-editable",
-   ).html();
+   const input_professional_info = $(".note-editing-area .note-editable").html();
    addToArray("input_professional_info", input_professional_info, data, true);
 
    if (id_modal.val() <= 0) {
@@ -239,14 +235,17 @@ async function fillTable() {
    objResponse.map((obj) => {
       let enable = {
          badgeColor: "badge-success",
-         text: "DISPONIBLE",
+         text: "DISPONIBLE"
       };
       if (obj.enable == 0) {
-			enable = {
-				badgeColor: "badge-primary",
-				text: "CONTRATADO",
-			};
-		}
+         enable = {
+            badgeColor: "badge-primary",
+            text: "CONTRATADO"
+         };
+      }
+
+      let age = moment(obj.birthdate, "YYYYMMDD").fromNow();
+      age = age.split("hace ").reverse()[0];
 
       //Campos
       let column_photo =
@@ -255,7 +254,7 @@ async function fillTable() {
                : `<img class="img-fluid rounded-lg" src="/assets/img/${obj.photo_path}" style="max-height: 150px !important;" />`,
          column_candidate = `
 				<b>${obj.name} ${obj.last_name}</b><br>
-				<i>(${obj.age} años)</i>
+				<i>(${age})</i>
 			`,
          column_contact = `
 				<p><i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.cellphone)}</p>
@@ -288,24 +287,9 @@ async function fillTable() {
          </td>`;
 
       if (role_cookie <= 2) {
-         list.push([
-            column_photo,
-            column_candidate,
-            column_contact,
-            column_profession,
-            column_enable,
-            column_created_at,
-            column_buttons,
-         ]);
+         list.push([column_photo, column_candidate, column_contact, column_profession, column_enable, column_created_at, column_buttons]);
       } else {
-         list.push([
-            column_photo,
-            column_candidate,
-            column_contact,
-            column_profession,
-            column_enable,
-            column_buttons,
-         ]);
+         list.push([column_photo, column_candidate, column_contact, column_profession, column_enable, column_buttons]);
       }
    });
    //Dibujar Tabla
@@ -349,9 +333,7 @@ tbody.click((e) => {
 
 //EDITAR OBJETO
 async function editObj(btn_edit) {
-   modal_title.html(
-      "<i class='fa-solid fa-user-pen'></i></i>&nbsp; EDITAR CANDIDATO",
-   );
+   modal_title.html("<i class='fa-solid fa-user-pen'></i></i>&nbsp; EDITAR CANDIDATO");
    btn_submit.removeClass("btn-success");
    btn_submit.addClass("btn-primary");
    btn_submit.text("GUARDAR");
@@ -370,42 +352,25 @@ async function editObj(btn_edit) {
 
    //form
    id_modal.val(Number(obj.id));
-   await fillSelect2(
-      URL_USER_APP,
-      obj.user_id,
-      input_user_id,
-      false,
-      "candidate",
-   );
+   await fillSelect2(URL_USER_APP, obj.user_id, input_user_id, false, "candidate");
    // input_user_id.attr("disabled", true);
    haveImg = false;
-   if (obj.photo_path == "" || obj.photo_path == null)
-      resetImgPreview($(`#${input_photo_path.attr("data-preview")}`));
+   if (obj.photo_path == "" || obj.photo_path == null) resetImgPreview($(`#${input_photo_path.attr("data-preview")}`));
    else {
       haveImg = true;
       // console.log("tengo imagen guardada");
-      resetImgPreview(
-         $(`#${input_photo_path.attr("data-preview")}`),
-         `/assets/img/${obj.photo_path}`,
-      );
+      resetImgPreview($(`#${input_photo_path.attr("data-preview")}`), `/assets/img/${obj.photo_path}`);
       vLogoPath = obj.photo_path;
       // input_photo_path.val(obj.photo_path);
    }
    input_name.val(obj.name);
    input_last_name.val(obj.last_name);
    input_cellphone.val(obj.cellphone);
-   input_age.val(obj.age);
-   await fillSelect2(
-      URL_PROFESSION_APP,
-      obj.profession_id,
-      input_profession_id,
-   );
+   // input_age.val(obj.age);
+   input_birthdate.val(obj.birthdate);
+   await fillSelect2(URL_PROFESSION_APP, obj.profession_id, input_profession_id);
    // await fillSelect2(URL_TAG_APP, obj.interest_tags_ids, input_interest_tags_ids);
-   if (
-      obj.professional_info == "<p><br></p>" ||
-      obj.professional_info.length < 1
-   )
-      $(".note-editing-area .note-placeholder").css("display", "block");
+   if (obj.professional_info == "<p><br></p>" || obj.professional_info.length < 1) $(".note-editing-area .note-placeholder").css("display", "block");
    else {
       $(".note-editing-area .note-placeholder").css("display", "none");
       $(".note-editing-area .note-editable").html(obj.professional_info);
@@ -423,16 +388,11 @@ async function editObj(btn_edit) {
    }
    // await showStates(obj.state, obj.municipality);
    haveCv = false;
-   if (obj.cv_path == "" || obj.cv_path == null)
-      resetImgPreview($(`#${input_cv_path.attr("data-preview")}`), null, true);
+   if (obj.cv_path == "" || obj.cv_path == null) resetImgPreview($(`#${input_cv_path.attr("data-preview")}`), null, true);
    else {
       haveCv = true;
       // console.log("tengo imagen guardada");
-      resetImgPreview(
-         $(`#${input_cv_path.attr("data-preview")}`),
-         `/assets/img/${obj.cv_path}`,
-         true,
-      );
+      resetImgPreview($(`#${input_cv_path.attr("data-preview")}`), `/assets/img/${obj.cv_path}`, true);
       vCvPath = obj.cv_path;
       // input_cv_path.val(obj.cv_path);
    }
@@ -446,47 +406,30 @@ async function editObj(btn_edit) {
 
 //ELIMINAR OBJETO
 async function deleteObj(btn_delete) {
-   let title = `¿Estas seguro de eliminar a <br> ${btn_delete.attr(
-      "data-name",
-   )}?`;
+   let title = `¿Estas seguro de eliminar a <br> ${btn_delete.attr("data-name")}?`;
    let text = ``;
 
    let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
    let data = {
       op: "delete",
       user_id: Number(btn_delete.attr("data-id")),
-      deleted_at: current_date,
+      deleted_at: current_date
    };
 
-   ajaxRequestQuestionAsync(
-      title,
-      text,
-      URL_CANDIDATE_APP,
-      data,
-      "fillTable()",
-   );
+   ajaxRequestQuestionAsync(title, text, URL_CANDIDATE_APP, data, "fillTable()");
 }
 
 //MOSTRAR INFORMAICON
-function resetImgPreviewProfile(
-   preview,
-   img_path = null,
-   iframe = false,
-   pointer = true,
-) {
+function resetImgPreviewProfile(preview, img_path = null, iframe = false, pointer = true) {
    if (!iframe || img_path == null) {
       // Crea un elemento de imagen
       const imagen = document.createElement("img");
       iframe
-         ? (imagen.src =
-              img_path == null ? "/assets/img/cargar_archivo.png" : img_path) // Asigna la imagen cargada como fuente
-         : (imagen.src =
-              img_path == null ? "/assets/img/sin_perfil.webp" : img_path); // Asigna la imagen cargada como fuente
+         ? (imagen.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path) // Asigna la imagen cargada como fuente
+         : (imagen.src = img_path == null ? "/assets/img/sin_perfil.webp" : img_path); // Asigna la imagen cargada como fuente
       if (iframe) {
          imagen.classList.add("img-fluid"); // Asignar clases
-         pointer
-            ? imagen.classList.add("pointer-sm")
-            : imagen.classList.remove("pointer-sm"); // sAsignar clases
+         pointer ? imagen.classList.add("pointer-sm") : imagen.classList.remove("pointer-sm"); // sAsignar clases
          //  imagen.classList.add("p-5"); // Asignar clases
          imagen.classList.add("rounded-lg"); // Asignar clases
          // imagen.classList.add("text-center"); // Asignar clases
@@ -495,16 +438,11 @@ function resetImgPreviewProfile(
          imagen.classList.add("img-circle"); // Asignar clases
          imagen.classList.add("elevation-2"); // Asignar clases
          imagen.classList.add("bg-white"); // Asignar clases
-         pointer
-            ? imagen.classList.add("pointer-sm")
-            : imagen.classList.remove("pointer-sm"); // sAsignar clases
+         pointer ? imagen.classList.add("pointer-sm") : imagen.classList.remove("pointer-sm"); // sAsignar clases
          imagen.classList.add("opacity-100"); // Asignar clases
          imagen.title = "Haz clic aquí, si deseas cambiar tu foto de perfil";
 
-         imagen.setAttribute(
-            "style",
-            "width: 100px !important; height: 100px !important; object-fit: contain",
-         );
+         imagen.setAttribute("style", "width: 100px !important; height: 100px !important; object-fit: contain");
       }
 
       // Agrega la imagen a la vista previa
@@ -513,13 +451,10 @@ function resetImgPreviewProfile(
    } else {
       // Crea un elemento de imagen
       const iframe = document.createElement("iframe");
-      iframe.src =
-         img_path == null ? "/assets/img/cargar_archivo.png" : img_path; // Asigna la iframe cargada como fuente
+      iframe.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path; // Asigna la iframe cargada como fuente
       // canvas.getContext("2d") // Asigna la iframe cargada como fuente
       iframe.classList.add("img-fluid"); // Asignar clases
-      pointer
-         ? iframe.classList.add("pointer-sm")
-         : iframe.classList.remove("pointer-sm"); // sAsignar clases
+      pointer ? iframe.classList.add("pointer-sm") : iframe.classList.remove("pointer-sm"); // sAsignar clases
       //  iframe.classList.add("p-5"); // Asignar clases
       iframe.classList.add("rounded-lg"); // Asignar clases
       iframe.classList.add("opacity-100"); // Asignar clases
@@ -547,22 +482,11 @@ async function showObj(id) {
    }
 
    haveImg = false;
-   if (obj.photo_path == "" || obj.photo_path == null)
-      resetImgPreviewProfile(
-         d_preview_photo,
-         `/assets/img/sin_perfil.webp`,
-         false,
-         false,
-      );
+   if (obj.photo_path == "" || obj.photo_path == null) resetImgPreviewProfile(d_preview_photo, `/assets/img/sin_perfil.webp`, false, false);
    else {
       haveImg = true;
       // console.log("tengo imagen guardada");
-      resetImgPreviewProfile(
-         d_preview_photo,
-         `/assets/img/${obj.photo_path}`,
-         false,
-         false,
-      );
+      resetImgPreviewProfile(d_preview_photo, `/assets/img/${obj.photo_path}`, false, false);
       vLogoPath = obj.photo_path;
       // input_photo_path.val(obj.photo_path);
       d_output_photo.attr("src", `/assets/img/${obj.photo_path}`);
@@ -571,7 +495,9 @@ async function showObj(id) {
    d_output_email.text(obj.email);
    d_output_cellphone.text(formatPhone(obj.cellphone));
    // input_age.val(obj.age);
-   d_output_age.text(obj.age);
+   let age = moment(obj.birthdate, "YYYYMMDD").fromNow();
+   age = age.split("hace ").reverse()[0];
+   d_output_birthdate.text(age);
 
    d_output_profession.text(obj.profession);
    d_output_professional_info.html(obj.professional_info);
@@ -579,17 +505,11 @@ async function showObj(id) {
    d_output_languages.text(obj.languages);
    // await showStates(obj.state, obj.municipality);
    haveCv = false;
-   if (obj.cv_path == "" || obj.cv_path == null)
-      resetImgPreviewProfile(d_preview_cv, null, true, false);
+   if (obj.cv_path == "" || obj.cv_path == null) resetImgPreviewProfile(d_preview_cv, null, true, false);
    else {
       haveCv = true;
       // console.log("tengo imagen guardada");
-      resetImgPreviewProfile(
-         d_preview_cv,
-         `/assets/img/${obj.cv_path}`,
-         true,
-         false,
-      );
+      resetImgPreviewProfile(d_preview_cv, `/assets/img/${obj.cv_path}`, true, false);
       vCvPath = obj.cv_path;
       // input_cv_path.val(obj.cv_path);
    }

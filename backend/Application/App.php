@@ -29,6 +29,7 @@ elseif ($op == "show") $Application->show($id);
 
 elseif ($op == "apply") $Application->apply($vacancy_id, $user_id, $created_at);
 elseif ($op == "checkAlreadyApplied") $Application->checkAlreadyApplied($vacancy_id, $user_id);
+elseif ($op == "getVacanciesAppliedByCandidate") $Application->getVacanciesAppliedByCandidate($user_id);  // solo para candidatos
 
 // elseif ($op == "edit") $Application->edit($vacancy_id, $id, $updated_at);
 elseif ($op == "changeStatus") $Application->changeStatus($status, $updated_at, $id);

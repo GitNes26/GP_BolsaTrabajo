@@ -179,37 +179,53 @@ $pagina_acutal = "Bolsa de Trabajo";
                   <p class="h5 fw-bolder output_vacancy">Vacante</p>
                   <p class="mb-3 output_info_company">
                      <span>Empresa</span><br>
-                     <span>Ciudad, Estado</span><br><br>
+                     <span>Ciudad, Estado</span><br>
+                     <b>CONTACTO:</b>&nbsp;&nbsp;
+                     <i class="fa-solid fa-user"></i>&nbsp; Contacto &nbsp; | &nbsp;
+                     <i class="fa-solid fa-phone"></i>&nbsp; (871)-000-00-00 &nbsp; | &nbsp;
+                     <i class="fa-solid fa-at"></i>&nbsp; correo@contacto.com
+                     <br><br>
                      <span class="">Descripción de la empresa...</span>
                   </p>
 
                   <hr>
 
+                  <!-- DIV IMAGEN CARGADA -->
+                  <div class="text-center div_img d-none">
+                     <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
+                     <img src="/assets/img/cargar_imagen.png" controls preview="true"
+                        class="rounded-lg img-fluid preview_img" height="250px"></img>
+                     <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
+                  </div>
+
                   <!-- DETALLES DEL EMPELO -->
-                  <p class="h6 fw-bolder">Detalles del empleo</p>
-                  <p class="output_area">Área</p>
-                  <p class="output_description">Descripción de la vacante...</p>
-                  <div class="mb-2">
-                     <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
-                     <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
-                     <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
-                     <span class="output_max_salary">$0</span>
-                  </div>
-                  <div class="mb-2">
-                     <i class="fa-solid fa-briefcase"></i>&nbsp;
-                     <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
-                     <span class="output_job_type">...</span>
-                  </div>
-                  <div class="mb-2">
-                     <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
-                     <span class="fw-bolder">Horario:&nbsp;</span>
-                     <span class="output_schedules">...</span>
+                  <div class="div_info">
+                     <p class="h6 fw-bolder">Detalles del empleo</p>
+                     <p class="output_area">Área</p>
+                     <p class="output_description">Descripción de la vacante...</p>
+                     <div class="mb-2">
+                        <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
+                        <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
+                        <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
+                        <span class="output_max_salary">$0</span>
+                     </div>
+                     <div class="mb-2">
+                        <i class="fa-solid fa-briefcase"></i>&nbsp;
+                        <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
+                        <span class="output_job_type">...</span>
+                     </div>
+                     <div class="mb-2">
+                        <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
+                        <span class="fw-bolder">Horario:&nbsp;</span>
+                        <span class="output_schedules">...</span>
+                     </div>
+
+                     <hr>
+
+                     <!-- MAS INFO -->
+                     <div class="output_more_info"></div>
                   </div>
 
-                  <hr>
-
-                  <!-- MAS INFO -->
-                  <div class="output_more_info"></div>
                </div>
                <div class="card-footer">
                   <div class="d-grid gap-2">
@@ -294,37 +310,52 @@ $pagina_acutal = "Bolsa de Trabajo";
                <p class="h5 fw-bolder output_vacancy">Vacante</p>
                <p class="mb-3 output_info_company">
                   <span>Empresa</span><br>
-                  <span>Ciudad, Estado</span><br><br>
+                  <span>Ciudad, Estado</span><br>
+                  <b>CONTACTO:</b>&nbsp;&nbsp;
+                  <i class="fa-solid fa-user"></i>&nbsp; Contacto &nbsp; | &nbsp;
+                  <i class="fa-solid fa-phone"></i>&nbsp; (871)-000-00-00 &nbsp; | &nbsp;
+                  <i class="fa-solid fa-at"></i>&nbsp; correo@contacto.com
+                  <br><br>
                   <span class="">Descripción de la empresa...</span>
                </p>
 
                <hr>
 
+               <!-- DIV IMAGEN CARGADA -->
+               <div class="text-center div_img d-none">
+                  <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
+                  <img src="/assets/img/cargar_imagen.png" controls preview="true"
+                     class="rounded-lg img-fluid preview_img" height="250px"></img>
+                  <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
+               </div>
+
                <!-- DETALLES DEL EMPELO -->
-               <p class="h6 fw-bolder">Detalles del empleo</p>
-               <p class="output_area">Área</p>
-               <p class="output_description">Descripción de la vacante...</p>
-               <div class="mb-2">
-                  <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
-                  <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
-                  <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
-                  <span class="output_max_salary">$0</span>
-               </div>
-               <div class="mb-2">
-                  <i class="fa-solid fa-briefcase"></i>&nbsp;
-                  <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
-                  <span class="output_job_type">...</span>
-               </div>
-               <div class="mb-2">
-                  <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
-                  <span class="fw-bolder">Horario:&nbsp;</span>
-                  <span class="output_schedules">...</span>
-               </div>
+               <div class="div_info">
+                  <p class="h6 fw-bolder">Detalles del empleo</p>
+                  <p class="output_area">Área</p>
+                  <p class="output_description">Descripción de la vacante...</p>
+                  <div class="mb-2">
+                     <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
+                     <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
+                     <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
+                     <span class="output_max_salary">$0</span>
+                  </div>
+                  <div class="mb-2">
+                     <i class="fa-solid fa-briefcase"></i>&nbsp;
+                     <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
+                     <span class="output_job_type">...</span>
+                  </div>
+                  <div class="mb-2">
+                     <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
+                     <span class="fw-bolder">Horario:&nbsp;</span>
+                     <span class="output_schedules">...</span>
+                  </div>
 
-               <hr>
+                  <hr>
 
-               <!-- MAS INFO -->
-               <div class="output_more_info"></div>
+                  <!-- MAS INFO -->
+                  <div class="output_more_info"></div>
+               </div>
             </div>
             <div class="modal-footer">
                <div class="d-grid gap-2">
@@ -348,7 +379,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 <template id="template_card_vacancy">
    <div class="card card-success card-outline direct-chat direct-chat-success shadow-sm pointer-sm card_vacancy"
       data-id="id">
-      <div class="ribbon-wrapper ribbon-lg">
+      <div class="ribbon-wrapper ribbon-lg d-none">
          <div class="ribbon bg-info fw-bolder">POSTULADO</div>
       </div>
       <div class="card-header">
@@ -362,22 +393,28 @@ $pagina_acutal = "Bolsa de Trabajo";
       </div>
       <div class="card-body pb-2">
          <div class="direct-chat-infos clearfix px-2">
-            <span class="direct-chat-timestamp float-right publication_date text-mini">Publicado el: </span>
+            <span class="direct-chat-timestamp float-right publication_date text-mini">Publicado </span>
             <span class="float-left company">Empresa</span>
             <br>
             <span class="fst-italic float-left company_location">Ciudad, Estado</span>
          </div>
-         <p>Area de aplicacion: <span class="area">Informatica</span></p>
-         <span class="badge bg-success">
-            <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; <span class="min_salary">$0</span> a <span
-               class="max_salary">$0</span>
-         </span>
-         <span class="badge bg-dark">
-            <i class="fa-solid fa-briefcase"></i>&nbsp; <span class="job_type">Tiempo completo</span>
-         </span>
-         <span class="badge bg-primary">
-            <i class="fa-sharp fa-regular fa-timer"></i>&nbsp; <span class="schedules">8 horas - Lunes a vienres</span>
-         </span>
+         <p class="fw-bolder have_img">
+            Esta vacante contiene una imagen, <br> haz click para ver la información
+         </p>
+         <div class="div_info_vacancy">
+            <p>Area de aplicacion: <span class="area">Informatica</span></p>
+            <span class="badge bg-success">
+               <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; <span class="min_salary">$0</span> a <span
+                  class="max_salary">$0</span>
+            </span>
+            <span class="badge bg-dark">
+               <i class="fa-solid fa-briefcase"></i>&nbsp; <span class="job_type">Tiempo completo</span>
+            </span>
+            <span class="badge bg-primary">
+               <i class="fa-sharp fa-regular fa-timer"></i>&nbsp; <span class="schedules">8 horas - Lunes a
+                  vienres</span>
+            </span>
+         </div>
       </div>
    </div>
 </template>

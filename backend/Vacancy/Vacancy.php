@@ -72,7 +72,7 @@ class Vacancy extends Connection {
          FROM vacancies v 
          INNER JOIN companies c ON v.company_id=c.id 
          INNER JOIN areas a ON v.area_id=a.id
-         WHERE v.publication_date <= Date_format(now(),'%Y-%m-%d 00:00:00') AND v.expiration_date >= Date_format(now(),'%Y-%m-%d 23:59:59') AND v.active=1 ORDER BY v.id DESC;";
+         WHERE v.publication_date <= Date_format(now(),'%Y-%m-%d 23:59:59') AND v.expiration_date >= Date_format(now(),'%Y-%m-%d 23:59:59') AND v.active=1 ORDER BY v.id DESC;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
@@ -134,17 +134,17 @@ class Vacancy extends Connection {
       die(json_encode($response));
    }
 
-   function create($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $created_at) {
+   function create($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $publication_mode, $img_path, $created_at) {
       try {
          $response = $this->defaultResponse();
 
          // $this->validateAvailableData(, null);
          if ($expiration_date == null) {
-            $query = "INSERT INTO vacancies(vacancy, description, company_id, area_id, schedules, job_type, min_salary, max_salary, more_info, tags_ids, publication_date, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $created_at));
+            $query = "INSERT INTO vacancies(vacancy, description, company_id, area_id, schedules, job_type, min_salary, max_salary, more_info, tags_ids, publication_date, publication_mode, img_path, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $img_path, $created_at));
          } else {
-            $query = "INSERT INTO vacancies(vacancy, description, company_id, area_id, schedules, job_type, min_salary, max_salary, more_info, tags_ids, publication_date, expiration_date, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $created_at));
+            $query = "INSERT INTO vacancies(vacancy, description, company_id, area_id, schedules, job_type, min_salary, max_salary, more_info, tags_ids, publication_date, expiration_date, publication_mode, img_path, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $publication_mode, $img_path, $created_at));
          }         
          
          $response = $this->CorrectResponse();
@@ -161,18 +161,18 @@ class Vacancy extends Connection {
       die(json_encode($response));
    }
 
-   function edit($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $updated_at, $id) {
+   function edit($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $publication_mode, $img_path, $updated_at, $id) {
       try {
          $response = $this->defaultResponse();
 
          // $this->validateAvailableData($area, $id);
 
          if ($expiration_date == null) {
-            $query = "UPDATE vacancies SET vacancy=?, description=?, company_id=?, area_id=?, schedules=?, job_type=?, min_salary=?, max_salary=?, more_info=?, tags_ids=?, publication_date=?, updated_at=? WHERE id=?";
-            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $updated_at, $id));
+            $query = "UPDATE vacancies SET vacancy=?, description=?, company_id=?, area_id=?, schedules=?, job_type=?, min_salary=?, max_salary=?, more_info=?, tags_ids=?, publication_date=?, publication_mode=?, img_path=?, updated_at=? WHERE id=?";
+            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $publication_mode, $img_path, $updated_at, $id));
          } else {
-            $query = "UPDATE vacancies SET vacancy=?, description=?, company_id=?, area_id=?, schedules=?, job_type=?, min_salary=?, max_salary=?, more_info=?, tags_ids=?, publication_date=?, expiration_date=?, updated_at=? WHERE id=?";
-            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $updated_at, $id));
+            $query = "UPDATE vacancies SET vacancy=?, description=?, company_id=?, area_id=?, schedules=?, job_type=?, min_salary=?, max_salary=?, more_info=?, tags_ids=?, publication_date=?, expiration_date=?, publication_mode=?, img_path=?, updated_at=? WHERE id=?";
+            $this->ExecuteQuery($query, array($vacancy, $description, $company_id, $area_id, $schedules, $job_type, $min_salary, $max_salary, $more_info, $tags_ids, $publication_date, $expiration_date, $publication_mode, $img_path, $updated_at, $id));
          }
          
          $response = $this->CorrectResponse();

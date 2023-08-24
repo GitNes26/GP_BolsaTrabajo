@@ -676,9 +676,11 @@ function formatDatetimeToSQL(the_date) {
 function validateInputs(form) {
    let inputs = form.serializeArray();
    let validated = true;
+   // console.log(inputs);
    $.each(inputs, function (i, input_iterable) {
       if (!validated) return;
       let input = $(`#${input_iterable.name}`);
+      // console.log(input);
       if (!input.hasClass("not_validate")) {
          // console.log(input)
          let input_validated = validateInput(input);

@@ -332,10 +332,12 @@ echo "
                                     name="input_cellphone" data-input-name="CELULAR" maxlength="10">
                               </div>
                               <div class="mb-3 col-md-6">
-                                 <label for="input_age" class="form-label">Edad: <span
+                                 <label for="input_birthdate" class="form-label">Fecha de Nacimiento: <span
                                        class="obligatory"></span></label>
-                                 <input type="number" class="form-control not_validate" id="input_age" name="input_age"
-                                    data-input-name="CORREO">
+                                 <input type="date" class="form-control not_validate" id="input_birthdate"
+                                    name="input_birthdate" data-input-name="FECHA DE NACIMIENTO">
+                                 <!-- <input type="number" class="form-control not_validate" id="input_age" name="input_age"
+                                    data-input-name="CORREO"> -->
                               </div>
                            </div>
                         </div>
