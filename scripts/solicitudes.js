@@ -295,6 +295,9 @@ async function showCandidate(id) {
    const obj = ajaxResponse.data;
    // console.log(obj);
 
+   d_div_header.removeClass("bg-primary");
+   d_div_header.addClass("bg-success");
+   d_output_enable.text("DISPONIBLE");
    if (obj.enable == 0) {
       d_div_header.removeClass("bg-success");
       d_div_header.addClass("bg-primary");

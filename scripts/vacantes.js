@@ -275,10 +275,12 @@ async function fillTable(show_toas = true) {
 				<i class="${active_icon.icon} fa-1x icono " style="color:${active_icon.color}">&nbsp; ${active_icon.text}</i>
 			</div>
          `;
-      let column_img =
-         obj.img_path.length > 1
-            ? `<img src="../assets/img/${obj.img_path}" class="img-fluid rounded-lg" style="max-height: 120px;"/>`
-            : `<img src="../assets/img/cargar_imagen.png" class="img-fluid rounded-lg" style="max-height: 120px;"/>`;
+      let column_img;
+      if (obj.img_path != null) {
+         if (obj.img_path.length > 1) column_img = `<img src="../assets/img/${obj.img_path}" class="img-fluid rounded-lg" style="max-height: 120px;"/>`
+         else column_img = `<img src="../assets/img/cargar_imagen.png" class="img-fluid rounded-lg" style="max-height: 120px;"/>`;
+      } 
+      else column_img = `<img src="../assets/img/cargar_imagen.png" class="img-fluid rounded-lg" style="max-height: 120px;"/>`;
       // : ` <div class="text-center align-middle">
       //       <i class="fa-solid fa-circle-xmark fa-2x icono" style="color:red"></i>
       //    </div> `;
