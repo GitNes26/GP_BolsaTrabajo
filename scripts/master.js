@@ -34,8 +34,7 @@ const id_cookie = Number(Cookies.get("user_id")),
 let auth_token;
 
 const SUMMERNOTE_CONFIG = {
-   placeholder:
-      "Escribir Habilidades, competencias, experiencias, observaciones, etc.",
+   placeholder: "Escribir Habilidades, competencias, experiencias, observaciones, etc.",
    lang: "es-ES",
    toolbar: [
       ["style", ["bold", "italic", "underline", "clear", "highlight"]],
@@ -44,7 +43,7 @@ const SUMMERNOTE_CONFIG = {
       ["insert", ["link", "unlink", "separator"]],
       // ['templates', ['template_candidate', 'template_vancancy']],
       // ['insert', ['link', 'picture', 'video']],
-      ["view", ["codeview", "clean"]],
+      ["view", ["codeview", "clean"]]
    ],
    buttons: {
       separator: function () {
@@ -58,7 +57,7 @@ const SUMMERNOTE_CONFIG = {
                var hr = '<hr class="custom-separator">';
                $(".note-editing-area .note-editable").append(hr);
                // $('#summernote').summernote('pasteHTML', hr);
-            },
+            }
          });
          return button.render();
       },
@@ -69,13 +68,10 @@ const SUMMERNOTE_CONFIG = {
             tooltip: "Limpiar todo",
             click: function () {
                // Insertar código aquí para agregar en el editor
-               $(".note-editing-area .note-placeholder").css(
-                  "display",
-                  "block",
-               );
+               $(".note-editing-area .note-placeholder").css("display", "block");
                $(".note-editing-area .note-editable").html(null);
                // $('#summernote').summernote('pasteHTML', hr);
-            },
+            }
          });
          return button.render();
       },
@@ -91,10 +87,10 @@ const SUMMERNOTE_CONFIG = {
 
                $(".note-editing-area .note-editable").html(null);
                $(".note-editing-area .note-editable").html(
-                  `<p></p><p></p><p><b>Habilidades</b></p><ul><li>Habilidad 1</li><li>Habilidad 2</li><li>...</li></ul><hr class="custom-separator"><b>Competencias</b><p></p><ul><li>Competencia 1</li><li>Competencia 2</li><li>....</li></ul><hr class="custom-separator"><b>EXPERIENCIAS</b><p></p><ul><li><b>Empresa - Puesto | </b>01/01/2020<b> - </b>02/02/2023<br>Descripción de lo que hacías...</li><li><span style="font-weight: bolder;">Empresa - Puesto |&nbsp;</span>01/01/2020<span style="font-weight: bolder;">&nbsp;-&nbsp;</span>02/02/2023<br>Descripción de lo que hacías...</li></ul><p><br></p>`,
+                  `<p></p><p></p><p><b>Habilidades</b></p><ul><li>Habilidad 1</li><li>Habilidad 2</li><li>...</li></ul><hr class="custom-separator"><b>Competencias</b><p></p><ul><li>Competencia 1</li><li>Competencia 2</li><li>....</li></ul><hr class="custom-separator"><b>EXPERIENCIAS</b><p></p><ul><li><b>Empresa - Puesto | </b>01/01/2020<b> - </b>02/02/2023<br>Descripción de lo que hacías...</li><li><span style="font-weight: bolder;">Empresa - Puesto |&nbsp;</span>01/01/2020<span style="font-weight: bolder;">&nbsp;-&nbsp;</span>02/02/2023<br>Descripción de lo que hacías...</li></ul><p><br></p>`
                );
                // $('#summernote').summernote('pasteHTML', hr);
-            },
+            }
          });
          return button.render();
       },
@@ -110,15 +106,15 @@ const SUMMERNOTE_CONFIG = {
 
                $(".note-editing-area .note-editable").html(null);
                $(".note-editing-area .note-editable").html(
-                  `<p class=""><span class="fw-bolder">Requisitos</span><ul class="" id="output_requirements"><li>Requerimiento 1</li><li>Requerimiento 1</li><li>Requerimiento 1</li></ul></p><p class=""><span class="fw-bolder">Expriencia necesaria</span><ul class="" id="output_necessary_experience"><li>Experiencias 1</li><li>Experiencias 1</li><li>Experiencias 1</li></ul></p><hr><p class=""><span class="fw-bolder">Beneficios</span><ul class="" id="output_benefits"><li>Beneficio 1</li><li>Beneficio 1</li><li>Beneficio 1</li></ul></p>`,
+                  `<p class=""><span class="fw-bolder">Requisitos</span><ul class="" id="output_requirements"><li>Requerimiento 1</li><li>Requerimiento 1</li><li>Requerimiento 1</li></ul></p><p class=""><span class="fw-bolder">Expriencia necesaria</span><ul class="" id="output_necessary_experience"><li>Experiencias 1</li><li>Experiencias 1</li><li>Experiencias 1</li></ul></p><hr><p class=""><span class="fw-bolder">Beneficios</span><ul class="" id="output_benefits"><li>Beneficio 1</li><li>Beneficio 1</li><li>Beneficio 1</li></ul></p>`
                );
                // $('#summernote').summernote('pasteHTML', hr);
-            },
+            }
          });
          return button.render();
-      },
+      }
    },
-   height: 350,
+   height: 350
 };
 //#endregion VARIABLES
 
@@ -135,13 +131,7 @@ if (location.pathname == "/pages") inIndex = true;
 else if (location.pathname == "/pages/") inIndex = true;
 else if (location.pathname == "/pages/index.php") inIndex = true;
 
-const ajaxRequestAsync = async (
-   url,
-   data,
-   close_modal = null,
-   show_blockUI = true,
-   show_toast = true,
-) => {
+const ajaxRequestAsync = async (url, data, close_modal = null, show_blockUI = true, show_toast = true) => {
    try {
       if (show_blockUI) {
          await showBlockUI();
@@ -151,18 +141,13 @@ const ajaxRequestAsync = async (
          url: url,
          data: data,
          async: true,
-         dataType: "json",
+         dataType: "json"
       });
       // console.log(response);
 
       if (response.message == "duplicado") {
          $.unblockUI();
-         showAlert(
-            response.alert_icon,
-            response.alert_title,
-            response.alert_text,
-            true,
-         );
+         showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
          $(`#${response.input}`).focus();
          return response;
       }
@@ -174,20 +159,9 @@ const ajaxRequestAsync = async (
                showToast(response.alert_icon, response.alert_text);
                // }, 2000);
             }
-         } else
-            showAlert(
-               response.alert_icon,
-               response.alert_title,
-               response.alert_text,
-               true,
-            );
+         } else showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
       } else {
-         showAlert(
-            response.alert_icon,
-            response.alert_title,
-            response.alert_text,
-            true,
-         );
+         showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
       }
 
       if (close_modal == null && btn_close != null) btn_close.click();
@@ -196,24 +170,11 @@ const ajaxRequestAsync = async (
    } catch (error) {
       if (close_modal == null && btn_close != null) btn_close.click();
       console.error(error);
-      showAlert(
-         "error",
-         "Oopss...!!",
-         `Ocurrio un error inesperado. <br> ${error.responseText}`,
-         true,
-      );
+      showAlert("error", "Oopss...!!", `Ocurrio un error inesperado. <br> ${error.responseText}`, true);
       $.unblockUI();
    }
 };
-const ajaxRequestQuestionAsync = async (
-   title,
-   text,
-   url,
-   data,
-   function_complete_string,
-   text_btn_confirm = "Eliminar",
-   color_btn_confirm = "#B04759",
-) => {
+const ajaxRequestQuestionAsync = async (title, text, url, data, function_complete_string, text_btn_confirm = "Eliminar", color_btn_confirm = "#B04759") => {
    Swal.fire({
       title: title,
       text: text,
@@ -222,7 +183,7 @@ const ajaxRequestQuestionAsync = async (
       confirmButtonColor: color_btn_confirm,
       confirmButtonText: text_btn_confirm,
       cancelButtonColor: "#9BA4B5",
-      cancelButtonText: "Cancelar",
+      cancelButtonText: "Cancelar"
    }).then(async (result) => {
       if (result.isConfirmed) {
          await showBlockUI();
@@ -232,45 +193,27 @@ const ajaxRequestQuestionAsync = async (
                type: "POST",
                url: url,
                data: data,
-               dataType: "json",
+               dataType: "json"
             });
 
             if (response.result) {
-               if (response.alert_text != undefined)
-                  showToast(response.alert_icon, response.alert_text);
+               if (response.alert_text != undefined) showToast(response.alert_icon, response.alert_text);
                deleted = true;
             } else {
-               showAlert(
-                  response.alert_icon,
-                  response.alert_title,
-                  response.alert_text,
-                  true,
-               );
+               showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
             }
-            if (function_complete_string != null)
-               eval(function_complete_string.toString());
+            if (function_complete_string != null) eval(function_complete_string.toString());
             $.unblockUI();
             return response;
          } catch (error) {
             $.unblockUI();
             console.error(error);
-            showAlert(
-               "error",
-               "Oopss...!!",
-               `Ocurrio un error inesperado. <br> ${error.responseText}`,
-               true,
-            );
+            showAlert("error", "Oopss...!!", `Ocurrio un error inesperado. <br> ${error.responseText}`, true);
          }
       }
    });
 };
-const ajaxRequestFileAsync = async (
-   url,
-   data,
-   close_modal = null,
-   show_blockUI = true,
-   show_toast = true,
-) => {
+const ajaxRequestFileAsync = async (url, data, close_modal = null, show_blockUI = true, show_toast = true) => {
    try {
       if (show_blockUI) {
          await showBlockUI();
@@ -284,18 +227,13 @@ const ajaxRequestFileAsync = async (
          enctype: "multipart/form-data",
          contentType: false,
          cache: false,
-         processData: false,
+         processData: false
       });
       // console.log(response);
 
       if (response.message == "duplicado") {
          $.unblockUI();
-         showAlert(
-            response.alert_icon,
-            response.alert_title,
-            response.alert_text,
-            true,
-         );
+         showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
          $(`#${response.input}`).focus();
          return response;
       }
@@ -307,20 +245,9 @@ const ajaxRequestFileAsync = async (
                showToast(response.alert_icon, response.alert_text);
                // }, 2000);
             }
-         } else
-            showAlert(
-               response.alert_icon,
-               response.alert_title,
-               response.alert_text,
-               false,
-            );
+         } else showAlert(response.alert_icon, response.alert_title, response.alert_text, false);
       } else {
-         showAlert(
-            response.alert_icon,
-            response.alert_title,
-            response.alert_text,
-            true,
-         );
+         showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
       }
 
       if (close_modal == null && btn_close != null) btn_close.click();
@@ -329,12 +256,7 @@ const ajaxRequestFileAsync = async (
    } catch (error) {
       if (close_modal == null && btn_close != null) btn_close.click();
       console.error(error);
-      showAlert(
-         "error",
-         "Oopss...!!",
-         `Ocurrio un error inesperado. <br> ${error.responseText}`,
-         true,
-      );
+      showAlert("error", "Oopss...!!", `Ocurrio un error inesperado. <br> ${error.responseText}`, true);
       $.unblockUI();
    }
 };
@@ -350,7 +272,7 @@ function showBlockUI() {
 	`;
    $.blockUI({
       message: dialogoBlockUI,
-      css: { backgroundColor: null, color: "#313131", border: null },
+      css: { backgroundColor: null, color: "#313131", border: null }
    });
 }
 
@@ -360,7 +282,7 @@ function showAlert(icon, title, text, show_confirm_btn) {
       title,
       html: text,
       showConfirmButton: show_confirm_btn,
-      confirmButtonColor: "#494E53",
+      confirmButtonColor: "#494E53"
    });
 }
 
@@ -375,14 +297,12 @@ function showToast(icon, message, position = "top-end") {
       didOpen: (toast) => {
          toast.addEventListener("mouseenter", Swal.stopTimer);
          toast.addEventListener("mouseleave", Swal.resumeTimer);
-      },
+      }
    });
 
    Toast.fire({ icon: icon, title: message });
 }
-const obligatory = $(".obligatory").html(
-   `<span class="text-danger fst-italic">&nbsp; * requerido</span>`,
-);
+const obligatory = $(".obligatory").html(`<span class="text-danger fst-italic">&nbsp; * requerido</span>`);
 
 function mayus(e) {
    e.value = e.value.toUpperCase();
@@ -405,7 +325,7 @@ const accent_map = {
    è: "e",
    Í: "i",
    Ó: "o",
-   Ú: "u",
+   Ú: "u"
 };
 function accentFold(s) {
    if (!s) {
@@ -429,12 +349,7 @@ $(".eye_icon").click((e) => {
 
 // #region CONTADOR DE LETRAS
 $(".counter").on("input change", function () {
-   countLetter(
-      this,
-      this.getAttribute("data-counter"),
-      this.value.length,
-      Number(this.dataset.limit),
-   );
+   countLetter(this, this.getAttribute("data-counter"), this.value.length, Number(this.dataset.limit));
 });
 function countLetter(input, counter_name, letters, limit) {
    const counter = $(`#${counter_name}`);
@@ -468,10 +383,8 @@ function resetImgPreview(preview, img_path = null, iframe = false) {
       // Crea un elemento de imagen
       const imagen = document.createElement("img");
       iframe
-         ? (imagen.src =
-              img_path == null ? "/assets/img/cargar_archivo.png" : img_path) // Asigna la imagen cargada como fuente
-         : (imagen.src =
-              img_path == null ? "/assets/img/cargar_imagen.png" : img_path); // Asigna la imagen cargada como fuente
+         ? (imagen.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path) // Asigna la imagen cargada como fuente
+         : (imagen.src = img_path == null ? "/assets/img/cargar_imagen.png" : img_path); // Asigna la imagen cargada como fuente
       imagen.classList.add("img-fluid"); // Asignar clases
       imagen.classList.add("pointer-sm"); // Asignar clases
       //  imagen.classList.add("p-5"); // Asignar clases
@@ -485,8 +398,7 @@ function resetImgPreview(preview, img_path = null, iframe = false) {
    } else {
       // Crea un elemento de imagen
       const iframe = document.createElement("iframe");
-      iframe.src =
-         img_path == null ? "/assets/img/cargar_archivo.png" : img_path; // Asigna la iframe cargada como fuente
+      iframe.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path; // Asigna la iframe cargada como fuente
       // canvas.getContext("2d") // Asigna la iframe cargada como fuente
       iframe.classList.add("img-fluid"); // Asignar clases
       iframe.classList.add("pointer-sm"); // Asignar clases
@@ -512,13 +424,7 @@ const fillSidebar = async (show_toast = false, navbar_side = false) => {
    let role_id = Number(Cookies.get("role_id"));
    // role_id=1;
    let data = { op: "showMyMenus", role_id: role_id };
-   const ajaxResponse = await ajaxRequestAsync(
-      URL_MENU_APP,
-      data,
-      false,
-      true,
-      show_toast,
-   );
+   const ajaxResponse = await ajaxRequestAsync(URL_MENU_APP, data, false, true, show_toast);
    sidebar_menus.html(null);
    navbar_menus.html(null);
    const objResponse = ajaxResponse.data;
@@ -544,9 +450,7 @@ const fillSidebar = async (show_toast = false, navbar_side = false) => {
 					</p>
 				</a>`;
       }
-      let children_menus = objResponse.filter(
-         (menu) => menu.belongs_to == parent_menu.id,
-      );
+      let children_menus = objResponse.filter((menu) => menu.belongs_to == parent_menu.id);
       children_menus.sort((a, b) => b.order - a.order);
       children_menus.map(async (child_menu) => {
          if (navbar_side) {
@@ -656,12 +560,12 @@ function formatDatetime(the_date, long_format = true) {
 
    if (the_date.length <= 10) {
       date = new Date(date.setDate(date.getDate() + 1));
-      return (datetime = moment(date).format("MM-DD-YYYY"));
+      return (datetime = moment(date).format("DD-MM-YYYY"));
       // return datetime = new Intl.DateTimeFormat("es-MX", { day: '2-digit', month: '2-digit', year: 'numeric'}).format(date);
    }
 
    date = new Date(the_date);
-   const formato = long_format ? "MM-DD-YYYY h:mm:ss a" : "MMMM-DD-YYYY";
+   const formato = long_format ? "DD-MM-YYYY h:mm:ss a" : "DD-MM-YYYY";
    return (datetime = moment(date).format(formato));
    // return datetime = new Intl.DateTimeFormat("es-MX", { day: '2-digit', month: '2-digit', year: 'numeric', hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true }).format(date);
 }
@@ -693,10 +597,7 @@ function validateInputs(form) {
 
 function validateInput(input) {
    if (input.val() == "" || input.val() == -1 || input.val() == "-1") {
-      showToast(
-         "error",
-         `El campo ${input.attr("data-input-name")} esta vacío.`,
-      );
+      showToast("error", `El campo ${input.attr("data-input-name")} esta vacío.`);
       input.addClass("is-invalid");
       input.focus();
       return false;
@@ -734,10 +635,7 @@ function formatearCantidadDeRenglones(tds) {
 }
 
 function formatPhone(phone) {
-   return `(${phone.slice(0, 3)})${phone.slice(3, 6)}-${phone.slice(
-      6,
-      8,
-   )}-${phone.slice(-2)}`;
+   return `(${phone.slice(0, 3)})${phone.slice(3, 6)}-${phone.slice(6, 8)}-${phone.slice(-2)}`;
 }
 //#endregion /** VALIDACIONES - INPUTS - FORMULARIOS */
 
@@ -771,36 +669,22 @@ function resetSelect2(selector) {
    if (selector.data().select2.options.options.multiple) {
       selector.prop("selectedIndex", 0);
       selector.val("-1");
-      $(`#select2-${selector[0].name}-container`).attr(
-         "title",
-         "Selecciona etiquetas con tús intereses",
-      );
+      $(`#select2-${selector[0].name}-container`).attr("title", "Selecciona etiquetas con tús intereses");
       $(`#select2-${selector[0].name}-container`).text("");
       // console.log(selector[0].placeholder);
       selector.attr("disabled", false);
    } else {
       selector.prop("selectedIndex", 0);
       selector.val("-1");
-      $(`#select2-${selector[0].name}-container`).text(
-         "Selecciona una opción...",
-      );
-      $(`#select2-${selector[0].name}-container`).attr(
-         "title",
-         "Selecciona una opción...",
-      );
+      $(`#select2-${selector[0].name}-container`).text("Selecciona una opción...");
+      $(`#select2-${selector[0].name}-container`).attr("title", "Selecciona una opción...");
       selector.attr("disabled", false);
    }
 
    // iconos(url, data, -1, select2[0].name);
 }
 
-async function fillSelect2(
-   url_app,
-   selected_index,
-   selector,
-   select_modules = false,
-   role = null,
-) {
+async function fillSelect2(url_app, selected_index, selector, select_modules = false, role = null) {
    let data = { op: "showSelect" };
    if (role != null) data = { op: "showSelect", role };
    const ajaxResponse = await ajaxRequestAsync(url_app, data, null, null, null);
@@ -831,10 +715,7 @@ async function fillSelect2(
    selector.append(options);
 
    $.each(objResponse, function (i, obj) {
-      if (obj.value == selected_index)
-         selector.append(
-            `<option selected value='${obj.value}'>${obj.text}</option>`,
-         );
+      if (obj.value == selected_index) selector.append(`<option selected value='${obj.value}'>${obj.text}</option>`);
       else selector.append(`<option value='${obj.value}'>${obj.text}</option>`);
    });
    selector.attr("disabled", false);
@@ -846,22 +727,22 @@ async function fillSelect2(
 const DT_CONFIG = {
    // responsive: true,
    language: {
-      url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es-mx.json",
+      url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es-mx.json"
    },
    columnDefs: [
       {
          className: "dt-center",
-         targets: "_all",
-      },
+         targets: "_all"
+      }
    ],
    dom: '<"row mb-2"B><"row"<"col-md-6 "lr> <"col-md-6"f> > rt <"row"<"col-md-6 "i> <"col-md-6"p> >',
    lengthMenu: [
       [5, 10, 50, 100, -1],
-      [5, 10, 50, 100, "Todos"],
+      [5, 10, 50, 100, "Todos"]
    ],
    pageLength: 10,
    deferRender: true,
-   aaSorting: [], //deshabilitar ordenado automatico
+   aaSorting: [] //deshabilitar ordenado automatico
 };
 $("table thead tr").clone(true).addClass("filters").appendTo("table thead");
 DT_CONFIG.orderCellsTop = true;
@@ -877,11 +758,7 @@ DT_CONFIG.initComplete = function () {
          var cell = $(".filters th").eq($(api.column(colIdx).header()).index());
          var title = $(cell).text();
          $(cell).addClass("bb-primary");
-         $(cell).html(
-            '<input type="search" class="form-control" placeholder="' +
-               title +
-               '" />',
-         );
+         $(cell).html('<input type="search" class="form-control" placeholder="' + title + '" />');
 
          // On every keypress in this input
          var cursorPosition;
@@ -895,22 +772,14 @@ DT_CONFIG.initComplete = function () {
                cursorPosition = this.selectionStart;
                // Search the column for that value
                api.column(colIdx)
-                  .search(
-                     this.value != ""
-                        ? regexr.replace("{search}", "(((" + this.value + ")))")
-                        : "",
-                     this.value != "",
-                     this.value == "",
-                  )
+                  .search(this.value != "" ? regexr.replace("{search}", "(((" + this.value + ")))") : "", this.value != "", this.value == "")
                   .draw();
             })
             .on("keyup", function (e) {
                e.stopPropagation();
 
                $(this).trigger("change");
-               $(this)
-                  .focus()[0]
-                  .setSelectionRange(cursorPosition, cursorPosition);
+               $(this).focus()[0].setSelectionRange(cursorPosition, cursorPosition);
             });
       });
 };
@@ -938,10 +807,9 @@ async function showStates(state = null, city = null) {
       method: "GET",
       headers: {
          Accept: "application/json",
-         "api-token":
-            "9BlpaH5qgUCOZJjDtIvbDH9BFkZbt40BdC9VQlVEGwkmibb3ubtwPdKWi9ftc6qVENE",
-         "user-email": "deconomico@gomezpalacio.gob.mx",
-      },
+         "api-token": "9BlpaH5qgUCOZJjDtIvbDH9BFkZbt40BdC9VQlVEGwkmibb3ubtwPdKWi9ftc6qVENE",
+         "user-email": "deconomico@gomezpalacio.gob.mx"
+      }
    });
    // Desarollo Economico - correo y token
 
@@ -957,8 +825,8 @@ async function showStates(state = null, city = null) {
          method: "GET",
          headers: {
             Authorization: `Bearer ${auth_token}`,
-            Accept: "application/json",
-         },
+            Accept: "application/json"
+         }
       });
       while (states.length < 1) {
          states = await $.ajax({
@@ -966,8 +834,8 @@ async function showStates(state = null, city = null) {
             method: "GET",
             headers: {
                Authorization: `Bearer ${auth_token}`,
-               Accept: "application/json",
-            },
+               Accept: "application/json"
+            }
          });
       }
       let comboStates = "<option value=''>Seleccionar una opción...</option>";
@@ -980,14 +848,7 @@ async function showStates(state = null, city = null) {
          }
          // console.log(state);
          // $("#input_state").click()
-         comboStates +=
-            '<option value="' +
-            element["state_name"] +
-            '" ' +
-            selected_state +
-            ">" +
-            element["state_name"] +
-            "</option>";
+         comboStates += '<option value="' + element["state_name"] + '" ' + selected_state + ">" + element["state_name"] + "</option>";
       });
 
       $("#input_state").html(comboStates);
@@ -1010,8 +871,8 @@ async function showCities(state, city = null) {
       method: "GET",
       headers: {
          Authorization: `Bearer ${auth_token}`,
-         Accept: "application/json",
-      },
+         Accept: "application/json"
+      }
    });
    var comboCities = "<option value='' >Selecciona una opción...</option>";
    cities.forEach((element) => {
@@ -1022,14 +883,7 @@ async function showCities(state, city = null) {
             selected_city = "selected";
          }
       }
-      comboCities +=
-         '<option value="' +
-         element["city_name"] +
-         '" ' +
-         selected_city +
-         ">" +
-         element["city_name"] +
-         "</option>";
+      comboCities += '<option value="' + element["city_name"] + '" ' + selected_city + ">" + element["city_name"] + "</option>";
    });
    $("#input_municipality").html(comboCities);
    $("#input_municipality").attr("disabled", false);
@@ -1037,9 +891,7 @@ async function showCities(state, city = null) {
 
 $(".reload_input").click(function () {
    const input = $(`#${$(this).attr("data-input")}`);
-   if (input.attr("id") == "input_state")
-      showStates((state = null), (city = null));
-   else if (input.attr("id") == "input_municipality")
-      showCities($("#input_state").val());
+   if (input.attr("id") == "input_state") showStates((state = null), (city = null));
+   else if (input.attr("id") == "input_municipality") showCities($("#input_state").val());
 });
 //#endregion SELECTORES DE PAISES / CIUDADES

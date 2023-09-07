@@ -132,6 +132,8 @@ class Connection{
 			if ($id != null) $query = "SELECT count(*) as duplicate FROM $table t INNER JOIN $secondTable ON t.user_id=users.id WHERE t.$column='$value' AND active=1 AND t.id!=$id";
 		} else {
 			$query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1";
+
+			
 			if ($id != null) $query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1 AND id!=$id";
 		}
 
