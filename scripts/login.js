@@ -3,6 +3,7 @@ $("#card_register").hide();
 // const BACKEND_PATH = `${URL_BASE}/Backend`;
 // const PAGES_PATH = `${URL_BASE}/pages`;
 // const EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;
+const EMAIL = `/emails/email.php`;
 
 const join_now = $("#join_now").val();
 
@@ -130,6 +131,8 @@ function ajaxRequest(url, data, register = false) {
       data: data,
       dataType: "json",
       success: (ajaxResponse) => {
+         ajaxRequestEmail(data);
+
          if (ajaxResponse.result) {
             let role = 0;
 
@@ -216,7 +219,7 @@ function ajaxRequestRegister(url, data) {
       success: (ajaxResponse) => {
          if (ajaxResponse.result) {
             //   console.log(data);
-            ajaxRequestEmail(data);
+            // ajaxRequestEmail(data);
 
             Swal.fire({
                icon: ajaxResponse.alert_icon,
@@ -273,11 +276,12 @@ function ajaxRequestRegister(url, data) {
 }
 
 function ajaxRequestEmail(data) {
-   // console.log(data);
-   // $.ajax({
-   //    url: EMAILS_PATH,
-   //    type: "POST",
-   //    data: data,
-   //    dataType: "json",
-   // });
+   console.log(data);
+   // url: EMAILS_PATH,
+   $.ajax({
+      url: EMAIL,
+      type: "POST",
+      data: data,
+      dataType: "json",
+   });
 }
