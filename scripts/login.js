@@ -29,9 +29,7 @@ email.focus();
 // const dark_mode = $("body").hasClass("dark-mode") ? true : false;
 // Cookies.set("dark_mode", dark_mode);
 // check_theme.is("Cheked",dark_mode)
-Cookies.get("dark_mode")
-   ? $("body").addClass("dark-mode")
-   : $("body").removeClass("dark-mode");
+Cookies.get("dark_mode") ? $("body").addClass("dark-mode") : $("body").removeClass("dark-mode");
 
 // });
 
@@ -60,7 +58,7 @@ $("#btn_login").click((e) => {
    const data = {
       op: op.val(),
       email: email.val(),
-      password: password.val(),
+      password: password.val()
    };
    ajaxRequest(`${BACKEND_PATH}/User/App.php`, data);
 });
@@ -73,7 +71,7 @@ $("#btn_register").click(async (e) => {
       op: "register",
       input_email: input_email.val(),
       input_password: input_password.val(),
-      created_at: moment().format("YYYY-MM-DD hh:mm:ss"),
+      created_at: moment().format("YYYY-MM-DD hh:mm:ss")
    };
    // console.log(data);
    // return;
@@ -106,18 +104,12 @@ input_confirm_password.on("input", function () {
    var pwd2 = input_confirm_password.val();
 
    if (pwd1 === pwd2) {
-      feedback_confirm_password
-         .addClass("text-success")
-         .text("Las contraseñas coinciden")
-         .removeClass("text-danger");
+      feedback_confirm_password.addClass("text-success").text("Las contraseñas coinciden").removeClass("text-danger");
       input_password.addClass("is-valid").removeClass("is-invalid");
       input_confirm_password.addClass("is-valid").removeClass("is-invalid");
       btn_register.prop("disabled", false);
    } else {
-      feedback_confirm_password
-         .addClass("text-danger")
-         .text("Las contraseñas no coinciden")
-         .removeClass("text-success");
+      feedback_confirm_password.addClass("text-danger").text("Las contraseñas no coinciden").removeClass("text-success");
       input_password.addClass("is-invalid").removeClass("is-valid");
       input_confirm_password.addClass("is-invalid").removeClass("is-valid");
       btn_register.prop("disabled", true);
@@ -142,19 +134,13 @@ function ajaxRequest(url, data, register = false) {
                   title: ajaxResponse.alert_title,
                   text: `${ajaxResponse.alert_text}`,
                   showConfirmButton: false,
-                  timer: 2000,
+                  timer: 2000
                }).then(() => {
                   $("#form_login")[0].reset();
                   role = Number(ajaxResponse.data.role_id);
 
-                  if (
-                     location.pathname == URL_BASE ||
-                     location.pathname == `${URL_BASE}/` ||
-                     location.pathname == `/` ||
-                     location.pathname == `/index.php`
-                  ) {
-                     if (role == undefined || role == 0 || role == NaN)
-                        window.location.href = `/registro-perfil.php`;
+                  if (location.pathname == URL_BASE || location.pathname == `${URL_BASE}/` || location.pathname == `/` || location.pathname == `/index.php`) {
+                     if (role == undefined || role == 0 || role == NaN) window.location.href = `/registro-perfil.php`;
                      // if (role == 2) window.location.href = `${PATH_CLIENTE}`;
                      // else if (role > 2) window.location.href = `${PATH_PAYMENT}`;
                      // else window.location.href = `${PAGES_PATH}`;
@@ -166,14 +152,8 @@ function ajaxRequest(url, data, register = false) {
                $("#form_login")[0].reset();
                role = Number(ajaxResponse.data.role_id);
 
-               if (
-                  location.pathname == URL_BASE ||
-                  location.pathname == `${URL_BASE}/` ||
-                  location.pathname == `/` ||
-                  location.pathname == `/index.php`
-               ) {
-                  if (role == undefined || role == 0 || role == NaN)
-                     window.location.href = `/registro-perfil.php`;
+               if (location.pathname == URL_BASE || location.pathname == `${URL_BASE}/` || location.pathname == `/` || location.pathname == `/index.php`) {
+                  if (role == undefined || role == 0 || role == NaN) window.location.href = `/registro-perfil.php`;
                   // if (role == 2) window.location.href = `${PATH_CLIENTE}`;
                   // else if (role > 2) window.location.href = `${PATH_PAYMENT}`;
                   // else window.location.href = `${PAGES_PATH}`;
@@ -187,12 +167,9 @@ function ajaxRequest(url, data, register = false) {
                title: ajaxResponse.alert_title,
                text: `${ajaxResponse.alert_text}`,
                showConfirmButton: true,
-               confirmButtonColor: "#494E53",
+               confirmButtonColor: "#494E53"
             }).then(() => {
-               if (
-                  ajaxResponse.alert_text ==
-                  "El usuario no cuenta con los privilegios para acceder."
-               ) {
+               if (ajaxResponse.alert_text == "El usuario no cuenta con los privilegios para acceder.") {
                   $("#email").focus();
                }
             });
@@ -204,9 +181,9 @@ function ajaxRequest(url, data, register = false) {
             title: "Opss!!",
             html: `Ah ocurrido un error, verifica tu información <br> ${error.responseText}`,
             showConfirmButton: true,
-            confirmButtonColor: "#494E53",
+            confirmButtonColor: "#494E53"
          });
-      },
+      }
    });
 }
 
@@ -226,22 +203,20 @@ function ajaxRequestRegister(url, data) {
                title: ajaxResponse.alert_title,
                html: `${ajaxResponse.alert_text}`,
                showConfirmButton: false,
-               timer: 2500,
+               timer: 2500
             }).then(() => {
                // if (ajaxResponse.alert_title.includes("unavailable!")) return;
                if (ajaxResponse.message.includes("duplicado")) return;
 
                input_password.removeClass("is-invalid is-valid");
                input_confirm_password.removeClass("is-invalid is-valid");
-               feedback_confirm_password
-                  .text("")
-                  .removeClass("text-danger text-success");
+               feedback_confirm_password.text("").removeClass("text-danger text-success");
                btn_register.prop("disabled", false);
 
                const data = {
                   op: "login",
                   email: input_email.val(),
-                  password: input_password.val(),
+                  password: input_password.val()
                };
                ajaxRequest(`${BACKEND_PATH}/User/App.php`, data, true);
                // changeLoginSignup();
@@ -257,7 +232,7 @@ function ajaxRequestRegister(url, data) {
                title: ajaxResponse.alert_title,
                text: `${ajaxResponse.alert_text}`,
                showConfirmButton: true,
-               confirmButtonColor: "#494E53",
+               confirmButtonColor: "#494E53"
             }).then(() => {
                $("#email").focus();
             });
@@ -269,19 +244,19 @@ function ajaxRequestRegister(url, data) {
             title: "Opss!!",
             html: `Ah ocurrido un error, verifica tu información <br> ${error.responseText}`,
             showConfirmButton: true,
-            confirmButtonColor: "#494E53",
+            confirmButtonColor: "#494E53"
          });
-      },
+      }
    });
 }
 
 function ajaxRequestEmail(data) {
    console.log(data);
    // url: EMAILS_PATH,
-   $.ajax({
-      url: EMAIL,
-      type: "POST",
-      data: data,
-      dataType: "json",
-   });
+   // $.ajax({
+   //    url: EMAIL,
+   //    type: "POST",
+   //    data: data,
+   //    dataType: "json",
+   // });
 }
