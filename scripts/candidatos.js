@@ -244,10 +244,8 @@ async function fillTable() {
          };
       }
 
-      console.log("el birthdate", obj.birthdate);
       let age = moment(obj.birthdate, "YYYYMMDD").fromNow();
       age = age.split("hace ").reverse()[0];
-      console.log("la age", obj.age);
 
       //Campos
       let column_photo =
@@ -500,10 +498,8 @@ async function showObj(id) {
    d_output_email.text(obj.email);
    d_output_cellphone.text(formatPhone(obj.cellphone));
    // input_age.val(obj.age);
-   console.log("el birthdate", obj.birthdate);
    let age = moment(obj.birthdate, "YYYYMMDD").fromNow();
    age = age.split("hace ").reverse()[0];
-   console.log("la age", obj.age);
    d_output_birthdate.text(age);
 
    d_output_profession.text(obj.profession);
