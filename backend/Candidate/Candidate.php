@@ -12,50 +12,52 @@ if (file_exists("../backend/Connection.php")) {
 }
 
 
-class Candidate extends Connection {
-   
-   function index() {
+class Candidate extends Connection
+{
+
+   function index()
+   {
       try {
          $response = $this->defaultResponse();
-   
+
          $query = "SELECT * FROM vw_candidates";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function showSelect() {
+   function showSelect()
+   {
       try {
          $response = $this->defaultResponse();
-   
+
          $query = "SELECT c.id value, c.name text FROM candidates c INNER JOIN users u ON c.user_id=u.id WHERE u.active=1;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function show($id) {
+   function show($id)
+   {
       try {
          $response = $this->defaultResponse();
-   
+
          $query = "SELECT * FROM vw_candidates WHERE id=$id;";
          $result = $this->Select($query, false);
 
@@ -63,16 +65,16 @@ class Candidate extends Connection {
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function create($name, $last_name, $cellphone, $birthdate, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id) {
+   function create($name, $last_name, $cellphone, $birthdate, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -85,7 +87,7 @@ class Candidate extends Connection {
          #Le asignamos el rol de compañia al usuario
          $query = "UPDATE users SET role_id=4 WHERE id=?";
          $this->ExecuteQuery($query, array($user_id));
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
          $response["alert_title"] = "Candidato registrado";
@@ -96,16 +98,16 @@ class Candidate extends Connection {
          require_once "../User/User.php";
          $User = new User();
          $User->setCookies($user_id);
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function edit($name, $last_name, $cellphone, $birthdate, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id) {
+   function edit($name, $last_name, $cellphone, $birthdate, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -116,21 +118,21 @@ class Candidate extends Connection {
 
          $query = "UPDATE users SET updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($updated_at, $user_id));
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
          $response["alert_title"] = "Candidato actualizado";
          $response["alert_text"] = "Candidato actualizado";
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
-   function editInfo($user_id, $name, $last_name, $cellphone, $professional_info, $languages, $profession_id, $email, $updated_at) {
+   function editInfo($user_id, $name, $last_name, $cellphone, $professional_info, $languages, $profession_id, $email, $updated_at)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -144,21 +146,21 @@ class Candidate extends Connection {
 
          $query = "UPDATE users SET email=?, updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($email, $updated_at, $user_id));
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
          $response["alert_title"] = "Información actualizada";
          $response["alert_text"] = "Información actualizada";
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
-   function editPhoto($user_id, $photo_path, $updated_at) {
+   function editPhoto($user_id, $photo_path, $updated_at)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -170,21 +172,21 @@ class Candidate extends Connection {
 
          $query = "UPDATE users SET updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($updated_at, $user_id));
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
          $response["alert_title"] = "Foto actualizada";
          $response["alert_text"] = "Foto actualizada";
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
-   function editCv($user_id, $cv_path, $updated_at) {
+   function editCv($user_id, $cv_path, $updated_at)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -196,21 +198,21 @@ class Candidate extends Connection {
 
          $query = "UPDATE users SET updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($updated_at, $user_id));
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
          $response["alert_title"] = "Curriculum actualizado";
          $response["alert_text"] = "Curriculum actualizado";
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
-   function editName($user_id, $name, $last_name, $updated_at) {
+   function editName($user_id, $name, $last_name, $updated_at)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -222,21 +224,21 @@ class Candidate extends Connection {
 
          $query = "UPDATE users SET updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($updated_at, $user_id));
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
          $response["alert_title"] = "Nombre actualizado";
          $response["alert_text"] = "Nombre actualizado";
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
-   function changeEnable($user_id, $enable, $updated_at) {
+   function changeEnable($user_id, $enable, $updated_at)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -248,24 +250,24 @@ class Candidate extends Connection {
 
          $query = "UPDATE users SET updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($updated_at, $user_id));
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
          $response["alert_title"] = "Disponibilidad actualizada";
          $response["alert_text"] = "Disponibilidad actualizada";
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function delete($deleted_at, $user_id) {
+   function delete($deleted_at, $user_id)
+   {
       try {
-        $response = $this->defaultResponse();
+         $response = $this->defaultResponse();
 
          $query = "UPDATE users SET active=0, deleted_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($deleted_at, $user_id));
@@ -275,33 +277,32 @@ class Candidate extends Connection {
          $response["alert_title"] = "Candidato eliminado";
          $response["alert_text"] = "Candidato eliminado";
          $this->Close();
-
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->catchResponse($error_message);
       }
       die(json_encode($response));
    }
 
 
-   function validateAvailableData($cellphone, $id) {
+   function validateAvailableData($cellphone, $id)
+   {
       // #VALIDACION DE DATOS REPETIDOS
       $duplicate = $this->checkAvailableData('candidates', 'cellphone', $cellphone, 'El número celular', 'input_cellphone', $id, 'users');
       if ($duplicate["result"] == true) die(json_encode($duplicate));
    }
 
-   function getIdByUserId($user_id, $private=true) {
+   function getIdByUserId($user_id, $private = true)
+   {
       $query = "SELECT id FROM candidates WHERE user_id=$user_id;";
       $candidate = $this->Select($query, false);
       if ($private) {
-         echo "ando privado";
          if (!$candidate) return 0;
-         else return $candidate["id"]; 
+         else return $candidate["id"];
       } else {
-         echo "ando publico";
          if (!$candidate) die(json_encode(array("data" => 0)));
-         else die(json_encode(array("data" => $candidate["id"]))); 
+         else die(json_encode(array("data" => $candidate["id"])));
       }
    }
 }
