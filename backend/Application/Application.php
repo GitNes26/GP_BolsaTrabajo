@@ -12,12 +12,14 @@ if (file_exists("../backend/Connection.php")) {
 }
 
 
-class Application extends Connection {
-   
-   function index() {
+class Application extends Connection
+{
+
+   function index()
+   {
       try {
          $response = $this->defaultResponse();
-   
+
          $query = "SELECT *, a.id a_id, v.id v_id, c.id c_id, ca.id ca_id, ca.*, u.email
          FROM applications a
          INNER JOIN vacancies v ON a.vacancy_id=v.id
@@ -32,16 +34,16 @@ class Application extends Connection {
          $response["alert_text"] = "Solicitudes encontradas";
          $response["data"] = $result;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function myApplications($user_id) {
+   function myApplications($user_id)
+   {
       try {
          // echo "el usuario: $user_id";
          $response = $this->defaultResponse();
@@ -63,15 +65,15 @@ class Application extends Connection {
          $response["alert_text"] = "Solicitudes encontradas";
          $response["data"] = $result;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
-   function myApplicationsByCompany($user_id) {
+   function myApplicationsByCompany($user_id)
+   {
       try {
          // echo "el usuario: $user_id";
          $response = $this->defaultResponse();
@@ -94,38 +96,38 @@ class Application extends Connection {
          $response["alert_text"] = "Solicitudes encontradas";
          $response["data"] = $result;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function showSelect() {
+   function showSelect()
+   {
       try {
          $response = $this->defaultResponse();
-   
+
          $query = "SELECT id value, area text FROM applications WHERE active=1;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function show($id) {
+   function show($id)
+   {
       try {
          $response = $this->defaultResponse();
-   
+
          $query = "SELECT *, a.id a_id, v.id v_id, c.id c_id, ca.id ca_id
          FROM applications a
          INNER JOIN vacancies v ON a.vacancy_id=v.id
@@ -140,16 +142,16 @@ class Application extends Connection {
          $response["alert_text"] = "Solicitud encontrada";
          $response["data"] = $result;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function apply($vacancy_id, $user_id, $created_at) {
+   function apply($vacancy_id, $user_id, $created_at)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -162,23 +164,23 @@ class Application extends Connection {
             $this->ExecuteQuery($query, array($vacancy_id, $candidate_id, $created_at));
          }
 
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
          $response["alert_title"] = "Solicitud enviada";
          $response["alert_text"] = "Revisa el status de la postulación en la sección de 'Mis Solicitudes'";
          $response["toast"] = false;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function changeStatus($status, $updated_at, $id) {
+   function changeStatus($status, $updated_at, $id)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -186,23 +188,23 @@ class Application extends Connection {
 
          $query = "UPDATE applications SET status=?, updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($status, $updated_at, $id));
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
          $response["alert_title"] = "Solicitud $status";
          $response["alert_text"] = "Solicitud $status";
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
 
-   function checkAlreadyApplied($vacancy_id, $user_id) {
+   function checkAlreadyApplied($vacancy_id, $user_id)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -210,7 +212,7 @@ class Application extends Connection {
          $candidate_id = $this->getCandidateIdByUserId($user_id);
          $data = [];
          if ($candidate_id > 0) {
-            $query = "SELECT count(*) applied FROM applications WHERE vacancy_id=$vacancy_id AND candidate_id=$candidate_id;";
+            $query = "SELECT count(*) applied FROM applications WHERE vacancy_id=$vacancy_id AND candidate_id=$candidate_id AND status NOT IN ('Rechazada', 'Cancelada');";
             $result = $this->Select($query, false);
             $data = array("applied" => (int)$result["applied"]);
          }
@@ -222,16 +224,16 @@ class Application extends Connection {
          $response["alert_text"] = "Ya te has postulado a esta vacante";
          $response["data"] = $data;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function getVacanciesAppliedByCandidate($user_id) {
+   function getVacanciesAppliedByCandidate($user_id)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -251,29 +253,31 @@ class Application extends Connection {
          $response["alert_text"] = "Tienes postulaciones activas";
          $response["data"] = $data;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   private function getCandidateIdByUserId($user_id) {
+   private function getCandidateIdByUserId($user_id)
+   {
       $query = "SELECT id FROM candidates WHERE user_id=$user_id;";
       $candidate = $this->Select($query, false);
       if (!$candidate) return 0;
-      else return $candidate["id"]; 
+      else return $candidate["id"];
    }
-   private function getCompanyIdByUserId($user_id) {
+   private function getCompanyIdByUserId($user_id)
+   {
       $query = "SELECT id FROM companies WHERE user_id=$user_id;";
       $company = $this->Select($query, false);
       if (!$company) return 0;
-      else return $company["id"]; 
+      else return $company["id"];
    }
 
-   private function validateAvailableData($area, $id) {
+   private function validateAvailableData($area, $id)
+   {
       // #VALIDACION DE DATOS REPETIDOS
       $duplicate = $this->checkAvailableData('applications', 'area', $area, 'El área', 'input_area', $id);
       if ($duplicate["result"] == true) die(json_encode($duplicate));
@@ -287,13 +291,13 @@ class Application extends Connection {
 
    //       $query = "UPDATE applications SET area=?, updated_at=? WHERE id=?";
    //       $this->ExecuteQuery($query, array($area, $updated_at, $id));
-         
+
    //       $response = $this->CorrectResponse();
    //       $response["message"] = "Peticion satisfactoria | registro actualizado.";
    //       $response["alert_title"] = "Solicitud actualizado";
    //       $response["alert_text"] = "Solicitud actualizado";
    //       $this->Close();
-   
+
    //    } catch (Exception $e) {
    //       $this->Close();
    //       $error_message = "Error: ".$e->getMessage();
@@ -324,5 +328,5 @@ class Application extends Connection {
    // }
 
 
-   
+
 }
