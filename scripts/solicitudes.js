@@ -170,7 +170,7 @@ async function fillTable(show_toas = true) {
       if (permission_update) {
          column_buttons +=
             //html
-            `<button class='btn btn-outline-primary m-1' type='button' data-id='${obj.id}' onclick="showDetail(${obj.v_id})" title='Mostrar Vacante' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-eye'></i></button>
+            `<button class='btn btn-outline-primary m-1' type='button' data-id='${obj.id}' onclick="showDetail(${obj.a_id},${obj.v_id})" title='Mostrar Vacante' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-eye'></i></button>
 				<button class='btn btn-sm btn-outline-secondary m-1' type='button' onclick="changeStatus('Pendiente', ${obj.a_id})" title='Pasar a status PENDIENTE'>PENDIENTE</button>
 				<button class='btn btn-sm btn-outline-info m-1' type='button' onclick="changeStatus('Recibida', ${obj.a_id})" title='Pasar a status RECIBIDA'>RECIBIDA</button>
 				<br>
@@ -197,10 +197,10 @@ async function fillTable(show_toas = true) {
    $("tr td").css("vertical-align", "middle");
 }
 
-async function showDetail(id) {
+async function showDetail(application_id, vacancy_id) {
    modalLabel.html("<i class='fa-solid fa-memo-circle-info'></i>&nbsp; DETALLE DE LA VACANTE");
 
-   let data = { id, op: "show" };
+   let data = { id: vacancy_id, op: "show" };
    const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data);
 
    const obj = ajaxResponse.data;
@@ -235,7 +235,7 @@ async function showDetail(id) {
    $(`.output_job_type`).text(obj.job_type);
    $(`.output_schedules`).text(obj.schedules);
    $(`.output_more_info`).html(obj.more_info);
-   btns_cancel.attr("data-id", obj.id);
+   btns_cancel.attr("data-id", application_id);
    btns_cancel.attr("data-name", obj.vacancy);
 }
 
@@ -363,10 +363,11 @@ async function cancel(btn_cancel_js) {
 
    let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
    let data = {
-      op: "cancel",
+      op: "changeStatus",
+      input_status: "Cancelada",
       id: Number(btn_cancel.attr("data-id")),
-      deleted_at: current_date
+      updated_at: current_date
    };
 
-   ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable()");
+   ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable(false)", "Sí Cancelar");
 }

@@ -251,7 +251,7 @@ function ajaxRequestRegister(url, data) {
 }
 
 function ajaxRequestEmail(data) {
-   console.log(data);
+   // console.log(data);
    // url: EMAILS_PATH,
    // $.ajax({
    //    url: EMAIL,
