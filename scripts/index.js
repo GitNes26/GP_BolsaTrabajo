@@ -168,9 +168,9 @@ vacancy_container.click(async (e) => {
    }
 });
 
-async function fillVacanciesWithRibbon() {
+async function fillVacanciesWithRibbon(show_toas = true) {
    await applicationsByCanidate();
-   fillVacancies();
+   fillVacancies(show_toas);
 }
 async function fillVacancies(show_toas = true) {
    let data = { op: "indexJobBag" };
@@ -200,8 +200,7 @@ async function applicationsByCanidate() {
    if (role_cookie != 4) return;
    vacanciesApplied = [];
    const data = { op: "getVacanciesAppliedByCandidate", user_id: id_cookie };
-   const ajaxResponse = await ajaxRequestAsync(URL_APPLICATION_APP, data);
-   console.log(ajaxResponse);
+   const ajaxResponse = await ajaxRequestAsync(URL_APPLICATION_APP, data, null, null, false);
    ajaxResponse.data.ids.map((d) => vacanciesApplied.push(d.id));
 }
 
@@ -366,7 +365,7 @@ async function applyVacancy(form_js) {
       user_id: id_cookie,
       created_at: moment().format("YYYY-MM-DD hh:mm:ss")
    };
-   await ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillVacanciesWithRibbon()", "Sí, Postularme", "green", "question");
+   await ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillVacanciesWithRibbon(false)", "Sí, Postularme", "green", "question");
    // await ajaxRequestAsync(URL_APPLICATION_APP, data);
    btns_submit.attr("disabled", false);
 }
