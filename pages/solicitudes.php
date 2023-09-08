@@ -22,7 +22,8 @@ $current_page = "Solicitudes";
             </div>
             <div class="col-sm-6">
                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="<?= $ADMIN_PATH ?>"><i class="fa-solid fa-house"></i>&nbsp; <?= $role ?? "" ?></a></li>
+                  <li class="breadcrumb-item"><a href="<?= $ADMIN_PATH ?>"><i class="fa-solid fa-house"></i>&nbsp;
+                        <?= $role ?? "" ?></a></li>
                   <!-- <li class="breadcrumb-item">Administración</li> -->
                   <li class="breadcrumb-item active"><?= $current_page ?></li>
                </ol>
@@ -41,28 +42,28 @@ $current_page = "Solicitudes";
                <div class="card-body">
                   <!-- tabla -->
                   <div class="table-responsive">
-                  <table id="table" class="table table-hover text-center" style="width:100%">
-                     <thead class="thead-dark">
-                        <tr>
-                           <th scope="col">Candidato</th>
-                           <th scope="col">Vacante</th>
-                           <th scope="col">Info</th>
-                           <th scope="col">Flujo</th>
-                           <th scope="col">Acciones</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                     </tbody>
-                     <tfoot>
-                        <tr class="thead-dark">
-                           <th scope="col">Candidato</th>
-                           <th scope="col">Vacante</th>
-                           <th scope="col">Info</th>
-                           <th scope="col">Flujo</th>
-                           <th scope="col">Acciones</th>
-                        </tr>
-                     </tfoot>
-                  </table>
+                     <table id="table" class="table table-hover text-center" style="width:100%">
+                        <thead class="thead-dark">
+                           <tr>
+                              <th scope="col">Candidato</th>
+                              <th scope="col">Vacante</th>
+                              <th scope="col">Info</th>
+                              <th scope="col">Flujo</th>
+                              <th scope="col">Acciones</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                           <tr class="thead-dark">
+                              <th scope="col">Candidato</th>
+                              <th scope="col">Vacante</th>
+                              <th scope="col">Info</th>
+                              <th scope="col">Flujo</th>
+                              <th scope="col">Acciones</th>
+                           </tr>
+                        </tfoot>
+                     </table>
                   </div>
                </div>
                <!-- /.card-body -->
@@ -79,7 +80,8 @@ $current_page = "Solicitudes";
       <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
          <form class="modal-content" id="form" enctype="multipart/form-data">
             <div class="modal-header">
-               <h5 class="modal-title fw-bold" id="modalLabel"><i class="fa-solid fa-user-plus"></i>&nbsp; REGISTRAR USUARIO</h5>
+               <h5 class="modal-title fw-bold" id="modalLabel"><i class="fa-solid fa-user-plus"></i>&nbsp; REGISTRAR
+                  USUARIO</h5>
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-start scroll-y">
@@ -96,8 +98,7 @@ $current_page = "Solicitudes";
                <!-- DIV IMAGEN CARGADA -->
                <div class="text-center div_img d-none">
                   <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
-                  <img src="/assets/img/cargar_imagen.png" controls preview="true"
-                     class="rounded-lg img-fluid preview_img" height="250px"></img>
+                  <img src="/assets/img/cargar_imagen.png" controls preview="true" class="rounded-lg img-fluid preview_img" height="250px"></img>
                   <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
                </div>
 
@@ -107,19 +108,19 @@ $current_page = "Solicitudes";
                   <p class="output_area">Área</p>
                   <p class="output_description">Descripción de la vacante...</p>
                   <div class="mb-2">
-                     <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; 
-                     <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span> 
-                     <span class="output_min_salary">$0</span> &nbsp;a&nbsp; 
+                     <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
+                     <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
+                     <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
                      <span class="output_max_salary">$0</span>
                   </div>
                   <div class="mb-2">
-                     <i class="fa-solid fa-briefcase"></i>&nbsp; 
-                     <span class="fw-bolder">Tipo de empleo:&nbsp;</span> 
+                     <i class="fa-solid fa-briefcase"></i>&nbsp;
+                     <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
                      <span class="output_job_type">...</span>
                   </div>
                   <div class="mb-2">
-                     <i class="fa-sharp fa-regular fa-timer"></i>&nbsp; 
-                     <span class="fw-bolder">Horario:&nbsp;</span> 
+                     <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
+                     <span class="fw-bolder">Horario:&nbsp;</span>
                      <span class="output_schedules">...</span>
                   </div>
 
@@ -130,7 +131,8 @@ $current_page = "Solicitudes";
                </div>
             </div>
             <div class="modal-footer">
-               <button type="button" onclick="cancel(this)" class="btn btn-danger fw-bold btn_cancel">CANCELAR SOLICITUD</button>
+               <button type="button" onclick="cancel(this)" class="btn btn-danger fw-bold btn_cancel">CANCELAR
+                  SOLICITUD</button>
             </div>
          </form>
       </div>
@@ -142,7 +144,8 @@ $current_page = "Solicitudes";
       <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
          <form class="modal-content" id="form" enctype="multipart/form-data">
             <div class="modal-header">
-               <h5 class="modal-titles fw-bold" id="modalLabel"><i class="fa-solid fa-user-tie"></i>&nbsp; INFORMACIÓN DEL POSTULADO</h5>
+               <h5 class="modal-titles fw-bold" id="modalLabel"><i class="fa-solid fa-user-tie"></i>&nbsp; INFORMACIÓN
+                  DEL POSTULADO</h5>
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body scroll-y">
@@ -175,14 +178,16 @@ $current_page = "Solicitudes";
 
                               <div class="col-sm-4 border-right">
                                  <div class="description-block">
-                                    <p class="description-header im_output" id="d_output_cellphone">[Mi número celular]</p>
+                                    <p class="description-header im_output" id="d_output_cellphone">[Mi número celular]
+                                    </p>
                                     <span class="description-text"><i class="fa-sharp fa-solid fa-phone"></i></span>
                                  </div>
                               </div>
 
                               <div class="col-sm-4">
                                  <div class="description-block">
-                                    <p class="description-header im_output" id="d_output_languages">[Mi nivel de ingles]</p>
+                                    <p class="description-header im_output" id="d_output_languages">[Mi nivel de ingles]
+                                    </p>
                                     <span class="description-text"><i class="fa-regular fa-language"></i></span>
                                  </div>
                               </div>
@@ -190,33 +195,33 @@ $current_page = "Solicitudes";
                         </div>
                      </div>
                      <div class="row">
-                     <!-- CURRICULUM VITAE -->
-                     <div class="col col-md-4">
-                        <div class="card card-success card-outline">
-                           <div class="card-body box-profile card-pdf">
-                           <div class="text-center h2 fw-bolder">CURRICULUM VITAE</div>
-                           <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
+                        <!-- CURRICULUM VITAE -->
+                        <div class="col col-md-4">
+                           <div class="card card-success card-outline">
+                              <div class="card-body box-profile card-pdf">
+                                 <div class="text-center h2 fw-bolder">CURRICULUM VITAE</div>
+                                 <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
                            <p class="text-muted text-center">Software Engineer</p> -->
-                           <label for="d_input_cv_path" class="">
-                              <div id="d_preview_cv" class="d-flex justify-content-center">
-                                 <img src="<?=$IMG_PATH?>/cargar_archivo.png" alt="Cargar CV" id="d_output_cv" class="img-fluid p-5 rounded-lg" style="height: 250px !important;" for="d_input_cv_path" title="Curriculum Vitae">
+                                 <label for="d_input_cv_path" class="">
+                                    <div id="d_preview_cv" class="d-flex justify-content-center">
+                                       <img src="<?= $IMG_PATH ?>/cargar_archivo.png" alt="Cargar CV" id="d_output_cv" class="img-fluid p-5 rounded-lg" style="height: 250px !important;" for="d_input_cv_path" title="Curriculum Vitae">
+                                    </div>
+                                 </label>
                               </div>
-                           </label>
                            </div>
                         </div>
-                     </div>
 
-                     <!-- INFORMACION PROFESIONAL -->
-                     <div class="col">
-                        <div class="card card-success card-outline">
-                           <div class="card-body box-profile card-pdf">
-                              <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONAL</div>
-                              <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
+                        <!-- INFORMACION PROFESIONAL -->
+                        <div class="col">
+                           <div class="card card-success card-outline">
+                              <div class="card-body box-profile card-pdf">
+                                 <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONAL</div>
+                                 <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
                               <p class="text-muted text-center">Software Engineer</p> -->
-                              <div id="d_output_professional_info" class="text-start scroll-y im_output" style="max-height: 81%;"></div>
+                                 <div id="d_output_professional_info" class="text-start scroll-y im_output" style="max-height: 81%;"></div>
+                              </div>
                            </div>
                         </div>
-                     </div>
 
                      </div>
 
@@ -237,4 +242,4 @@ $current_page = "Solicitudes";
 <?php
 include "../templates/footer.php";
 ?>
-<script src="<?=($SCRIPTS_PATH) ?>/<?=substr($path,0,-4)?>.js"></script>
+<script src="<?= ($SCRIPTS_PATH) ?>/<?= substr($path, 0, -4) ?>.js"></script>

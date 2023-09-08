@@ -147,14 +147,14 @@ async function fillTable(show_toas = true) {
       if (permission_update) {
          column_buttons +=
             //html
-            `<button class='btn btn-outline-primary' type='button' data-id='${obj.id}' onclick="showDetail(${obj.v_id},'${obj.status}')" title='Mostrar Vacante' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-eye'></i></button>`;
+            `<button class='btn btn-outline-primary' type='button' data-id='${obj.id}' onclick="showDetail(${obj.a_id},${obj.v_id},'${obj.status}')" title='Mostrar Vacante' data-bs-toggle="modal" data-bs-target="#modal"><i class='fa-solid fa-eye'></i></button>`;
       }
       if (permission_delete) {
          if (obj.status == "Aceptada" || obj.status == "Rechazada" || obj.status == "Cancelada") column_buttons += "";
          else
             column_buttons +=
                //html
-               `<button class='btn btn-outline-danger btn_cancel' type='button' data-id='${obj.a_id}' onclick="changeStatus(this,'Cancelada',${obj.a_id})" title='Cancelar Solicitud' data-name='${obj.vacancy}'><i class='fa-solid fa-ban'></i></button>`;
+               `<button class='btn btn-outline-danger btn_cancel' type='button' data-id='${obj.a_id}' onclick="cancel(this)" title='Cancelar Solicitud' data-name='${obj.vacancy}'><i class='fa-solid fa-ban'></i></button>`;
       }
       column_buttons += `</div>
 					</td>`;
@@ -169,10 +169,10 @@ async function fillTable(show_toas = true) {
 }
 
 //EDITAR OBJETO
-async function showDetail(id, status) {
+async function showDetail(application_id, vacancy_id, status) {
    modal_title.html("<i class='fa-solid fa-memo-circle-info'></i>&nbsp; DETALLE DE LA VACANTE");
 
-   let data = { id, op: "show" };
+   let data = { id: vacancy_id, op: "show" };
    const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data);
 
    const obj = ajaxResponse.data;
@@ -207,16 +207,15 @@ async function showDetail(id, status) {
    $(`.output_job_type`).text(obj.job_type);
    $(`.output_schedules`).text(obj.schedules);
    $(`.output_more_info`).html(obj.more_info);
-   btns_cancel.attr("data-id", obj.id);
+   btns_cancel.attr("data-id", application_id);
    btns_cancel.attr("data-name", obj.vacancy);
    // console.log(status);
    if (status == "Aceptada" || status == "Rechazada" || status == "Cancelada") btns_cancel.addClass("d-none");
    else btns_cancel.removeClass("d-none");
 }
 
-async function changeStatus(btn_cancel_js, status, vacancy_id) {
-   const btn_cancel = $(btn_cancel_js);
-   let title = `¿Estas seguro de cancelar tú solicitud de <br> ${btn_cancel.attr("data-name")}?`;
+async function changeStatus(status, vacancy_id) {
+   let title = `¿Estas de acuerdo con pasar a ${status} esta solicitud?`;
    // if (status == "Cancelada") title = `¿Estas seguro de cancelar tu solicitud de <br> ${btn_cancel.attr("data-name")}?`;
    let text = ``;
 
@@ -228,21 +227,22 @@ async function changeStatus(btn_cancel_js, status, vacancy_id) {
       updated_at: current_date
    };
 
-   ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable(false)", "Sí, Cancelar", "#DC3545");
+   ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable(false)", "De acuerdo", "#0c7827");
 }
 
 //ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
 async function cancel(btn_cancel_js) {
    const btn_cancel = $(btn_cancel_js);
-   let title = `¿Estas seguro de cancelar tú solicitud de <br> ${btn_cancel.attr("data-name")}?`;
+   let title = `¿Estas seguro de cancelar la solicitud de <br> ${btn_cancel.attr("data-name")}?`;
    let text = ``;
 
    let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
    let data = {
-      op: "cancel",
+      op: "changeStatus",
+      input_status: "Cancelada",
       id: Number(btn_cancel.attr("data-id")),
-      deleted_at: current_date
+      updated_at: current_date
    };
 
-   ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable()");
+   ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable(false)", "Sí Cancelar");
 }
