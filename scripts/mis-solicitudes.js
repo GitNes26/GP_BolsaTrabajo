@@ -154,7 +154,7 @@ async function fillTable(show_toas = true) {
          else
             column_buttons +=
                //html
-               `<button class='btn btn-outline-danger btn_cancel' type='button' data-id='${obj.a_id}' onclick="cancel(this)" title='Cancelar Solicitud' data-name='${obj.vacancy}'><i class='fa-solid fa-ban'></i></button>`;
+               `<button class='btn btn-outline-danger btn_cancel' type='button' data-id='${obj.a_id}' onclick="changeStatus(this,'Cancelada',${obj.a_id})" title='Cancelar Solicitud' data-name='${obj.vacancy}'><i class='fa-solid fa-ban'></i></button>`;
       }
       column_buttons += `</div>
 					</td>`;
@@ -214,10 +214,27 @@ async function showDetail(id, status) {
    else btns_cancel.removeClass("d-none");
 }
 
+async function changeStatus(btn_cancel_js, status, vacancy_id) {
+   const btn_cancel = $(btn_cancel_js);
+   let title = `¿Estas seguro de cancelar tú solicitud de <br> ${btn_cancel.attr("data-name")}?`;
+   // if (status == "Cancelada") title = `¿Estas seguro de cancelar tu solicitud de <br> ${btn_cancel.attr("data-name")}?`;
+   let text = ``;
+
+   let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
+   let data = {
+      op: "changeStatus",
+      input_status: status,
+      id: vacancy_id,
+      updated_at: current_date
+   };
+
+   ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable(false)", "Sí, Cancelar", "#DC3545");
+}
+
 //ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
 async function cancel(btn_cancel_js) {
    const btn_cancel = $(btn_cancel_js);
-   let title = `¿Estas seguro de cancelar tu solicitud de <br> ${btn_cancel.attr("data-name")}?`;
+   let title = `¿Estas seguro de cancelar tú solicitud de <br> ${btn_cancel.attr("data-name")}?`;
    let text = ``;
 
    let current_date = moment().format("YYYY-MM-DD hh:mm:ss");

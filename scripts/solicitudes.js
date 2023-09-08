@@ -358,7 +358,7 @@ async function changeStatus(status, vacancy_id) {
 //ELIMINAR OBJETO
 async function cancel(btn_cancel_js) {
    const btn_cancel = $(btn_cancel_js);
-   let title = `¿Estas seguro de cancelar tu solicitud de <br> ${btn_cancel.attr("data-name")}?`;
+   let title = `¿Estas seguro de cancelar la solicitud de <br> ${btn_cancel.attr("data-name")}?`;
    let text = ``;
 
    let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
