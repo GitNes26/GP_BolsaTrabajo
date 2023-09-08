@@ -174,11 +174,20 @@ const ajaxRequestAsync = async (url, data, close_modal = null, show_blockUI = tr
       $.unblockUI();
    }
 };
-const ajaxRequestQuestionAsync = async (title, text, url, data, function_complete_string, text_btn_confirm = "Eliminar", color_btn_confirm = "#B04759") => {
+const ajaxRequestQuestionAsync = async (
+   title,
+   text,
+   url,
+   data,
+   function_complete_string,
+   text_btn_confirm = "Eliminar",
+   color_btn_confirm = "#B04759",
+   icon = "warning"
+) => {
    Swal.fire({
       title: title,
-      text: text,
-      icon: "warning",
+      html: text,
+      icon: icon,
       showCancelButton: true,
       confirmButtonColor: color_btn_confirm,
       confirmButtonText: text_btn_confirm,

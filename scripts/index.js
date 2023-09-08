@@ -34,8 +34,7 @@ focusSelect2($(".select2"));
 
 init();
 async function init() {
-   await applicationsByCanidate();
-   fillVacancies();
+   fillVacanciesWithRibbon();
    fillBanners();
 
    fillSelect2(URL_BUSINESS_LINE_APP, -1, input_filter_business_line_id);
@@ -169,6 +168,10 @@ vacancy_container.click(async (e) => {
    }
 });
 
+async function fillVacanciesWithRibbon() {
+   await applicationsByCanidate();
+   fillVacancies();
+}
 async function fillVacancies(show_toas = true) {
    let data = { op: "indexJobBag" };
    const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data, null, true, show_toas);
@@ -198,6 +201,7 @@ async function applicationsByCanidate() {
    vacanciesApplied = [];
    const data = { op: "getVacanciesAppliedByCandidate", user_id: id_cookie };
    const ajaxResponse = await ajaxRequestAsync(URL_APPLICATION_APP, data);
+   console.log(ajaxResponse);
    ajaxResponse.data.ids.map((d) => vacanciesApplied.push(d.id));
 }
 
@@ -333,7 +337,7 @@ form_modal.on("submit", function (e) {
 });
 async function applyVacancy(form_js) {
    btns_submit.attr("disabled", true);
-   const form = $(form_js);
+   // const form = $(form_js);
    let data = {
       op: "checkAlreadyApplied",
       input_vacancy_id: inputs_id.val(),
@@ -348,12 +352,22 @@ async function applyVacancy(form_js) {
    }
 
    data = {
+      op: "show",
+      id: inputs_id.val()
+   };
+   const ajaxVacancy = await ajaxRequestAsync(URL_VACANCY_APP, data, null, true, false);
+   // return console.log("ajaxVacancy", ajaxVacancy);
+
+   let title = ``;
+   let text = `<h5 class="fw-bold">¿Estas seguro de postularte de <br> ${ajaxVacancy.data.vacancy} en ${ajaxVacancy.data.company} ?</h5>`;
+   data = {
       op: "apply",
       input_vacancy_id: inputs_id.val(),
       user_id: id_cookie,
       created_at: moment().format("YYYY-MM-DD hh:mm:ss")
    };
-   await ajaxRequestAsync(URL_APPLICATION_APP, data);
+   await ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillVacanciesWithRibbon()", "Sí, Postularme", "green", "question");
+   // await ajaxRequestAsync(URL_APPLICATION_APP, data);
    btns_submit.attr("disabled", false);
 }
 // let num = 0
