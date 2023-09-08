@@ -311,8 +311,10 @@ btn_change_enable.click(async (e) => {
 form.on("submit", async (e) => {
    e.preventDefault();
    // console.log(form.serializeArray());
+   showBlockUI();
 
-   if (!validateInputs(form)) return;
+   if (!validateInputs(form)) return $.unblockUI();
+   showBlockUI();
    let ajaxResponse;
    let data = form.serializeArray();
 
@@ -338,7 +340,9 @@ form.on("submit", async (e) => {
 
    if (ajaxResponse.message == "duplicado") return;
    btn_cancel.click();
+   showBlockUI();
    await fillInfo(false);
+   $.unblockUI();
 });
 
 async function fillInfo(show_toas = true) {
