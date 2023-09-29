@@ -53,6 +53,37 @@ tr td {
 }
 
 
+#container_privacity {
+   position: absolute;
+   background-color: #E9ECEF;
+   top: 95%;
+}
+.slideUpEnter{
+   animation: slideUpEnter 1s cubic-bezier(0.72, 0.01, 0.63, 1.18)  forwards;
+}
+
+.slideDownExit {
+   animation: slideDownExit 1s cubic-bezier(0.84,-0.15, 0.55, 1.15) forwards;
+}
+
+@keyframes slideUpEnter{
+   to{
+      top: 0%;
+   }
+   from {
+      top: 95%;      
+   }
+}
+
+@keyframes slideDownExit{
+   to{
+      top: 95%;      
+   }
+   from {
+      top:0%
+   }
+}
+
 
 
 .eye_icon {
