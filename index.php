@@ -51,7 +51,8 @@ if (isset($_GET["p"])) {
    <!-- <link rel="stylesheet" href="Assets/css/style.css" /> -->
 
    <!-- Tipo de letra -->
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+   <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
    <!-- JQuery 6 -->
    <script src="<?= $PLUGINS_PATH ?>/jquery.min.js"></script>
 
@@ -77,21 +78,29 @@ if (isset($_GET["p"])) {
 
 </head>
 
-<body data-spy="scroll" data-target=".navbar" data-offset="90" class="particles_special_id green-version body-login <?= $dark_mode ?>">
+<body data-spy="scroll" data-target=".navbar" data-offset="90"
+   class="particles_special_id green-version body-login <?= $dark_mode ?>">
    <input type="hidden" id="url_base" value="<?= $URL_BASE ?>">
    <!-- <input type="hidden" id="join_now" value="<?= $join_now ?>"> -->
 
+   <div id="particles-js" class="bg-index"></div>
    <!-- start slider -->
    <section class="fadeIn example no-padding no-transition" id="home">
       <article class="content">
          <!-- <h2 class="display-none no-padding no-margin" aria-hidden="true"></h2> -->
-         <div id="rev_slider_1078_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="classic4export" data-source="gallery" style="margin:0px auto;background-color:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
+         <div id="rev_slider_1078_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container"
+            data-alias="classic4export" data-source="gallery"
+            style="margin:0px auto;background-color:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
             <!-- start revolution slider 5.4.1 fullwidth mode -->
-            <div id="rev_slider_1078_1" class="rev_slider fullwidthabanner hold-transition login-page" style="background-image: url(); background-size:cover;" data-version="5.4.1">
-               <canvas id="particles_bg" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; overflow:hidden;"></canvas>
+            <div id="rev_slider_1078_1" class="rev_slider fullwidthabanner hold-transition login-page"
+               style="background-image: url(); background-size:cover;" data-version="5.4.1">
+               <canvas id="particles_bg"
+                  style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; overflow:hidden;"></canvas>
                <div class="opacity-extra-medium bg-black position-absolute z-index-1"></div>
 
-               <div class="container-fluid d-flex justify-content-center overflow-auto py-3 flex-column align-items-center" style="z-index:1">
+               <div
+                  class="container-fluid d-flex justify-content-center overflow-auto py-3 flex-column align-items-center "
+                  style="z-index:1">
                   <div class="login-box">
                      <div class="login-logo">
                         <!-- <span class="fw-bold h1">RESO</span>
@@ -110,17 +119,22 @@ if (isset($_GET["p"])) {
                            <form id="form_login">
                               <input type="hidden" id="op" name="op" value="login">
                               <div class="form-floating mb-3">
-                                 <input type="email" class="form-control rounded-lg" id='email' name='email' placeholder="Correo Electronico" autofocus="autofocus" data-input-name="Correo" value="<?= $e ?>" />
+                                 <input type="email" class="form-control rounded-lg" id='email' name='email'
+                                    placeholder="Correo Electronico" autofocus="autofocus" data-input-name="Correo"
+                                    value="<?= $e ?>" />
                                  <label for="email">Correo Electrónico</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="password" class="form-control" id='password' name='password' placeholder="Contraseña" autocomplete="off" data-input-name="CONTRASEÑA" value="<?= $p ?>" />
+                                 <input type="password" class="form-control" id='password' name='password'
+                                    placeholder="Contraseña" autocomplete="off" data-input-name="CONTRASEÑA"
+                                    value="<?= $p ?>" />
                                  <label for="password">Contraseña</label>
                                  <i class="fa-duotone fa-eye-slash eye_icon" data-input="password"></i>
                               </div>
                               <div class="row">
                                  <div class="col">
-                                    <button type="submit" id="btn_login" class="btn btn-outline-success btn-block fw-bold text-center">
+                                    <button type="submit" id="btn_login"
+                                       class="btn btn-outline-success btn-block fw-bold text-center">
                                        <i class="fa-solid fa-circle-arrow-right"></i>&nbsp;&nbsp;INICIAR SESIÓN
                                     </button>
                                     <br>
@@ -141,25 +155,32 @@ if (isset($_GET["p"])) {
 
                            <form id="form_register">
                               <div class="form-floating mb-3">
-                                 <input type="email" class="form-control rounded-lg" id='input_email' name='input_email' placeholder="Correo Electrónico" autofocus="autofocus" data-input-name="CORREO" />
+                                 <input type="email" class="form-control rounded-lg" id='input_email' name='input_email'
+                                    placeholder="Correo Electrónico" autofocus="autofocus" data-input-name="CORREO" />
                                  <label for="input_email">Correo Electrónico</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="password" class="form-control" id='input_password' name='input_password' placeholder="Contraseña" autocomplete="off" data-input-name="CONTRASEÑA" />
+                                 <input type="password" class="form-control" id='input_password' name='input_password'
+                                    placeholder="Contraseña" autocomplete="off" data-input-name="CONTRASEÑA" />
                                  <label for="input_password">Contraseña</label>
-                                 <i class="fa-duotone fa-eye-slash eye_icon" tittle="show text" data-input="input_password"></i>
+                                 <i class="fa-duotone fa-eye-slash eye_icon" tittle="show text"
+                                    data-input="input_password"></i>
 
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="password" class="form-control" id='input_confirm_password' name='input_confirm_password' placeholder="Confirm Password" autocomplete="off" data-input-name="CONFIRMAR CONTRASEÑA" />
+                                 <input type="password" class="form-control" id='input_confirm_password'
+                                    name='input_confirm_password' placeholder="Confirm Password" autocomplete="off"
+                                    data-input-name="CONFIRMAR CONTRASEÑA" />
                                  <label for="input_confirm_password">Confirmar Contraseña</label>
                                  <span class="fst-italic" id="feedback_confirm_password"></span>
-                                 <i class="fa-duotone fa-eye-slash eye_icon" tittle="show text" data-input="input_confirm_password"></i>
+                                 <i class="fa-duotone fa-eye-slash eye_icon" tittle="show text"
+                                    data-input="input_confirm_password"></i>
                               </div>
 
                               <div class="row">
                                  <div class="col">
-                                    <button type="submit" id="btn_register" class="btn btn-outline-success btn-block fw-bold text-center">
+                                    <button type="submit" id="btn_register"
+                                       class="btn btn-outline-success btn-block fw-bold text-center">
                                        <i class="fa-solid fa-circle-arrow-up"></i>&nbsp;&nbsp;REGISTRARME
                                     </button>
                                     <br>
@@ -177,7 +198,8 @@ if (isset($_GET["p"])) {
 
                   <!-- CONTENIDO DE PRIVACIDAD -->
                   <div class="container my-5" id="container_privacity">
-                     <button type="button" class="btn-close float-end" onclick="closeDialogPrivate()" aria-label="Close"></button>
+                     <button type="button" class="btn-close float-end" onclick="closeDialogPrivate()"
+                        aria-label="Close"></button>
                      <div class="row">
                         <div class="login-logo">
                            <img src="<?= $LOGO ?>" alt='GP Logo' class='img-fluid' />
@@ -204,8 +226,8 @@ if (isset($_GET["p"])) {
                   </div>
                   <!-- CONTENIDO DE PRIVACIDAD -->
 
-                  <footer class="footer-login login-box mt-5 text-dark d-flex justify-content-between">
-                     <p><a href="#" class="" onclick="openDialogPrivate()">AVISO DE
+                  <footer class="footer-login login-box mt-5 text-light d-flex justify-content-between">
+                     <p><a href="#" class="fw-bolder text-light" onclick="openDialogPrivate()">AVISO DE
                            PRIVACIDAD</a></p>
                      <p><b>Presidencia de GP</b> | 2023</p>
                   </footer>
@@ -241,6 +263,10 @@ if (isset($_GET["p"])) {
 
    <!-- Cookies -->
    <script src="<?= $PLUGINS_PATH ?>/js-cookie/js.cookie.min.js"></script>
+
+   <!-- Particular JS -->
+   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+   <script src="<?= $SCRIPTS_PATH ?>/particles.js"></script>
 
    <script src="<?= $SCRIPTS_PATH ?>/master.js"></script>
    <script src="<?= $SCRIPTS_PATH ?>/login.js"></script>
