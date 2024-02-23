@@ -262,12 +262,10 @@ function ajaxRequestEmail(data) {
 }
 
 const openDialogPrivate = () => {
-   console.log("click");
    $("#container_privacity").removeClass("slideDownExit");
    $("#container_privacity").addClass("slideUpEnter");
 };
 const closeDialogPrivate = () => {
-   console.log("click");
    $("#container_privacity").removeClass("slideUpEnter");
    $("#container_privacity").addClass("slideDownExit");
 };
