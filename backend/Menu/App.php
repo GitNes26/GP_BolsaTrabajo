@@ -68,7 +68,7 @@ if (isset($_POST['menu'])) {
 
 if ($op == "index") $Menu->index();
 
-elseif ($op == "showMyMenus" && !is_nan($role_id)) $Menu->showMyMenus($role_id);
+elseif ($op == "showMyMenus") $Menu->showMyMenus($role_id);
 elseif ($op == 'showSelect') $Menu->showSelect();
 elseif ($op == "show") $Menu->show($id);
 
