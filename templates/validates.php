@@ -1,5 +1,5 @@
 <?php
-include_once "../empleos/config.php";
+include_once "../config.php";
 
 
 // #VERIFICAR SESION ACTIVA
