@@ -112,7 +112,8 @@ setcookie("permission_update",$permission_update,strtotime($cookies_time), "/");
 #Esta validacion es para cuando le dan "atras" y la pagina se sigue viendo
 echo "
 <!-- Cookies -->
-<script src='/plugins/js-cookie/js.cookie.min.js'></script>
+<script src='$PLUGINS_PATH/js-cookie/js.cookie.min.js'></script>
+// <script src='/plugins/js-cookie/js.cookie.min.js'></script>
 <script>
    const validateNeedCookies = () => {
       let needCookies = true;

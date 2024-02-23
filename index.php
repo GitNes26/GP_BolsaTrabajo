@@ -81,6 +81,7 @@ if (isset($_GET["p"])) {
    <input type="hidden" id="url_base" value="<?= $URL_BASE ?>">
    <!-- <input type="hidden" id="join_now" value="<?= $join_now ?>"> -->
 
+   <div id="particles-js" class="bg-index"></div>
    <!-- start slider -->
    <section class="fadeIn example no-padding no-transition" id="home">
       <article class="content">
@@ -91,7 +92,7 @@ if (isset($_GET["p"])) {
                <canvas id="particles_bg" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; overflow:hidden;"></canvas>
                <div class="opacity-extra-medium bg-black position-absolute z-index-1"></div>
 
-               <div class="container-fluid d-flex justify-content-center overflow-auto py-3 flex-column align-items-center" style="z-index:1">
+               <div class="container-fluid d-flex justify-content-center overflow-auto py-3 flex-column align-items-center " style="z-index:1">
                   <div class="login-box">
                      <div class="login-logo">
                         <!-- <span class="fw-bold h1">RESO</span>
@@ -204,8 +205,8 @@ if (isset($_GET["p"])) {
                   </div>
                   <!-- CONTENIDO DE PRIVACIDAD -->
 
-                  <footer class="footer-login login-box mt-5 text-dark d-flex justify-content-between">
-                     <p><a href="#" class="" onclick="openDialogPrivate()">AVISO DE
+                  <footer class="footer-login login-box mt-5 text-light d-flex justify-content-between">
+                     <p><a href="#" class="fw-bolder text-light" onclick="openDialogPrivate()">AVISO DE
                            PRIVACIDAD</a></p>
                      <p><b>Presidencia de GP</b> | 2023</p>
                   </footer>
@@ -241,6 +242,10 @@ if (isset($_GET["p"])) {
 
    <!-- Cookies -->
    <script src="<?= $PLUGINS_PATH ?>/js-cookie/js.cookie.min.js"></script>
+
+   <!-- Particular JS -->
+   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+   <script src="<?= $SCRIPTS_PATH ?>/particles.js"></script>
 
    <script src="<?= $SCRIPTS_PATH ?>/master.js"></script>
    <script src="<?= $SCRIPTS_PATH ?>/login.js"></script>
