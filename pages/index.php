@@ -8,7 +8,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 ?>
 
 <!-- Content Wrapper. Contenido de la pagina -->
-<div class="content-wrapper text-sm" style="height: 96% !important;">
+<div class="content-wrapper text-sm" style="margin-top: 1.5rem;height: 96% !important;">
    <!-- Content Header (Encabezado en el contenido de la pagina) -->
    <section class="content-header pt_sm_10">
       <div class="container-fluid">
@@ -17,8 +17,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                <h1 class="fw-bolder text-uppercase">
                   <i class="fa-regular fa-sack-dollar"></i>&nbsp;
                   <!-- <?= $pagina_acutal ?> -->
-                  <em class="fw-ligth text-muted lead text-sm">Actualmente contamos con <b id="vacancies_enabled"
-                        class="">0</b> vacantes disponibles para ti</em>
+                  <em class="fw-ligth text-muted lead text-sm">Actualmente contamos con <b id="vacancies_enabled" class="">0</b> vacantes disponibles para ti</em>
                </h1>
             </div>
             <!-- <div class="col-sm-6">
@@ -42,12 +41,10 @@ $pagina_acutal = "Bolsa de Trabajo";
                <div class="card-header">
                   <div class="pb-1">
                      <label for="input_filter_search" class="form-label">Buscador General</label>
-                     <input type="search" class="form-control not_validate" id="input_filter_search"
-                        name="input_filter_search" data-input-name="BUSCADOR GENERAL" placeholder="Puesto | Empresa">
+                     <input type="search" class="form-control not_validate" id="input_filter_search" name="input_filter_search" data-input-name="BUSCADOR GENERAL" placeholder="Puesto | Empresa">
                   </div>
                   <div class="card-tools mt-2">
-                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Filtros de búsqueda"
-                        id="btn_show_filters">
+                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Filtros de búsqueda" id="btn_show_filters">
                         <i class="fas fa-minus"></i>
                         <i class="fa-solid fa-filter-list"></i>
                      </button>
@@ -60,54 +57,43 @@ $pagina_acutal = "Bolsa de Trabajo";
                      <label for="input_filter_min_salary" class="form-label">Sueldo deseado:</label>
                      <div class="row">
                         <div class="col">
-                           <input type="text" class="form-control" id="input_filter_min_salary"
-                              name="input_filter_min_salary" data-input-name="NOMBRE DEL MÓDULO" placeholder="Mínimo">
+                           <input type="text" class="form-control" id="input_filter_min_salary" name="input_filter_min_salary" data-input-name="NOMBRE DEL MÓDULO" placeholder="Mínimo">
                         </div>
                         <div class="col">
-                           <input type="text" class="form-control" id="input_filter_max_salary"
-                              name="input_filter_max_salary" data-input-name="NOMBRE DEL MÓDULO" placeholder="Máximo">
+                           <input type="text" class="form-control" id="input_filter_max_salary" name="input_filter_max_salary" data-input-name="NOMBRE DEL MÓDULO" placeholder="Máximo">
                         </div>
                      </div>
                   </div>
                   <!-- GIRO -->
                   <div class="mb-3">
                      <label for="input_filter_business_line_id" class="form-label">Giro:</label>
-                     <select class="select2 form-control" style="width:100%" id="input_filter_business_line_id"
-                        name="input_filter_business_line_id" data-input-name="GIRO">
+                     <select class="select2 form-control" style="width:100%" id="input_filter_business_line_id" name="input_filter_business_line_id" data-input-name="GIRO">
                      </select>
                   </div>
                   <!-- AREA -->
                   <div class="mb-3">
                      <label for="input_filter_area_id" class="form-label">Área:</label>
-                     <select class="select2 form-control" style="width:100%" id="input_filter_area_id"
-                        name="input_filter_area_id" data-input-name="GIRO">
+                     <select class="select2 form-control" style="width:100%" id="input_filter_area_id" name="input_filter_area_id" data-input-name="GIRO">
                      </select>
                   </div>
                   <!-- INTERESES -->
                   <div class="form-group d-none">
                      <label for="input_filter_interest_tags_ids">Intereses de búsqueda:</label>
-                     <select class="select2 select2-hidden-accessible not_validate" multiple=""
-                        data-placeholder="Selecciona etiquetas con tús intereses" style="width: 100%;" tabindex="-1"
-                        aria-hidden="true" id="input_filter_interest_tags_ids" name="input_filter_interest_tags_ids"
-                        data-input-name="INTERESES">
+                     <select class="select2 select2-hidden-accessible not_validate" multiple="" data-placeholder="Selecciona etiquetas con tús intereses" style="width: 100%;" tabindex="-1" aria-hidden="true" id="input_filter_interest_tags_ids" name="input_filter_interest_tags_ids" data-input-name="INTERESES">
                      </select>
                   </div>
                   <!-- ESTADO -->
                   <div class="mb-3">
                      <label for="input_state" class="form-label">Estado:</label>
-                     <span title="dar click aqui si no se cargan los datos." data-input="input_state"
-                        class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span>
-                     <select class="select2 form-control" style="width:100%; line-height:10px" id="input_state"
-                        name="input_state" data-input-name="ESTADO">
+                     <span title="dar click aqui si no se cargan los datos." data-input="input_state" class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span>
+                     <select class="select2 form-control" style="width:100%; line-height:10px" id="input_state" name="input_state" data-input-name="ESTADO">
                      </select>
                   </div>
                   <!-- MUNICIPIO -->
                   <div class="mb-3">
                      <label for="input_municipality" class="form-label">Municipio:</label>
-                     <span title="dar click aqui si no se cargan los datos." data-input="input_municipality"
-                        class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span>
-                     <select class="select2 form-control" style="width:100%; line-height:20px" id="input_municipality"
-                        name="input_municipality" data-input-name="MUNICIPIO" disabled>
+                     <span title="dar click aqui si no se cargan los datos." data-input="input_municipality" class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span>
+                     <select class="select2 form-control" style="width:100%; line-height:20px" id="input_municipality" name="input_municipality" data-input-name="MUNICIPIO" disabled>
                      </select>
                   </div>
 
@@ -163,8 +149,7 @@ $pagina_acutal = "Bolsa de Trabajo";
          <div class="col-md-4 d-none d-sm-none d-md-block">
             <form id="form_vacancy" enctype="multipart/form-data" class="card shadow-lg sticky-top card-detail">
                <div class="card-header">
-                  <span class="modal-title fw-bold h5" id="modalLabel"><i
-                        class="fa-regular fa-memo-circle-info"></i>&nbsp; DETALLE DE LA VACANTE</span>
+                  <span class="modal-title fw-bold h5" id="modalLabel"><i class="fa-regular fa-memo-circle-info"></i>&nbsp; DETALLE DE LA VACANTE</span>
                   <div class="card-tools mt-2">
                      <button type="button" id="btn_close_detail" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -193,8 +178,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                   <!-- DIV IMAGEN CARGADA -->
                   <div class="text-center div_img d-none">
                      <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
-                     <img src="../assets/img/cargar_imagen.png" controls preview="true"
-                        class="rounded-lg img-fluid preview_img" height="250px"></img>
+                     <img src="../assets/img/cargar_imagen.png" controls preview="true" class="rounded-lg img-fluid preview_img" height="250px"></img>
                      <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
                   </div>
 
@@ -229,8 +213,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                </div>
                <div class="card-footer">
                   <div class="d-grid gap-2">
-                     <button type="submit" id="btn_send" class="btn btn-outline-success fw-bold grid btn_submit"
-                        disabled><i class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
+                     <button type="submit" id="btn_send" class="btn btn-outline-success fw-bold grid btn_submit" disabled><i class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
                      </button>
                   </div>
                </div>
@@ -296,8 +279,7 @@ $pagina_acutal = "Bolsa de Trabajo";
    <!-- /.content -->
 
    <!-- Modal -->
-   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"
-      data-bs-backdrop="static">
+   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" data-bs-backdrop="static">
       <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
          <form id="form_modal" class="modal-content">
             <div class="modal-header">
@@ -324,8 +306,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                <!-- DIV IMAGEN CARGADA -->
                <div class="text-center div_img d-none">
                   <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
-                  <img src="../assets/img/cargar_imagen.png" controls preview="true"
-                     class="rounded-lg img-fluid preview_img" height="250px"></img>
+                  <img src="../assets/img/cargar_imagen.png" controls preview="true" class="rounded-lg img-fluid preview_img" height="250px"></img>
                   <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
                </div>
 
@@ -359,8 +340,7 @@ $pagina_acutal = "Bolsa de Trabajo";
             </div>
             <div class="modal-footer">
                <div class="d-grid gap-2">
-                  <button type="submit" class="btn btn-outline-success fw-bold grid btn_submit" disabled><i
-                        class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
+                  <button type="submit" class="btn btn-outline-success fw-bold grid btn_submit" disabled><i class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
                   </button>
                </div>
             </div>
@@ -377,8 +357,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 
 
 <template id="template_card_vacancy">
-   <div class="card card-success card-outline direct-chat direct-chat-success shadow-sm pointer-sm card_vacancy"
-      data-id="id">
+   <div class="card card-success card-outline direct-chat direct-chat-success shadow-sm pointer-sm card_vacancy" data-id="id">
       <div class="ribbon-wrapper ribbon-lg d-none">
          <div class="ribbon bg-info fw-bolder">POSTULADO</div>
       </div>
@@ -404,8 +383,7 @@ $pagina_acutal = "Bolsa de Trabajo";
          <div class="div_info_vacancy">
             <p>Area de aplicacion: <span class="area">Informatica</span></p>
             <span class="badge bg-success">
-               <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; <span class="min_salary">$0</span> a <span
-                  class="max_salary">$0</span>
+               <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; <span class="min_salary">$0</span> a <span class="max_salary">$0</span>
             </span>
             <span class="badge bg-dark">
                <i class="fa-solid fa-briefcase"></i>&nbsp; <span class="job_type">Tiempo completo</span>
@@ -427,21 +405,21 @@ include "../templates/footer.php";
 ?>
 <script src="<?php echo ($SCRIPTS_PATH) ?>/index.js"></script>
 <script>
-// $(function () {
-//    /* BOOTSTRAP SLIDER */
-//    // $('.slider').bootstrapSlider();
+   // $(function () {
+   //    /* BOOTSTRAP SLIDER */
+   //    // $('.slider').bootstrapSlider();
 
-//    /* ION SLIDER */
-//    $('#range_1').ionRangeSlider({
-//    min     : 0,
-//    max     : 5000,
-//    from    : 1000,
-//    to      : 4000,
-//    type    : 'double',
-//    step    : 1,
-//    prefix  : '$',
-//    prettify: false,
-//    hasGrid : true
-//    })
-// })
+   //    /* ION SLIDER */
+   //    $('#range_1').ionRangeSlider({
+   //    min     : 0,
+   //    max     : 5000,
+   //    from    : 1000,
+   //    to      : 4000,
+   //    type    : 'double',
+   //    step    : 1,
+   //    prefix  : '$',
+   //    prettify: false,
+   //    hasGrid : true
+   //    })
+   // })
 </script>

@@ -60,12 +60,11 @@ if ($path != "perfil.php") {
       // echo "URL_SERVER: $URL_SERVER)<br>";
       // echo "ADMIN_PATH: ".print_r($ADMIN_PATH)."<br>";
    }
-   echo $URL_SERVER;
    if (!$access) {
-      if ($URL_SERVER == "/pages") return;
-      elseif ($URL_SERVER == "/pages/") return;
-      elseif ($URL_SERVER == "/pages/index.php") return;
-      elseif ($URL_SERVER == "/perfil.php") return;
+      if ($URL_SERVER == "/empleos/pages") return;
+      elseif ($URL_SERVER == "/empleos/pages/") return;
+      elseif ($URL_SERVER == "/empleos/pages/index.php") return;
+      elseif ($URL_SERVER == "/empleos/perfil.php") return;
       // echo "ESTOY SIN access... CREO";
       header("location:$URL_BASE/");
       die();
