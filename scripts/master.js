@@ -127,9 +127,9 @@ else if (location.pathname == "/registro-perfil.php") needCookies = false;
 if (!["/empleos/", "/empleos/index.php"].includes(location.pathname)) if (!Cookies.get("session") && needCookies) location.reload();
 
 let inIndex = false;
-if (location.pathname == "/pages") inIndex = true;
-else if (location.pathname == "/pages/") inIndex = true;
-else if (location.pathname == "/pages/index.php") inIndex = true;
+if (location.pathname == "/empleos/pages") inIndex = true;
+else if (location.pathname == "/empleos/pages/") inIndex = true;
+else if (location.pathname == "/empleos/pages/index.php") inIndex = true;
 
 const ajaxRequestAsync = async (url, data, close_modal = null, show_blockUI = true, show_toast = true) => {
    try {
@@ -430,7 +430,7 @@ const sidebar_menus = $("#sidebar_menus");
 const navbar_menus = $("#navbar_menus");
 const fillSidebar = async (show_toast = false, navbar = false) => {
    // sidebar_menus.slideUp(1000);
-   console.log("a cargar menus");
+   // console.log("a cargar menus");
    let role_id = Number(Cookies.get("role_id"));
    // role_id=1;
    let data = { op: "showMyMenus", role_id: role_id };
@@ -495,7 +495,7 @@ const fillSidebar = async (show_toast = false, navbar = false) => {
    if (navbar) await navbar_menus.append(menus);
    else await sidebar_menus.append(menus);
    // sidebar_menus.slideDown(1000);
-   console.log("menus cargados", menus);
+   // console.log("menus cargados", menus);
 };
 if (sidebar_menus.length > 0) fillSidebar();
 else if (inIndex) fillSidebar(false, true);
