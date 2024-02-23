@@ -392,8 +392,8 @@ function resetImgPreview(preview, img_path = null, iframe = false) {
       // Crea un elemento de imagen
       const imagen = document.createElement("img");
       iframe
-         ? (imagen.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path) // Asigna la imagen cargada como fuente
-         : (imagen.src = img_path == null ? "/assets/img/cargar_imagen.png" : img_path); // Asigna la imagen cargada como fuente
+         ? (imagen.src = img_path == null ? "../assets/img/cargar_archivo.png" : img_path) // Asigna la imagen cargada como fuente
+         : (imagen.src = img_path == null ? "../assets/img/cargar_imagen.png" : img_path); // Asigna la imagen cargada como fuente
       imagen.classList.add("img-fluid"); // Asignar clases
       imagen.classList.add("pointer-sm"); // Asignar clases
       //  imagen.classList.add("p-5"); // Asignar clases
@@ -407,7 +407,7 @@ function resetImgPreview(preview, img_path = null, iframe = false) {
    } else {
       // Crea un elemento de imagen
       const iframe = document.createElement("iframe");
-      iframe.src = img_path == null ? "/assets/img/cargar_archivo.png" : img_path; // Asigna la iframe cargada como fuente
+      iframe.src = img_path == null ? "../assets/img/cargar_archivo.png" : img_path; // Asigna la iframe cargada como fuente
       // canvas.getContext("2d") // Asigna la iframe cargada como fuente
       iframe.classList.add("img-fluid"); // Asignar clases
       iframe.classList.add("pointer-sm"); // Asignar clases

@@ -277,10 +277,9 @@ async function fillTable(show_toas = true) {
          `;
       let column_img;
       if (obj.img_path != null) {
-         if (obj.img_path.length > 1) column_img = `<img src="../assets/img/${obj.img_path}" class="img-fluid rounded-lg" style="max-height: 120px;"/>`
+         if (obj.img_path.length > 1) column_img = `<img src="../assets/img/${obj.img_path}" class="img-fluid rounded-lg" style="max-height: 120px;"/>`;
          else column_img = `<img src="../assets/img/cargar_imagen.png" class="img-fluid rounded-lg" style="max-height: 120px;"/>`;
-      } 
-      else column_img = `<img src="../assets/img/cargar_imagen.png" class="img-fluid rounded-lg" style="max-height: 120px;"/>`;
+      } else column_img = `<img src="../assets/img/cargar_imagen.png" class="img-fluid rounded-lg" style="max-height: 120px;"/>`;
       // : ` <div class="text-center align-middle">
       //       <i class="fa-solid fa-circle-xmark fa-2x icono" style="color:red"></i>
       //    </div> `;
@@ -301,6 +300,7 @@ async function fillTable(show_toas = true) {
 
       list.push([column_vacancy, column_company, column_salary, column_job_type, column_active, column_img, column_buttons]);
    });
+   console.log("list", list);
    //Dibujar Tabla
    await table.rows.add(list).draw();
    await table.columns.adjust().draw();
@@ -591,7 +591,7 @@ input_name_publication_mode.click(function (e) {
 });
 
 function resetImgPreviewVacancy(file_path) {
-   const file = file_path ?? "/assets/img/cargar_imagen.png";
+   const file = file_path ?? "../assets/img/cargar_imagen.png";
    // Agrega la imagen a la vista previa
    preview_img.html(""); // Limpia la vista previa antes de agregar la nueva imagen
    preview_img.attr("src", file);
