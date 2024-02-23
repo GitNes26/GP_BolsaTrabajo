@@ -124,7 +124,7 @@ if (location.pathname == "/") needCookies = false;
 else if (location.pathname == "/index.php") needCookies = false;
 else if (location.pathname == "/registro-perfil.php") needCookies = false;
 
-if (!Cookies.get("session") && needCookies) location.reload();
+if (!["/empleos/", "/empleos/index.php"].includes(location.pathname)) if (!Cookies.get("session") && needCookies) location.reload();
 
 let inIndex = false;
 if (location.pathname == "/pages") inIndex = true;
