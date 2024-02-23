@@ -2,9 +2,9 @@
 include "../templates/validates.php";
 
 $classBody = "hold-transition sidebar-mini layout-fixed ";
-if ($URL_SERVER == "/pages") $classBody = "layout-top-nav ";
-elseif ($URL_SERVER == "/pages/") $classBody = "layout-top-nav ";
-elseif ($URL_SERVER == "/pages/index.php") $classBody = "layout-top-nav ";
+if ($URL_SERVER == "/empleos/pages") $classBody = "layout-top-nav ";
+elseif ($URL_SERVER == "/empleos/pages/") $classBody = "layout-top-nav ";
+elseif ($URL_SERVER == "/empleos/pages/index.php") $classBody = "layout-top-nav ";
 
 if (strpos($classBody, 'layout-top-nav') !== 0) $classBody .= "layout-navbar-fixed ";
 ?>

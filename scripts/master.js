@@ -1,7 +1,7 @@
 // #region FUNCIONES DE CAJON
 
 //#region VARIABLES
-const URL_BASE = $("#url_base").val(),
+const URL_BASE = $("#url_base").val() + "/empleos",
    BACKEND_PATH = `${URL_BASE}/backend`,
    PAGES_PATH = `${URL_BASE}/pages`,
    EMAILS_PATH = `/emails/NewMemberEmail_copy.php`,
@@ -127,9 +127,10 @@ else if (location.pathname == "/registro-perfil.php") needCookies = false;
 if (!["/empleos/", "/empleos/index.php"].includes(location.pathname)) if (!Cookies.get("session") && needCookies) location.reload();
 
 let inIndex = false;
-if (location.pathname == "/empleos/pages") inIndex = true;
-else if (location.pathname == "/empleos/pages/") inIndex = true;
-else if (location.pathname == "/empleos/pages/index.php") inIndex = true;
+if (["/empleos/pages/index.php", "/empleos/pages/", "/empleos/pages", "/empleos/", "/empleos"].includes(location.pathname)) inIndex = true;
+// if (location.pathname == "/empleos/pages") inIndex = true;
+// else if (location.pathname == "/empleos/pages/") inIndex = true;
+// else if (location.pathname == "/empleos/pages/index.php") inIndex = true;
 
 const ajaxRequestAsync = async (url, data, close_modal = null, show_blockUI = true, show_toast = true) => {
    try {

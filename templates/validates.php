@@ -60,6 +60,7 @@ if ($path != "perfil.php") {
       // echo "URL_SERVER: $URL_SERVER)<br>";
       // echo "ADMIN_PATH: ".print_r($ADMIN_PATH)."<br>";
    }
+   echo $URL_SERVER;
    if (!$access) {
       if ($URL_SERVER == "/pages") return;
       elseif ($URL_SERVER == "/pages/") return;

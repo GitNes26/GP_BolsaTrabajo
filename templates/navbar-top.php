@@ -1,7 +1,7 @@
 <nav class="main-header navbar navbar-expand-md navbar-light text-sm">
    <div class="container-fluid">
-      <a href="<?php echo($URL_BASE) ?>/pages" class="navbar-brand">
-         <img src="<?php echo($ICONO) ?>" alt="Logo" class="brand-image" style="opacity: .8;" id="img-logo-menu">
+      <a href="<?=$URL_BASE?>/pages" class="navbar-brand">
+         <img src="<?=$ICONO?>" alt="Logo" class="brand-image" style="opacity: .8;" id="img-logo-menu">
          <!-- <span class="brand-text d-sm-inline d-md-none">BT</span> -->
          <span class="brand-text d-md-inline d-none fw-bolder h3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bolsa
             de Trabajo</span>
@@ -87,8 +87,8 @@
                <i class="fas fa-door-closed"></i>
             </a>
             <span class='d-block text-decoration-none text-bold'>
-               <a href="/pages/perfil.php" title="Ir a mi perfil"><i
-                     class='text-break'><?php echo "$role:&nbsp; $_COOKIE[email]" ?></i></a>
+               <a href="<?=$URL_BASE?>/pages/perfil.php" title="Ir a mi perfil"><i
+                     class='text-break'><?="$role:&nbsp; $_COOKIE[email]"?></i></a>
             </span>
          </li>
          <!-- <li class="nav-item ml-1">

@@ -3,7 +3,7 @@ $("#card_register").hide();
 // const BACKEND_PATH = `${URL_BASE}/Backend`;
 // const PAGES_PATH = `${URL_BASE}/pages`;
 // const EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;
-const EMAIL = `/emails/email.php`;
+const EMAIL = `/empleos/emails/email.php`;
 
 const join_now = $("#join_now").val();
 
