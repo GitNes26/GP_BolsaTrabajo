@@ -1,6 +1,6 @@
 <aside class="control-sidebar control-sidebar-dark" style="display: none;">
 
-  <div class="p-3 control-sidebar-content" style="">
+  <div class="p-3 control-sidebar-content">
     <h5>Customize AdminLTE</h5>
     <hr class="mb-2">
     <div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Dark Mode</span></div>
