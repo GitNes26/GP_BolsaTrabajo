@@ -127,7 +127,7 @@ else if (location.pathname == "/registro-perfil.php") needCookies = false;
 if (!["/empleos/", "/empleos/index.php"].includes(location.pathname)) if (!Cookies.get("session") && needCookies) location.reload();
 
 let inIndex = false;
-if (["/empleos/pages/index.php", "/empleos/pages/", "/empleos/pages", "/empleos/", "/empleos"].includes(location.pathname)) inIndex = true;
+if (["/empleos/pages/index.php", "/empleos/pages/", "/empleos/pages"].includes(location.pathname)) inIndex = true;
 console.log("pathname", location.pathname, "inIndex", inIndex);
 // if (location.pathname == "/empleos/pages") inIndex = true;
 // else if (location.pathname == "/empleos/pages/") inIndex = true;
