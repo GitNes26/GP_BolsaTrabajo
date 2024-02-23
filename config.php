@@ -27,7 +27,7 @@ $CONN_DB = $CONN_DB_LOCAL;
 #region CONSTANTES RUTAS
 $ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
 
-$URL_BASE = "";
+$URL_BASE = "/empleos";
 // $PROTOCOL = $_SERVER["HTTPS"] == "on" ? "https" : "http";
 $URL_MAIN = "http://$_SERVER[HTTP_HOST]$URL_BASE";
 $URL_BASE = $URL_MAIN;
