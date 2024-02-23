@@ -21,7 +21,7 @@ $CONN_DB_WEB = array(
   "DB_PWD" => "lybY~fUnIs}t",
   "DB_NAME" => "pagprincipal_db_bolsa_trabajo",
 );
-$CONN_DB = $CONN_DB_LOCAL;
+$CONN_DB = $CONN_DB_WEB;
 #endregion CONSTANTES DE CONFIGURACION
 
 #region CONSTANTES RUTAS
