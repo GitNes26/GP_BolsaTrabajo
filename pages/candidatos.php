@@ -287,7 +287,8 @@ $current_page = "Candidatos";
 
                         <div class="widget-user-header bg-success" id="d_div_header">
                            <h3 class="widget-user-username im_output">
-                              <span id="d_output_name">[Mi Nombre]</span> - <span class="h6 fst-italic" id="d_output_birthdate">[Mi edad]</span>
+                              <span id="d_output_name">[Mi Nombre]</span> - <span class="h6 fst-italic"
+                                 id="d_output_birthdate">[Mi edad]</span>
                            </h3>
                            <h5 class="widget-user-desc im_output" id="d_output_profession">[Mi Profesión]</h5>
                            <h1 class="text-end fw-bolder" id="d_output_enable">DISPONIBLE</h1>
@@ -296,7 +297,7 @@ $current_page = "Candidatos";
                            <label>
                               <div id="d_preview_photo" class="d-flex justify-content-center">
                                  <img class="img-circle elevation-2 bg-white pointer-sm opacity-100 d-none"
-                                    id="d_output_photo" src="/assets/img/sin_perfil.webp" alt="Foto de perfil"
+                                    id="d_output_photo" src="../assets/img/sin_perfil.webp" alt="Foto de perfil"
                                     title="Foto de perfil">
                               </div>
                            </label>

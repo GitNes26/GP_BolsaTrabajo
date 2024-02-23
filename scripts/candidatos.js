@@ -250,8 +250,8 @@ async function fillTable() {
       //Campos
       let column_photo =
             obj.photo_path == "" || obj.photo_path == null
-               ? `<img class="img-fluid rounded-lg" src="/assets/img/sin_perfil.webp" style="max-height: 150px !important;" />`
-               : `<img class="img-fluid rounded-lg" src="/assets/img/${obj.photo_path}" style="max-height: 150px !important;" />`,
+               ? `<img class="img-fluid rounded-lg" src="../assets/img/sin_perfil.webp" style="max-height: 150px !important;" />`
+               : `<img class="img-fluid rounded-lg" src="../assets/img/${obj.photo_path}" style="max-height: 150px !important;" />`,
          column_candidate = `
 				<b>${obj.name} ${obj.last_name}</b><br>
 				<i>(${age})</i>
