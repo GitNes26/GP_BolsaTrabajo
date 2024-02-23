@@ -29,7 +29,7 @@ email.focus();
 // const dark_mode = $("body").hasClass("dark-mode") ? true : false;
 // Cookies.set("dark_mode", dark_mode);
 // check_theme.is("Cheked",dark_mode)
-Cookies.get("dark_mode") ? $("body").addClass("dark-mode") : $("body").removeClass("dark-mode");
+// Cookies.get("dark_mode") ? $("body").addClass("dark-mode") : $("body").removeClass("dark-mode");
 
 // });
 

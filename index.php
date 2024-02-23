@@ -82,7 +82,7 @@ if (isset($_GET["p"])) {
 <body data-spy="scroll" data-target=".navbar" data-offset="90"
    class="particles_special_id green-version body-login <?= $dark_mode ?>">
    <input type="hidden" id="url_base" value="<?= $URL_BASE ?>">
-   <!-- <input type="hidden" id="join_now" value="<?= $join_now ?>"> -->
+   <input type="hidden" id="join_now" value="<?= $join_now ?>">
 
    <div id="particles-js" class="bg-index"></div>
    <!-- start slider -->
