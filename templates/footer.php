@@ -62,9 +62,9 @@
 <script src="<?=$PLUGINS_PATH?>/js-cookie/js.cookie.min.js"></script>
 
 <!-- SUMMERNOTE - EDITOR DE TEXTO -->
-<script src="/plugins/summernote-0.8.18/summernote.min.js"></script>
-<script src="/plugins/summernote-0.8.18/summernote-bs4.min.js"></script>
-<script src="/plugins/summernote-0.8.18/lang/summernote-es-ES.min.js"></script>
+<script src="<?=$PLUGINS_PATH?>/summernote-0.8.18/summernote.min.js"></script>
+<script src="<?=$PLUGINS_PATH?>/summernote-0.8.18/summernote-bs4.min.js"></script>
+<script src="<?=$PLUGINS_PATH?>/summernote-0.8.18/lang/summernote-es-ES.min.js"></script>
 
 <!-- slick-carousel 1.8.1 -->
 <!-- <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script> -->

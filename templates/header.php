@@ -66,7 +66,7 @@ if (strpos($classBody, 'layout-top-nav') !== 0) $classBody.= "layout-navbar-fixe
 
    <!-- SUMMERNOTE - EDITOR DE TEXTO -->
    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">  -->
-   <link rel="stylesheet" href="/plugins/summernote-0.8.18/summernote.min.css">
+   <link rel="stylesheet" href="<?=$PLUGINS_PATH?>/summernote-0.8.18/summernote.min.css">
 
    <!-- slick-carousel 1.8.1 -->
    <!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/> -->
