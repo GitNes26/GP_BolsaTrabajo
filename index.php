@@ -267,7 +267,7 @@ if (isset($_GET["p"])) {
 
    <!-- Particular JS -->
    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-   <script src="<?= $SCRIPTS_PATH ?>/particles.js"></script>
+   <!-- <script src="<?= $SCRIPTS_PATH ?>/particles.js"></script> -->
 
    <script src="<?= $SCRIPTS_PATH ?>/master.js"></script>
    <script src="<?= $SCRIPTS_PATH ?>/login.js"></script>
