@@ -1,12 +1,14 @@
 <?php
 
-class Connection{
+class Connection
+{
 	private $conn;
-  	// private $database;
-	function __construct() {
+	// private $database;
+	function __construct()
+	{
 		$ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
 
-		include "$ROOT/config.php";
+		include "$ROOT/empleos/config.php";
 		$CONN_OBJ = $CONN_DB;
 		$this->conn = null;
 
@@ -23,12 +25,13 @@ class Connection{
 	}
 
 
-  /*
+	/*
     $query --> (string) consutla 
     $array --> (bool) true= si desea esperar más de un registro como respuesta || false = si solo espera un resultado (un objeto)
   */
-	function Select($query, $array=true){
-		try{
+	function Select($query, $array = true)
+	{
+		try {
 			$sth = $this->conn->prepare($query);
 			$sth->execute();
 			$sth->setFetchMode(PDO::FETCH_ASSOC);
@@ -36,8 +39,7 @@ class Connection{
 			else $result = $sth->fetch();
 			// $this->conn = null;
 			return $result;
-		}
-		catch(PDOException $e){
+		} catch (PDOException $e) {
 			error_log('PDOException - ' . $e->getMessage(), 0);
 			http_response_code(500);
 			die($e->getMessage());
@@ -45,24 +47,24 @@ class Connection{
 	}
 
 
-	function ExecuteQuery($query, $parametros){
+	function ExecuteQuery($query, $parametros)
+	{
 		try {
 			$sth = $this->conn->prepare($query);
 			$sth->execute($parametros);
 			// $this->conn = null;
-		}
-		catch(PDOException $e){
+		} catch (PDOException $e) {
 			error_log('PDOException - ' . $e->getMessage(), 0);
 			http_response_code(500);
 			die($e->getMessage());
 			return $e->getMessage();
 		}
 	}
-	function GetInsertedId() {
+	function GetInsertedId()
+	{
 		try {
-         return $this->conn->lastInsertId();
-		}
-		catch(PDOException $e){
+			return $this->conn->lastInsertId();
+		} catch (PDOException $e) {
 			error_log('PDOException - ' . $e->getMessage(), 0);
 			http_response_code(500);
 			die($e->getMessage());
@@ -70,7 +72,8 @@ class Connection{
 		}
 	}
 
-	function Procedure($query){
+	function Procedure($query)
+	{
 		try {
 			$res = $this->conn->prepare($query);
 			$res->execute();
@@ -84,48 +87,52 @@ class Connection{
 		}
 	}
 
-	function defaultResponse() {
+	function defaultResponse()
+	{
 		$response = array(
-		"result" => null,
-		"message" => "mensaje para mostrar en consola, solo informativo",
-		"toast" => true,
-		"alert_icon" => 'warning',
-		"alert_title" => 'Oh oh',
-		"alert_text" => 'No se encontraron registros.',
-		// "alert_text" => 'No registers found.',
-		"data" => [],
+			"result" => null,
+			"message" => "mensaje para mostrar en consola, solo informativo",
+			"toast" => true,
+			"alert_icon" => 'warning',
+			"alert_title" => 'Oh oh',
+			"alert_text" => 'No se encontraron registros.',
+			// "alert_text" => 'No registers found.',
+			"data" => [],
 		);
 		return $response;
 	}
-	function correctResponse() {
+	function correctResponse()
+	{
 		$response = array(
-		"result" => true,
-		"message" => "mensaje para mostrar en consola, solo informativo",
-		"toast" => true,
-		"alert_icon" => 'success',
-		"alert_title" => 'Exito',
-		"alert_text" => 'Registros cargados.',
-		// "alert_text" => 'No registers found.',
-		"data" => [],
+			"result" => true,
+			"message" => "mensaje para mostrar en consola, solo informativo",
+			"toast" => true,
+			"alert_icon" => 'success',
+			"alert_title" => 'Exito',
+			"alert_text" => 'Registros cargados.',
+			// "alert_text" => 'No registers found.',
+			"data" => [],
 		);
 		return $response;
 	}
-	function catchResponse($error_message) {
-		error_log($error_message,"./error_log.log");
+	function catchResponse($error_message)
+	{
+		error_log($error_message, "./error_log.log");
 		$response = array(
-		"result" => false,
-		"message" => "Peticion fallida | $error_message",
-		"toast" => false,
-		"alert_icon" => 'error',
-		"alert_title" => 'Opps...!',
-		"alert_text" => "Ha ocurrido un error, verifica tus datos.\n $error_message",
-		// "alert_text" => "An error has occurred, please verify your info.\n $error_message",
-		"data" => [],
+			"result" => false,
+			"message" => "Peticion fallida | $error_message",
+			"toast" => false,
+			"alert_icon" => 'error',
+			"alert_title" => 'Opps...!',
+			"alert_text" => "Ha ocurrido un error, verifica tus datos.\n $error_message",
+			// "alert_text" => "An error has occurred, please verify your info.\n $error_message",
+			"data" => [],
 		);
 		return $response;
 	}
-	
-	function checkAvailableData($table, $column, $value, $propTitle, $input, $id, $secondTable=null) {
+
+	function checkAvailableData($table, $column, $value, $propTitle, $input, $id, $secondTable = null)
+	{
 
 		if ($secondTable) {
 			$query = "SELECT count(*) as duplicate FROM $table INNER JOIN $secondTable ON user_id=users.id WHERE $column='$value' AND active=1;";
@@ -133,11 +140,11 @@ class Connection{
 		} else {
 			$query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1";
 
-			
+
 			if ($id != null) $query = "SELECT count(*) as duplicate FROM $table WHERE $column='$value' AND active=1 AND id!=$id";
 		}
 
-		$consulta = $this->Select($query,false);
+		$consulta = $this->Select($query, false);
 		if ($consulta["duplicate"] > 0) {
 			$response = array(
 				"result" => true,
@@ -154,10 +161,11 @@ class Connection{
 			);
 		}
 		return $response;
- 	}
-	
+	}
 
-   function Close() {
-      $this->conn = null;
-   }
+
+	function Close()
+	{
+		$this->conn = null;
+	}
 }
