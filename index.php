@@ -1,5 +1,5 @@
 <?php
-require_once "empleos/config.php";
+require_once "config.php";
 if (isset($_COOKIE["session"])) {
    if ($_COOKIE["session"] == "active") {
       // if ($_COOKIE["profile_id"] == 2)
