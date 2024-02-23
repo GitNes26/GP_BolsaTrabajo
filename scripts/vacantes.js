@@ -592,7 +592,7 @@ input_name_publication_mode.click(function (e) {
 });
 
 function resetImgPreviewVacancy(file_path) {
-   const file = file_path ?? "../empleos/assets/img/cargar_imagen.png";
+   const file = file_path ?? "../assets/img/cargar_imagen.png";
    // Agrega la imagen a la vista previa
    preview_img.html(""); // Limpia la vista previa antes de agregar la nueva imagen
    preview_img.attr("src", file);
