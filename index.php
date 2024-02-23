@@ -2,9 +2,10 @@
 require_once "config.php";
 if (isset($_COOKIE["session"])) {
    if ($_COOKIE["session"] == "active") {
+      echo "aqui andamos";
       // if ($_COOKIE["profile_id"] == 2)
       // die(header("location:$CUSTOMER_PATH"));
-      die(header("location:$PAGES_PATH"));
+      // die(header("location:$PAGES_PATH"));
    }
 }
 // $join_now = '0';
