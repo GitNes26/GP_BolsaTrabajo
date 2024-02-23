@@ -32,8 +32,8 @@ $URL_BASE = "/empleos";
 $URL_MAIN = "https://$_SERVER[HTTP_HOST]$URL_BASE";
 $URL_BASE = $URL_MAIN;
 
-// $ICONO = "$URL_BASE/favicon.ico";
-$ICONO = "$URL_BASE/assets/img/logo_gomez_palacio.png"; #"https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
+$ICONO = "$URL_BASE/favicon.ico";
+// $ICONO = "$URL_BASE/assets/img/logo_gomez_palacio.png"; #"https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
 // $LOGO = "$URL_BASE/logo.ico";
 $LOGO = "$URL_BASE/assets/img/logo_gomez_palacio.png";
 // $LOGO = "https://www.ayuntamientogp.imagendigitalstudio.com/img/logo.png";
