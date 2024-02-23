@@ -428,8 +428,9 @@ function resetImgPreview(preview, img_path = null, iframe = false) {
 //#region MENUS
 const sidebar_menus = $("#sidebar_menus");
 const navbar_menus = $("#navbar_menus");
-const fillSidebar = async (show_toast = false, navbar_side = false) => {
+const fillSidebar = async (show_toast = false, navbar = false) => {
    // sidebar_menus.slideUp(1000);
+   console.log("a cargar menus");
    let role_id = Number(Cookies.get("role_id"));
    // role_id=1;
    let data = { op: "showMyMenus", role_id: role_id };
@@ -441,7 +442,7 @@ const fillSidebar = async (show_toast = false, navbar_side = false) => {
    let menus = "";
    let parent_menus = objResponse.filter((menu) => menu.belongs_to == 0);
    parent_menus = parent_menus.sort().map((parent_menu) => {
-      if (navbar_side) {
+      if (navbar) {
          menus += ` <li class="nav-item dropdown text-light">
 			<a id="submenus${parent_menu.id}" href="#" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
 				class="nav-link dropdown-toggle"><i class="nav-icon ${parent_menu.icon} mr-2"></i> ${parent_menu.menu}
@@ -462,7 +463,7 @@ const fillSidebar = async (show_toast = false, navbar_side = false) => {
       let children_menus = objResponse.filter((menu) => menu.belongs_to == parent_menu.id);
       children_menus.sort((a, b) => b.order - a.order);
       children_menus.map(async (child_menu) => {
-         if (navbar_side) {
+         if (navbar) {
             menus += `
 				<li>
 					<a href="${PAGES_PATH}/${child_menu.file_path}" class="dropdown-item text-xs"><i class="nav-icon ${child_menu.icon} mr-2"></i> ${child_menu.menu}</a>
@@ -488,12 +489,13 @@ const fillSidebar = async (show_toast = false, navbar_side = false) => {
 				</ul>`;
          }
       });
-      if (navbar_side) menus += `</ul>`;
+      if (navbar) menus += `</ul>`;
       menus += `</li>`;
    });
-   if (navbar_side) await navbar_menus.append(menus);
+   if (navbar) await navbar_menus.append(menus);
    else await sidebar_menus.append(menus);
    // sidebar_menus.slideDown(1000);
+   console.log("menus cargados", menus);
 };
 if (sidebar_menus.length > 0) fillSidebar();
 else if (inIndex) fillSidebar(false, true);
