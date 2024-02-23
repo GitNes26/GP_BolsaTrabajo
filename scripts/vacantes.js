@@ -79,7 +79,6 @@ async function init() {
 			<span class="">${objCompany.description}</span>
 		`);
    }
-   console.log("a rellenar");
    fillTable();
 
    if (role_cookie < 3) fillSelect2(URL_COMPANY_APP, -1, input_company_id);
@@ -234,7 +233,7 @@ form.on("submit", async function (e) {
 });
 
 async function fillTable(show_toas = true) {
-   console.log("a rellenar->fillTable");
+   // console.log("a rellenar->fillTable");
 
    let data = { op: "index" };
    if (role_cookie == 3) data = { op: "indexByCompany", input_company_id: company_id };
@@ -246,7 +245,7 @@ async function fillTable(show_toas = true) {
 
    const list = [];
    let objResponse = ajaxResponse.data;
-   console.log("objResponse", objResponse);
+   // console.log("objResponse", objResponse);
 
    objResponse.map((obj) => {
       const today = moment(),
@@ -302,7 +301,7 @@ async function fillTable(show_toas = true) {
 
       list.push([column_vacancy, column_company, column_salary, column_job_type, column_active, column_img, column_buttons]);
    });
-   console.log("list", list);
+   // console.log("list", list);
    //Dibujar Tabla
    await table.rows.add(list).draw();
    await table.columns.adjust().draw();
