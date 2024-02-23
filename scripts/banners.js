@@ -484,7 +484,7 @@ async function editObj(btn_edit) {
    else {
       haveImg = true;
       // console.log("tengo imagen guardada");
-      resetImgPreviewBanner(`/assets/img/${obj.file_path}`);
+      resetImgPreviewBanner(`/empleos/assets/img/${obj.file_path}`);
       vImgPath = obj.file_path;
       // input_file_path.val(obj.file_path);
    }

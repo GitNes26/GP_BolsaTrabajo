@@ -393,7 +393,7 @@ async function fillBanners() {
    // console.log(ajaxResponse);
    ajaxResponse.data.map((obj) => {
       //busco los elementos que existen en mi template y le asigno valores a sus atributos y contenido...
-      template_banner.querySelector("img").src = `/assets/img/${obj.file_path}`;
+      template_banner.querySelector("img").src = `/empleos/assets/img/${obj.file_path}`;
       template_banner.querySelector("img").style = `border-radius: 10px;`;
       template_banner.querySelector("img").alt = `${obj.file_path.split("/").reverse()[0]}`;
       if (obj.link != null) {

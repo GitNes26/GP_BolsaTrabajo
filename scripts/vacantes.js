@@ -79,7 +79,7 @@ async function init() {
 			<span class="">${objCompany.description}</span>
 		`);
    }
-
+   console.log("a rellenar");
    fillTable();
 
    if (role_cookie < 3) fillSelect2(URL_COMPANY_APP, -1, input_company_id);
@@ -234,6 +234,8 @@ form.on("submit", async function (e) {
 });
 
 async function fillTable(show_toas = true) {
+   console.log("a rellenar->fillTable");
+
    let data = { op: "index" };
    if (role_cookie == 3) data = { op: "indexByCompany", input_company_id: company_id };
    const ajaxResponse = await ajaxRequestAsync(URL_VACANCY_APP, data, null, true, show_toas);
@@ -244,7 +246,7 @@ async function fillTable(show_toas = true) {
 
    const list = [];
    let objResponse = ajaxResponse.data;
-   // console.log(objResponse);
+   console.log("objResponse", objResponse);
 
    objResponse.map((obj) => {
       const today = moment(),
@@ -426,7 +428,7 @@ async function editObj(btn_edit) {
    else {
       haveImg = true;
       // console.log("tengo imagen guardada");
-      resetImgPreviewVacancy(`/assets/img/${obj.img_path}`);
+      resetImgPreviewVacancy(`/empleos/assets/img/${obj.img_path}`);
       vImgPath = obj.img_path;
       // input_img_path.val(obj.img_path);
    }
@@ -591,7 +593,7 @@ input_name_publication_mode.click(function (e) {
 });
 
 function resetImgPreviewVacancy(file_path) {
-   const file = file_path ?? "../assets/img/cargar_imagen.png";
+   const file = file_path ?? "../empleos/assets/img/cargar_imagen.png";
    // Agrega la imagen a la vista previa
    preview_img.html(""); // Limpia la vista previa antes de agregar la nueva imagen
    preview_img.attr("src", file);
