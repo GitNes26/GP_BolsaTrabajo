@@ -98,7 +98,7 @@ $current_page = "Solicitudes";
                <!-- DIV IMAGEN CARGADA -->
                <div class="text-center div_img d-none">
                   <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
-                  <img src="/assets/img/cargar_imagen.png" controls preview="true" class="rounded-lg img-fluid preview_img" height="250px"></img>
+                  <img src="../assets/img/cargar_imagen.png" controls preview="true" class="rounded-lg img-fluid preview_img" height="250px"></img>
                   <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
                </div>
 
@@ -163,7 +163,7 @@ $current_page = "Solicitudes";
                         <div class="widget-user-image">
                            <label>
                               <div id="d_preview_photo" class="d-flex justify-content-center">
-                                 <img class="img-circle elevation-2 bg-white pointer-sm opacity-100 d-none" id="d_output_photo" src="/assets/img/sin_perfil.webp" alt="Foto de perfil" title="Foto de perfil">
+                                 <img class="img-circle elevation-2 bg-white pointer-sm opacity-100 d-none" id="d_output_photo" src="../assets/img/sin_perfil.webp" alt="Foto de perfil" title="Foto de perfil">
                               </div>
                            </label>
                         </div>

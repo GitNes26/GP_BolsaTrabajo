@@ -8,7 +8,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 ?>
 
 <!-- Content Wrapper. Contenido de la pagina -->
-<div class="content-wrapper text-sm" style="height: 96% !importanta;">
+<div class="content-wrapper text-sm" style="height: 96% !important;">
    <!-- Content Header (Encabezado en el contenido de la pagina) -->
    <section class="content-header pt_sm_10">
       <div class="container-fluid">
@@ -138,7 +138,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                   <template id="template_banner">
                      <div class="swiper-slide">
                         <a target="_blank" rel="noopener noreferrer">
-                           <img class="img-carrusel" src="/assets/img/cargar_imagen.png" alt="img">
+                           <img class="img-carrusel" src="../assets/img/cargar_imagen.png" alt="img">
                         </a>
                      </div>
                   </template>
@@ -193,7 +193,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                   <!-- DIV IMAGEN CARGADA -->
                   <div class="text-center div_img d-none">
                      <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
-                     <img src="/assets/img/cargar_imagen.png" controls preview="true"
+                     <img src="../assets/img/cargar_imagen.png" controls preview="true"
                         class="rounded-lg img-fluid preview_img" height="250px"></img>
                      <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
                   </div>
@@ -246,7 +246,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                   <template id="template_banner">
                      <div class="swiper-slide">
                         <a target="_blank" rel="noopener noreferrer">
-                           <img class="img-carrusel" src="/assets/img/cargar_imagen.png" alt="img">
+                           <img class="img-carrusel" src="../assets/img/cargar_imagen.png" alt="img">
                         </a>
                      </div>
                   </template>
@@ -276,7 +276,7 @@ $pagina_acutal = "Bolsa de Trabajo";
          <template id="template_banner">
             <div class="swiper-slide">
                <a target="_blank" rel="noopener noreferrer">
-                  <img class="img-carrusel" src="/assets/img/cargar_imagen.png" alt="img">
+                  <img class="img-carrusel" src="../assets/img/cargar_imagen.png" alt="img">
                </a>
             </div>
          </template>
@@ -324,7 +324,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                <!-- DIV IMAGEN CARGADA -->
                <div class="text-center div_img d-none">
                   <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
-                  <img src="/assets/img/cargar_imagen.png" controls preview="true"
+                  <img src="../assets/img/cargar_imagen.png" controls preview="true"
                      class="rounded-lg img-fluid preview_img" height="250px"></img>
                   <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
                </div>
@@ -425,7 +425,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 <?php
 include "../templates/footer.php";
 ?>
-<script src="<?php echo($SCRIPTS_PATH) ?>/index.js"></script>
+<script src="<?php echo ($SCRIPTS_PATH) ?>/index.js"></script>
 <script>
 // $(function () {
 //    /* BOOTSTRAP SLIDER */

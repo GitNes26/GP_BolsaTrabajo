@@ -96,7 +96,7 @@ $current_page = "Solicitudes";
                <!-- DIV IMAGEN CARGADA -->
                <div class="text-center div_img d-none">
                   <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
-                  <img src="/assets/img/cargar_imagen.png" controls preview="true" class="rounded-lg img-fluid preview_img" height="250px"></img>
+                  <img src="../assets/img/cargar_imagen.png" controls preview="true" class="rounded-lg img-fluid preview_img" height="250px"></img>
                   <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
                </div>
 

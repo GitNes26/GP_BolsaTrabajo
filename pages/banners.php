@@ -20,7 +20,8 @@ $current_page = "Banners";
             </div>
             <div class="col-sm-6">
                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="<?php echo $ADMIN_PATH ?>"><i class="fa-solid fa-house"></i>&nbsp; <?php echo $role ?? "" ?></a></li>
+                  <li class="breadcrumb-item"><a href="<?php echo $ADMIN_PATH ?>"><i
+                           class="fa-solid fa-house"></i>&nbsp; <?php echo $role ?? "" ?></a></li>
                   <!-- <li class="breadcrumb-item">Administración</li> -->
                   <li class="breadcrumb-item active"><?php echo $current_page ?></li>
                </ol>
@@ -37,14 +38,16 @@ $current_page = "Banners";
          <?php if ($permission_write ?? false): ?>
          <div class="container-fluid mt-2">
             <!-- <i class="text-muted h6 text-sm">Medidas: <b>1400px</b> largo &nbsp; <i class="fas fa-times"></i> &nbsp; <b>132px</b> alto</i> -->
-            <i class="text-muted h6 text-sm">Medidas: <b>350px-400px</b> largo &nbsp; <i class="fas fa-times"></i> &nbsp; <b>340px</b> alto</i> 
-            <button id="btn_modal_form" class="float-end btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR BANNER</button>
+            <i class="text-muted h6 text-sm">Medidas: <b>350px-400px</b> largo &nbsp; <i class="fas fa-times"></i>
+               &nbsp; <b>340px</b> alto</i>
+            <button id="btn_modal_form" class="float-end btn btn-success fw-bold" data-bs-toggle="modal"
+               data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR BANNER</button>
          </div>
          <?php endif ?>
          <div class="card-body">
             <!-- tabla -->
             <div class="table-responsive">
-              <table id="table" class="table table-hover text-center" style="width:100%">
+               <table id="table" class="table table-hover text-center" style="width:100%">
                   <thead class="thead-dark">
                      <tr>
                         <th scope="col">Fecha inicial</th>
@@ -68,7 +71,7 @@ $current_page = "Banners";
                         <th scope="col">Activo</th>
                         <th scope="col">Acciones</th>
                      </tr>
-                  </tfoot>  
+                  </tfoot>
                </table>
             </div>
          </div>
@@ -80,11 +83,13 @@ $current_page = "Banners";
    <!-- /.content -->
 
    <!-- Modal -->
-   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" data-bs-backdrop="static">
+   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"
+      data-bs-backdrop="static">
       <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
          <form class="modal-content" id="form" enctype="multipart/form-data">
             <div class="modal-header">
-               <h5 class="modal-title fw-bold" id="modalLabel"><i class="fa-duotone fa-bullhorn"></i></i>&nbsp; REGISTRAR BANNER</h5>
+               <h5 class="modal-title fw-bold" id="modalLabel"><i class="fa-duotone fa-bullhorn"></i></i>&nbsp;
+                  REGISTRAR BANNER</h5>
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -93,27 +98,35 @@ $current_page = "Banners";
 
                <div class="row">
                   <div class="mb-3 col">
-                     <label for="input_date_init" class="form-label">Fecha inicial: <span class="obligatory"></span></label>
-                     <input class="form-control" type="date" id="input_date_init" name="input_date_init" data-input-name="FECHA DE INICIO">
+                     <label for="input_date_init" class="form-label">Fecha inicial: <span
+                           class="obligatory"></span></label>
+                     <input class="form-control" type="date" id="input_date_init" name="input_date_init"
+                        data-input-name="FECHA DE INICIO">
                   </div>
                   <div class="mb-3 col">
-                     <label for="input_date_end" class="form-label">Fecha final: <span class="obligatory"></span></label>
-                     <input class="form-control" type="date" id="input_date_end" name="input_date_end" data-input-name="FECHA FINAL">
+                     <label for="input_date_end" class="form-label">Fecha final: <span
+                           class="obligatory"></span></label>
+                     <input class="form-control" type="date" id="input_date_end" name="input_date_end"
+                        data-input-name="FECHA FINAL">
                   </div>
                </div>
                <div class="mb-3 col">
                   <label for="input_link" class="form-label">Enlace:</span></label>
-                  <input class="form-control not_validate" type="text" id="input_link" name="input_link" data-input-name="ENLACE">
+                  <input class="form-control not_validate" type="text" id="input_link" name="input_link"
+                     data-input-name="ENLACE">
                </div>
                <!-- DIV CARGAR IMAGEN -->
                <div class="mb-3">
-                  <label for="input_file_path" class="form-label">Cargar banner: <span class="obligatory"></span></label>
-                  <input class="form-control" type="file" id="input_file_path" name="input_file_path" data-input-name="IMAGEN" accept="image/*">
+                  <label for="input_file_path" class="form-label">Cargar banner: <span
+                        class="obligatory"></span></label>
+                  <input class="form-control" type="file" id="input_file_path" name="input_file_path"
+                     data-input-name="IMAGEN" accept="image/*">
                   <!-- <div class="form-text">Subir archivo con un peso máximo de <b id="peso_archivo"></b><b>MB</b>.</div> -->
                   <!-- DIV IMAGEN CARGADO -->
                   <div class="text-center">
                      <label for="preview_file" class="form-label">Banner cargado:</label><br>
-                     <img src="/assets/img/cargar_imagen.png" controls preview="true" class="rounded-lg img-fluid" id="preview_file" height="250px"></img>
+                     <img src="../assets/img/cargar_imagen.png" controls preview="true" class="rounded-lg img-fluid"
+                        id="preview_file" height="250px"></img>
                      <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
                   </div>
                </div>
