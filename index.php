@@ -204,7 +204,7 @@ if (isset($_GET["p"])) {
                         <div class="login-logo">
                            <img src="<?= $LOGO ?>" alt='GP Logo' class='img-fluid' />
                         </div>
-                        <div class="col-md-8 my-auto mx-auto p-3 p-sm-5 fs-5">
+                        <div class="col-md-8 my-auto mx-auto p-3 p-sm-5 fs-5 overflow-auto">
                            <h1 class="fw-bold text-uppercase text-center">Aviso de privacidad simplificado</h1>
                            <p>El R. Ayuntamiento de Gómez Palacio, es el responsable del tratamiento de los datos
                               personales que nos proporcione.</p>
