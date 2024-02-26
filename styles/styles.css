@@ -58,6 +58,7 @@ tr td {
    background-color: #edf4ed /* #E9ECEF */;
    border-radius: 15px;
    top: 95%;
+   opacity: 0;
 }
 .slideUpEnter{
    animation: slideUpEnter 1s cubic-bezier(0.72, 0.01, 0.63, 1.18)  forwards;
@@ -69,18 +70,22 @@ tr td {
 
 @keyframes slideUpEnter{
    to{
+      opacity: 0;
       top: 0%;
    }
    from {
+      opacity: 1;
       top: 95%;      
    }
 }
 
 @keyframes slideDownExit{
    to{
+      opacity: 1;
       top: 95%;      
    }
    from {
+      opacity: 0;
       top:0%
    }
 }
