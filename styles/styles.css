@@ -59,6 +59,7 @@ tr td {
    border-radius: 15px;
    top: 95%;
    opacity: 0;
+   max-height: 90vh;
 }
 .slideUpEnter{
    animation: slideUpEnter 1s cubic-bezier(0.72, 0.01, 0.63, 1.18)  forwards;
