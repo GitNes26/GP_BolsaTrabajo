@@ -32,7 +32,7 @@ const id_cookie = Number(Cookies.get("user_id")),
    plural_object = $("#plural_object").val();
 
 let auth_token;
-console.log("🚀 ~ URL_BASE:", URL_BASE);
+// console.log("🚀 ~ URL_BASE:", URL_BASE);
 
 const SUMMERNOTE_CONFIG = {
    placeholder: "Escribir Habilidades, competencias, experiencias, observaciones, etc.",

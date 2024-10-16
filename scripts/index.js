@@ -392,16 +392,15 @@ async function fillBanners() {
    const ajaxResponse = await ajaxRequestAsync(URL_BANNER_APP, data, null, false, false);
    // console.log(ajaxResponse);
    ajaxResponse.data.map((obj) => {
-      console.log("🚀 ~ ajaxResponse.data.map ~ obj:", obj);
       //busco los elementos que existen en mi template y le asigno valores a sus atributos y contenido...
       template_banner.querySelector("img").src = `../assets/img/${obj.file_path}`;
       template_banner.querySelector("img").style = `border-radius: 10px;`;
       template_banner.querySelector("img").alt = `${obj.file_path.split("/").reverse()[0]}`;
-      template_banner.querySelector("a").href = "";
+      template_banner.querySelector("a").href = null;
       template_banner.querySelector("a").target = "";
       if (obj.link != null) {
          if (obj.link.length > 1) {
-            console.log("a ponerle el link", obj.link);
+            template_banner.querySelector("a").target = "_blank";
             template_banner.querySelector("a").href = obj.link;
          }
       }
