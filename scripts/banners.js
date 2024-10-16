@@ -385,8 +385,8 @@ async function fillTable(show_toas = true) {
          column_link = `<a href="${obj.link}" target="_blank" rel="noopener noreferrer">${obj.link}</a>`,
          column_file_path = `
 				<td class='align-middle'>
-					<img src='/assets/img/${obj.file_path}' class='img-fluid rounded shadow tooltip_imagen tt_banvertical' data-id='${obj.id}'></img>
-					<img src='/assets/img/${obj.file_path}' width='50' preload='true' class='td_img rounded' data-id='${obj.id}'></img>
+					<img src='../assets/img/${obj.file_path}' class='img-fluid rounded shadow tooltip_imagen tt_banvertical' data-id='${obj.id}'></img>
+					<img src='../assets/img/${obj.file_path}' width='50' preload='true' class='td_img rounded' data-id='${obj.id}'></img>
 				</td>`;
 
       (column_order_view = `
@@ -484,7 +484,6 @@ async function editObj(btn_edit) {
    else {
       haveImg = true;
       // console.log("tengo imagen guardada");
-      // resetImgPreviewBanner(`/empleos/assets/img/${obj.file_path}`);
       resetImgPreviewBanner(`../assets/img/${obj.file_path}`);
       vImgPath = obj.file_path;
       // input_file_path.val(obj.file_path);

@@ -305,14 +305,14 @@ async function showCandidate(id) {
    }
 
    haveImg = false;
-   if (obj.photo_path == "" || obj.photo_path == null) resetImgPreviewProfile(d_preview_photo, `/empleos/assets/img/sin_perfil.webp`, false, false);
+   if (obj.photo_path == "" || obj.photo_path == null) resetImgPreviewProfile(d_preview_photo, `../assets/img/sin_perfil.webp`, false, false);
    else {
       haveImg = true;
       // console.log("tengo imagen guardada");
-      resetImgPreviewProfile(d_preview_photo, `/empleos/assets/img/${obj.photo_path}`, false, false);
+      resetImgPreviewProfile(d_preview_photo, `../assets/img/${obj.photo_path}`, false, false);
       vLogoPath = obj.photo_path;
       // input_photo_path.val(obj.photo_path);
-      d_output_photo.attr("src", `/empleos/assets/img/${obj.photo_path}`);
+      d_output_photo.attr("src", `../assets/img/${obj.photo_path}`);
    }
    d_output_name.text(`${obj.name} ${obj.last_name}`);
    d_output_email.text(obj.email);
@@ -332,7 +332,7 @@ async function showCandidate(id) {
    else {
       haveCv = true;
       // console.log("tengo imagen guardada");
-      resetImgPreviewProfile(d_preview_cv, `/empleos/assets/img/${obj.cv_path}`, true, false);
+      resetImgPreviewProfile(d_preview_cv, `../assets/img/${obj.cv_path}`, true, false);
       vCvPath = obj.cv_path;
       // input_cv_path.val(obj.cv_path);
    }

@@ -361,14 +361,14 @@ async function fillInfo(show_toas = true) {
 
       haveImg = false;
       if (obj.photo_path == "" || obj.photo_path == null)
-         resetImgPreviewProfile($(`#${input_photo_path.attr("data-preview")}`), `/empleos/assets/img/sin_perfil.webp`);
+         resetImgPreviewProfile($(`#${input_photo_path.attr("data-preview")}`), `../assets/img/sin_perfil.webp`);
       else {
          haveImg = true;
          // console.log("tengo imagen guardada");
-         resetImgPreviewProfile($(`#${input_photo_path.attr("data-preview")}`), `/empleos/assets/img/${obj.photo_path}`);
+         resetImgPreviewProfile($(`#${input_photo_path.attr("data-preview")}`), `../assets/img/${obj.photo_path}`);
          vLogoPath = obj.photo_path;
          // input_photo_path.val(obj.photo_path);
-         output_photo.attr("src", `/empleos/assets/img/${obj.photo_path}`);
+         output_photo.attr("src", `../assets/img/${obj.photo_path}`);
       }
       input_name.val(obj.name);
       input_last_name.val(obj.last_name);
@@ -415,21 +415,21 @@ async function fillInfo(show_toas = true) {
       else {
          haveCv = true;
          // console.log("tengo imagen guardada");
-         resetImgPreviewProfile($(`#${input_cv_path.attr("data-preview")}`), `/empleos/assets/img/${obj.cv_path}`, true);
+         resetImgPreviewProfile($(`#${input_cv_path.attr("data-preview")}`), `../assets/img/${obj.cv_path}`, true);
          vCvPath = obj.cv_path;
          // input_cv_path.val(obj.cv_path);
       }
       changeEnable(obj.enable);
    } else if (role_cookie == 3) {
       haveImg = false;
-      if (obj.logo_path == "" || obj.logo_path == null) resetImgPreviewProfile($(`#${input_logo_path.attr("data-preview")}`), `/empleos/assets/img/sin_perfil.webp`);
+      if (obj.logo_path == "" || obj.logo_path == null) resetImgPreviewProfile($(`#${input_logo_path.attr("data-preview")}`), `../assets/img/sin_perfil.webp`);
       else {
          haveImg = true;
          // console.log("tengo imagen guardada");
-         resetImgPreviewProfile($(`#${input_logo_path.attr("data-preview")}`), `/empleos/assets/img/${obj.logo_path}`);
+         resetImgPreviewProfile($(`#${input_logo_path.attr("data-preview")}`), `../assets/img/${obj.logo_path}`);
          vLogoPath = obj.logo_path;
          // input_logo_path.val(obj.logo_path);
-         output_logo.attr("src", `/empleos/assets/img/${obj.logo_path}`);
+         output_logo.attr("src", `../assets/img/${obj.logo_path}`);
       }
       input_company.val(obj.company);
       output_company.text(`${obj.company}`);

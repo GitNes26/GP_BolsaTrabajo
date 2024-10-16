@@ -427,7 +427,7 @@ async function editObj(btn_edit) {
    else {
       haveImg = true;
       // console.log("tengo imagen guardada");
-      resetImgPreviewVacancy(`/empleos/assets/img/${obj.img_path}`);
+      resetImgPreviewVacancy(`../assets/img/${obj.img_path}`);
       vImgPath = obj.img_path;
       // input_img_path.val(obj.img_path);
    }
