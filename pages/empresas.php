@@ -212,7 +212,7 @@ $current_page = "Empresas";
 <!-- Modal Ver Empresa -->
 <div class="modal fade" id="company_modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"
    data-bs-backdrop="static">
-   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
       <form class="modal-content" id="form" enctype="multipart/form-data">
          <div class="modal-header">
             <h5 class="modal-title fw-bold" id="modalLabel"><i class="fa-solid fa-buildings"></i>&nbsp; INFORMACIÓN DE
@@ -275,7 +275,7 @@ $current_page = "Empresas";
                   <!-- DATOS DE LA EMPRESA -->
                   <div class="row">
                      <div class="col">
-                        <div class="card card-success card-outline">
+                        <div class="card card-dark card-outline">
                            <div class="card-body box-profile">
                               <div class="text-center h2 fw-bolder">DATOS DE LA EMPRESA</div>
                               <div class="row">
