@@ -398,18 +398,13 @@ async function fillBanners() {
       template_banner.querySelector("img").style = `border-radius: 10px;`;
       template_banner.querySelector("img").alt = `${obj.file_path.split("/").reverse()[0]}`;
       template_banner.querySelector("a").href = "";
+      template_banner.querySelector("a").target = "";
       if (obj.link != null) {
          if (obj.link.length > 1) {
             console.log("a ponerle el link", obj.link);
             template_banner.querySelector("a").href = obj.link;
-         } else
-            template_banner.querySelector("a").addEventListener("click", function (event) {
-               event.preventDefault(); // Evita que el enlace redireccione
-            });
-      } else
-         template_banner.querySelector("a").addEventListener("click", function (event) {
-            event.preventDefault(); // Evita que el enlace redireccione
-         });
+         }
+      }
 
       // ya que termine de asignarle valores a mis elementos de la plantilla, creo un nodo llamado clone ya que duplicara el contenido de mi template
       let $clone = document.importNode(template_banner, true); //el primer parametro es el elemento a cloonar y el segundo parametro es para indicar que si quiero que se duplique  su contenid
