@@ -7,7 +7,7 @@ class Connection
 	function __construct()
 	{
 		$ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
-		$URL_BASE = ""; #/empleos
+		$URL_BASE = "/empleos"; #/empleos
 
 		include "$ROOT$URL_BASE/config.php";
 		$CONN_OBJ = $CONN_DB;

@@ -1,6 +1,6 @@
 <?php
 include "../templates/validates.php";
-$URL_BASE = ""; #/empleos
+$URL_BASE = "/empleos"; #/empleos
 
 $classBody = "hold-transition sidebar-mini layout-fixed ";
 if ($URL_SERVER == "$URL_BASE/pages") $classBody = "layout-top-nav ";
