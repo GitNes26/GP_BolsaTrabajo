@@ -289,7 +289,7 @@ async function editObj(btn_edit) {
 	await fillSelect2(URL_ROLE_APP, obj.role_id, input_role_id);
 	setTimeout(() => {
 		input_email.focus();
-	}, 500);
+	}, 850);
 }
 
 //ELIMINAR OBJETO

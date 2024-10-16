@@ -111,7 +111,7 @@ $current_page = "Candidatos";
                         data-preview="preview_photo">
                      <label for="input_photo_path">Foto de perfil
                         <div id="preview_photo" class="d-flex justify-content-center">
-                           <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar foto" id="output_photo"
+                           <img src="<?= $IMG_PATH ?>/cargar_imagen.png" alt="Cargar foto" id="output_photo"
                               class="img-fluid pointer p-3 rounded-lg" for="input_photo_path"
                               title="Haz clic aquí para cargar tu foto de perfil">
                         </div>
@@ -253,7 +253,7 @@ $current_page = "Candidatos";
                         <label for="input_cv_path" class="border rounded-lg">Cargar CV: <span
                               class="badge btn-outline-secondary btn-xs mt-2 h4">Cambiar archivo</span>
                            <div id="preview_cv" class="d-flex justify-content-center">
-                              <img src="<?=$IMG_PATH?>/cargar_archivo.png" alt="Cargar CV" id="output_cv"
+                              <img src="<?= $IMG_PATH ?>/cargar_archivo.png" alt="Cargar CV" id="output_cv"
                                  class="img-fluid pointer-sm p-5 rounded-lg" style="height: 150px;" for="input_cv_path"
                                  title="Haz clic aquí para cargar tu curriculum vitae">
                            </div>
@@ -339,7 +339,7 @@ $current_page = "Candidatos";
                            <p class="text-muted text-center">Software Engineer</p> -->
                                  <label for="d_input_cv_path" class="">
                                     <div id="d_preview_cv" class="d-flex justify-content-center">
-                                       <img src="<?=$IMG_PATH?>/cargar_archivo.png" alt="Cargar CV" id="d_output_cv"
+                                       <img src="<?= $IMG_PATH ?>/cargar_archivo.png" alt="Cargar CV" id="d_output_cv"
                                           class="img-fluid p-5 rounded-lg" style="height: 250px !important;"
                                           for="d_input_cv_path" title="Curriculum Vitae">
                                     </div>
@@ -380,4 +380,4 @@ $current_page = "Candidatos";
 <?php
 include "../templates/footer.php";
 ?>
-<script src="<?php echo($SCRIPTS_PATH) ?>/<?=substr($path,0,-4)?>.js"></script>
+<script src="<?php echo ($SCRIPTS_PATH) ?>/<?= substr($path, 0, -4) ?>.js"></script>

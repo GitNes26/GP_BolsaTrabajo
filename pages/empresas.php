@@ -111,7 +111,7 @@ $current_page = "Empresas";
                            data-preview="preview_logo">
                         <label for="input_logo_path">Logo
                            <div id="preview_logo" class="d-flex justify-content-center">
-                              <img src="<?=$IMG_PATH?>/cargar_imagen.png" alt="Cargar Logo" id="output_logo"
+                              <img src="<?= $IMG_PATH ?>/cargar_imagen.png" alt="Cargar Logo" id="output_logo"
                                  class="img-fluid pointer p-3 rounded-lg" for="input_logo_path"
                                  title="Haz clic aquí para cargar tu logo de empresa">
                            </div>
@@ -209,6 +209,110 @@ $current_page = "Empresas";
 </div>
 <!-- /.content-wrapper -->
 
+<!-- Modal Ver Empresa -->
+<div class="modal fade" id="company_modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"
+   data-bs-backdrop="static">
+   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <form class="modal-content" id="form" enctype="multipart/form-data">
+         <div class="modal-header">
+            <h5 class="modal-title fw-bold" id="modalLabel"><i class="fa-solid fa-buildings"></i>&nbsp; INFORMACIÓN DE
+               LA
+               EMPRESA</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body scroll-y">
+            <section class="content text-center">
+               <div class="content">
+                  <!-- DATOS DE CABECERA -->
+                  <div class="card card-widget widget-user shadow">
+                     <div class="widget-user-header bg-success" id="d_div_header">
+                        <h2 class="widget-user-username fw-bolder im_output" id="d_output_company">[Mi Compañia]
+                        </h2>
+                        <h5 class="lead im_output" id="d_output_location">[Ciudad, Estado]</h5>
+                        <!-- <h1 class="text-end fw-bolder" id="d_output_enable">[CONTRATANDO / SIN VACANTES]</h1> -->
+                     </div>
+                     <div class="widget-user-image">
+                        <label>
+                           <div id="d_preview_photo" class="d-flex justify-content-center">
+                              <img class="elevation-2 bg-white pointer-sm opacity-100 d-none" id="d_output_logo"
+                                 src="../assets/img/cargar_imagen.png" alt="Foto de la empresa"
+                                 title="Foto de la empresa">
+                           </div>
+                        </label>
+                     </div>
+                     <div class="card-footer">
+                        <div class="row">
+                           <div class="text-center h6 fw-bolder">DATOS DE CONTACTO</div>
+                           <div class="col-sm-4 border-right">
+                              <div class="description-block">
+                                 <p class="description-header im_output" id="d_output_contact_name">[Nombre del
+                                    Contacto]
+                                 </p>
+                                 <span class="description-text"><i class="fa-solid fa-user"></i></span>
+                              </div>
+                           </div>
+
+                           <div class="col-sm-4 border-right">
+                              <div class="description-block">
+                                 <p class="description-header im_output" id="d_output_contact_phone">[Telefono de
+                                    contacto]
+                                 </p>
+                                 <span class="description-text"><i class="fa-sharp fa-solid fa-phone"></i></span>
+                              </div>
+                           </div>
+
+                           <div class="col-sm-4">
+                              <div class="description-block">
+                                 <p class="description-header im_output" id="d_output_contact_email">
+                                    [correo_contacto@gmail.com]
+                                 </p>
+                                 <span class="description-text"><i class="fa-regular fa-envelope"></i></span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- DATOS DE LA EMPRESA -->
+                  <div class="row">
+                     <div class="col">
+                        <div class="card card-success card-outline">
+                           <div class="card-body box-profile">
+                              <div class="text-center h2 fw-bolder">DATOS DE LA EMPRESA</div>
+                              <div class="row">
+                                 <!-- GIRO Y CLASIFICACION -->
+
+                                 <div class="mb-3 col">
+                                    <div class="im_output">
+                                       <i class="fa-solid fa-briefcase"></i> &nbsp; Giro Empresarial
+                                       <p class="fw-bolder" id="d_output_business_line">[Giro Empresarial]</p>
+                                    </div>
+                                 </div>
+                                 <div class="mb-3 col">
+                                    <div class="im_output">
+                                       <i class="far fa-circle"></i> &nbsp; Clasificacion de Empresa
+                                       <p class="fw-bolder" id="d_output_company_ranking">[Clasificacion de Empresa]</p>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 <div class="mb-3 col">
+                                    <div class="im_output">
+                                       <i class="fa-regular fa-memo-circle-info"></i>&nbsp; Acerca de mi empresa
+                                       <p class="fw-bolder" id="d_output_description">...</p>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </section>
+         </div>
+   </div>
+   </form>
+</div>
+</div>
 
 </div>
 <!-- ./wrapper (este se abre en el Template-header) -->
@@ -216,4 +320,4 @@ $current_page = "Empresas";
 <?php
 include "../templates/footer.php";
 ?>
-<script src="<?php echo($SCRIPTS_PATH) ?>/<?=substr($path,0,-4)?>.js"></script>
+<script src="<?php echo ($SCRIPTS_PATH) ?>/<?= substr($path, 0, -4) ?>.js"></script>

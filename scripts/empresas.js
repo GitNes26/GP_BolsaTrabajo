@@ -26,7 +26,19 @@ const btn_modal_form = $("#btn_modal_form"),
    input_contact_phone = $("#input_contact_phone"),
    input_contact_email = $("#input_contact_email"),
    btn_submit = $("#btn_submit"),
-   btn_reset = $("#btn_reset");
+   btn_reset = $("#btn_reset"),
+   d_div_header = $("#d_div_header"),
+   d_output_company = $("#d_output_company"),
+   d_output_location = $("#d_output_location"),
+   d_output_enable = $("#d_output_enable"),
+   d_preview_photo = $("#d_preview_photo"),
+   d_output_logo = $("#d_output_logo"),
+   d_output_contact_name = $("#d_output_contact_name"),
+   d_output_contact_phone = $("#d_output_contact_phone"),
+   d_output_contact_email = $("#d_output_contact_email"),
+   d_output_business_line = $("#d_output_business_line"),
+   d_output_company_ranking = $("#d_output_company_ranking"),
+   d_output_description = $("#d_output_description");
 let haveImg = false;
 let vLogoPath = null;
 //#endregion VARIABLES
@@ -217,6 +229,10 @@ async function fillTable() {
 
       let column_buttons = `<td class='align-middle'>
             <div class='btn-group' role='group' aria-label='Basic example'>`;
+      column_buttons +=
+         //html
+         `<button class='btn btn-outline-primary' type='button' onclick='showObj(${obj.id})' title='Mostrar Información de al Empresa' data-bs-toggle="modal" data-bs-target="#company_modal"><i class='fa-solid fa-eye'></i></button>`;
+
       if (permission_update) {
          column_buttons +=
             //html
@@ -333,4 +349,43 @@ async function deleteObj(btn_delete) {
    };
 
    ajaxRequestQuestionAsync(title, text, URL_COMPANY_APP, data, "fillTable()");
+}
+
+//VER OBJETO
+async function showObj(id) {
+   let data = { id, op: "show" };
+   const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
+   const obj = ajaxResponse.data;
+   console.log(obj);
+
+   d_div_header.removeClass("bg-primary");
+   d_div_header.addClass("bg-dark");
+   d_output_enable.text("CONTRATANDO");
+   if (obj.enable == 0) {
+      d_div_header.removeClass("bg-dark");
+      d_div_header.addClass("bg-primary");
+      d_output_enable.text("SIN VACANTES");
+   }
+
+   haveImg = false;
+   if (obj.logo_path == "" || obj.logo_path == null) resetImgPreviewProfile(d_preview_photo, `../assets/img/cargar_imagen.png`, false, false, true);
+   else {
+      haveImg = true;
+      // console.log("tengo imagen guardada");
+      resetImgPreviewProfile(d_preview_photo, `../assets/img/${obj.logo_path}`, false, false, true);
+      vLogoPath = obj.logo_path;
+      // input_logo_path.val(obj.logo_path);
+   }
+   d_output_company.text(obj.company);
+   d_output_location.text(`${obj.state} ${obj.municipality}`);
+
+   d_output_contact_name.text(obj.contact_name);
+   d_output_contact_phone.text(formatPhone(obj.contact_phone));
+   d_output_contact_email.text(obj.contact_email);
+
+   d_output_business_line.text(obj.business_line);
+   d_output_company_ranking.text(`${obj.company_ranking} - ${obj.cr_description}`);
+   d_output_description.html(obj.description);
+
+   // changeEnable(obj.enable);
 }

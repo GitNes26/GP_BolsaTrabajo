@@ -1,10 +1,11 @@
 <?php
 include "../templates/validates.php";
+$URL_BASE = ""; #/empleos
 
 $classBody = "hold-transition sidebar-mini layout-fixed ";
-if ($URL_SERVER == "/empleos/pages") $classBody = "layout-top-nav ";
-elseif ($URL_SERVER == "/empleos/pages/") $classBody = "layout-top-nav ";
-elseif ($URL_SERVER == "/empleos/pages/index.php") $classBody = "layout-top-nav ";
+if ($URL_SERVER == "$URL_BASE/pages") $classBody = "layout-top-nav ";
+elseif ($URL_SERVER == "$URL_BASE/pages/") $classBody = "layout-top-nav ";
+elseif ($URL_SERVER == "$URL_BASE/pages/index.php") $classBody = "layout-top-nav ";
 
 if (strpos($classBody, 'layout-top-nav') !== 0) $classBody .= "layout-navbar-fixed ";
 ?>
@@ -18,7 +19,8 @@ if (strpos($classBody, 'layout-top-nav') !== 0) $classBody .= "layout-navbar-fix
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
    <!-- TipoGrafia -->
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+   <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
 
    <!-- JQuery 6 -->
    <script src="<?= $PLUGINS_PATH ?>/jquery.min.js"></script>

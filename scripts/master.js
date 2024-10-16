@@ -32,6 +32,7 @@ const id_cookie = Number(Cookies.get("user_id")),
    plural_object = $("#plural_object").val();
 
 let auth_token;
+console.log("🚀 ~ URL_BASE:", URL_BASE);
 
 const SUMMERNOTE_CONFIG = {
    placeholder: "Escribir Habilidades, competencias, experiencias, observaciones, etc.",
@@ -124,14 +125,14 @@ if (location.pathname == "/") needCookies = false;
 else if (location.pathname == "/index.php") needCookies = false;
 else if (location.pathname == "/registro-perfil.php") needCookies = false;
 
-if (!["/empleos/", "/empleos/index.php"].includes(location.pathname)) if (!Cookies.get("session") && needCookies) location.reload();
+if (![`${URL_BASE}/`, `${URL_BASE}/index.php`].includes(location.pathname)) if (!Cookies.get(`session`) && needCookies) location.reload();
 
 let inIndex = false;
-if (["/empleos/pages/index.php", "/empleos/pages/", "/empleos/pages"].includes(location.pathname)) inIndex = true;
+if ([`${URL_BASE}/pages/index.php`, `${URL_BASE}/pages/`, `${URL_BASE}/pages`].includes(location.pathname)) inIndex = true;
 // console.log("pathname", location.pathname, "inIndex", inIndex);
-// if (location.pathname == "/empleos/pages") inIndex = true;
-// else if (location.pathname == "/empleos/pages/") inIndex = true;
-// else if (location.pathname == "/empleos/pages/index.php") inIndex = true;
+// if (location.pathname == "${URL_BASE}/pages") inIndex = true;
+// else if (location.pathname == "${URL_BASE}/pages/") inIndex = true;
+// else if (location.pathname == "${URL_BASE}/pages/index.php") inIndex = true;
 
 const ajaxRequestAsync = async (url, data, close_modal = null, show_blockUI = true, show_toast = true) => {
    try {
@@ -648,7 +649,7 @@ function formatearCantidadDeRenglones(tds) {
 }
 
 function formatPhone(phone) {
-   return `(${phone.slice(0, 3)})${phone.slice(3, 6)}-${phone.slice(6, 8)}-${phone.slice(-2)}`;
+   return `${phone.slice(0, 3)} ${phone.slice(3, 6)} ${phone.slice(6, 10)}`;
 }
 //#endregion /** VALIDACIONES - INPUTS - FORMULARIOS */
 
@@ -806,6 +807,55 @@ moment.locale("es-mx");
 //#endregion /** MonentJS */
 
 // // #endregion FUNCIONES DE CAJON
+
+function resetImgPreviewProfile(preview, img_path = null, iframe = false, pointer = true, logo_empresa = false) {
+   if (!iframe || img_path == null) {
+      // Crea un elemento de imagen
+      const imagen = document.createElement("img");
+      iframe
+         ? (imagen.src = img_path == null ? "../assets/img/cargar_archivo.png" : img_path) // Asigna la imagen cargada como fuente
+         : (imagen.src = img_path == null ? "../assets/img/sin_perfil.webp" : img_path); // Asigna la imagen cargada como fuente
+      if (iframe) {
+         imagen.classList.add("img-fluid"); // Asignar clases
+         pointer ? imagen.classList.add("pointer-sm") : imagen.classList.remove("pointer-sm"); // sAsignar clases
+         //  imagen.classList.add("p-5"); // Asignar clases
+         !logo_empresa && imagen.classList.add("rounded-lg"); // Asignar clases
+         // imagen.classList.add("text-center"); // Asignar clases
+         imagen.style = "max-height: 200px !important";
+      } else {
+         !logo_empresa && imagen.classList.add("img-circle"); // Asignar clases
+         imagen.classList.add("elevation-2"); // Asignar clases
+         imagen.classList.add("bg-white"); // Asignar clases
+         pointer ? imagen.classList.add("pointer-sm") : imagen.classList.remove("pointer-sm"); // sAsignar clases
+         imagen.classList.add("opacity-100"); // Asignar clases
+         imagen.title = "Haz clic aquí, si deseas cambiar tu foto de perfil";
+
+         imagen.setAttribute("style", "width: 100px !important; height: 100px !important; object-fit: contain");
+      }
+
+      // Agrega la imagen a la vista previa
+      preview.html(""); // Limpia la vista previa antes de agregar la nueva imagen
+      preview.append(imagen);
+   } else {
+      // Crea un elemento de imagen
+      const iframe = document.createElement("iframe");
+      iframe.src = img_path == null ? "../assets/img/cargar_archivo.png" : img_path; // Asigna la iframe cargada como fuente
+      // canvas.getContext("2d") // Asigna la iframe cargada como fuente
+      iframe.classList.add("img-fluid"); // Asignar clases
+      pointer ? iframe.classList.add("pointer-sm") : iframe.classList.remove("pointer-sm"); // sAsignar clases
+      //  iframe.classList.add("p-5"); // Asignar clases
+      iframe.classList.add("rounded-lg"); // Asignar clases
+      iframe.classList.add("opacity-100"); // Asignar clases
+      iframe.style = "height: 100% !important";
+
+      // Agrega la iframe a la vista previa
+      preview.html(""); // Limpia la vista previa antes de agregar la nueva iframe
+      preview.append(iframe);
+      preview.parent().css("height", "50vh");
+      // label_input_file.css("height","100%");
+      preview.css("height", "100%");
+   }
+}
 
 //#region SELECTORES DE PAISES / CIUDADES
 async function showStates(state = null, city = null) {

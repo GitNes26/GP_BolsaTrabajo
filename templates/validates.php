@@ -1,5 +1,5 @@
 <?php
-include_once "../config.php";
+include "../config.php";
 
 
 // #VERIFICAR SESION ACTIVA
@@ -60,11 +60,12 @@ if ($path != "perfil.php") {
       // echo "URL_SERVER: $URL_SERVER)<br>";
       // echo "ADMIN_PATH: ".print_r($ADMIN_PATH)."<br>";
    }
+   $URL_BASE = ""; #/empleos
    if (!$access) {
-      if ($URL_SERVER == "/empleos/pages") return;
-      elseif ($URL_SERVER == "/empleos/pages/") return;
-      elseif ($URL_SERVER == "/empleos/pages/index.php") return;
-      elseif ($URL_SERVER == "/empleos/perfil.php") return;
+      if ($URL_SERVER == "$URL_BASE/pages") return;
+      elseif ($URL_SERVER == "$URL_BASE/pages/") return;
+      elseif ($URL_SERVER == "$URL_BASE/pages/index.php") return;
+      elseif ($URL_SERVER == "$URL_BASE/perfil.php") return;
       // echo "ESTOY SIN access... CREO";
       header("location:$URL_BASE/");
       die();
