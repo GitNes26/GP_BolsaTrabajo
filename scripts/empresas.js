@@ -356,7 +356,7 @@ async function showObj(id) {
    let data = { id, op: "show" };
    const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
    const obj = ajaxResponse.data;
-   console.log(obj);
+   // console.log(obj);
 
    d_div_header.removeClass("bg-primary");
    d_div_header.addClass("bg-dark");
