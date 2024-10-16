@@ -227,11 +227,11 @@ async function fillTable() {
 			`,
          column_created_at = formatDatetime(obj.created_at, true);
 
-      let column_buttons = `<td class='align-middle'>
-            <div class='btn-group' role='group' aria-label='Basic example'>`;
-      column_buttons +=
+      let column_buttons =
          //html
-         `<button class='btn btn-outline-primary' type='button' onclick='showObj(${obj.id})' title='Mostrar Información de al Empresa' data-bs-toggle="modal" data-bs-target="#company_modal"><i class='fa-solid fa-eye'></i></button>`;
+         `<td class='align-middle'>
+            <div class='btn-group' role='group' aria-label='Basic example'>
+               <button class='btn btn-outline-primary' type='button' onclick='showObj(${obj.id})' title='Mostrar Información de al Empresa' data-bs-toggle="modal" data-bs-target="#company_modal"><i class='fa-solid fa-eye'></i></button>`;
 
       if (permission_update) {
          column_buttons +=
