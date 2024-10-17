@@ -500,8 +500,8 @@ const fillSidebar = async (show_toast = false, navbar = false) => {
    // sidebar_menus.slideDown(1000);
    // console.log("menus cargados", menus);
 };
-if (sidebar_menus.length > 0) fillSidebar();
-else if (inIndex) fillSidebar(false, true);
+// if (sidebar_menus.length > 0) fillSidebar();
+// else if (inIndex) fillSidebar(false, true);
 
 //#endregion
 

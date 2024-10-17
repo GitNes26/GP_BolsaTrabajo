@@ -269,7 +269,7 @@ if (isset($_GET["p"])) {
    <script src="<?= $SCRIPTS_PATH ?>/particles.js"></script>
 
    <script src="<?= $SCRIPTS_PATH ?>/master.js"></script>
-   <!-- <script src="<?= $SCRIPTS_PATH ?>/login.js"></script> -->
+   <script src="<?= $SCRIPTS_PATH ?>/login.js"></script>
 </body>
 
 </html>
