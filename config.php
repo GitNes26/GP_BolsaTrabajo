@@ -21,13 +21,14 @@ $CONN_DB_WEB = array(
   "DB_PWD" => "lybY~fUnIs}t",
   "DB_NAME" => "pagprincipal_db_bolsa_trabajo",
 );
-$CONN_DB = $CONN_DB_WEB;
+$URL_BASE = "/empleos"; #/empleos
+
+$CONN_DB = $URL_BASE == "" ? $CONN_DB_LOCAL : $CONN_DB_WEB;
 #endregion CONSTANTES DE CONFIGURACION
 
 #region CONSTANTES RUTAS
 $ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
 
-$URL_BASE = "/empleos"; #/empleos
 $PROTOCOL = ($_SERVER["HTTPS"] ?? '') === "on" ? "https" : "http";
 $URL_MAIN = "$PROTOCOL://$_SERVER[HTTP_HOST]$URL_BASE"; #https
 $URL_BASE = $URL_MAIN;

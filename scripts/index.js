@@ -398,7 +398,6 @@ async function fillBanners() {
       template_banner.querySelector("img").alt = `${obj.file_path.split("/").reverse()[0]}`;
       template_banner.querySelector("a").href = "";
       template_banner.querySelector("a").target = ""; 
-      template_banner.querySelector("a").href = "";
       template_banner.querySelector("a").removeAttribute("href");
       if (obj.link != null) {
          if (obj.link.length > 1) {
