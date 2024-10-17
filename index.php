@@ -121,7 +121,7 @@ if (isset($_GET["p"])) {
                               <input type="hidden" id="op" name="op" value="login">
                               <div class="form-floating mb-3">
                                  <input type="email" class="form-control rounded-lg" id='email' name='email'
-                                    placeholder="Correo Electronico" autofocus="autofocus" data-input-name="Correo"
+                                    placeholder="Correo Electronico" autofocus data-input-name="Correo"
                                     value="<?= $e ?>" />
                                  <label for="email">Correo Electrónico</label>
                               </div>
@@ -157,7 +157,7 @@ if (isset($_GET["p"])) {
                            <form id="form_register">
                               <div class="form-floating mb-3">
                                  <input type="email" class="form-control rounded-lg" id='input_email' name='input_email'
-                                    placeholder="Correo Electrónico" autofocus="autofocus" data-input-name="CORREO" />
+                                    placeholder="Correo Electrónico" autofocus data-input-name="CORREO" />
                                  <label for="input_email">Correo Electrónico</label>
                               </div>
                               <div class="form-floating mb-3">
