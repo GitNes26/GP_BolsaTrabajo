@@ -265,8 +265,8 @@ if (isset($_GET["p"])) {
    <script src="<?= $PLUGINS_PATH ?>/js-cookie/js.cookie.min.js"></script>
 
    <!-- Particular JS -->
-   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-   <script src="<?= $SCRIPTS_PATH ?>/particles.js"></script>
+   <!-- <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script> -->
+   <!-- <script src="<?= $SCRIPTS_PATH ?>/particles.js"></script> -->
 
    <script src="<?= $SCRIPTS_PATH ?>/master.js"></script>
    <script src="<?= $SCRIPTS_PATH ?>/login.js"></script>
