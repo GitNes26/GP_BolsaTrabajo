@@ -1,7 +1,7 @@
 $("#card_register").hide();
 
 const URL_BASE = $("#url_base").val(); //+ "/empleos",
-const BACKEND_PATH = `${URL_BASE}/Backend`;
+const BACKEND_PATH = `${URL_BASE}/backend`;
 const PAGES_PATH = `${URL_BASE}/pages`;
 const EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;
 const EMAIL = `/empleos/emails/email.php`;
@@ -270,6 +270,15 @@ const closeDialogPrivate = () => {
    $("#container_privacity").removeClass("slideUpEnter");
    $("#container_privacity").addClass("slideDownExit");
 };
+
+$(".eye_icon").click((e) => {
+   // console.log("ojito en loigin");
+   const target = $(e.target);
+   target.toggleClass("fa-solid fa-eye fa-duotone fa-eye-slash");
+   const input = $(`input#${target.attr("data-input")}`);
+   if (target.hasClass("fa-eye")) input.prop("type", "text");
+   else input.prop("type", "password");
+});
 
 function validateInputs(form) {
    let inputs = form.serializeArray();
