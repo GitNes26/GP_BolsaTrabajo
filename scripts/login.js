@@ -1,8 +1,9 @@
 $("#card_register").hide();
 
-// const BACKEND_PATH = `${URL_BASE}/Backend`;
-// const PAGES_PATH = `${URL_BASE}/pages`;
-// const EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;
+const URL_BASE = $("#url_base").val(); //+ "/empleos",
+const BACKEND_PATH = `${URL_BASE}/Backend`;
+const PAGES_PATH = `${URL_BASE}/pages`;
+const EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;
 const EMAIL = `/empleos/emails/email.php`;
 
 const join_now = $("#join_now").val();
@@ -269,3 +270,74 @@ const closeDialogPrivate = () => {
    $("#container_privacity").removeClass("slideUpEnter");
    $("#container_privacity").addClass("slideDownExit");
 };
+
+function validateInputs(form) {
+   let inputs = form.serializeArray();
+   let validated = true;
+   // console.log(inputs);
+   $.each(inputs, function (i, input_iterable) {
+      if (!validated) return;
+      let input = $(`#${input_iterable.name}`);
+      // console.log(input);
+      if (!input.hasClass("not_validate")) {
+         // console.log(input)
+         let input_validated = validateInput(input);
+         if (!input_validated) return (validated = false);
+      }
+      validated = true;
+   });
+   return validated;
+}
+
+function validateInput(input) {
+   if (input.val() == "" || input.val() == -1 || input.val() == "-1") {
+      showToast("error", `El campo ${input.attr("data-input-name")} esta vacío.`);
+      input.addClass("is-invalid");
+      input.focus();
+      return false;
+   }
+   input.removeClass("is-invalid");
+   return true;
+}
+
+function showBlockUI() {
+   const dialogoBlockUI = `
+	<div class="card text-center" style="opacity:1 !important; width:40vw !important;">
+		<div class="card-body">
+			<div class="fw-bold h6">CARGANDO...</div><br>
+			<div class='spinner-border text-dark' role='status'> <span class='sr-only'></span></div>
+		</div>
+	</div>
+	`;
+   $.blockUI({
+      message: dialogoBlockUI,
+      css: { backgroundColor: null, color: "#313131", border: null }
+   });
+}
+
+function showAlert(icon, title, text, show_confirm_btn) {
+   Swal.fire({
+      icon,
+      title,
+      html: text,
+      showConfirmButton: show_confirm_btn,
+      confirmButtonColor: "#494E53"
+   });
+}
+
+function showToast(icon, message, position = "top-end") {
+   const Toast = Swal.mixin({
+      toast: true,
+      position: position,
+      showConfirmButton: false,
+      timer: 2000,
+      // color: #007BFF,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+         toast.addEventListener("mouseenter", Swal.stopTimer);
+         toast.addEventListener("mouseleave", Swal.resumeTimer);
+      }
+   });
+
+   Toast.fire({ icon: icon, title: message });
+}
