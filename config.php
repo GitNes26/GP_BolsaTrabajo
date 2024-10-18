@@ -30,7 +30,7 @@ $ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
 
 $URL_BASE = "/empleos"; #/empleos
 $PROTOCOL = ($_SERVER["HTTPS"] ?? '') === "on" ? "https" : "http";
-$URL_MAIN = "$PROTOCOL://$_SERVER[HTTP_HOST]$URL_BASE"; #https
+$URL_MAIN = "$PROTOCOL://$_SERVER[HTTP_HOST]$URL_BASE";
 $URL_BASE = $URL_MAIN;
 
 $ICONO = "$URL_BASE/favicon.ico";

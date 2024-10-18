@@ -224,8 +224,8 @@ $current_page = "Candidatos";
                   </div>
                   <!-- INFORMACION PROFESIONAL -->
                   <div class="mb-3">
-                     <label for="input_professional_info" class="form-label">Más información: &nbsp;<i
-                           class="fa-duotone fa-circle-info"
+                     <label for="input_professional_info" class="form-label">Más información: <span
+                           class="obligatory"></span> &nbsp;<i class="fa-duotone fa-circle-info"
                            title="Escribir Habilidades, competencias, experiencias, observaciones, etc."></i></label>
                      <div class="summernote"></div>
                   </div>
