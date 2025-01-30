@@ -1,6 +1,6 @@
 $("#card_register").hide();
 
-const URL_BASE = $("#url_base").val(); //+ "/empleos",
+const URL_BASE = $("#url_base").val(); //+ /empleos",
 const BACKEND_PATH = `${URL_BASE}/backend`;
 const PAGES_PATH = `${URL_BASE}/pages`;
 const EMAIL_REGISTER_PATH = `/php/NewUserEmail.php`;

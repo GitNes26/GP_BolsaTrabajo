@@ -12,12 +12,14 @@ if (file_exists("../backend/Connection.php")) {
 }
 
 
-class Company extends Connection {
-   
-   function index() {
+class Company extends Connection
+{
+
+   function index()
+   {
       try {
          $response = $this->defaultResponse();
-   
+
          $query = "SELECT * FROM vw_companies";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
@@ -26,38 +28,38 @@ class Company extends Connection {
          $response["alert_text"] = "Empresas encontradas";
          $response["data"] = $result;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function showSelect() {
+   function showSelect()
+   {
       try {
          $response = $this->defaultResponse();
-   
+
          $query = "SELECT c.id value, c.company text FROM companies c INNER JOIN users u ON c.user_id=u.id WHERE u.active=1;";
          $result = $this->Select($query, true);
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registros encontrados.";
          $response["data"] = $result;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function show($id) {
+   function show($id)
+   {
       try {
          $response = $this->defaultResponse();
-   
+
          $query = "SELECT * FROM vw_companies WHERE id=$id;";
          $result = $this->Select($query, false);
 
@@ -67,29 +69,29 @@ class Company extends Connection {
          $response["alert_text"] = "Empresa encontrada";
          $response["data"] = $result;
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function create($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id) {
+   function create($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id)
+   {
       try {
          $response = $this->defaultResponse();
 
          $this->validateAvailableData($company, null);
 
          #Creamos el registro en la tabla compañias
-         $query = "INSERT INTO companies(company, description, logo_path, contact_name, contact_phone, contact_email, state, municipality, business_line_id, company_ranking_id, user_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id));
+         $query = "INSERT INTO companies(company, description, logo_path, contact_name, contact_phone, contact_email, community_id, state, municipality, business_line_id, company_ranking_id, user_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+         $this->ExecuteQuery($query, array($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id));
 
          #Le asignamos el rol de compañia al usuario
          $query = "UPDATE users SET role_id=3 WHERE id=?";
          $this->ExecuteQuery($query, array($user_id));
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro creado.";
          $response["alert_title"] = "Empresa registrada";
@@ -100,41 +102,41 @@ class Company extends Connection {
          include "../User/User.php";
          $User = new User();
          $User->setCookies($user_id);
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function edit($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id, $updated_at) {
+   function edit($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id, $updated_at)
+   {
       try {
          $response = $this->defaultResponse();
 
          $this->validateAvailableData($company, $id);
 
-         $query = "UPDATE companies SET company=?, description=?, logo_path=?, contact_name=?, contact_phone=?, contact_email=?, state=?, municipality=?, business_line_id=?, company_ranking_id=?, user_id=? WHERE id=?";
-         $this->ExecuteQuery($query, array($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id));
+         $query = "UPDATE companies SET company=?, description=?, logo_path=?, contact_name=?, contact_phone=?, contact_email=?, community_id=?, state=?, municipality=?, business_line_id=?, company_ranking_id=?, user_id=? WHERE id=?";
+         $this->ExecuteQuery($query, array($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id));
 
          $query = "UPDATE users SET updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($updated_at, $user_id));
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
          $response["alert_title"] = "Empresa actualizada";
          $response["alert_text"] = "Empresa actualizada";
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
-   function editInfo($user_id, $company, $description, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $email, $updated_at) {
+   function editInfo($user_id, $company, $description, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $email, $updated_at)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -143,26 +145,26 @@ class Company extends Connection {
 
          $this->validateAvailableData($company, $id);
 
-         $query = "UPDATE companies SET company=?, description=?, contact_name=?, contact_phone=?, contact_email=?, state=?, municipality=?, business_line_id=?, company_ranking_id=? WHERE id=?";
-         $this->ExecuteQuery($query, array($company, $description, $contact_name, $contact_phone, $contact_email, $state, $municipality, $business_line_id, $company_ranking_id, $id));
+         $query = "UPDATE companies SET company=?, description=?, contact_name=?, contact_phone=?, contact_email=?, community_id=?, state=?, municipality=?, business_line_id=?, company_ranking_id=? WHERE id=?";
+         $this->ExecuteQuery($query, array($company, $description, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $id));
 
          $query = "UPDATE users SET email=?, updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($email, $updated_at, $user_id));
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
          $response["alert_title"] = "Información actualizada";
          $response["alert_text"] = "Información actualizada";
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
-   function editLogo($user_id, $logo_path, $updated_at) {
+   function editLogo($user_id, $logo_path, $updated_at)
+   {
       try {
          $response = $this->defaultResponse();
 
@@ -174,24 +176,24 @@ class Company extends Connection {
 
          $query = "UPDATE users SET updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($updated_at, $user_id));
-         
+
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";
          $response["alert_title"] = "Foto actualizada";
          $response["alert_text"] = "Foto actualizada";
          $this->Close();
-   
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->CatchResponse($error_message);
       }
       die(json_encode($response));
    }
 
-   function delete($deleted_at, $user_id) {
+   function delete($deleted_at, $user_id)
+   {
       try {
-        $response = $this->defaultResponse();
+         $response = $this->defaultResponse();
 
          $query = "UPDATE users SET active=0, deleted_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($deleted_at, $user_id));
@@ -201,35 +203,37 @@ class Company extends Connection {
          $response["alert_title"] = "Empresa eliminada";
          $response["alert_text"] = "Empresa eliminada";
          $this->Close();
-
       } catch (Exception $e) {
          $this->Close();
-         $error_message = "Error: ".$e->getMessage();
+         $error_message = "Error: " . $e->getMessage();
          $response = $this->catchResponse($error_message);
       }
       die(json_encode($response));
    }
 
 
-   function validateAvailableData($company, $id) {
+   function validateAvailableData($company, $id)
+   {
       // #VALIDACION DE DATOS REPETIDOS
       $duplicate = $this->checkAvailableData('companies', 'company', $company, 'La compañia', 'input_company', $id, 'users');
       if ($duplicate["result"] == true) die(json_encode($duplicate));
    }
 
-   function getIdByUserId($user_id) {
+   function getIdByUserId($user_id)
+   {
       $query = "SELECT id FROM companies WHERE user_id=$user_id;";
       $company = $this->Select($query, false);
       if (!$company) die(json_encode(array("data" => 0)));
-      else die(json_encode(array("data" => $company["id"]))); 
+      else die(json_encode(array("data" => $company["id"])));
    }
 
 
 
-   private function _getIdByUserId($user_id) {
+   private function _getIdByUserId($user_id)
+   {
       $query = "SELECT id FROM companies WHERE user_id=$user_id;";
       $company = $this->Select($query, false);
       if (!$company) return 0;
-      else return $company["id"]; 
+      else return $company["id"];
    }
 }

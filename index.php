@@ -225,7 +225,7 @@ if (isset($_GET["p"])) {
                      </div>
                   </div>
                   <!-- CONTENIDO DE PRIVACIDAD -->
-
+                  <small class="brand-text fw-bolder text-light">v <?= $VERSION ?></small>
                   <footer class="footer-login login-box mt-5 text-light d-flex justify-content-between">
                      <p><a href="#" class="fw-bolder text-light" onclick="openDialogPrivate()">AVISO DE
                            PRIVACIDAD</a></p>

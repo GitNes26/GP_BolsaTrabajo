@@ -23,7 +23,7 @@
          <div class='user-panel d-flex'>
             <div class='info'>
                <span class='d-block text-decoration-none text-bold'>
-                  <a href="<?=$URL_BASE?>/pages/perfil.php" title="Ir a mi perfil"><i
+                  <a href="<?= $URL_BASE ?>/pages/perfil.php" title="Ir a mi perfil"><i
                         class=''><?php echo "$role:&nbsp; $_COOKIE[email]" ?></i></a>
                </span>
             </div>

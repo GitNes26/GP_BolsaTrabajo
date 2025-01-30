@@ -71,8 +71,11 @@ const input_company = $("#input_company"),
    output_business_line = $("#output_business_line"),
    input_company_ranking_id = $("#input_company_ranking_id"),
    output_company_ranking = $("#output_company_ranking"),
+   input_community_id = $("#input_community_id"),
+   input_zip = $("#input_zip"),
    input_state = $("#input_state"),
    input_municipality = $("#input_municipality"),
+   input_colony = $("#input_colony"),
    output_location = $("#output_location"),
    input_contact_name = $("#input_contact_name"),
    output_contact_name = $("#output_contact_name"),
@@ -95,7 +98,7 @@ async function init() {
    counter_description.text(`0/${input_description.data("limit")}`);
 
    fillInfo(false);
-   showStates();
+   // showStates();
 
    fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
    fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
@@ -269,6 +272,15 @@ function resetImgPreviewProfile(preview, img_path = null, iframe = false) {
    }
 }
 
+input_zip.on("input", async (e) => {
+   const zip = $(e.target).val();
+   if (zip.length < 5) return;
+   await showStates(zip);
+});
+input_colony.on("change", async (e) => {
+   const community_id = $(e.target).val();
+   input_community_id.val(community_id);
+});
 //CLICK EN BTN EDITAR PARA MODIFICAR INFORMACION
 btn_edit.click(function () {
    $(this).addClass("d-none");
@@ -360,8 +372,7 @@ async function fillInfo(show_toas = true) {
       }
 
       haveImg = false;
-      if (obj.photo_path == "" || obj.photo_path == null)
-         resetImgPreviewProfile($(`#${input_photo_path.attr("data-preview")}`), `../assets/img/sin_perfil.webp`);
+      if (obj.photo_path == "" || obj.photo_path == null) resetImgPreviewProfile($(`#${input_photo_path.attr("data-preview")}`), `../assets/img/sin_perfil.webp`);
       else {
          haveImg = true;
          // console.log("tengo imagen guardada");
@@ -434,8 +445,18 @@ async function fillInfo(show_toas = true) {
       input_company.val(obj.company);
       output_company.text(`${obj.company}`);
 
-      output_location.text(`${obj.municipality}, ${obj.state}`);
-      await showStates(obj.state, obj.municipality);
+      const communityRequest = await $.ajax({
+         url: `${URL_API_COUNTRIES}/colonia/${obj.community_id}`,
+         method: "GET",
+         headers: {
+            Accept: "application/json"
+         }
+      });
+      const community = communityRequest.data.result;
+      if (community) {
+         output_location.text(`${community.CodigoPostal}, ${community.Municipio}, ${community.Estado}`);
+         await showStates(null, obj.community_id);
+      }
 
       input_contact_name.val(obj.contact_name);
       output_contact_name.text(obj.contact_name);

@@ -20,8 +20,11 @@ const btn_modal_form = $("#btn_modal_form"),
    preview_logo = $("#preview_logo"),
    input_business_line_id = $("#input_business_line_id"),
    input_company_ranking_id = $("#input_company_ranking_id"),
+   input_community_id = $("#input_community_id"),
+   input_zip = $("#input_zip"),
    input_state = $("#input_state"),
    input_municipality = $("#input_municipality"),
+   input_colony = $("#input_colony"),
    input_contact_name = $("#input_contact_name"),
    input_contact_phone = $("#input_contact_phone"),
    input_contact_email = $("#input_contact_email"),
@@ -53,7 +56,6 @@ init();
 async function init() {
    fillTable();
    counter_description.text(`0/${input_description.data("limit")}`);
-   showStates();
    fillSelect2(URL_USER_APP, -1, input_user_id, false, "company");
 
    fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
@@ -63,6 +65,15 @@ async function init() {
    input_company.focus();
 }
 
+input_zip.on("input", async (e) => {
+   const zip = $(e.target).val();
+   if (zip.length < 5) return;
+   await showStates(zip);
+});
+input_colony.on("change", async (e) => {
+   const community_id = $(e.target).val();
+   input_community_id.val(community_id);
+});
 //CLICK EN BTN ABRIR MODAL
 btn_modal_form.click((e) => {
    e.preventDefault();
@@ -95,7 +106,10 @@ btn_reset.click(async (e) => {
    // await resetSelect2(input_interest_tags_ids);
    await resetSelect2(input_state);
    await resetSelect2(input_municipality);
+   await resetSelect2(input_colony);
+   input_state.attr("disabled", true);
    input_municipality.attr("disabled", true);
+   input_colony.attr("disabled", true);
 
    // $('.note-editing-area .note-editable').html(null);
    // $('.note-editing-area .note-placeholder').css("display","block");
@@ -327,7 +341,7 @@ async function editObj(btn_edit) {
    input_contact_name.val(obj.contact_name);
    input_contact_phone.val(obj.contact_phone);
    input_contact_email.val(obj.contact_email);
-   /* await */ showStates(obj.state, obj.municipality);
+   /* await */ showStates(null, obj.community_id);
 
    setTimeout(() => {
       // btn_submit.attr("disabled",false);

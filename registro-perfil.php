@@ -249,21 +249,37 @@ validateNeedCookies();
                      <div class="row border rounded mb-3">
                         <!-- UBICACION -->
                         <label class="text-center">UBICACIÓN</label>
-                        <div class="mb-3 col">
+                        <div class="mb-3 col-2">
+                           <label for="input_zip" class="form-label">C.P.: <span class="obligatory"></span></label>
+                           <input type="hidden" class="form-control form-control-sm numeric" id="input_community_id"
+                              name="input_community_id" data-input-name="COMUNIDAD">
+                           <input type="text" maxlength="5" class="form-control form-control-sm numeric" id="input_zip"
+                              name="input_zip" data-input-name="CÓDIGO POSTAL">
+                        </div>
+                        <div class="mb-3 col-3">
                            <label for="input_state" class="form-label">Estado: <span class="obligatory"></span></label>
-                           <span title="dar click aqui si no se cargan los datos." data-input="input_state"
-                              class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span>
+                           <!-- <span title="dar click aqui si no se cargan los datos." data-input="input_state"
+                           class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span> -->
                            <select class="select2 form-control" style="width:100%; line-height:10px" id="input_state"
-                              name="input_state" data-input-name="ESTADO">
+                              name="input_state" data-input-name="ESTADO" disabled>
                            </select>
                         </div>
-                        <div class="mb-3 col">
+                        <div class="mb-3 col-3">
                            <label for="input_municipality" class="form-label">Municipio: <span
                                  class="obligatory"></span></label>
-                           <span title="dar click aqui si no se cargan los datos." data-input="input_municipality"
-                              class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span>
+                           <!-- <span title="dar click aqui si no se cargan los datos." data-input="input_municipality"
+                           class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span> -->
                            <select class="select2 form-control" style="width:100%; line-height:20px"
                               id="input_municipality" name="input_municipality" data-input-name="MUNICIPIO" disabled>
+                           </select>
+                        </div>
+                        <div class="mb-3 col-4">
+                           <label for="input_colony" class="form-label">Colonia: <span
+                                 class="obligatory"></span></label>
+                           <!-- <span title="dar click aqui si no se cargan los datos." data-input="input_colony"
+                           class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span> -->
+                           <select class="select2 form-control" style="width:100%; line-height:20px" id="input_colony"
+                              name="input_colony" data-input-name="COLONIA" disabled>
                            </select>
                         </div>
                      </div>

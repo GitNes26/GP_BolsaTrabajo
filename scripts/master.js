@@ -1,11 +1,12 @@
 // #region FUNCIONES DE CAJON
 
 //#region VARIABLES
-const URL_BASE = $("#url_base").val(), //+ "/empleos",
+const URL_BASE = $("#url_base").val(), //+ /empleos",
    BACKEND_PATH = `${URL_BASE}/backend`,
    PAGES_PATH = `${URL_BASE}/pages`,
    EMAILS_PATH = `/empleos/emails/NewMemberEmail_copy.php`,
-   URL_API_COUNTRIES = `https://www.universal-tutorial.com/api`,
+   // URL_API_COUNTRIES = `https://www.universal-tutorial.com/api`,
+   URL_API_COUNTRIES = `https://cp.gomezpalacio.gob.mx/api/cp`,
    URL_USER_APP = `${BACKEND_PATH}/User/App.php`,
    URL_COMPANY_APP = `${BACKEND_PATH}/Company/App.php`,
    URL_ROLE_APP = `${BACKEND_PATH}/Role/App.php`,
@@ -32,7 +33,7 @@ const id_cookie = Number(Cookies.get("user_id")),
    plural_object = $("#plural_object").val();
 
 let auth_token;
-// console.log("🚀 ~ URL_BASE:", URL_BASE);
+console.log("🚀 ~ URL_BASE:", URL_BASE);
 
 const SUMMERNOTE_CONFIG = {
    placeholder: "Escribir Habilidades, competencias, experiencias, observaciones, etc.",
@@ -857,104 +858,215 @@ function resetImgPreviewProfile(preview, img_path = null, iframe = false, pointe
    }
 }
 
+const removeDuplicates = (array) => {
+   return [...new Set(array)];
+};
+
 //#region SELECTORES DE PAISES / CIUDADES
-async function showStates(state = null, city = null) {
+async function showStates(zip = 35000, community_id = null) {
+   console.log("🚀 ~ showStates ~ zip:", zip);
+   console.log("🚀 ~ showStates ~ community_id:", community_id);
+
    $("#input_state").attr("disabled", true);
    $("#input_state").html("<option value=''>Cargando...</option>");
-
-   // console.log("generar token");
-   let requestToken = await $.ajax({
-      async: true,
-      crossDomain: true,
-      url: `${URL_API_COUNTRIES}/getaccesstoken`,
-      method: "GET",
-      headers: {
-         Accept: "application/json",
-         "api-token": "9BlpaH5qgUCOZJjDtIvbDH9BFkZbt40BdC9VQlVEGwkmibb3ubtwPdKWi9ftc6qVENE",
-         "user-email": "deconomico@gomezpalacio.gob.mx"
-      }
-   });
-   // Desarollo Economico - correo y token
-
-   auth_token = requestToken.auth_token;
-   // console.log(auth_token);
-
-   // await estados_ciudades(output_estado.text(), output_ciudad.text());
-   await states_cities(state, city);
-   // console.log("ESTADOS_CIUDADES");
-   async function states_cities(state = null, city = null) {
-      let states = await $.ajax({
-         url: `${URL_API_COUNTRIES}/states/México`,
-         method: "GET",
-         headers: {
-            Authorization: `Bearer ${auth_token}`,
-            Accept: "application/json"
-         }
-      });
-      while (states.length < 1) {
-         states = await $.ajax({
-            url: `${URL_API_COUNTRIES}/states/México`,
-            method: "GET",
-            headers: {
-               Authorization: `Bearer ${auth_token}`,
-               Accept: "application/json"
-            }
-         });
-      }
-      let comboStates = "<option value=''>Seleccionar una opción...</option>";
-      states.forEach((element) => {
-         let selected_state = "";
-         if (state != null) {
-            if (state == element[`state_name`]) {
-               selected_state = "selected";
-            }
-         }
-         // console.log(state);
-         // $("#input_state").click()
-         comboStates += '<option value="' + element["state_name"] + '" ' + selected_state + ">" + element["state_name"] + "</option>";
-      });
-
-      $("#input_state").html(comboStates);
-      $("#input_state").attr("disabled", false);
-      if (city != null) await showCities(state, city);
-   }
-}
-$("#input_state").on("change", async function () {
-   var state = this.value;
-   // console.log(output_estado.text());
-   // console.log(state);
-   showCities(state);
-});
-async function showCities(state, city = null) {
    $("#input_municipality").attr("disabled", true);
    $("#input_municipality").html("<option value=''>Cargando...</option>");
+   $("#input_colony").attr("disabled", true);
+   $("#input_colony").html("<option value=''>Cargando...</option>");
 
-   let cities = await $.ajax({
-      url: `${URL_API_COUNTRIES}/cities/${state}`,
+   // console.log("ESTADOS_CIUDADES");
+   let url = `${URL_API_COUNTRIES}/${zip}`;
+   if (community_id) url = `${URL_API_COUNTRIES}/colonia/${community_id}`;
+
+   const communitiesRequest = await $.ajax({
+      url: url,
       method: "GET",
       headers: {
-         Authorization: `Bearer ${auth_token}`,
          Accept: "application/json"
       }
    });
-   var comboCities = "<option value='' >Selecciona una opción...</option>";
+   let communities = Array.isArray(communitiesRequest.data.result) ? communitiesRequest.data.result : [communitiesRequest.data.result];
+   console.log("🚀 ~ showStates ~ communities:", communities)
+   const community = {
+      zip: "",
+      state: "",
+      city: "",
+      colony: ""
+   };
+   if (community_id) {
+      community.zip = communities[0].CodigoPostal;
+      community.state = communities[0].Estado;
+      community.city = communities[0].Municipio;
+      community.colony = communities[0].Colonia;
+   }
+
+   let states = communities.map((item) => item.Estado);
+   states = removeDuplicates(states);
+   let cities = communities.map((item) => item.Municipio);
+   cities = removeDuplicates(cities);
+   let colonies = communities.map((item) => {
+      return { id: item.id, label: item.Colonia };
+   });
+   colonies = removeDuplicates(colonies);
+
+   let comboStates = "<option value=''>Seleccionar una opción...</option>";
+   states.forEach((element) => {
+      let selected_state = "";
+      if (states.length > 1) {
+         if (community.state != null) {
+            if (community.state == element) {
+               selected_state = "selected";
+            }
+         }
+      } else selected_state = "selected";
+      // console.log(state);
+      // $("#input_state").click()
+      comboStates += '<option value="' + element + '" ' + selected_state + ">" + element + "</option>";
+   });
+
+   let comboCities = "<option value=''>Seleccionar una opción...</option>";
    cities.forEach((element) => {
       let selected_city = "";
-      if (city != null) {
-         // console.log("hay ciudad:", city);
-         if (city == element[`city_name`]) {
-            selected_city = "selected";
+      if (cities.length > 1) {
+         if (community.city != null) {
+            if (community.city == element) {
+               selected_city = "selected";
+            }
          }
-      }
-      comboCities += '<option value="' + element["city_name"] + '" ' + selected_city + ">" + element["city_name"] + "</option>";
+      } else selected_city = "selected";
+      // console.log(city);
+      // $("#input_city").click()
+      comboCities += '<option value="' + element + '" ' + selected_city + ">" + element + "</option>";
    });
+
+   let comboColonies = "<option value=''>Seleccionar una opción...</option>";
+   colonies.forEach((element) => {
+      let selected_colony = "";
+      if (colonies.length > 1) {
+         if (community.colony != null) {
+            if (community.colony == element.label) {
+               selected_colony = "selected";
+            }
+         }
+      } else selected_colony = "selected";
+      // console.log(colony);
+      // $("#input_colony").click()
+      comboColonies += '<option value="' + element.id + '" ' + selected_colony + ">" + element.label + "</option>";
+   });
+
+   if (community_id) $("#input_zip").val(community.zip);
+   $("#input_state").html(comboStates);
+   $("#input_state").attr("disabled", false);
    $("#input_municipality").html(comboCities);
    $("#input_municipality").attr("disabled", false);
+   $("#input_colony").html(comboColonies);
+   $("#input_colony").attr("disabled", false);
 }
 
 $(".reload_input").click(function () {
-   const input = $(`#${$(this).attr("data-input")}`);
-   if (input.attr("id") == "input_state") showStates((state = null), (city = null));
-   else if (input.attr("id") == "input_municipality") showCities($("#input_state").val());
+   const zip = $(`#input_zip`).val();
+   if (zip == "") return showToast("info", "El Código Postal esta vacío");
+   showStates(zip);
 });
+
+/** OPCION 1 */
+// async function showStates(state = null, city = null) {
+//    $("#input_state").attr("disabled", true);
+//    $("#input_state").html("<option value=''>Cargando...</option>");
+
+//    // console.log("generar token");
+//    let requestToken = await $.ajax({
+//       async: true,
+//       crossDomain: true,
+//       url: `${URL_API_COUNTRIES}/getaccesstoken`,
+//       method: "GET",
+//       headers: {
+//          Accept: "application/json",
+//          "api-token": "9BlpaH5qgUCOZJjDtIvbDH9BFkZbt40BdC9VQlVEGwkmibb3ubtwPdKWi9ftc6qVENE",
+//          "user-email": "deconomico@gomezpalacio.gob.mx"
+//       }
+//    });
+//    // Desarollo Economico - correo y token
+
+//    auth_token = requestToken.auth_token;
+//    // console.log(auth_token);
+
+//    // await estados_ciudades(output_estado.text(), output_ciudad.text());
+//    await states_cities(state, city);
+//    // console.log("ESTADOS_CIUDADES");
+//    async function states_cities(state = null, city = null) {
+//       let states = await $.ajax({
+//          url: `${URL_API_COUNTRIES}/states/México`,
+//          method: "GET",
+//          headers: {
+//             Authorization: `Bearer ${auth_token}`,
+//             Accept: "application/json"
+//          }
+//       });
+//       while (states.length < 1) {
+//          states = await $.ajax({
+//             url: `${URL_API_COUNTRIES}/states/México`,
+//             method: "GET",
+//             headers: {
+//                Authorization: `Bearer ${auth_token}`,
+//                Accept: "application/json"
+//             }
+//          });
+//       }
+//       let comboStates = "<option value=''>Seleccionar una opción...</option>";
+//       states.forEach((element) => {
+//          let selected_state = "";
+//          if (state != null) {
+//             if (state == element[`state_name`]) {
+//                selected_state = "selected";
+//             }
+//          }
+//          // console.log(state);
+//          // $("#input_state").click()
+//          comboStates += '<option value="' + element["state_name"] + '" ' + selected_state + ">" + element["state_name"] + "</option>";
+//       });
+
+//       $("#input_state").html(comboStates);
+//       $("#input_state").attr("disabled", false);
+//       if (city != null) await showCities(state, city);
+//    }
+// }
+// $("#input_state").on("change", async function () {
+//    var state = this.value;
+//    // console.log(output_estado.text());
+//    // console.log(state);
+//    showCities(state);
+// });
+// async function showCities(state, city = null) {
+//    $("#input_municipality").attr("disabled", true);
+//    $("#input_municipality").html("<option value=''>Cargando...</option>");
+
+//    let cities = await $.ajax({
+//       url: `${URL_API_COUNTRIES}/cities/${state}`,
+//       method: "GET",
+//       headers: {
+//          Authorization: `Bearer ${auth_token}`,
+//          Accept: "application/json"
+//       }
+//    });
+//    var comboCities = "<option value='' >Selecciona una opción...</option>";
+//    cities.forEach((element) => {
+//       let selected_city = "";
+//       if (city != null) {
+//          // console.log("hay ciudad:", city);
+//          if (city == element[`city_name`]) {
+//             selected_city = "selected";
+//          }
+//       }
+//       comboCities += '<option value="' + element["city_name"] + '" ' + selected_city + ">" + element["city_name"] + "</option>";
+//    });
+//    $("#input_municipality").html(comboCities);
+//    $("#input_municipality").attr("disabled", false);
+// }
+
+// $(".reload_input").click(function () {
+//    const input = $(`#${$(this).attr("data-input")}`);
+//    if (input.attr("id") == "input_state") showStates((state = null), (city = null));
+//    else if (input.attr("id") == "input_municipality") showCities($("#input_state").val());
+// });
 //#endregion SELECTORES DE PAISES / CIUDADES

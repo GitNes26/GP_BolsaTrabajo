@@ -24,8 +24,11 @@ const div_company = $("#div_company"),
    preview_logo = $("#preview_logo"),
    input_business_line_id = $("#input_business_line_id"),
    input_company_ranking_id = $("#input_company_ranking_id"),
+   input_community_id = $("#input_community_id"),
+   input_zip = $("#input_zip"),
    input_state = $("#input_state"),
    input_municipality = $("#input_municipality"),
+   input_colony = $("#input_colony"),
    input_contact_name = $("#input_contact_name"),
    input_contact_phone = $("#input_contact_phone"),
    input_contact_email = $("#input_contact_email");
@@ -75,6 +78,16 @@ async function init() {
    user_id.val(id_cookie);
    input_company.focus();
 }
+
+input_zip.on("input", async (e) => {
+   const zip = $(e.target).val();
+   if (zip.length < 5) return;
+   await showStates(zip);
+});
+input_colony.on("change", async (e) => {
+   const community_id = $(e.target).val();
+   input_community_id.val(community_id);
+});
 
 //RESETEAR FORMULARIOS
 btn_reset.click(async (e) => {

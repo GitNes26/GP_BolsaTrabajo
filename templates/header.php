@@ -88,5 +88,5 @@ if (strpos($classBody, 'layout-top-nav') !== 0) $classBody .= "layout-navbar-fix
 
 
 <body class="<?= $classBody ?>  text-sm" style="height: auto;">
-   <input type="hidden" id="url_base" value="<?= $URL_BASE ?>">
+   <input type="hidden" id="url_base" value="<?= strpos($_SERVER["HTTP_HOST"], ".test") ? "" : $URL_BASE ?>">
    <div class="wrapper">

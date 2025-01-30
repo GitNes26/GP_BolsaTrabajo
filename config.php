@@ -15,14 +15,15 @@ $CONN_DB_WEB_PLESK = array(
   "DB_NAME" => "bd_bolsa_trabajo",
 );
 $CONN_DB_WEB = array(
-  "HOST_NAME" => "127.0.0.1",
+  "HOST_NAME" => "127.0.0.1", #"186.96.142.8", #"127.0.0.1",
   "DB_PORT" => "3306",
   "DB_USER" => "pagprincipal_dbusr_bolsa_trabajo",
   "DB_PWD" => "lybY~fUnIs}t",
   "DB_NAME" => "pagprincipal_db_bolsa_trabajo",
 );
 
-$CONN_DB = $CONN_DB_WEB;
+$CONN_DB = $CONN_DB_LOCAL;
+$VERSION = "1.2.0";
 #endregion CONSTANTES DE CONFIGURACION
 
 #region CONSTANTES RUTAS
