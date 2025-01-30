@@ -33,7 +33,7 @@ const id_cookie = Number(Cookies.get("user_id")),
    plural_object = $("#plural_object").val();
 
 let auth_token;
-console.log("🚀 ~ URL_BASE:", URL_BASE);
+// console.log("🚀 ~ URL_BASE:", URL_BASE);
 
 const SUMMERNOTE_CONFIG = {
    placeholder: "Escribir Habilidades, competencias, experiencias, observaciones, etc.",
@@ -864,8 +864,8 @@ const removeDuplicates = (array) => {
 
 //#region SELECTORES DE PAISES / CIUDADES
 async function showStates(zip = 35000, community_id = null) {
-   console.log("🚀 ~ showStates ~ zip:", zip);
-   console.log("🚀 ~ showStates ~ community_id:", community_id);
+   // console.log("🚀 ~ showStates ~ zip:", zip);
+   // console.log("🚀 ~ showStates ~ community_id:", community_id);
 
    $("#input_state").attr("disabled", true);
    $("#input_state").html("<option value=''>Cargando...</option>");
@@ -886,7 +886,6 @@ async function showStates(zip = 35000, community_id = null) {
       }
    });
    let communities = Array.isArray(communitiesRequest.data.result) ? communitiesRequest.data.result : [communitiesRequest.data.result];
-   console.log("🚀 ~ showStates ~ communities:", communities)
    const community = {
       zip: "",
       state: "",

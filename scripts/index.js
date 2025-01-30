@@ -40,7 +40,7 @@ async function init() {
    fillSelect2(URL_BUSINESS_LINE_APP, -1, input_filter_business_line_id);
    fillSelect2(URL_AREA_APP, -1, input_filter_area_id);
    fillSelect2(URL_TAG_APP, -1, input_filter_interest_tags_ids, false);
-   showStates();
+   // showStates();
    if (role_cookie != 4) {
       btns_submit.attr("disabled", true);
       btns_submit.text("SOLO CANDIDATOS");

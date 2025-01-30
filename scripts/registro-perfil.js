@@ -69,8 +69,6 @@ focusSelect2($(".select2"));
 init();
 async function init() {
    counter_description.text(`0/${input_description.data("limit")}`);
-   showStates();
-
    fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
    fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
    fillSelect2(URL_PROFESSION_APP, -1, input_profession_id, false);
