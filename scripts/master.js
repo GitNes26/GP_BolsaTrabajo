@@ -945,9 +945,13 @@ async function showStates(zip = 35000, community_id = null) {
          if (community.colony != null) {
             if (community.colony == element.label) {
                selected_colony = "selected";
+               $("#input_community_id").val(element.id);
             }
          }
-      } else selected_colony = "selected";
+      } else {
+         selected_colony = "selected";
+         $("#input_community_id").val(element.id);
+      }
       // console.log(colony);
       // $("#input_colony").click()
       comboColonies += '<option value="' + element.id + '" ' + selected_colony + ">" + element.label + "</option>";
