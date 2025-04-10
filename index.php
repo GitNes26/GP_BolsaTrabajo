@@ -105,7 +105,7 @@ if (isset($_GET["p"])) {
                   <div class="login-box">
                      <div class="login-logo">
                         <span class="fw-bold h1">GÓMEZ PALACIO</span>
-                        <!-- <span class="fw-light h1">Sistemas</span> -->
+                        <span class="fw-light h1">Bolsa de Trabajo</span>
                         <!-- <div class="login-logo">
                            <img src="<?= $LOGO ?>" alt='GP Logo' class='img-fluid' />
                         </div> -->
