@@ -104,11 +104,11 @@ if (isset($_GET["p"])) {
                   style="z-index:1">
                   <div class="login-box">
                      <div class="login-logo">
-                        <!-- <span class="fw-bold h1">RESO</span>
-                          <span class="fw-light h1">Sistemas</span> -->
-                        <div class="login-logo">
+                        <span class="fw-bold h1">GÓMEZ PALACIO</span>
+                        <!-- <span class="fw-light h1">Sistemas</span> -->
+                        <!-- <div class="login-logo">
                            <img src="<?= $LOGO ?>" alt='GP Logo' class='img-fluid' />
-                        </div>
+                        </div> -->
                      </div>
                      <!-- /.login-logo -->
 
@@ -202,7 +202,8 @@ if (isset($_GET["p"])) {
                         aria-label="Close"></button>
                      <div class="row">
                         <div class="login-logo">
-                           <img src="<?= $LOGO ?>" alt='GP Logo' class='img-fluid' />
+                           <span class="fw-bold h1">GÓMEZ PALACIO</span>
+                           <!-- <img src="<?= $LOGO ?>" alt='GP Logo' class='img-fluid' /> -->
                         </div>
                         <div class="col-md-8 my-auto mx-auto p-3 p-sm-5 fs-5">
                            <h1 class="fw-bold text-uppercase text-center">Aviso de privacidad simplificado</h1>
