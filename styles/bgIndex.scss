@@ -1,5 +1,15 @@
 @import compass
 
+*{
+  --color--primary: #3e3e3e;
+  --color--primary--hover: #2c2b2b;
+  /* --color--primary: #2aa549 */ /*green; */
+  /* --color--primary--hover: #0c7827; */
+}
+.image-gray{
+  -webkit-filter: grayscale(100%); /* Para navegadores basados en WebKit */
+  filter: grayscale(100%);
+}
 
 // n is number of stars required
 @function multiple-box-shadow ($n) 

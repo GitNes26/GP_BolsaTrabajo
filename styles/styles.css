@@ -6,6 +6,11 @@
 *{
    --color--scroll: #2aa549;
    --color--bg--scroll: #343A40;
+   --color--primary: #3e3e3e;
+   --color--primary--hover: #2c2b2b;
+   /* --color--primary: #2aa549 */ /*green; */
+   /* --color--primary--hover: #0c7827; */
+
    /* --color--bg--scroll: #D6D8D9; */
 }
 /* Works on Firefox */
@@ -40,6 +45,11 @@
 /* --------------------------------SCROLLBAR------------------------------------------ */
 body, html {
    background-color: #F4F6F9;
+}
+
+.image-gray{
+   -webkit-filter: grayscale(100%); /* Para navegadores basados en WebKit */
+   filter: grayscale(100%);
 }
 
 .wrapper, body, html {
@@ -99,7 +109,7 @@ tr td {
 
 .eye_icon:hover {
    cursor: pointer;
-   color: green;
+   color: var(--color--primary);
    /* color: blue; */
 }
 
@@ -159,8 +169,8 @@ body {
    width: 75%;
 }
 
-a { color: #2aa549; }
-a:hover { color: #0c7827; }
+a { color: var(--color--primary); }
+a:hover { color: var(--color--primary--hover); }
 
 .content-index, #vacancy_container {
    max-height: 75vh !important; /* 75vh */  /* 88.8vh */
@@ -171,7 +181,7 @@ a:hover { color: #0c7827; }
 
 
 .card-detail {
-   border: 5px solid #0c7827;
+   border: 5px solid var(--color--primary--hover);
    border-radius: 20px;
    max-height: 75vh;
 }
@@ -183,7 +193,7 @@ a:hover { color: #0c7827; }
 }
 
 .card_vacancy_selected {
-   border: 5px solid #0c7827;
+   border: 5px solid var(--color--primary--hover);
    border-radius: 10px;
    opacity: 1;
    font-weight: bold;
@@ -191,8 +201,8 @@ a:hover { color: #0c7827; }
 }
 
 .select2-selection__choice {
-   background-color: #0c7827 !important;
-   border-color: #0c7827 !important;
+   background-color: var(--color--primary--hover) !important;
+   border-color: var(--color--primary--hover) !important;
    color: whitesmoke !important;
 }
 
