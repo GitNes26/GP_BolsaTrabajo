@@ -33,16 +33,16 @@ $current_page = "Usuarios";
    <section class="content">
 
       <!-- card -->
-      <div class="card card-outline card-success shadow">
+      <div class="card card-outline card-dark shadow">
          <?php if ($permission_write ?? false): ?>
-         <div class="container-fluid mt-2">
-            <button id="btn_modal_form" class="float-end btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR USUARIO</button>
-         </div>
+            <div class="container-fluid mt-2">
+               <button id="btn_modal_form" class="float-end btn btn-dark fw-bold" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR USUARIO</button>
+            </div>
          <?php endif ?>
          <div class="card-body">
             <!-- tabla -->
             <div class="table-responsive">
-              <table id="table" class="table table-hover text-center" style="width:100%">
+               <table id="table" class="table table-hover text-center" style="width:100%">
                   <thead class="thead-dark">
                      <tr>
                         <th scope="col">Correo</th>
@@ -138,7 +138,7 @@ $current_page = "Usuarios";
                </div>
             </div>
             <div class="modal-footer">
-               <button type="submit" id="btn_submit" class="btn btn-success fw-bold">AGREGAR</button>
+               <button type="submit" id="btn_submit" class="btn btn-dark fw-bold">AGREGAR</button>
                <button type="reset" id="btn_reset" class="btn btn-secondary">LIMPIAR</button>
             </div>
          </form>
@@ -155,4 +155,4 @@ $current_page = "Usuarios";
 <?php
 include "../templates/footer.php";
 ?>
-<script src="<?php echo($SCRIPTS_PATH) ?>/<?=substr($path,0,-4)?>.js"></script>
+<script src="<?php echo ($SCRIPTS_PATH) ?>/<?= substr($path, 0, -4) ?>.js"></script>

@@ -80,7 +80,7 @@ btn_modal_form.click((e) => {
 
    modal_title.html("<i class='fa-solid fa-circle-plus'></i></i>&nbsp; REGISTRAR EMPRESA");
    btn_submit.removeClass("btn-primary");
-   btn_submit.addClass("btn-success");
+   btn_submit.addClass("btn-dark");
    btn_submit.text("AGREGAR");
 
    //Resetear form
@@ -306,7 +306,7 @@ tbody.click((e) => {
 //EDITAR OBJETO
 async function editObj(btn_edit) {
    modal_title.html("<i class='fa-solid fa-user-pen'></i></i>&nbsp; EDITAR EMPRESA");
-   btn_submit.removeClass("btn-success");
+   btn_submit.removeClass("btn-dark");
    btn_submit.addClass("btn-primary");
    btn_submit.text("GUARDAR");
 

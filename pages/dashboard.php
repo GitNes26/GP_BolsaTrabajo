@@ -33,10 +33,11 @@ $pagina_acutal = "Dashboard";
    <!-- Main content -->
    <section class="content text-center">
 
-     <h1 clas="lead fw-bold text-center">Dashboard</h1>
+      <h1 clas="lead fw-bold text-center">Dashboard</h1>
 
       <!-- card -->
-      <!-- <?php #include "./paquetes.php"; ?> -->
+      <!-- <?php #include "./paquetes.php"; 
+            ?> -->
       <!-- /.card -->
 
    </section>
@@ -80,7 +81,7 @@ $pagina_acutal = "Dashboard";
                   </div>
             </div>
             <div class="modal-footer">
-               <button type="submit" id="btn_enviar_formulario" class="btn btn-success fw-bold">AGREGAR</button>
+               <button type="submit" id="btn_enviar_formulario" class="btn btn-dark fw-bold">AGREGAR</button>
                <button type="reset" id="btn_reset_formulario" class="btn btn-secondary">Limpiar todo</button>
                </form>
             </div>
@@ -100,5 +101,5 @@ include "../templates/footer.php";
 ?>
 
 <script>
-//   window.location.href = `${URL_ADMIN}/users.php`;
+   //   window.location.href = `${URL_ADMIN}/users.php`;
 </script>

@@ -38,7 +38,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 
          <!-- FILTROS -->
          <div class="col-md-4 sticky-top">
-            <form id="form_filter" class="card card-outline card-success shadow sticky-top">
+            <form id="form_filter" class="card card-outline card-dark shadow sticky-top">
                <div class="card-header">
                   <div class="pb-1">
                      <label for="input_filter_search" class="form-label">Buscador General</label>
@@ -53,12 +53,12 @@ $pagina_acutal = "Bolsa de Trabajo";
                      </button>
                   </div>
                </div>
-               <div class="card-body text-start d-none">
+               <div class="card-body text-start" hidden>
                   <input type="hidden" id="filter_op" name="filter_op" value="" class="not_validate">
                   <!-- SUELDO -->
                   <div class="mb-3">
-                     <label for="input_filter_min_salary" class="form-label">Sueldo deseado:</label>
-                     <div class="row">
+                     <!-- <label for="input_filter_min_salary" class="form-label">Sueldo deseado:</label> -->
+                     <!-- <div class="row">
                         <div class="col">
                            <input type="text" class="form-control" id="input_filter_min_salary"
                               name="input_filter_min_salary" data-input-name="NOMBRE DEL MÓDULO" placeholder="Mínimo">
@@ -66,6 +66,21 @@ $pagina_acutal = "Bolsa de Trabajo";
                         <div class="col">
                            <input type="text" class="form-control" id="input_filter_max_salary"
                               name="input_filter_max_salary" data-input-name="NOMBRE DEL MÓDULO" placeholder="Máximo">
+                        </div>
+                     </div> -->
+                     <div class="row">
+                        <div class="col-12">
+                           <label class="form-label">Rango Salarial</label>
+                           <!-- <div id="salarySlider"></div> -->
+                           <input type="text" id="salaryRange">
+                        </div>
+                        <div class="col mt-3">
+                           <input type="number" class="form-control" id="input_filter_min_salary"
+                              name="input_filter_min_salary" placeholder="Mínimo">
+                        </div>
+                        <div class="col mt-3">
+                           <input type="number" class="form-control" id="input_filter_max_salary"
+                              name="input_filter_max_salary" placeholder="Máximo">
                         </div>
                      </div>
                   </div>
@@ -127,7 +142,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                </div>
                <div class="card-footer">
                   <div class="fw-bolder mb-2" id="leyend_job_found">¡Busca tú empleo ideal!</div>
-                  <button type="submit" id="btn_submit" class="btn btn-outline-success btn-block fw-bold text-center">
+                  <button type="submit" id="btn_submit" class="btn btn-outline-dark btn-block fw-bold text-center">
                      <i class="fa-regular fa-magnifying-glass"></i>&nbsp;&nbsp;BUSCAR
                   </button>
                   <button type="reset" id="btn_reset" class="btn btn-outline-secondary btn-block fw-bold text-center">
@@ -236,7 +251,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                </div>
                <div class="card-footer">
                   <div class="d-grid gap-2">
-                     <button type="submit" id="btn_send" class="btn btn-outline-success fw-bold grid btn_submit"
+                     <button type="submit" id="btn_send" class="btn btn-outline-dark fw-bold grid btn_submit"
                         disabled><i class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
                      </button>
                   </div>
@@ -366,7 +381,7 @@ $pagina_acutal = "Bolsa de Trabajo";
             </div>
             <div class="modal-footer">
                <div class="d-grid gap-2">
-                  <button type="submit" class="btn btn-outline-success fw-bold grid btn_submit" disabled><i
+                  <button type="submit" class="btn btn-outline-dark fw-bold grid btn_submit" disabled><i
                         class="fa-sharp fa-solid fa-paper-plane-top"></i>&nbsp; POSTULARSE
                   </button>
                </div>
@@ -384,7 +399,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 
 
 <template id="template_card_vacancy">
-   <div class="card card-success card-outline direct-chat direct-chat-success shadow-sm pointer-sm card_vacancy"
+   <div class="card card-dark card-outline direct-chat direct-chat-dark shadow-sm pointer-sm card_vacancy"
       data-id="id">
       <div class="ribbon-wrapper ribbon-lg d-none">
          <div class="ribbon bg-info fw-bolder">POSTULADO</div>
@@ -392,7 +407,7 @@ $pagina_acutal = "Bolsa de Trabajo";
       <div class="card-header">
          <span class="card-title fw-bolder vacancy">Vacante</span>
          <div class="card-tools">
-            <!-- <span title="vacantes disponibles" class="badge bg-success vacancy_numbers">3</span> -->
+            <!-- <span title="vacantes disponibles" class="badge bg-dark vacancy_numbers">3</span> -->
             <!-- <button type="button" class="btn btn-tool" title="Favoritos" data-widget="chat-pane-toggle">
                <i class="fa-solid fa-star"></i>
             </button> -->
@@ -434,21 +449,21 @@ include "../templates/footer.php";
 ?>
 <script src="<?php echo ($SCRIPTS_PATH) ?>/index.js"></script>
 <script>
-// $(function () {
-//    /* BOOTSTRAP SLIDER */
-//    // $('.slider').bootstrapSlider();
+   // $(function () {
+   //    /* BOOTSTRAP SLIDER */
+   //    // $('.slider').bootstrapSlider();
 
-//    /* ION SLIDER */
-//    $('#range_1').ionRangeSlider({
-//    min     : 0,
-//    max     : 5000,
-//    from    : 1000,
-//    to      : 4000,
-//    type    : 'double',
-//    step    : 1,
-//    prefix  : '$',
-//    prettify: false,
-//    hasGrid : true
-//    })
-// })
+   //    /* ION SLIDER */
+   //    $('#range_1').ionRangeSlider({
+   //    min     : 0,
+   //    max     : 5000,
+   //    from    : 1000,
+   //    to      : 4000,
+   //    type    : 'double',
+   //    step    : 1,
+   //    prefix  : '$',
+   //    prettify: false,
+   //    hasGrid : true
+   //    })
+   // })
 </script>

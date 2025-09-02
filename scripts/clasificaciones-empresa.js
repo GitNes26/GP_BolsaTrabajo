@@ -2,26 +2,22 @@
 var table;
 table = $("#table").DataTable(DT_CONFIG);
 
-$(document).ready(() => {
-});
+$(document).ready(() => {});
 
 // btn_modal_form = $("#btn_modal_form"),
-const 
-	tbody = $("#table tbody"),
-	modal_body = $("#modal-body"),
-	form = $("#form"),
-	modal_title = $(".modal-title"),
-	id_modal = $("#id"),
-	op_modal = $("#op"),
-	input_company_ranking = $("#input_company_ranking"),
-	input_description = $("#input_description"),
-	counter_description = $("#counter_description"),
-	
+const tbody = $("#table tbody"),
+   modal_body = $("#modal-body"),
+   form = $("#form"),
+   modal_title = $(".modal-title"),
+   id_modal = $("#id"),
+   op_modal = $("#op"),
+   input_company_ranking = $("#input_company_ranking"),
+   input_description = $("#input_description"),
+   counter_description = $("#counter_description"),
+   btn_submit = $("#btn_submit"),
+   btn_reset = $("#btn_reset"),
+   btn_cancel = $("#btn_cancel");
 
-	btn_submit = $("#btn_submit"),
-	btn_reset = $("#btn_reset"),
-	btn_cancel = $("#btn_cancel");
-	
 //#endregion VARIABLES
 // $(".select2").select2();
 // focusSelect2($(".select2"));
@@ -32,210 +28,187 @@ const
 
 init();
 async function init() {
-	counter_description.text(`0/${input_description.data("limit")}`);
+   counter_description.text(`0/${input_description.data("limit")}`);
 
-	
-	fillTable();
-	setTimeout(() => {
+   fillTable();
+   setTimeout(() => {
       input_company_ranking.focus();
    }, 500);
 }
 
-
-
 //CLICK EN BTN CANCELAR PARA CREAR UNO NUEVO
- btn_cancel.click((e) => {
-	e.preventDefault();
-	modal_title.html(
-		"<i class='fa-regular fa-circle-plus'></i>&nbsp; REGISTRAR CLASIFICACIÓN"
-	);
-	btn_submit.removeClass("btn-primary");
-	btn_submit.addClass("btn-success");
-	btn_submit.text("AGREGAR");
+btn_cancel.click((e) => {
+   e.preventDefault();
+   modal_title.html("<i class='fa-regular fa-circle-plus'></i>&nbsp; REGISTRAR CLASIFICACIÓN");
+   btn_submit.removeClass("btn-primary");
+   btn_submit.addClass("btn-dark");
+   btn_submit.text("AGREGAR");
 
-	btn_cancel.removeClass("btn-success");
-	btn_cancel.addClass("btn-danger d-none");
-	btn_cancel.text("CANCELAR");
+   btn_cancel.removeClass("btn-dark");
+   btn_cancel.addClass("btn-danger d-none");
+   btn_cancel.text("CANCELAR");
 
-	//Resetear form
-	btn_reset.click();
+   //Resetear form
+   btn_reset.click();
 });
 
 //RESETEAR FORMULARIOS
 btn_reset.click(async (e) => {
-	id_modal.val("");
-	// setTimeout(() => {
-	// 	input_company_ranking.focus();
-	// }, 500);
+   id_modal.val("");
+   // setTimeout(() => {
+   // 	input_company_ranking.focus();
+   // }, 500);
 });
-
 
 // REGISTRAR O EDITAR OBJETO
 form.on("submit", async (e) => {
-	e.preventDefault();
-	// console.log(form.serializeArray());
+   e.preventDefault();
+   // console.log(form.serializeArray());
 
-	if (!validateInputs(form)) return;
+   if (!validateInputs(form)) return;
 
-	if (id_modal.val() <= 0) {
-		//NUEVO
-		if (!permission_write) return;
-		id_modal.val("");
-		op_modal.val("create");
-	} else {
-		//EDICION
-		if (!permission_update) return;
-		op_modal.val("edit");
-	}
+   if (id_modal.val() <= 0) {
+      //NUEVO
+      if (!permission_write) return;
+      id_modal.val("");
+      op_modal.val("create");
+   } else {
+      //EDICION
+      if (!permission_update) return;
+      op_modal.val("edit");
+   }
 
-	let data = form.serializeArray();
-	// return console.log(data);
-	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
-	if (id_modal.val() <= 0) {
-		//NUEVO
-		addToArray("created_at", current_date, data);
-	} else {
-		//EDICION
-		addToArray("updated_at", current_date, data);
-	}
+   let data = form.serializeArray();
+   // return console.log(data);
+   let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
+   if (id_modal.val() <= 0) {
+      //NUEVO
+      addToArray("created_at", current_date, data);
+   } else {
+      //EDICION
+      addToArray("updated_at", current_date, data);
+   }
 
-	// return console.log(data);
-	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_RANKING_APP, data);
-	if (ajaxResponse.message == "duplicado") return
-	btn_cancel.click();
-	await fillTable();
+   // return console.log(data);
+   const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_RANKING_APP, data);
+   if (ajaxResponse.message == "duplicado") return;
+   btn_cancel.click();
+   await fillTable();
 });
 
-async function fillTable(show_toas=true) {
-	let data = { op: "index" };
-	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_RANKING_APP, data, null, true, show_toas);
+async function fillTable(show_toas = true) {
+   let data = { op: "index" };
+   const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_RANKING_APP, data, null, true, show_toas);
 
-	//Limpiar table
-	tbody.slideUp();
-	table.clear().draw();
+   //Limpiar table
+   tbody.slideUp();
+   table.clear().draw();
 
-	const list = [];
-	let objResponse = ajaxResponse.data;
-	// console.log(objResponse);
+   const list = [];
+   let objResponse = ajaxResponse.data;
+   // console.log(objResponse);
 
-	objResponse.map((obj) => {
-		//Campos
-		let 
-			column_company_ranking = `${obj.company_ranking}`;
-			column_description = `${obj.description}`;
+   objResponse.map((obj) => {
+      //Campos
+      let column_company_ranking = `${obj.company_ranking}`;
+      column_description = `${obj.description}`;
 
-		let column_buttons = `<td class='align-middle'>
+      let column_buttons = `<td class='align-middle'>
             <div class='btn-group' role='group'>`;
-		if (permission_update) {
-			column_buttons +=
-				//html
-				`<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Clasificación'><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
-		}
-		if (permission_delete) {
-			column_buttons +=
-				//html
-				`<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Clasificación' data-name='${obj.company_ranking}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
-		}
-		column_buttons += `</div>
+      if (permission_update) {
+         column_buttons +=
+            //html
+            `<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Clasificación'><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
+      }
+      if (permission_delete) {
+         column_buttons +=
+            //html
+            `<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Clasificación' data-name='${obj.company_ranking}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
+      }
+      column_buttons += `</div>
 					</td>`;
 
-		list.push([
-			column_company_ranking,
-			column_description,
-			column_buttons,
-		]);		
-	});
-	//Dibujar Tabla
-	await table.rows
-	.add(list)
-	.draw();
-	await table.columns.adjust().draw();
-	tbody.slideDown("slow");
-	btn_reset.click();
-	$("tr td").css("vertical-align", "middle");
+      list.push([column_company_ranking, column_description, column_buttons]);
+   });
+   //Dibujar Tabla
+   await table.rows.add(list).draw();
+   await table.columns.adjust().draw();
+   tbody.slideDown("slow");
+   btn_reset.click();
+   $("tr td").css("vertical-align", "middle");
 }
 
 //ACCIONES EN BOTONES DE LA TABLA
 tbody.click((e) => {
-	// console.log(e.target);
-	e.preventDefault();
+   // console.log(e.target);
+   e.preventDefault();
 
-	//EDITAR OBJETO
-	if ($(e.target).hasClass("btn_edit") || $(e.target).hasClass("i_edit")) {
-		let btn_edit;
+   //EDITAR OBJETO
+   if ($(e.target).hasClass("btn_edit") || $(e.target).hasClass("i_edit")) {
+      let btn_edit;
 
-		if ($(e.target).hasClass("i_edit")) {
-			btn_edit = $(e.target).parent();
-		} else {
-			btn_edit = $(e.target);
-		}
+      if ($(e.target).hasClass("i_edit")) {
+         btn_edit = $(e.target).parent();
+      } else {
+         btn_edit = $(e.target);
+      }
 
-		editObj(btn_edit);
-	}
+      editObj(btn_edit);
+   }
 
-	//ELIMINAR OBJETO
-	if (
-		$(e.target).hasClass("btn_delete") ||
-		$(e.target).hasClass("i_delete")
-	) {
-		let btn_delete;
+   //ELIMINAR OBJETO
+   if ($(e.target).hasClass("btn_delete") || $(e.target).hasClass("i_delete")) {
+      let btn_delete;
 
-		if ($(e.target).hasClass("i_delete")) {
-			btn_delete = $(e.target).parent();
-		} else {
-			btn_delete = $(e.target);
-		}
+      if ($(e.target).hasClass("i_delete")) {
+         btn_delete = $(e.target).parent();
+      } else {
+         btn_delete = $(e.target);
+      }
 
-		deleteObj(btn_delete);
-	}
+      deleteObj(btn_delete);
+   }
 });
 
 //EDITAR OBJETO
 async function editObj(btn_edit) {
-	modal_title.html("<i class='fa-light fa-pen-to-square'></i>&nbsp; EDITAR CLASIFICACIÓN");
-	btn_submit.removeClass("btn-success");
-	btn_submit.addClass("btn-primary");
-	btn_submit.text("GUARDAR");
+   modal_title.html("<i class='fa-light fa-pen-to-square'></i>&nbsp; EDITAR CLASIFICACIÓN");
+   btn_submit.removeClass("btn-dark");
+   btn_submit.addClass("btn-primary");
+   btn_submit.text("GUARDAR");
 
-	btn_cancel.removeClass("btn-danger d-none");
-	btn_cancel.addClass("btn-danger");
-	btn_cancel.text("CANCELAR");
+   btn_cancel.removeClass("btn-danger d-none");
+   btn_cancel.addClass("btn-danger");
+   btn_cancel.text("CANCELAR");
 
-	btn_reset.click();
+   btn_reset.click();
 
-	let id_obj = btn_edit.attr("data-id");
-	let data = { id: id_obj, op: "show" };
-	const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_RANKING_APP, data);
+   let id_obj = btn_edit.attr("data-id");
+   let data = { id: id_obj, op: "show" };
+   const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_RANKING_APP, data);
 
-	const obj = ajaxResponse.data;
-	//form
-	id_modal.val(Number(obj.id));
-	input_company_ranking.val(obj.company_ranking);
-	input_description.val(obj.description);
-	
+   const obj = ajaxResponse.data;
+   //form
+   id_modal.val(Number(obj.id));
+   input_company_ranking.val(obj.company_ranking);
+   input_description.val(obj.description);
 
-	setTimeout(() => {
-		input_company_ranking.focus();
-	}, 500);
+   setTimeout(() => {
+      input_company_ranking.focus();
+   }, 500);
 }
 
 //ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
 async function deleteObj(btn_delete) {
-	let title = `¿Estas seguro de eliminar la clasificación <br> ${btn_delete.attr("data-name")}?`;
-	let text = ``;
+   let title = `¿Estas seguro de eliminar la clasificación <br> ${btn_delete.attr("data-name")}?`;
+   let text = ``;
 
-	let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
-	let data = {
-		op: "delete",
-		id: Number(btn_delete.attr("data-id")),
-		deleted_at: current_date,
-	};
+   let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
+   let data = {
+      op: "delete",
+      id: Number(btn_delete.attr("data-id")),
+      deleted_at: current_date
+   };
 
-	ajaxRequestQuestionAsync(
-		title,
-		text,
-		URL_COMPANY_RANKING_APP,
-		data,
-		"fillTable()"
-	);
+   ajaxRequestQuestionAsync(title, text, URL_COMPANY_RANKING_APP, data, "fillTable()");
 }

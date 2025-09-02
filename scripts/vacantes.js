@@ -94,10 +94,10 @@ btn_cancel.click((e) => {
    e.preventDefault();
    modal_vacancy.html("<i class='fa-regular fa-circle-plus'></i>&nbsp; AGREGAR VACANTE");
    btn_submit.removeClass("btn-primary");
-   btn_submit.addClass("btn-success");
+   btn_submit.addClass("btn-dark");
    btn_submit.text("AGREGAR");
 
-   btn_cancel.removeClass("btn-success");
+   btn_cancel.removeClass("btn-dark");
    btn_cancel.addClass("btn-danger d-none");
    btn_cancel.text("CANCELAR");
 
@@ -345,7 +345,7 @@ tbody.click((e) => {
 //EDITAR OBJETO
 async function editObj(btn_edit) {
    modal_vacancy.html("<i class='fa-light fa-pen-to-square'></i>&nbsp; EDITAR VACANTE");
-   btn_submit.removeClass("btn-success");
+   btn_submit.removeClass("btn-dark");
    btn_submit.addClass("btn-primary");
    btn_submit.text("GUARDAR");
 

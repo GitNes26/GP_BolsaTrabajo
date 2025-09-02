@@ -77,7 +77,7 @@ btn_modal_form.click((e) => {
 
    modal_title.html("<i class='fa-solid fa-circle-plus'></i></i>&nbsp; REGISTRAR CANDIDATO");
    btn_submit.removeClass("btn-primary");
-   btn_submit.addClass("btn-success");
+   btn_submit.addClass("btn-dark");
    btn_submit.text("AGREGAR");
 
    //Resetear form
@@ -334,7 +334,7 @@ tbody.click((e) => {
 //EDITAR OBJETO
 async function editObj(btn_edit) {
    modal_title.html("<i class='fa-solid fa-user-pen'></i></i>&nbsp; EDITAR CANDIDATO");
-   btn_submit.removeClass("btn-success");
+   btn_submit.removeClass("btn-dark");
    btn_submit.addClass("btn-primary");
    btn_submit.text("GUARDAR");
 
@@ -476,10 +476,10 @@ async function showObj(id) {
    // console.log(obj);
 
    d_div_header.removeClass("bg-primary");
-   d_div_header.addClass("bg-success");
+   d_div_header.addClass("bg-dark");
    d_output_enable.text("DISPONIBLE");
    if (obj.enable == 0) {
-      d_div_header.removeClass("bg-success");
+      d_div_header.removeClass("bg-dark");
       d_div_header.addClass("bg-primary");
       d_output_enable.text("CONTRATADO");
    }

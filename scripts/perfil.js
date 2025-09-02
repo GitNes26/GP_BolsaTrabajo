@@ -366,7 +366,7 @@ async function fillInfo(show_toas = true) {
 
    if (role_cookie == 4) {
       if (obj.enable == 0) {
-         div_header.removeClass("bg-success");
+         div_header.removeClass("bg-dark");
          div_header.addClass("bg-primary");
          output_enable.text("CONTRATADO");
       }
@@ -482,7 +482,7 @@ async function fillInfo(show_toas = true) {
 //EDITAR OBJETO
 async function editObj(btn_edit) {
    modal_title.html("<i class='fa-light fa-pen-to-square'></i>&nbsp; EDITAR GIRO");
-   btn_submit.removeClass("btn-success");
+   btn_submit.removeClass("btn-dark");
    btn_submit.addClass("btn-primary");
    btn_submit.text("GUARDAR");
 
@@ -511,13 +511,13 @@ async function changeEnable(enable) {
    btn_change_enable.attr("data-enable", enable);
    if (enable == "1") {
       div_header.removeClass("bg-primary");
-      div_header.addClass("bg-success");
+      div_header.addClass("bg-dark");
       output_enable.text("DISPONIBLE");
       btn_change_enable.text("Fui Contratado");
       btn_change_enable.attr("title", "Click para mostrar en tú perfíl que estás CONTRATADO");
       return;
    }
-   div_header.removeClass("bg-success");
+   div_header.removeClass("bg-dark");
    div_header.addClass("bg-primary");
    output_enable.text("CONTRATADO");
    btn_change_enable.text("Disponible");

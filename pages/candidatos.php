@@ -34,12 +34,12 @@ $current_page = "Candidatos";
    <section class="content">
 
       <!-- card -->
-      <div class="card card-outline card-success shadow">
+      <div class="card card-outline card-dark shadow">
          <?php if ($permission_write ?? false): ?>
-         <div class="container-fluid mt-2">
-            <button id="btn_modal_form" class="float-end btn btn-success fw-bold" data-bs-toggle="modal"
-               data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR CANDIDATO</button>
-         </div>
+            <div class="container-fluid mt-2">
+               <button id="btn_modal_form" class="float-end btn btn-dark fw-bold" data-bs-toggle="modal"
+                  data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR CANDIDATO</button>
+            </div>
          <?php endif ?>
          <div class="card-body">
             <!-- tabla -->
@@ -184,7 +184,7 @@ $current_page = "Candidatos";
                            ">
                               <input type="text" class="border-only-bottom not_validate" id="input_skill_" value="Competencia 1">
                               <div class="">
-                                 <span class="badge bg-success rounded-pill pointer btn_skill_ok" data-id="" title="Aceptar"><i class="fa-solid fa-check"></i></span>
+                                 <span class="badge bg-dark rounded-pill pointer btn_skill_ok" data-id="" title="Aceptar"><i class="fa-solid fa-check"></i></span>
                                  <span class="badge bg-primary rounded-pill pointer btn_skill_edit" data-id="" title="Editar"><i class="fa-solid fa-pen"></i></span>
                                  <span class="badge bg-danger rounded-pill pointer btn_skill_delete" data-id="" title="Eliminar"><i class="fa-solid fa-xmark"></i></span>
                               </div>
@@ -201,7 +201,7 @@ $current_page = "Candidatos";
                            ">
                               <input type="text" class="border-only-bottom not_validate" id="input_ability_" value="Competencia 1">
                               <div class="">
-                                 <span class="badge bg-success rounded-pill pointer btn_ability_ok" data-id="" title="Aceptar"><i class="fa-solid fa-check"></i></span>
+                                 <span class="badge bg-dark rounded-pill pointer btn_ability_ok" data-id="" title="Aceptar"><i class="fa-solid fa-check"></i></span>
                                  <span class="badge bg-primary rounded-pill pointer btn_ability_edit" data-id="" title="Editar"><i class="fa-solid fa-pen"></i></span>
                                  <span class="badge bg-danger rounded-pill pointer btn_ability_delete" data-id="" title="Eliminar"><i class="fa-solid fa-xmark"></i></span>
                               </div>
@@ -263,7 +263,7 @@ $current_page = "Candidatos";
                </div>
             </div>
             <div class="modal-footer">
-               <button type="submit" id="btn_submit" class="btn btn-success fw-bold">AGREGAR</button>
+               <button type="submit" id="btn_submit" class="btn btn-dark fw-bold">AGREGAR</button>
                <button type="reset" id="btn_reset" class="btn btn-secondary">LIMPIAR</button>
             </div>
          </form>
@@ -285,7 +285,7 @@ $current_page = "Candidatos";
                   <div class="content">
                      <div class="card card-widget widget-user shadow">
 
-                        <div class="widget-user-header bg-success" id="d_div_header">
+                        <div class="widget-user-header bg-dark" id="d_div_header">
                            <h3 class="widget-user-username im_output">
                               <span id="d_output_name">[Mi Nombre]</span> - <span class="h6 fst-italic"
                                  id="d_output_birthdate">[Mi edad]</span>
@@ -332,7 +332,7 @@ $current_page = "Candidatos";
                      <div class="row">
                         <!-- CURRICULUM VITAE -->
                         <div class="col col-md-4">
-                           <div class="card card-success card-outline">
+                           <div class="card card-dark card-outline">
                               <div class="card-body box-profile card-pdf">
                                  <div class="text-center h2 fw-bolder">CURRICULUM VITAE</div>
                                  <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
@@ -350,7 +350,7 @@ $current_page = "Candidatos";
 
                         <!-- INFORMACION PROFESIONAL -->
                         <div class="col">
-                           <div class="card card-success card-outline">
+                           <div class="card card-dark card-outline">
                               <div class="card-body box-profile card-pdf">
                                  <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONAL</div>
                                  <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>

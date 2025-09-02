@@ -38,7 +38,7 @@ $current_page = "Solicitudes";
       <div class="row">
          <div class="col">
             <!-- card Tabla-->
-            <div class="card card-outline card-success shadow">
+            <div class="card card-outline card-dark shadow">
                <div class="card-body">
                   <!-- tabla -->
                   <div class="table-responsive">

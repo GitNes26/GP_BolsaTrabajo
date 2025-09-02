@@ -50,9 +50,12 @@ if (strpos($classBody, 'layout-top-nav') !== 0) $classBody .= "layout-navbar-fix
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script> -->
 
    <!-- Ion-RangeSlider -->
+   <!-- <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" /> -->
    <link rel="stylesheet" href="<?= $PLUGINS_PATH ?>/ion-rangeslider/css/ion.rangeSlider.min.css">
    <!-- BootstrapSlider -->
    <!-- <link rel="stylesheet" href="<?= $PLUGINS_PATH ?>/bootstrap-slider/css/bootstrap-slider.min.css"> -->
+
 
 
    <!-- Moment JS -->

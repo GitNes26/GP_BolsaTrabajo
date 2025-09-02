@@ -34,12 +34,12 @@ $current_page = "Empresas";
    <section class="content">
 
       <!-- card -->
-      <div class="card card-outline card-success shadow">
+      <div class="card card-outline card-dark shadow">
          <?php if ($permission_write ?? false): ?>
-         <div class="container-fluid mt-2">
-            <button id="btn_modal_form" class="float-end btn btn-success fw-bold" data-bs-toggle="modal"
-               data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR EMPRESA</button>
-         </div>
+            <div class="container-fluid mt-2">
+               <button id="btn_modal_form" class="float-end btn btn-dark fw-bold" data-bs-toggle="modal"
+                  data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR EMPRESA</button>
+            </div>
          <?php endif ?>
          <div class="card-body">
             <!-- tabla -->
@@ -214,7 +214,7 @@ $current_page = "Empresas";
                   </div>
                </div>
                <div class="modal-footer">
-                  <button type="submit" id="btn_submit" class="btn btn-success fw-bold">AGREGAR</button>
+                  <button type="submit" id="btn_submit" class="btn btn-dark fw-bold">AGREGAR</button>
                   <button type="reset" id="btn_reset" class="btn btn-secondary">LIMPIAR</button>
                </div>
          </form>
@@ -240,7 +240,7 @@ $current_page = "Empresas";
                <div class="content">
                   <!-- DATOS DE CABECERA -->
                   <div class="card card-widget widget-user shadow">
-                     <div class="widget-user-header bg-success" id="d_div_header">
+                     <div class="widget-user-header bg-dark" id="d_div_header">
                         <h2 class="widget-user-username fw-bolder im_output" id="d_output_company">[Mi Compañia]
                         </h2>
                         <h5 class="lead im_output" id="d_output_location">[Ciudad, Estado]</h5>

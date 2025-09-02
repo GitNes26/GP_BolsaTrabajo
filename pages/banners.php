@@ -34,15 +34,15 @@ $current_page = "Banners";
    <section class="content">
 
       <!-- card -->
-      <div class="card card-outline card-success shadow">
+      <div class="card card-outline card-dark shadow">
          <?php if ($permission_write ?? false): ?>
-         <div class="container-fluid mt-2">
-            <!-- <i class="text-muted h6 text-sm">Medidas: <b>1400px</b> largo &nbsp; <i class="fas fa-times"></i> &nbsp; <b>132px</b> alto</i> -->
-            <i class="text-muted h6 text-sm">Medidas: <b>350px-400px</b> largo &nbsp; <i class="fas fa-times"></i>
-               &nbsp; <b>340px</b> alto</i>
-            <button id="btn_modal_form" class="float-end btn btn-success fw-bold" data-bs-toggle="modal"
-               data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR BANNER</button>
-         </div>
+            <div class="container-fluid mt-2">
+               <!-- <i class="text-muted h6 text-sm">Medidas: <b>1400px</b> largo &nbsp; <i class="fas fa-times"></i> &nbsp; <b>132px</b> alto</i> -->
+               <i class="text-muted h6 text-sm">Medidas: <b>350px-400px</b> largo &nbsp; <i class="fas fa-times"></i>
+                  &nbsp; <b>340px</b> alto</i>
+               <button id="btn_modal_form" class="float-end btn btn-dark fw-bold" data-bs-toggle="modal"
+                  data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR BANNER</button>
+            </div>
          <?php endif ?>
          <div class="card-body">
             <!-- tabla -->
@@ -143,7 +143,7 @@ $current_page = "Banners";
                </div> -->
             </div>
             <div class="modal-footer">
-               <button type="submit" id="btn_submit" class="btn btn-success fw-bold">AGREGAR</button>
+               <button type="submit" id="btn_submit" class="btn btn-dark fw-bold">AGREGAR</button>
                <button type="reset" id="btn_reset" class="btn btn-secondary">LIMPIAR</button>
             </div>
          </form>
@@ -160,4 +160,4 @@ $current_page = "Banners";
 <?php
 include "../templates/footer.php";
 ?>
-<script src="<?php echo($SCRIPTS_PATH) ?>/<?=substr($path,0,-4)?>.js"></script>
+<script src="<?php echo ($SCRIPTS_PATH) ?>/<?= substr($path, 0, -4) ?>.js"></script>

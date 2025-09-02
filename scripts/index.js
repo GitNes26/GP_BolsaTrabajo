@@ -3,6 +3,8 @@ const vacancies_enabled = $("#vacancies_enabled"),
    form_filter = $("#form_filter"),
    btn_show_filters = $("#btn_show_filters"),
    input_filter_search = $("#input_filter_search"),
+   salarySlider = $("salarySlider"),
+   salary_range = $("#salaryRange"),
    input_filter_min_salary = $("#input_filter_min_salary"),
    input_filter_max_salary = $("#input_filter_max_salary"),
    input_filter_business_line_id = $("#input_filter_business_line_id"),
@@ -27,6 +29,72 @@ let vacanciesApplied = [];
 //#endregion VARIABLES
 $(".select2").select2();
 focusSelect2($(".select2"));
+
+// noUiSlider.create(salarySlider, {
+//    start: [5000, 30000], // valores iniciales [min, max]
+//    connect: true,
+//    step: 1000,
+//    range: {
+//       min: 0,
+//       max: 50000
+//    },
+//    tooltips: true,
+//    format: {
+//       to: function (value) {
+//          return "$" + Math.round(value);
+//       },
+//       from: function (value) {
+//          return Number(value.replace("$", ""));
+//       }
+//    }
+// });
+// // Actualiza inputs cuando mueves el slider
+// salarySlider.noUiSlider.on("update", function (values, handle) {
+//    if (handle === 0) {
+//       inputMin.value = values[0];
+//    } else {
+//       inputMax.value = values[1];
+//    }
+// });
+// // Permitir escribir en los inputs y mover el slider
+// input_filter_min_salary.on("change", function () {
+//    salary_slider.noUiSlider.set([this.value, null]);
+// });
+// input_filter_max_salary.on("change", function () {
+//    salary_slider.noUiSlider.set([null, this.value]);
+// });
+
+salary_range.ionRangeSlider({
+   type: "double",
+   min: 0,
+   max: 50000,
+   from: 5000,
+   to: 30000,
+   step: 1000,
+   prefix: "$",
+   grid: true,
+   onStart: updateInputs,
+   onChange: updateInputs,
+   onFinish: updateInputs
+});
+var slider = salary_range.data("ionRangeSlider");
+function updateInputs(data) {
+   input_filter_min_salary.val(data.from);
+   input_filter_max_salary.val(data.to);
+}
+// Si se escriben valores en los inputs -> actualiza el slider
+input_filter_min_salary.on("change", function () {
+   var val = $(this).val();
+   slider.update({
+      from: val
+   });
+});
+input_filter_max_salary.on("change", function () {
+   var val = $(this).val();
+   slider.update({
+      to: val
+   });
+});
 
 /* --- FUNCIONES DE CAJON--- */
 // estas funciones se encuentran en index.js para no repetir código
@@ -111,14 +179,14 @@ btn_reset.click(async (e) => {
 
 // ACCION PARA LLENAR EL DETALLE
 vacancy_container.click(async (e) => {
-   $(".card_vacancy_selected").addClass("card_vacancy_selected card-success card-outline");
+   $(".card_vacancy_selected").addClass("card_vacancy_selected card-dark card-outline");
    $(".card_vacancy_selected").removeClass("card_vacancy_selected");
 
    if (e.target.matches(".card_vacancy *")) {
       // btn_close_detail.click();
       const card_vacancy = e.target.closest(".card_vacancy");
       if (card_vacancy) {
-         card_vacancy.classList.remove("card-success");
+         card_vacancy.classList.remove("card-dark");
          card_vacancy.classList.add("card_vacancy_selected");
          let id_obj = card_vacancy.getAttribute("data-id");
          let data = { id: id_obj, op: "show" };
@@ -397,7 +465,7 @@ async function fillBanners() {
       template_banner.querySelector("img").style = `border-radius: 10px;`;
       template_banner.querySelector("img").alt = `${obj.file_path.split("/").reverse()[0]}`;
       template_banner.querySelector("a").href = "";
-      template_banner.querySelector("a").target = ""; 
+      template_banner.querySelector("a").target = "";
       template_banner.querySelector("a").removeAttribute("href");
       if (obj.link != null) {
          if (obj.link.length > 1) {

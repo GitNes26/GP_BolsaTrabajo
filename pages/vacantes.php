@@ -37,7 +37,7 @@ $current_page = "Vacantes";
 
       <div class="row">
          <div class="col">
-            <div class="card card-outline card-success">
+            <div class="card card-outline card-dark">
                <div class="card-header">
                   <span class="modal-title fw-bold h5" id="modalLabel"><i
                         class="fa-regular fa-memo-circle-info"></i>&nbsp; FORMULARIO</span>
@@ -73,13 +73,13 @@ $current_page = "Vacantes";
                               </div>
                               <!-- EMPRESA -->
                               <?php if ($_COOKIE["role_id"] <= 2) : ?>
-                              <div class="mb-3">
-                                 <label for="input_company_id" class="form-label">Empresa: <span
-                                       class="obligatory"></span></label>
-                                 <select class="select2 form-control" style="width:100%" id="input_company_id"
-                                    name="input_company_id" data-input-name="EMPRESA" data-output="output_info_company">
-                                 </select>
-                              </div>
+                                 <div class="mb-3">
+                                    <label for="input_company_id" class="form-label">Empresa: <span
+                                          class="obligatory"></span></label>
+                                    <select class="select2 form-control" style="width:100%" id="input_company_id"
+                                       name="input_company_id" data-input-name="EMPRESA" data-output="output_info_company">
+                                    </select>
+                                 </div>
                               <?php endif ?>
 
                               <!-- PREGUNTAR SI AGREGARAN IMAGEN -->
@@ -233,8 +233,8 @@ $current_page = "Vacantes";
                               <button type="reset" id="btn_reset"
                                  class="btn btn-secondary float-end ml-2 d-none">LIMPIAR</button>
                               <?php if ($permission_write ?? false) : ?>
-                              <button type="submit" id="btn_submit"
-                                 class="btn btn-success fw-bold float-end">AGREGAR</button>
+                                 <button type="submit" id="btn_submit"
+                                    class="btn btn-dark fw-bold float-end">AGREGAR</button>
                               <?php endif ?>
                            </div>
                         </form>
@@ -344,7 +344,7 @@ $current_page = "Vacantes";
       <div class="row">
          <div class="col">
             <!-- card Tabla-->
-            <div class="card card-outline card-success shadow">
+            <div class="card card-outline card-dark shadow">
                <div class="card-body">
                   <!-- tabla -->
                   <div class="table-responsive">

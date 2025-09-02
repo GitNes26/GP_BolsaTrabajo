@@ -22,7 +22,7 @@ $CONN_DB_WEB = array(
   "DB_NAME" => "pagprincipal_db_bolsa_trabajo",
 );
 
-$CONN_DB = $CONN_DB_WEB;
+$CONN_DB = $CONN_DB_WEB; #/empleos CONN_DB_WEB
 $VERSION = "1.2.0";
 #endregion CONSTANTES DE CONFIGURACION
 

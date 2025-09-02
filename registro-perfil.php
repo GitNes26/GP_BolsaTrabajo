@@ -114,7 +114,7 @@ validateNeedCookies();
 
    <div class="wrapper">
 
-      <nav class="main-header navbar navbar-expand-md navbar-success navbar-dark">
+      <nav class="main-header navbar navbar-expand-md navbar-dark">
          <div class="container">
             <a href="/" class="navbar-brand">
                <img src="<?= $LOGO ?>" alt="Imagen Logo" class="img-responsive" style="opacity: .8; width:125px">
@@ -173,7 +173,7 @@ validateNeedCookies();
 
          <div class="container">
             <!-- Card -->
-            <form id="form_role" class="card rounded-3 card-outline card-success shadow" enctype="multipart/form-data"
+            <form id="form_role" class="card rounded-3 card-outline card-dark shadow" enctype="multipart/form-data"
                id="card_role">
                <div class="card-body login-card-body">
                   <div class="text-center mb-4">
@@ -477,7 +477,7 @@ validateNeedCookies();
                   </div>
                </div>
                <div class="card-footer">
-                  <button type="submit" id="btn_done" class="btn btn-outline-success btn-block fw-bold text-center">
+                  <button type="submit" id="btn_done" class="btn btn-outline-dark btn-block fw-bold text-center">
                      <i class="fa-solid fa-circle-check"></i>&nbsp;&nbsp;TERMINAR
                   </button>
                   <button type="reset" id="btn_reset" class="btn btn-outline-secondary btn-block fw-bold text-center">

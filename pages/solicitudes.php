@@ -38,7 +38,7 @@ $current_page = "Solicitudes";
       <div class="row">
          <div class="col">
             <!-- card Tabla-->
-            <div class="card card-outline card-success shadow">
+            <div class="card card-outline card-dark shadow">
                <div class="card-body">
                   <!-- tabla -->
                   <div class="table-responsive">
@@ -153,7 +153,7 @@ $current_page = "Solicitudes";
                   <div class="content">
                      <div class="card card-widget widget-user shadow">
 
-                        <div class="widget-user-header bg-success" id="d_div_header">
+                        <div class="widget-user-header bg-dark" id="d_div_header">
                            <h3 class="widget-user-username im_output">
                               <span id="d_output_name">[Mi Nombre]</span> - <span class="h6 fst-italic" id="d_output_birthdate">[Mi edad]</span>
                            </h3>
@@ -197,7 +197,7 @@ $current_page = "Solicitudes";
                      <div class="row">
                         <!-- CURRICULUM VITAE -->
                         <div class="col col-md-4">
-                           <div class="card card-success card-outline">
+                           <div class="card card-dark card-outline">
                               <div class="card-body box-profile card-pdf">
                                  <div class="text-center h2 fw-bolder">CURRICULUM VITAE</div>
                                  <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
@@ -213,7 +213,7 @@ $current_page = "Solicitudes";
 
                         <!-- INFORMACION PROFESIONAL -->
                         <div class="col">
-                           <div class="card card-success card-outline">
+                           <div class="card card-dark card-outline">
                               <div class="card-body box-profile card-pdf">
                                  <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONAL</div>
                                  <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
