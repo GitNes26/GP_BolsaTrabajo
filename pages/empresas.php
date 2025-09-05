@@ -36,10 +36,10 @@ $current_page = "Empresas";
       <!-- card -->
       <div class="card card-outline card-dark shadow">
          <?php if ($permission_write ?? false): ?>
-            <div class="container-fluid mt-2">
-               <button id="btn_modal_form" class="float-end btn btn-dark fw-bold" data-bs-toggle="modal"
-                  data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR EMPRESA</button>
-            </div>
+         <div class="container-fluid mt-2">
+            <button id="btn_modal_form" class="float-end btn btn-dark fw-bold" data-bs-toggle="modal"
+               data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR EMPRESA</button>
+         </div>
          <?php endif ?>
          <div class="card-body">
             <!-- tabla -->
@@ -49,7 +49,12 @@ $current_page = "Empresas";
                      <tr>
                         <th scope="col">Logo</th>
                         <th scope="col">Empresa</th>
+                        <th scope="col">Empresa</th>
+                        <th scope="col">Ubicación</th>
                         <th scope="col">Contacto</th>
+                        <th scope="col">Nombre de Contacto</th>
+                        <th scope="col">Teléfono de Contacto</th>
+                        <th scope="col">Correo de Contacto</th>
                         <th scope="col">Giro</th>
                         <th scope="col">Tamaño</th>
                         <th scope="col">Miembro desde</th>
@@ -62,7 +67,12 @@ $current_page = "Empresas";
                      <tr class="thead-dark">
                         <th scope="col">Logo</th>
                         <th scope="col">Empresa</th>
+                        <th scope="col">Empresa</th>
+                        <th scope="col">Ubicación</th>
                         <th scope="col">Contacto</th>
+                        <th scope="col">Nombre de Contacto</th>
+                        <th scope="col">Telefonó de Contacto</th>
+                        <th scope="col">Correo de Contacto</th>
                         <th scope="col">Giro</th>
                         <th scope="col">Tamaño</th>
                         <th scope="col">Miembro desde</th>

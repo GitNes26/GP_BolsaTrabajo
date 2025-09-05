@@ -49,7 +49,11 @@ $current_page = "Candidatos";
                      <tr>
                         <th scope="col">Foto</th>
                         <th scope="col">Candidato</th>
+                        <th scope="col">Candidato</th>
+                        <th scope="col">Edad</th>
                         <th scope="col">Contacto</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Correo</th>
                         <th scope="col">Profesión</th>
                         <th scope="col">Status</th>
                         <?php if ((int)$_COOKIE["role_id"] <= 2): ?> <th scope="col">Miembro desde</th> <?php endif ?>
@@ -62,7 +66,11 @@ $current_page = "Candidatos";
                      <tr class="thead-dark">
                         <th scope="col">Foto</th>
                         <th scope="col">Candidato</th>
+                        <th scope="col">Candidato</th>
+                        <th scope="col">Edad</th>
                         <th scope="col">Contacto</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Correo</th>
                         <th scope="col">Profesión</th>
                         <th scope="col">Status</th>
                         <?php if ((int)$_COOKIE["role_id"] <= 2): ?> <th scope="col">Miembro desde</th> <?php endif ?>

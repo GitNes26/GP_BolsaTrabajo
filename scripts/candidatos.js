@@ -1,6 +1,25 @@
 //#region VARIABLES
 var table;
-table = $("#table").DataTable(DT_CONFIG);
+table = $("#table").DataTable({
+   ...DT_CONFIG,
+   columnDefs: [
+      { targets: [2, 3, 5, 6], visible: false } // ocultar columnas contacto (Candidato(solo nombre), Ubicacion, name, phone, email)
+   ],
+   buttons: [
+      {
+         extend: "excelHtml5",
+         text: '<b><i class="fa-solid fa-file-excel"></i>&nbsp; Exportar a Excel</b>',
+         className: "btn btn-success", // color verde estilo Bootstrap
+         filename: "BT-Candidatos", // nombre por defecto sin extensión
+         title: "BT - Listado de Candidatos", // título dentro del archivo Excel
+         exportOptions: {
+            // omitimos las columna [0,1,4] (Logo, InfoCandidato, InfoContacto)
+            // Exportar columnas visibles + las ocultas [2,3,5,6,7]
+            columns: [2, 3, 5, 6, 7, 8, 9]
+         }
+      }
+   ]
+});
 
 $(document).ready(function () {
    SUMMERNOTE_CONFIG.placeholder = "Escribir Habilidades, competencias, experiencias, observaciones, etc.";
@@ -256,10 +275,15 @@ async function fillTable() {
 				<b>${obj.name} ${obj.last_name}</b><br>
 				<i>(${age})</i>
 			`,
+         column_candidate_name = `<b>${obj.name} ${obj.last_name}</b><br>`,
+         column_candidate_age = `<i>(${age})</i>`,
          column_contact = `
 				<p><i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.cellphone)}</p>
 				<p><i class="fa-solid fa-at"></i>&nbsp; ${obj.email}</p>
 			`,
+         column_contact_phone = `
+				<p><i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.cellphone)}</p>`,
+         column_contact_email = `<p><i class="fa-solid fa-at"></i>&nbsp; ${obj.email}</p>`,
          column_profession = `
 				${obj.profession}
 			`,
@@ -287,12 +311,36 @@ async function fillTable() {
          </td>`;
 
       if (role_cookie <= 2) {
-         list.push([column_photo, column_candidate, column_contact, column_profession, column_enable, column_created_at, column_buttons]);
+         list.push([
+            column_photo,
+            column_candidate,
+            column_candidate_name,
+            column_candidate_age,
+            column_contact,
+            column_contact_phone,
+            column_contact_email,
+            column_profession,
+            column_enable,
+            column_created_at,
+            column_buttons
+         ]);
       } else {
-         list.push([column_photo, column_candidate, column_contact, column_profession, column_enable, column_buttons]);
+         list.push([
+            column_photo,
+            column_candidate,
+            column_candidate_name,
+            column_candidate_age,
+            column_contact,
+            column_contact_phone,
+            column_contact_email,
+            column_profession,
+            column_enable,
+            column_buttons
+         ]);
       }
    });
    //Dibujar Tabla
+   // table
    table.rows.add(list).draw();
    table.columns.adjust().draw();
    tbody.slideDown("slow");

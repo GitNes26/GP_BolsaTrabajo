@@ -1,6 +1,25 @@
 //#region VARIABLES
 var table;
-table = $("#table").DataTable(DT_CONFIG);
+table = $("#table").DataTable({
+   ...DT_CONFIG,
+   columnDefs: [
+      { targets: [2, 3, 5, 6, 7], visible: false } // ocultar columnas contacto (Empresa(solo nombre), Ubicacion, name, phone, email)
+   ],
+   buttons: [
+      {
+         extend: "excelHtml5",
+         text: '<b><i class="fa-solid fa-file-excel"></i>&nbsp; Exportar a Excel</b>',
+         className: "btn btn-success", // color verde estilo Bootstrap
+         filename: "BT-Empresas", // nombre por defecto sin extensión
+         title: "BT - Listado de Empresas", // título dentro del archivo Excel
+         exportOptions: {
+            // omitimos las columna [0,1,4] (Logo, InfoEmpresa, InfoContacto)
+            // Exportar columnas visibles + las ocultas [2,3,5,6,7]
+            columns: [2, 3, 5, 6, 7, 8, 9, 10]
+         }
+      }
+   ]
+});
 
 $(document).ready(() => {});
 
@@ -227,11 +246,16 @@ async function fillTable() {
 
 				<b>${obj.email}</b>
 			`,
+         column_company_name = `<b>${obj.company}</b><br>`,
+         column_company_ubication = `${obj.municipality}, ${obj.state}<br><br>`,
          column_contact = `
 				<p><i class="fa-solid fa-id-badge"></i>&nbsp; <b>${obj.contact_name}</b></p>
 				<p><i class="fa-solid fa-phone-office"></i>&nbsp; ${formatPhone(obj.contact_phone)}</p>
 				<p><i class="fa-solid fa-at"></i>&nbsp; ${obj.contact_email}</p>
 			`,
+         column_contact_name = `<p><i class="fa-solid fa-id-badge"></i>&nbsp; <b>${obj.contact_name}</b></p>`,
+         column_contact_phone = `<p><i class="fa-solid fa-phone-office"></i>&nbsp; ${formatPhone(obj.contact_phone)}</p>`,
+         column_contact_email = `<p><i class="fa-solid fa-at"></i>&nbsp; ${obj.contact_email}</p>`,
          column_business_line = `
 				${obj.business_line}
 			`,
@@ -260,7 +284,20 @@ async function fillTable() {
       column_buttons += `</div>
          </td>`;
 
-      list.push([column_logo, column_company, column_contact, column_business_line, column_company_ranking, column_created_at, column_buttons]);
+      list.push([
+         column_logo,
+         column_company,
+         column_company_name,
+         column_company_ubication,
+         column_contact,
+         column_contact_name,
+         column_contact_phone,
+         column_contact_email,
+         column_business_line,
+         column_company_ranking,
+         column_created_at,
+         column_buttons
+      ]);
    });
    //Dibujar Tabla
    table.rows.add(list).draw();

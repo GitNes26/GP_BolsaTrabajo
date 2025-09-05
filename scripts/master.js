@@ -750,6 +750,13 @@ const DT_CONFIG = {
          targets: "_all"
       }
    ],
+   buttons: [
+      {
+         extend: "excelHtml5",
+         text: '<b><i class="fa-solid fa-file-excel"></i>&nbsp; Exportar a Excel</b>',
+         className: "btn btn-success" // color verde estilo Bootstrap
+      }
+   ],
    dom: '<"row mb-2"B><"row"<"col-md-6 "lr> <"col-md-6"f> > rt <"row"<"col-md-6 "i> <"col-md-6"p> >',
    lengthMenu: [
       [5, 10, 50, 100, -1],
