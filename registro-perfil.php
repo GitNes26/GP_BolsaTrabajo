@@ -230,8 +230,8 @@ validateNeedCookies();
                            <div class="mb-3">
                               <div class="form-group">
                                  <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="input_accept_inclusive"
-                                       name="input_accept_inclusive">
+                                    <input type="checkbox" class="custom-control-input not_validate"
+                                       id="input_accept_inclusive" name="input_accept_inclusive">
                                     <label class="custom-control-label" id="label_module_enable"
                                        for="input_accept_inclusive">Empresa Inclusiva: (aceptamos
                                        personal con alguna discapacidad)</label>
