@@ -244,7 +244,7 @@ async function fillTable() {
 				<b>${obj.company}</b><br>
 				${obj.municipality}, ${obj.state}<br><br>
 
-				<b>${obj.email}</b>
+				${role_cookie <= 2 ? `<b>${obj.email}</b>` : ""}
 			`,
          column_company_name = `<b>${obj.company}</b><br>`,
          column_company_ubication = `${obj.municipality}, ${obj.state}<br><br>`,

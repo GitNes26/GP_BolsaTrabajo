@@ -3,9 +3,9 @@ include "../templates/header.php";
 include "../templates/navbar.php";
 include "../templates/sidebar.php";
 
-$current_page = "Profesiones";
-// $single = "Profesión";
-// $plural = "Profesiones";
+$current_page = "Niveles de Estudio";
+// $single = "Nivel de Estudio";
+// $plural = "Niveles de Estudio";
 
 ?>
 <!-- Content Wrapper. Contenido de la pagina -->
@@ -16,8 +16,8 @@ $current_page = "Profesiones";
          <div class="row mb-2">
             <div class="col-sm-6">
                <h1 class="fw-bolder text-uppercase">
-                  <i class="fa-solid fa-toolbox"></i>&nbsp; <?= $current_page ?>
-                  <em class="fw-ligth text-muted lead text-sm">| Gestión de Profesiones</em>
+                  <i class="fa-solid fa-graduation-cap"></i>&nbsp; <?= $current_page ?>
+                  <em class="fw-ligth text-muted lead text-sm">| Gestión de Niveles de Estudio</em>
                </h1>
             </div>
             <div class="col-sm-6">
@@ -41,7 +41,7 @@ $current_page = "Profesiones";
             <form id="form" enctype="multipart/form-data" class="card card-outline card-dark shadow sticky-top">
                <div class="card-header">
                   <span class="modal-title fw-bold h5" id="modalLabel"><i
-                        class="fa-regular fa-circle-plus to-upper-case"></i>&nbsp; AGREGAR PROFESIÓN</span>
+                        class="fa-regular fa-circle-plus to-upper-case"></i>&nbsp; AGREGAR NIVEL DE ESTUDIO</span>
                   <div class="card-tools">
                      <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -52,10 +52,10 @@ $current_page = "Profesiones";
                   <input type="hidden" id="op" name="op" value="" class="not_validate">
                   <input type="hidden" id="id" name="id" value="" class="not_validate">
                   <div class="mb-3">
-                     <label for="input_profession" class="form-label">Profesión: <span
+                     <label for="input_level" class="form-label">Nivel de Estudio: <span
                            class="obligatory"></span></label>
-                     <input type="text" class="form-control" id="input_profession" name="input_profession"
-                        data-input-name="PROFESION">
+                     <input type="text" class="form-control" id="input_level" name="input_level"
+                        data-input-name="NIVEL DE ESTUDIO">
                   </div>
                </div>
                <div class="card-footer">
@@ -79,7 +79,7 @@ $current_page = "Profesiones";
                      <table id="table" class="table table-hover text-center" style="width:100%">
                         <thead class="thead-dark">
                            <tr>
-                              <th scope="col">Profesión</th>
+                              <th scope="col">Nivel de Estudio</th>
                               <th scope="col">Acciones</th>
                            </tr>
                         </thead>
@@ -87,7 +87,7 @@ $current_page = "Profesiones";
                         </tbody>
                         <tfoot>
                            <tr class="thead-dark">
-                              <th scope="col">Profesión</th>
+                              <th scope="col">Nivel de Estudio</th>
                               <th scope="col">Acciones</th>
                            </tr>
                         </tfoot>

@@ -77,7 +77,7 @@ class Company extends Connection
       die(json_encode($response));
    }
 
-   function create($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id)
+   function create($company, $description, $accept_inclusive, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id)
    {
       try {
          $response = $this->defaultResponse();
@@ -85,8 +85,8 @@ class Company extends Connection
          $this->validateAvailableData($company, null);
 
          #Creamos el registro en la tabla compañias
-         $query = "INSERT INTO companies(company, description, logo_path, contact_name, contact_phone, contact_email, community_id, state, municipality, business_line_id, company_ranking_id, user_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-         $this->ExecuteQuery($query, array($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id));
+         $query = "INSERT INTO companies(company, description, accept_inclusive, logo_path, contact_name, contact_phone, contact_email, community_id, state, municipality, business_line_id, company_ranking_id, user_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+         $this->ExecuteQuery($query, array($company, $description, $accept_inclusive, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id));
 
          #Le asignamos el rol de compañia al usuario
          $query = "UPDATE users SET role_id=3 WHERE id=?";
@@ -110,15 +110,15 @@ class Company extends Connection
       die(json_encode($response));
    }
 
-   function edit($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id, $updated_at)
+   function edit($company, $description, $accept_inclusive, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id, $updated_at)
    {
       try {
          $response = $this->defaultResponse();
 
          $this->validateAvailableData($company, $id);
 
-         $query = "UPDATE companies SET company=?, description=?, logo_path=?, contact_name=?, contact_phone=?, contact_email=?, community_id=?, state=?, municipality=?, business_line_id=?, company_ranking_id=?, user_id=? WHERE id=?";
-         $this->ExecuteQuery($query, array($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id));
+         $query = "UPDATE companies SET company=?, description=?, accept_inclusive=?, logo_path=?, contact_name=?, contact_phone=?, contact_email=?, community_id=?, state=?, municipality=?, business_line_id=?, company_ranking_id=?, user_id=? WHERE id=?";
+         $this->ExecuteQuery($query, array($company, $description, $accept_inclusive, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id));
 
          $query = "UPDATE users SET updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($updated_at, $user_id));
@@ -135,7 +135,7 @@ class Company extends Connection
       }
       die(json_encode($response));
    }
-   function editInfo($user_id, $company, $description, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $email, $updated_at)
+   function editInfo($user_id, $company, $description, $accept_inclusive, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $email, $updated_at)
    {
       try {
          $response = $this->defaultResponse();
@@ -145,8 +145,8 @@ class Company extends Connection
 
          $this->validateAvailableData($company, $id);
 
-         $query = "UPDATE companies SET company=?, description=?, contact_name=?, contact_phone=?, contact_email=?, community_id=?, state=?, municipality=?, business_line_id=?, company_ranking_id=? WHERE id=?";
-         $this->ExecuteQuery($query, array($company, $description, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $id));
+         $query = "UPDATE companies SET company=?, description=?, accept_inclusive=?, contact_name=?, contact_phone=?, contact_email=?, community_id=?, state=?, municipality=?, business_line_id=?, company_ranking_id=? WHERE id=?";
+         $this->ExecuteQuery($query, array($company, $description, $accept_inclusive, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $id));
 
          $query = "UPDATE users SET email=?, updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($email, $updated_at, $user_id));

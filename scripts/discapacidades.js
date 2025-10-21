@@ -11,7 +11,8 @@ const tbody = $("#table tbody"),
    modal_title = $(".modal-title"),
    id_modal = $("#id"),
    op_modal = $("#op"),
-   input_profession = $("#input_profession"),
+   input_disability = $("#input_disability"),
+   input_description = $("#input_description"),
    btn_submit = $("#btn_submit"),
    btn_reset = $("#btn_reset"),
    btn_cancel = $("#btn_cancel");
@@ -28,14 +29,14 @@ init();
 async function init() {
    fillTable();
    setTimeout(() => {
-      input_profession.focus();
+      input_disability.focus();
    }, 500);
 }
 
 //CLICK EN BTN CANCELAR PARA CREAR UNO NUEVO
 btn_cancel.click((e) => {
    e.preventDefault();
-   modal_title.html("<i class='fa-regular fa-circle-plus'></i>&nbsp; REGISTRAR PROFESIÓN");
+   modal_title.html("<i class='fa-regular fa-circle-plus'></i>&nbsp; REGISTRAR DISCAPACIDAD");
    btn_submit.removeClass("btn-primary");
    btn_submit.addClass("btn-dark");
    btn_submit.text("AGREGAR");
@@ -52,7 +53,7 @@ btn_cancel.click((e) => {
 btn_reset.click(async (e) => {
    id_modal.val("");
    // setTimeout(() => {
-   // 	input_profession.focus();
+   // 	input_disability.focus();
    // }, 500);
 });
 
@@ -86,7 +87,7 @@ form.on("submit", async (e) => {
    }
 
    // return console.log(data);
-   const ajaxResponse = await ajaxRequestAsync(URL_PROFESSION_APP, data);
+   const ajaxResponse = await ajaxRequestAsync(URL_DISABILITY_APP, data);
    if (ajaxResponse.message == "duplicado") return;
    btn_cancel.click();
    await fillTable();
@@ -94,7 +95,7 @@ form.on("submit", async (e) => {
 
 async function fillTable(show_toas = true) {
    let data = { op: "index" };
-   const ajaxResponse = await ajaxRequestAsync(URL_PROFESSION_APP, data, null, true, show_toas);
+   const ajaxResponse = await ajaxRequestAsync(URL_DISABILITY_APP, data, null, true, show_toas);
 
    //Limpiar table
    tbody.slideUp();
@@ -106,24 +107,25 @@ async function fillTable(show_toas = true) {
 
    objResponse.map((obj) => {
       //Campos
-      let column_profession = `${obj.profession}`;
+      let column_disability = `${obj.disability}`;
+      let column_description = `${obj.description}`;
 
       let column_buttons = `<td class='align-middle'>
             <div class='btn-group' role='group'>`;
       if (permission_update) {
          column_buttons +=
             //html
-            `<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Profesión'><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
+            `<button class='btn btn-outline-primary btn_edit' type='button' data-id='${obj.id}' title='Editar Discapacidad'><i class='fa-regular fa-pen-to-square fa-lg i_edit'></i></button>`;
       }
       if (permission_delete) {
          column_buttons +=
             //html
-            `<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Profesión' data-name='${obj.profession}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
+            `<button class='btn btn-outline-danger btn_delete' type='button' data-id='${obj.id}' title='Eliminar Discapacidad' data-name='${obj.disability}'><i class='fa-solid fa-trash-alt i_delete'></i></button>`;
       }
       column_buttons += `</div>
 					</td>`;
 
-      list.push([column_profession, column_buttons]);
+      list.push([column_disability, column_description, column_buttons]);
    });
    //Dibujar Tabla
    await table.rows.add(list).draw();
@@ -167,7 +169,7 @@ tbody.click((e) => {
 
 //EDITAR OBJETO
 async function editObj(btn_edit) {
-   modal_title.html("<i class='fa-light fa-pen-to-square'></i>&nbsp; EDITAR PROFESIÓN");
+   modal_title.html("<i class='fa-light fa-pen-to-square'></i>&nbsp; EDITAR DISCAPACIDAD");
    btn_submit.removeClass("btn-dark");
    btn_submit.addClass("btn-primary");
    btn_submit.text("GUARDAR");
@@ -180,21 +182,22 @@ async function editObj(btn_edit) {
 
    let id_obj = btn_edit.attr("data-id");
    let data = { id: id_obj, op: "show" };
-   const ajaxResponse = await ajaxRequestAsync(URL_PROFESSION_APP, data);
+   const ajaxResponse = await ajaxRequestAsync(URL_DISABILITY_APP, data);
 
    const obj = ajaxResponse.data;
    //form
    id_modal.val(Number(obj.id));
-   input_profession.val(obj.profession);
+   input_disability.val(obj.disability);
+   input_description.val(obj.description);
 
    setTimeout(() => {
-      input_profession.focus();
+      input_disability.focus();
    }, 500);
 }
 
 //ELIMINAR OBJETO -- CAMBIAR STATUS CON EL SWITCH
 async function deleteObj(btn_delete) {
-   let title = `¿Estas seguro de eliminar la profesión <br> ${btn_delete.attr("data-name")}?`;
+   let title = `¿Estas seguro de eliminar la discapacidad <br> ${btn_delete.attr("data-name")}?`;
    let text = ``;
 
    let current_date = moment().format("YYYY-MM-DD hh:mm:ss");
@@ -204,5 +207,5 @@ async function deleteObj(btn_delete) {
       deleted_at: current_date
    };
 
-   ajaxRequestQuestionAsync(title, text, URL_PROFESSION_APP, data, "fillTable()");
+   ajaxRequestQuestionAsync(title, text, URL_DISABILITY_APP, data, "fillTable()");
 }

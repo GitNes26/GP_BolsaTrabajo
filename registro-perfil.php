@@ -226,6 +226,18 @@ validateNeedCookies();
                                  data-counter="counter_description"></textarea>
                               <div class="text-sm text-end text-muted" id="counter_description"></div>
                            </div>
+                           <!-- EMPRESA INCLUSIVA -->
+                           <div class="mb-3">
+                              <div class="form-group">
+                                 <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="input_accept_inclusive"
+                                       name="input_accept_inclusive">
+                                    <label class="custom-control-label" id="label_module_enable"
+                                       for="input_accept_inclusive">Empresa Inclusiva: (aceptamos
+                                       personal con alguna discapacidad)</label>
+                                 </div>
+                              </div>
+                           </div>
                         </div>
                      </div>
 
@@ -355,6 +367,34 @@ validateNeedCookies();
                                  <!-- <input type="number" class="form-control not_validate" id="input_age" name="input_age"
                                     data-input-name="CORREO"> -->
                               </div>
+                           </div>
+                           <!-- NIVEL Y DISCAPACIDAD -->
+                           <div class="row">
+                              <div class="mb-3 col-md-6">
+                                 <label for="input_level_id" class="form-label">Nivel de Estudio Máximo: <span
+                                       class="obligatory"></span></label>
+                                 <select class="select2 form-control not_validate" style="width:100%"
+                                    id="input_level_id" name="input_level_id" data-input-name="NIVEL DE ESTUDIO MÁXIMO">
+                                 </select>
+                              </div>
+                              <div class="mb-3 col-md-6">
+                                 <label for="input_disability_id" class="form-label">¿Cuenta con alguna
+                                    Discapacidad?</label>
+                                 <select class="select2 form-control not_validate" style="width:100%"
+                                    id="input_disability_id" name="input_disability_id"
+                                    data-input-name="NIVEL DE ESTUDIO MÁXIMO">
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="mb-3 col-md-6">
+                              <label for="input_gender" class="form-label">Género: <span
+                                    class="obligatory"></span></label>
+                              <select class="select2 form-control not_validate" style="width:100%" id="input_gender"
+                                 name="input_gender" data-input-name="GÉNERO">
+                                 <option value="">Selecciona una opción...</option>
+                                 <option value="MASCULINO">MASCULINO</option>
+                                 <option value="FEMENINO">FEMENINO</option>
+                              </select>
                            </div>
                         </div>
                      </div>

@@ -20,6 +20,7 @@ const div_company = $("#div_company"),
    input_company = $("#input_company"),
    input_description = $("#input_description"),
    counter_description = $("#counter_description"),
+   input_accept_inclusive = $("#input_accept_inclusive"),
    input_logo_path = $("#input_logo_path"), //este es un input_file
    preview_logo = $("#preview_logo"),
    input_business_line_id = $("#input_business_line_id"),
@@ -40,6 +41,9 @@ const div_candidate = $("#div_candidate"),
    input_name = $("#input_name"),
    input_last_name = $("#input_last_name"),
    input_cellphone = $("#input_cellphone"),
+   input_level_id = $("#input_level_id"),
+   input_disability_id = $("#input_disability_id"),
+   input_gender = $("#input_gender"),
    // input_age = $("#input_age"),
    input_birthdate = $("#input_birthdate"),
    input_profession_id = $("#input_profession_id"),
@@ -73,6 +77,10 @@ async function init() {
    fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
    fillSelect2(URL_PROFESSION_APP, -1, input_profession_id, false);
    fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
+   fillSelect2(URL_LEVEL_APP, -1, input_level_id, false);
+   fillSelect2(URL_DISABILITY_APP, -1, input_disability_id, false);
+   input_level_id.addClass("not_validate");
+
    user_id.val(id_cookie);
    input_company.focus();
 }
@@ -97,6 +105,9 @@ btn_reset.click(async (e) => {
    await resetSelect2(input_interest_tags_ids);
    await resetSelect2(input_state);
    await resetSelect2(input_municipality);
+   await resetSelect2(input_level_id);
+   await resetSelect2(input_disability_id);
+   await resetSelect2(input_gender);
    input_municipality.attr("disabled", true);
 
    $(".note-editing-area .note-editable").html(null);
@@ -215,6 +226,9 @@ input_name_role.on("change", async function () {
       $("#div_candidate select").addClass("not_validate");
       $("#div_candidate textarea").addClass("not_validate");
       input_profession_id.addClass("not_validate");
+      input_level_id.addClass("not_validate");
+      input_disability_id.addClass("not_validate");
+      input_gender.addClass("not_validate");
       // valido empresa
       $("#div_company input").removeClass("not_validate");
       $("#div_company select").removeClass("not_validate");
@@ -234,6 +248,9 @@ input_name_role.on("change", async function () {
       $("#div_candidate textarea").removeClass("not_validate");
       input_profession_id.removeClass("not_validate");
       input_interest_tags_ids.addClass("not_validate");
+      input_level_id.removeClass("not_validate");
+      input_disability_id.removeClass("not_validate");
+      input_gender.removeClass("not_validate");
       // input_skills.addClass("not_validate");
       // input_abilities.addClass("not_validate");
 

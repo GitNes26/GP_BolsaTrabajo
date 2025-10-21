@@ -16,6 +16,9 @@ if (isset($_POST['input_company'])) {
 if (isset($_POST['input_description'])) {
   $description = $_POST['input_description'];
 }
+if (isset($_POST['input_accept_inclusive'])) {
+  $accept_inclusive = $_POST['input_accept_inclusive'] == 'on' ? "1"  : $_POST['input_accept_inclusive'];
+}
 if (isset($_POST['input_logo_path'])) {
   $logo_path = $_POST['input_logo_path'];
 }
@@ -130,10 +133,10 @@ if ($op == "index") $Company->index();
 elseif ($op == "show") $Company->show($id);
 elseif ($op == 'showSelect') $Company->showSelect();
 
-elseif ($op == "create") $Company->create($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id);
+elseif ($op == "create") $Company->create($company, $description, $accept_inclusive, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id);
 
-elseif ($op == "edit") $Company->edit($company, $description, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id, $updated_at);
-elseif ($op == "editInfo") $Company->editInfo($user_id, $company, $description, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $email, $updated_at);
+elseif ($op == "edit") $Company->edit($company, $description, $accept_inclusive, $logo_path, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $user_id, $id, $updated_at);
+elseif ($op == "editInfo") $Company->editInfo($user_id, $company, $description, $accept_inclusive, $contact_name, $contact_phone, $contact_email, $community_id, $state, $municipality, $business_line_id, $company_ranking_id, $email, $updated_at);
 elseif ($op == "editLogo") $Company->editLogo($user_id, $logo_path, $updated_at);
 
 elseif ($op == "delete") $Company->delete($deleted_at, $user_id);
