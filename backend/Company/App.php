@@ -18,6 +18,8 @@ if (isset($_POST['input_description'])) {
 }
 if (isset($_POST['input_accept_inclusive'])) {
   $accept_inclusive = $_POST['input_accept_inclusive'] == 'on' ? "1"  : $_POST['input_accept_inclusive'];
+} else {
+  $accept_inclusive = "0";
 }
 if (isset($_POST['input_logo_path'])) {
   $logo_path = $_POST['input_logo_path'];
