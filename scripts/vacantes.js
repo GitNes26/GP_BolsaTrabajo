@@ -275,13 +275,13 @@ async function fillTable(show_toas = true) {
               };
       //Campos
       let column_vacancy = `${obj.vacancy}`;
-      column_company = `${obj.company}`;
-      column_salary = `${formatCurrency(obj.min_salary)} &nbsp;-&nbsp; ${formatCurrency(obj.max_salary)}`;
-      column_job_type = `${obj.job_type}`;
-      column_inclusive = `<p class="badge badge-${obj.inclusive ? "success" : "danger"}" title="${
+      let column_company = `${obj.company}`;
+      let column_salary = `${formatCurrency(obj.min_salary)} &nbsp;-&nbsp; ${formatCurrency(obj.max_salary)}`;
+      let column_job_type = `${obj.job_type}`;
+      let column_inclusive = `<p class="badge badge-${obj.inclusive ? "success" : "danger"}" title="${
          obj.inclusive ? "aceptamos personal con alguna discapacidad" : ""
       }"><b>${obj.inclusive ? "SI" : "NO"}</b></p>`;
-      column_mode = `${obj.mode ?? ""}`;
+      let column_mode = `${obj.mode ?? "PRESENCIAL"}`;
 
       let column_active = `
          <div class="text-center align-middle">
