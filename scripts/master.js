@@ -317,6 +317,51 @@ function showToast(icon, message, position = "top-end") {
 
    Toast.fire({ icon: icon, title: message });
 }
+
+function showConfirmationOnce(
+   storageKey = "alertConfirmed",
+   title = "¿Deseas continuar?",
+   text = "Esta acción no se volverá a preguntar.",
+   textConfirm = "Aceptar",
+   fnSuccess = null
+) {
+   const confirmed = localStorage.getItem(storageKey);
+
+   // Si ya existe la variable, no mostramos la alerta
+   if (confirmed === "true") {
+      console.log("La alerta ya fue confirmada antes, no se mostrará.");
+      return;
+   }
+
+   // Mostramos la alerta
+   Swal.fire({
+      title: title,
+      text: text,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: textConfirm,
+      cancelButtonText: "Cancelar",
+      // 🔒 Evita que se cierre accidentalmente
+      allowOutsideClick: false, // No permite cerrar haciendo clic fuera
+      allowEscapeKey: false, // No permite cerrar con la tecla ESC
+      allowEnterKey: false, // No se confirma con Enter automáticamente
+      backdrop: true // Mantiene el fondo bloqueado
+   }).then((result) => {
+      if (result.isConfirmed) {
+         // Guardamos en localStorage
+         localStorage.setItem(storageKey, "true");
+
+         fnSuccess != null ? fnSuccess() : null;
+
+         // Swal.fire({
+         //    icon: "success",
+         //    title: "Confirmado",
+         //    text: "Ya no volverás a ver este mensaje."
+         // });
+      }
+   });
+}
+
 const obligatory = $(".obligatory").html(`<span class="text-danger fst-italic">&nbsp; * requerido</span>`);
 
 function mayus(e) {
@@ -326,6 +371,16 @@ function mayus(e) {
 function Enter(e) {
    const code = e.keyCode ? e.keyCode : e.which;
    return code == 13 ? true : false;
+}
+
+// SWITCH HABILITADO/DESAHBILITADO
+function switchEnabled(status, input, label = null, text_label_active = "Activo", text_label_inactive = "No Activo") {
+   // console.log("status", status);
+   // console.log("input", input);
+   if (status) input.is(":checked") ? null : input.click();
+   else input.is(":checked") ? input.click() : null;
+
+   if (label != null) input.change(() => (input.is(":checked") ? label.text(text_label_active) : label.text(text_label_inactive)));
 }
 
 const accent_map = {
@@ -701,12 +756,12 @@ function resetSelect2(selector) {
    // iconos(url, data, -1, select2[0].name);
 }
 
-async function fillSelect2(url_app, selected_index, selector, select_modules = false, role = null) {
+async function fillSelect2(url_app, selected_index, selector, select_modules = false, role = null, dataOptions = []) {
    let data = { op: "showSelect" };
    if (role != null) data = { op: "showSelect", role };
-   const ajaxResponse = await ajaxRequestAsync(url_app, data, null, null, null);
+   const ajaxResponse = dataOptions.length > 0 ? { data: dataOptions } : await ajaxRequestAsync(url_app, data, null, null, null);
 
-   const objResponse = ajaxResponse.data;
+   const objResponse = dataOptions.length > 0 ? dataOptions : ajaxResponse.data;
    // console.log("objResponse",objResponse);
    selector.attr("disabled", true);
    selector.html(`<option value="">Cargando...</option>`);

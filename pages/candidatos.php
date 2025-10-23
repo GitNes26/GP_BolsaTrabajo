@@ -36,10 +36,10 @@ $current_page = "Candidatos";
       <!-- card -->
       <div class="card card-outline card-dark shadow">
          <?php if ($permission_write ?? false): ?>
-            <div class="container-fluid mt-2">
-               <button id="btn_modal_form" class="float-end btn btn-dark fw-bold" data-bs-toggle="modal"
-                  data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR CANDIDATO</button>
-            </div>
+         <div class="container-fluid mt-2">
+            <button id="btn_modal_form" class="float-end btn btn-dark fw-bold" data-bs-toggle="modal"
+               data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR CANDIDATO</button>
+         </div>
          <?php endif ?>
          <div class="card-body">
             <!-- tabla -->
@@ -55,6 +55,9 @@ $current_page = "Candidatos";
                         <th scope="col">Teléfono</th>
                         <th scope="col">Correo</th>
                         <th scope="col">Profesión</th>
+                        <th scope="col">Nivel de Estudios Máx.</th>
+                        <th scope="col">Género</th>
+                        <th scope="col">Discapacidad</th>
                         <th scope="col">Status</th>
                         <?php if ((int)$_COOKIE["role_id"] <= 2): ?> <th scope="col">Miembro desde</th> <?php endif ?>
                         <th scope="col">Acciones</th>
@@ -72,6 +75,9 @@ $current_page = "Candidatos";
                         <th scope="col">Teléfono</th>
                         <th scope="col">Correo</th>
                         <th scope="col">Profesión</th>
+                        <th scope="col">Nivel de Estudios Máx.</th>
+                        <th scope="col">Género</th>
+                        <th scope="col">Discapacidad</th>
                         <th scope="col">Status</th>
                         <?php if ((int)$_COOKIE["role_id"] <= 2): ?> <th scope="col">Miembro desde</th> <?php endif ?>
                         <th scope="col">Acciones</th>
@@ -159,6 +165,22 @@ $current_page = "Candidatos";
                               data-input-name="CORREO"> -->
                         </div>
                      </div>
+                     <!-- DISCAPACIDAD Y GÉNERO -->
+                     <div class="row">
+                        <div class="mb-3 col-md-6">
+                           <label for="input_disability_id" class="form-label">¿Cuenta con alguna
+                              Discapacidad?</label>
+                           <select class="select2 form-control not_validate" style="width:100%" id="input_disability_id"
+                              name="input_disability_id" data-input-name="DISCAPACIDAD">
+                           </select>
+                        </div>
+                        <div class="mb-3 col-md-6">
+                           <label for="input_gender" class="form-label">Género: <span class="obligatory"></span></label>
+                           <select class="select2 form-control not_validate" style="width:100%" id="input_gender"
+                              name="input_gender" data-input-name="GÉNERO">
+                           </select>
+                        </div>
+                     </div>
                   </div>
                </div>
                <!-- INTERESES -->
@@ -222,6 +244,13 @@ $current_page = "Candidatos";
                   </div> -->
                   <!-- PROFESION -->
                   <div class="row">
+                     <div class="mb-3 col-md-6">
+                        <label for="input_level_id" class="form-label">Nivel de Estudio Máximo: <span
+                              class="obligatory"></span></label>
+                        <select class="select2 form-control not_validate" style="width:100%;" id="input_level_id"
+                           name="input_level_id" data-input-name="NIVEL DE ESTUDIO MÁXIMO">
+                        </select>
+                     </div>
                      <div class="mb-3 col">
                         <label for="input_profession_id" class="form-label">Profesión/Oficio: <span
                               class="obligatory"></span></label>
@@ -255,6 +284,7 @@ $current_page = "Candidatos";
                            <label class="btn btn-outline-dark" for="input_languages_a">Avanzado</label>
                         </div>
                      </div>
+
                      <div class="mb-3 col-md-6 rounded-lg text-center">
                         <input type="file" id="input_cv_path" name="input_cv_path" class="d-none" accept=".pdf"
                            data-preview="preview_cv" data-input-name="CURRICULUM VITAE">
@@ -338,6 +368,31 @@ $current_page = "Candidatos";
                         </div>
                      </div>
                      <div class="row">
+                        <!-- DISCAPACIDAD, GÉNERO Y NIVEL DE ESTUDIO -->
+                        <div class="col col-12">
+                           <div class="card card-dark card-outline">
+                              <div class="card-body box-profile">
+                                 <div class="row">
+                                    <div class="mb-3 col-md-4 border-right">
+                                       <label for="input_disability_id" class="form-label">¿Cuenta con alguna
+                                          Discapacidad?</label>
+                                       <h5 class="widget-user-desc im_output" id="d_output_disability_id">[Discapacidad]
+                                       </h5>
+                                    </div>
+                                    <div class="mb-3 col-md-4 border-right">
+                                       <label for="input_gender" class="form-label">Género:</label>
+                                       <h5 class="widget-user-desc im_output" id="d_output_gender">[Género]</h5>
+                                    </div>
+                                    <div class="mb-3 col-md-4">
+                                       <label for="input_level_id" class="form-label">Nivel de Estudio Máximo:</label>
+                                       <h5 class="widget-user-desc im_output" id="d_output_level_id">[Nivel de Estudio]
+                                       </h5>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+
                         <!-- CURRICULUM VITAE -->
                         <div class="col col-md-4">
                            <div class="card card-dark card-outline">

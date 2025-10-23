@@ -37,6 +37,13 @@ const tbody = $("#table tbody"),
    input_job_type_mt = $("#input_job_type_mt"),
    input_job_type_p = $("#input_job_type_p"),
    input_schedules = $("#input_schedules"),
+   input_inclusive = $("#input_inclusive"),
+   output_inclusive = $("#output_inclusive"),
+   input_mode = $("#input_mode"),
+   input_name_mode = $("[name='input_mode']"),
+   input_mode_p = $("#input_mode_p"),
+   input_mode_h = $("#input_mode_h"),
+   input_mode_r = $("#input_mode_r"),
    input_tags_ids = $("#input_tags_ids"),
    input_publication_date = $("#input_publication_date"),
    input_expiration_date = $("#input_expiration_date"),
@@ -130,6 +137,9 @@ btn_reset.click(async (e) => {
    $(`#${input_max_salary.attr("data-output")}`).text("$0");
    $(`#${input_name_job_type.attr("data-output")}`).text("Tiempo completo");
    $(`#${input_schedules.attr("data-output")}`).html("8 horas &nbsp;-&nbsp; Lunes a viernes");
+   $(`#${input_inclusive.attr("data-output")}`).html("NO");
+   $(`#${input_mode.attr("data-output")}`).html("PRESENCIAL");
+
    $(`#output_more_info`).html(`
 		<i>LA INFORMACION A CONTINUACIÓIN ES SOLO DE EJEMPLO, 
 		NO SE GUARDARA A MENOS QUE ESCRIBA ALGO EN EL APARTADO DE <b>Más información</b></i>
@@ -268,6 +278,10 @@ async function fillTable(show_toas = true) {
       column_company = `${obj.company}`;
       column_salary = `${formatCurrency(obj.min_salary)} &nbsp;-&nbsp; ${formatCurrency(obj.max_salary)}`;
       column_job_type = `${obj.job_type}`;
+      column_inclusive = `<p class="badge badge-${obj.inclusive ? "success" : "danger"}" title="${
+         obj.inclusive ? "aceptamos personal con alguna discapacidad" : ""
+      }"><b>${obj.inclusive ? "SI" : "NO"}</b></p>`;
+      column_mode = `${obj.mode ?? ""}`;
 
       let column_active = `
          <div class="text-center align-middle">
@@ -299,7 +313,7 @@ async function fillTable(show_toas = true) {
       column_buttons += `</div>
 					</td>`;
 
-      list.push([column_vacancy, column_company, column_salary, column_job_type, column_active, column_img, column_buttons]);
+      list.push([column_vacancy, column_company, column_salary, column_job_type, column_mode, column_inclusive, column_active, column_img, column_buttons]);
    });
    // console.log("list", list);
    //Dibujar Tabla
@@ -398,6 +412,18 @@ async function editObj(btn_edit) {
          break;
    }
    input_schedules.val(obj.schedules);
+   switchEnabled(Boolean(Number(obj.inclusive)), input_inclusive);
+   switch (obj.mode) {
+      case "PRESENCIAL":
+         input_mode_p.click();
+         break;
+      case "HIBRIDO":
+         input_mode_h.click();
+      case "REMOTO":
+         input_mode_r.click();
+      default:
+         break;
+   }
    $(".note-editing-area .note-placeholder").css("display", "none");
    $(".note-editing-area .note-editable").html(obj.more_info);
    input_publication_date.val(moment(obj.publication_date).format("Y-MM-DD"));
@@ -516,6 +542,12 @@ input_schedules.on("input change", function () {
    const output = $(`#${this.getAttribute("data-output")}`);
    output.html(this.value);
    if (this.value == "") output.html("8 horas &nbsp;-&nbsp; Lunes a viernes");
+});
+input_inclusive.change(() => (input_inclusive.is(":checked") ? output_inclusive.text("SI") : output_inclusive.text("NO")));
+input_name_mode.on("input change", function () {
+   const output = $(`#${this.getAttribute("data-output")}`);
+   output.html(this.value);
+   if (this.value == "") output.text("PRESENCIAL");
 });
 form.on("input change", function () {
    const output = $(`#output_more_info`);

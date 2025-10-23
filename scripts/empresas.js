@@ -15,7 +15,7 @@ table = $("#table").DataTable({
          exportOptions: {
             // omitimos las columna [0,1,4] (Logo, InfoEmpresa, InfoContacto)
             // Exportar columnas visibles + las ocultas [2,3,5,6,7]
-            columns: [2, 3, 5, 6, 7, 8, 9, 10]
+            columns: [2, 3, 5, 6, 7, 8, 9, 10, 11]
          }
       }
    ]
@@ -34,6 +34,7 @@ const btn_modal_form = $("#btn_modal_form"),
    input_company = $("#input_company"),
    input_description = $("#input_description"),
    counter_description = $("#counter_description"),
+   input_accept_inclusive = $("#input_accept_inclusive"),
    input_logo_path = $("#input_logo_path"), //este es un input_file
    output_logo = $("#output_logo"),
    preview_logo = $("#preview_logo"),
@@ -60,6 +61,7 @@ const btn_modal_form = $("#btn_modal_form"),
    d_output_contact_email = $("#d_output_contact_email"),
    d_output_business_line = $("#d_output_business_line"),
    d_output_company_ranking = $("#d_output_company_ranking"),
+   d_output_accept_inclusive = $("#d_output_accept_inclusive"),
    d_output_description = $("#d_output_description");
 let haveImg = false;
 let vLogoPath = null;
@@ -263,6 +265,9 @@ async function fillTable() {
 				<b>${obj.company_ranking}</b><br>
 				${obj.cr_description}
 			`,
+         column_accept_inclusive = `<p class="badge badge-${obj.accept_inclusive ? "success" : "danger"}" title="${
+            obj.accept_inclusive ? "aceptamos personal con alguna discapacidad" : ""
+         }"><b>${obj.accept_inclusive ? "SI" : "NO"}</b></p>`,
          column_created_at = formatDatetime(obj.created_at, true);
 
       let column_buttons =
@@ -295,6 +300,7 @@ async function fillTable() {
          column_contact_email,
          column_business_line,
          column_company_ranking,
+         column_accept_inclusive,
          column_created_at,
          column_buttons
       ]);
@@ -373,6 +379,7 @@ async function editObj(btn_edit) {
    }
    input_company.val(obj.company);
    input_description.val(obj.description);
+   switchEnabled(Boolean(Number(obj.accept_inclusive)), input_accept_inclusive);
    /* await */ fillSelect2(URL_BUSINESS_LINE_APP, obj.business_line_id, input_business_line_id);
    /* await */ fillSelect2(URL_COMPANY_RANKING_APP, obj.company_ranking_id, input_company_ranking_id);
    input_contact_name.val(obj.contact_name);
@@ -407,7 +414,7 @@ async function showObj(id) {
    let data = { id, op: "show" };
    const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
    const obj = ajaxResponse.data;
-   // console.log(obj);
+   console.log(obj);
 
    d_div_header.removeClass("bg-primary");
    d_div_header.addClass("bg-dark");
@@ -436,6 +443,7 @@ async function showObj(id) {
 
    d_output_business_line.text(obj.business_line);
    d_output_company_ranking.text(`${obj.company_ranking} - ${obj.cr_description}`);
+   d_output_accept_inclusive.text(obj.accept_inclusive == 1 ? "Aceptamos personal con alguna discapacidad" : "No");
    d_output_description.html(obj.description);
 
    // changeEnable(obj.enable);

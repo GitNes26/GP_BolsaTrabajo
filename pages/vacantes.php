@@ -73,13 +73,13 @@ $current_page = "Vacantes";
                               </div>
                               <!-- EMPRESA -->
                               <?php if ($_COOKIE["role_id"] <= 2) : ?>
-                                 <div class="mb-3">
-                                    <label for="input_company_id" class="form-label">Empresa: <span
-                                          class="obligatory"></span></label>
-                                    <select class="select2 form-control" style="width:100%" id="input_company_id"
-                                       name="input_company_id" data-input-name="EMPRESA" data-output="output_info_company">
-                                    </select>
-                                 </div>
+                              <div class="mb-3">
+                                 <label for="input_company_id" class="form-label">Empresa: <span
+                                       class="obligatory"></span></label>
+                                 <select class="select2 form-control" style="width:100%" id="input_company_id"
+                                    name="input_company_id" data-input-name="EMPRESA" data-output="output_info_company">
+                                 </select>
+                              </div>
                               <?php endif ?>
 
                               <!-- PREGUNTAR SI AGREGARAN IMAGEN -->
@@ -187,6 +187,42 @@ $current_page = "Vacantes";
                                        data-input-name="HORARIO" placeholder="8 horas - Lunes a viernes"
                                        data-output="output_schedules">
                                  </div>
+                                 <div class="row">
+                                    <!-- VACANTE INCLUSIVA -->
+                                    <div class="mb-3 col-md-6">
+                                       <div class="form-group">
+                                          <div class="custom-control custom-switch">
+                                             <input type="checkbox" class="custom-control-input not_validate"
+                                                id="input_inclusive" name="input_inclusive"
+                                                data-output="output_inclusive">
+                                             <label class="custom-control-label" id="" for="input_inclusive">Vacante
+                                                Inclusiva: (aceptamos
+                                                personal con alguna discapacidad)</label>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <!-- MODALIDAD -->
+                                    <div class="mb-3 col-md-6 d-flex flex-column align-items-center">
+                                       <label for="input_mode">Modalidad: <span class="obligatory"></span></label>
+                                       <div class="btn-group ml-3" role="group">
+                                          <input type="radio" class="btn-check not_validate" name="input_mode"
+                                             id="input_mode_p" value="PRESENCIAL" autocomplete="off"
+                                             data-output="output_mode" checked>
+                                          <label class="btn btn-outline-dark rounded-left"
+                                             for="input_mode_p">Presencial</label>
+
+                                          <input type="radio" class="btn-check not_validate" name="input_mode"
+                                             id="input_mode_h" value="HIBRIDO" autocomplete="off"
+                                             data-output="output_mode">
+                                          <label class="btn btn-outline-dark" for="input_mode_h">Híbrido</label>
+
+                                          <input type="radio" class="btn-check not_validate" name="input_mode"
+                                             id="input_mode_r" value="REMOTO" autocomplete="off"
+                                             data-output="output_mode">
+                                          <label class="btn btn-outline-dark" for="input_mode_r">Remoto</label>
+                                       </div>
+                                    </div>
+                                 </div>
                                  <!-- MAS INFORMACION -->
                                  <div class="mb-3">
                                     <label for="input_more_info" class="form-label">Más información: &nbsp;<i
@@ -233,8 +269,8 @@ $current_page = "Vacantes";
                               <button type="reset" id="btn_reset"
                                  class="btn btn-secondary float-end ml-2 d-none">LIMPIAR</button>
                               <?php if ($permission_write ?? false) : ?>
-                                 <button type="submit" id="btn_submit"
-                                    class="btn btn-dark fw-bold float-end">AGREGAR</button>
+                              <button type="submit" id="btn_submit"
+                                 class="btn btn-dark fw-bold float-end">AGREGAR</button>
                               <?php endif ?>
                            </div>
                         </form>
@@ -279,22 +315,39 @@ $current_page = "Vacantes";
                                  <p class="h6 fw-bolder">Detalles del empleo</p>
                                  <p class="" id="output_area">Área</p>
                                  <p class="" id="output_description">Descripción de la vacante...</p>
-                                 <div class="mb-2">
-                                    <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
-                                    <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
-                                    <span id="output_min_salary">$0</span> &nbsp;a&nbsp;
-                                    <span id="output_max_salary">$0</span>
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                       <div class="mb-2">
+                                          <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
+                                          <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
+                                          <span id="output_min_salary">$0</span> &nbsp;a&nbsp;
+                                          <span id="output_max_salary">$0</span>
+                                       </div>
+                                       <div class="mb-2">
+                                          <i class="fa-solid fa-briefcase"></i>&nbsp;
+                                          <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
+                                          <span id="output_job_type">Tiempo completo</span>
+                                       </div>
+                                       <div class="mb-2">
+                                          <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
+                                          <span class="fw-bolder">Horario:&nbsp;</span>
+                                          <span id="output_schedules">8 horas &nbsp;-&nbsp; Lunes a viernes</span>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="mb-2">
+                                          <i class="fa-brands fa-accessible-icon"></i>&nbsp;
+                                          <span class="fw-bolder">Inclusiva:&nbsp;</span>
+                                          <span id="output_inclusive">NO</span>
+                                       </div>
+                                       <div class="mb-2">
+                                          <i class="fa-solid fa-laptop-file"></i>&nbsp;
+                                          <span class="fw-bolder">Modalidad:&nbsp;</span>
+                                          <span id="output_mode">PRESENCIAL</span>
+                                       </div>
+                                    </div>
                                  </div>
-                                 <div class="mb-2">
-                                    <i class="fa-solid fa-briefcase"></i>&nbsp;
-                                    <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
-                                    <span id="output_job_type">Tiempo completo</span>
-                                 </div>
-                                 <div class="mb-2">
-                                    <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
-                                    <span class="fw-bolder">Horario:&nbsp;</span>
-                                    <span id="output_schedules">8 horas &nbsp;-&nbsp; Lunes a viernes</span>
-                                 </div>
+
 
                                  <hr>
 
@@ -355,6 +408,8 @@ $current_page = "Vacantes";
                               <th scope="col">Empresa</th>
                               <th scope="col">Sueldo</th>
                               <th scope="col">Tipo de empleo</th>
+                              <th scope="col">Modalidad</th>
+                              <th scope="col">Inclusiva</th>
                               <th scope="col">Publicidad</th>
                               <th scope="col">Imagen</th>
                               <th scope="col">Acciones</th>
@@ -368,6 +423,8 @@ $current_page = "Vacantes";
                               <th scope="col">Empresa</th>
                               <th scope="col">Sueldo</th>
                               <th scope="col">Tipo de empleo</th>
+                              <th scope="col">Modalidad</th>
+                              <th scope="col">Inclusiva</th>
                               <th scope="col">Publicidad</th>
                               <th scope="col">Imagen</th>
                               <th scope="col">Acciones</th>

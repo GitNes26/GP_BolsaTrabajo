@@ -131,7 +131,7 @@ class Candidate extends Connection
       }
       die(json_encode($response));
    }
-   function editInfo($user_id, $name, $last_name, $cellphone, $professional_info, $languages, $profession_id, $email, $updated_at)
+   function editInfo($user_id, $name, $last_name, $cellphone, $level_id, $disability_id, $gender, $professional_info, $languages, $profession_id, $email, $updated_at)
    {
       try {
          $response = $this->defaultResponse();
@@ -141,8 +141,8 @@ class Candidate extends Connection
 
          $this->validateAvailableData($cellphone, $id);
 
-         $query = "UPDATE candidates SET name=?, last_name=?, cellphone=?, professional_info=?, languages=?, profession_id=? WHERE id=?";
-         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $professional_info, $languages, $profession_id, $id));
+         $query = "UPDATE candidates SET name=?, last_name=?, cellphone=?, level_id=?, disability_id=?, gender=?, professional_info=?, languages=?, profession_id=? WHERE id=?";
+         $this->ExecuteQuery($query, array($name, $last_name, $cellphone, $level_id, $disability_id, $gender, $professional_info, $languages, $profession_id, $id));
 
          $query = "UPDATE users SET email=?, updated_at=? WHERE id=?";
          $this->ExecuteQuery($query, array($email, $updated_at, $user_id));

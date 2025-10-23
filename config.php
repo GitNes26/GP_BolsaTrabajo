@@ -23,7 +23,7 @@ $CONN_DB_WEB = array(
 );
 
 $CONN_DB = $CONN_DB_WEB; #/empleos CONN_DB_WEB
-$VERSION = "1.2.0";
+$VERSION = "1.3.0";
 #endregion CONSTANTES DE CONFIGURACION
 
 #region CONSTANTES RUTAS

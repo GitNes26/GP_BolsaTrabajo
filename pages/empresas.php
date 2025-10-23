@@ -57,6 +57,7 @@ $current_page = "Empresas";
                         <th scope="col">Correo de Contacto</th>
                         <th scope="col">Giro</th>
                         <th scope="col">Tamaño</th>
+                        <th scope="col">Inclusiva</th>
                         <th scope="col">Miembro desde</th>
                         <th scope="col">Acciones</th>
                      </tr>
@@ -75,6 +76,7 @@ $current_page = "Empresas";
                         <th scope="col">Correo de Contacto</th>
                         <th scope="col">Giro</th>
                         <th scope="col">Tamaño</th>
+                        <th scope="col">Inclusiva</th>
                         <th scope="col">Miembro desde</th>
                         <th scope="col">Acciones</th>
                      </tr>
@@ -143,6 +145,18 @@ $current_page = "Empresas";
                               name="input_description" data-input-name="ACERCA DE" rows="6" data-limit="500"
                               data-counter="counter_description"></textarea>
                            <div class="text-sm text-end text-muted" id="counter_description"></div>
+                        </div>
+                        <!-- EMPRESA INCLUSIVA -->
+                        <div class="mb-3">
+                           <div class="form-group">
+                              <div class="custom-control custom-switch">
+                                 <input type="checkbox" class="custom-control-input not_validate"
+                                    id="input_accept_inclusive" name="input_accept_inclusive">
+                                 <label class="custom-control-label" id="label_module_enable"
+                                    for="input_accept_inclusive">Empresa Inclusiva: (aceptamos
+                                    personal con alguna discapacidad)</label>
+                              </div>
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -316,6 +330,13 @@ $current_page = "Empresas";
                                     <div class="im_output">
                                        <i class="far fa-circle"></i> &nbsp; Clasificacion de Empresa
                                        <p class="fw-bolder" id="d_output_company_ranking">[Clasificacion de Empresa]</p>
+                                    </div>
+                                 </div>
+                                 <div class="mb-3 col">
+                                    <div class="im_output">
+                                       <i class="fa-brands fa-accessible-icon"></i> &nbsp; Empresa Inclusiva
+                                       <p class="fw-bolder" id="d_output_accept_inclusive">[Empresa Inclusiva]
+                                       </p>
                                     </div>
                                  </div>
                               </div>

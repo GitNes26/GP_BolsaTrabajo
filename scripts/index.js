@@ -113,7 +113,17 @@ async function init() {
       btns_submit.attr("disabled", true);
       btns_submit.text("SOLO CANDIDATOS");
    }
+   setTimeout(() => {
+      showConfirmationOnce(
+         "completarPerfil",
+         "¡Completa tu perfil!",
+         "Para tener una mejor experiencia, actualiza tu perfil completando los nuevos campos.",
+         "Actualizar ahora",
+         () => (window.location.href = `${URL_BASE}/pages/perfil.php`)
+      );
+   }, 1500);
 }
+// window.addEventListener("DOMContentLoaded", showConfirmationOnce);
 
 // EVENTO DE REDIMENCIONADO DE VENTANA
 $(window).resize(function () {
@@ -170,6 +180,8 @@ btn_reset.click(async (e) => {
    $(`.output_max_salary`).text(formatCurrency("$0"));
    $(`.output_job_type`).text("...");
    $(`.output_schedules`).text("...");
+   $(`.output_mode`).text("...");
+   $(`.output_inclusive`).text("...");
    $(`.output_more_info`).html("");
 
    setTimeout(() => {
@@ -222,6 +234,8 @@ vacancy_container.click(async (e) => {
          $(`.output_max_salary`).text(formatCurrency(obj.max_salary));
          $(`.output_job_type`).text(obj.job_type);
          $(`.output_schedules`).text(obj.schedules);
+         $(`.output_mode`).text(obj.mode ?? "PRESENCIAL");
+         $(`.output_inclusive`).text(Boolean(obj.inclusive) ? "SI" : "NO");
          $(`.output_more_info`).html(obj.more_info);
          inputs_id.val(obj.id);
          btns_submit.attr("disabled", false);
@@ -373,6 +387,8 @@ function displayResults(results, filter) {
       template_card_vacancy.querySelector(".max_salary").innerText = `${formatCurrency(obj.max_salary, true, false)}`;
       template_card_vacancy.querySelector(".job_type").innerText = `${obj.job_type}`;
       template_card_vacancy.querySelector(".schedules").innerText = `${obj.schedules}`;
+      template_card_vacancy.querySelector(".mode").innerText = `${obj.mode ?? "PRESENCIAL"}`;
+      template_card_vacancy.querySelector(".inclusive").innerText = `${Boolean(obj.inclusive) ? "SI" : "NO"}`;
 
       // ya que termine de asignarle valores a mis elementos de la plantilla, creo un nodo llamado clone ya que duplicara el contenido de mi template
       let clone = document.importNode(template_card_vacancy, true); //el primer parametro es el elemento a cloonar y el segundo parametro es para indicar que si quiero que se duplique  su contenido

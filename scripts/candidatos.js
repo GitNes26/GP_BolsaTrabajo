@@ -15,7 +15,7 @@ table = $("#table").DataTable({
          exportOptions: {
             // omitimos las columna [0,1,4] (Logo, InfoCandidato, InfoContacto)
             // Exportar columnas visibles + las ocultas [2,3,5,6,7]
-            columns: [2, 3, 5, 6, 7, 8, 9]
+            columns: [2, 3, 5, 6, 7, 8, 9, 10, 11, 12]
          }
       }
    ]
@@ -42,6 +42,9 @@ const btn_modal_form = $("#btn_modal_form"),
    input_cellphone = $("#input_cellphone"),
    // input_age = $("#input_age"),
    input_birthdate = $("#input_birthdate"),
+   input_level_id = $("#input_level_id"),
+   input_disability_id = $("#input_disability_id"),
+   input_gender = $("#input_gender"),
    input_profession_id = $("#input_profession_id"),
    input_interest_tags_ids = $("#input_interest_tags_ids"),
    input_languages_b = $("#input_languages_b"),
@@ -61,6 +64,9 @@ const btn_modal_form = $("#btn_modal_form"),
    d_output_cellphone = $("#d_output_cellphone"),
    // d_output_age = $("#d_output_age"),
    d_output_birthdate = $("#d_output_birthdate"),
+   d_output_level_id = $("#d_output_level_id"),
+   d_output_disability_id = $("#d_output_disability_id"),
+   d_output_gender = $("#d_output_gender"),
    d_output_profession = $("#d_output_profession"),
    d_output_interest_tags_ids = $("#d_output_interest_tags_ids"),
    d_output_professional_info = $("#d_output_professional_info"),
@@ -85,6 +91,13 @@ async function init() {
    fillSelect2(URL_USER_APP, -1, input_user_id, false, "candidate");
 
    fillSelect2(URL_PROFESSION_APP, -1, input_profession_id, false);
+   fillSelect2(URL_LEVEL_APP, -1, input_level_id, false);
+   fillSelect2(URL_DISABILITY_APP, -1, input_disability_id, false);
+   await fillSelect2(null, -1, input_gender, null, null, [
+      { value: "MASCULINO", text: "MASCULINO" },
+      { value: "FEMENINO", text: "FEMENINO" }
+      // { value: "OTRO", text: "OTRO" }
+   ]);
    fillSelect2(URL_TAG_APP, -1, input_interest_tags_ids, false);
    resetImgPreview(preview_photo);
    input_name.focus();
@@ -119,6 +132,9 @@ btn_reset.click(async (e) => {
    await resetSelect2(input_user_id);
    await resetSelect2(input_profession_id);
    await resetSelect2(input_interest_tags_ids);
+   await resetSelect2(input_disability_id);
+   await resetSelect2(input_level_id);
+   await resetSelect2(input_gender);
    // await resetSelect2(input_state);
    // await resetSelect2(input_municipality);
    // input_municipality.attr("disabled",true);
@@ -249,7 +265,7 @@ async function fillTable() {
 
    const list = [];
    let objResponse = ajaxResponse.data;
-   // console.log(objResponse);
+   console.log(objResponse);
 
    objResponse.map((obj) => {
       let enable = {
@@ -287,6 +303,9 @@ async function fillTable() {
          column_profession = `
 				${obj.profession}
 			`,
+         column_level = `<p>${obj.level ?? ""}</p>`,
+         column_gender = `<p>${obj.gender ?? ""}</p>`,
+         column_disability = `<p>${obj.disability ?? ""}</p>`,
          column_enable = `<h5><span class="fw-bolder badge ${enable.badgeColor}">${enable.text}</span></h5>`,
          column_created_at = formatDatetime(obj.created_at, true);
 
@@ -320,6 +339,9 @@ async function fillTable() {
             column_contact_phone,
             column_contact_email,
             column_profession,
+            column_level,
+            column_gender,
+            column_disability,
             column_enable,
             column_created_at,
             column_buttons
@@ -334,6 +356,9 @@ async function fillTable() {
             column_contact_phone,
             column_contact_email,
             column_profession,
+            column_level,
+            column_gender,
+            column_disability,
             column_enable,
             column_buttons
          ]);
@@ -396,7 +421,7 @@ async function editObj(btn_edit) {
    const ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
 
    const obj = ajaxResponse.data;
-   // console.log(obj);
+   console.log(obj);
 
    //form
    id_modal.val(Number(obj.id));
@@ -417,6 +442,13 @@ async function editObj(btn_edit) {
    // input_age.val(obj.age);
    input_birthdate.val(obj.birthdate);
    await fillSelect2(URL_PROFESSION_APP, obj.profession_id, input_profession_id);
+   await fillSelect2(URL_LEVEL_APP, obj.level_id, input_level_id);
+   await fillSelect2(URL_DISABILITY_APP, obj.disability_id, input_disability_id);
+   await fillSelect2(null, obj.gender, input_gender, null, null, [
+      { value: "MASCULINO", text: "MASCULINO" },
+      { value: "FEMENINO", text: "FEMENINO" }
+      // { value: "OTRO", text: "OTRO" }
+   ]);
    // await fillSelect2(URL_TAG_APP, obj.interest_tags_ids, input_interest_tags_ids);
    if (obj.professional_info == "<p><br></p>" || obj.professional_info.length < 1) $(".note-editing-area .note-placeholder").css("display", "block");
    else {
@@ -521,7 +553,7 @@ async function showObj(id) {
    let data = { id, op: "show" };
    const ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
    const obj = ajaxResponse.data;
-   // console.log(obj);
+   console.log(obj);
 
    d_div_header.removeClass("bg-primary");
    d_div_header.addClass("bg-dark");
@@ -549,6 +581,10 @@ async function showObj(id) {
    let age = moment(obj.birthdate, "YYYYMMDD").fromNow();
    age = age.split("hace ").reverse()[0];
    d_output_birthdate.text(age);
+
+   d_output_disability_id.text(obj.disability);
+   d_output_level_id.text(obj.level);
+   d_output_gender.text(obj.gender);
 
    d_output_profession.text(obj.profession);
    d_output_professional_info.html(obj.professional_info);

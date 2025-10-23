@@ -45,6 +45,12 @@ const input_user_id = $("#input_user_id"),
    input_languages_i = $("#input_languages_i"),
    input_languages_a = $("#input_languages_a"),
    output_languages = $("#output_languages"),
+   input_level_id = $("#input_level_id"),
+   output_level = $("#output_level"),
+   input_disability_id = $("#input_disability_id"),
+   output_disability = $("#output_disability"),
+   input_gender = $("#input_gender"),
+   output_gender = $("#output_gender"),
    input_cv_path = $("#input_cv_path"), //este es un input_file
    output_cv = $("#output_cv"),
    preview_cv = $("#preview_cv"),
@@ -71,6 +77,8 @@ const input_company = $("#input_company"),
    output_business_line = $("#output_business_line"),
    input_company_ranking_id = $("#input_company_ranking_id"),
    output_company_ranking = $("#output_company_ranking"),
+   input_accept_inclusive = $("#input_accept_inclusive"),
+   output_accept_inclusive = $("#output_accept_inclusive"),
    input_community_id = $("#input_community_id"),
    input_zip = $("#input_zip"),
    input_state = $("#input_state"),
@@ -102,6 +110,13 @@ async function init() {
 
    fillSelect2(URL_BUSINESS_LINE_APP, -1, input_business_line_id, false);
    fillSelect2(URL_COMPANY_RANKING_APP, -1, input_company_ranking_id, false);
+   fillSelect2(URL_LEVEL_APP, -1, input_level_id, false);
+   fillSelect2(URL_DISABILITY_APP, -1, input_disability_id, false);
+   await fillSelect2(null, -1, input_gender, null, null, [
+      { value: "MASCULINO", text: "MASCULINO" },
+      { value: "FEMENINO", text: "FEMENINO" }
+      // { value: "OTRO", text: "OTRO" }
+   ]);
 }
 
 // Agrega un evento change a la foto de perfil
@@ -289,6 +304,9 @@ btn_edit.click(function () {
    btn_cancel.removeClass("d-none");
    $(".im_input").removeClass("d-none");
    $(`span[aria-labelledby='select2-input_profession_id-container']`).removeClass("d-none");
+   $(`span[aria-labelledby='select2-input_disability_id-container']`).removeClass("d-none");
+   $(`span[aria-labelledby='select2-input_level_id-container']`).removeClass("d-none");
+   $(`span[aria-labelledby='select2-input_gender-container']`).removeClass("d-none");
 
    $(".im_output").addClass("d-none");
 });
@@ -395,6 +413,16 @@ async function fillInfo(show_toas = true) {
 
       await fillSelect2(URL_PROFESSION_APP, obj.profession_id, input_profession_id);
       output_profession.text(obj.profession);
+      await fillSelect2(URL_DISABILITY_APP, obj.disability_id, input_disability_id);
+      output_disability.text(obj.disability);
+      await fillSelect2(URL_LEVEL_APP, obj.level_id, input_level_id);
+      output_level.text(obj.level);
+      await fillSelect2(null, obj.gender, input_gender, null, null, [
+         { value: "MASCULINO", text: "MASCULINO" },
+         { value: "FEMENINO", text: "FEMENINO" }
+         // { value: "OTRO", text: "OTRO" }
+      ]);
+      output_gender.text(obj.gender);
       // await fillSelect2(URL_TAG_APP, obj.interest_tags_ids, input_interest_tags_ids);
       // output_interest_tags_ids.text(obj.)
       // if (obj.professional_info == "<p><br></p>" || obj.professional_info.length < 1)
@@ -469,7 +497,10 @@ async function fillInfo(show_toas = true) {
       await fillSelect2(URL_BUSINESS_LINE_APP, obj.business_line_id, input_business_line_id);
       output_business_line.text(obj.business_line);
       await fillSelect2(URL_COMPANY_RANKING_APP, obj.company_ranking_id, input_company_ranking_id);
-      output_company_ranking.text(obj.company_ranking);
+      output_company_ranking.text(`${obj.company_ranking} - ${obj.cr_description}`);
+
+      switchEnabled(Boolean(Number(obj.accept_inclusive)), input_accept_inclusive);
+      output_accept_inclusive.text(obj.accept_inclusive == 1 ? "Aceptamos personal con alguna discapacidad" : "No");
 
       input_description.val(obj.description);
       output_description.text(obj.description);
@@ -494,12 +525,16 @@ async function editObj(btn_edit) {
 
    let id_obj = btn_edit.attr("data-id");
    let data = { id: id_obj, op: "show" };
-   const ajaxResponse = await ajaxRequestAsync(URL_BUSINESS_LINE_APP, data);
 
+   const ajaxResponse = await ajaxRequestAsync(URL_BUSINESS_LINE_APP, data);
+   // const ajaxResponseUser = await ajaxRequestAsync(role_cookie === 4 ? URL_CANDIDATE_APP : URL_COMPANY_APP, data);
+
+   // const user = ajaxResponseUser.data;
    const obj = ajaxResponse.data;
    //form
    id_modal.val(Number(obj.id));
    input_business_line.val(obj.business_line);
+   // input_disability_id.val(user.disability_id);
 
    setTimeout(() => {
       input_business_line.focus();

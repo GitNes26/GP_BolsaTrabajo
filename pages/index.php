@@ -225,22 +225,39 @@ $pagina_acutal = "Bolsa de Trabajo";
                      <p class="h6 fw-bolder">Detalles del empleo</p>
                      <p class="output_area">Área</p>
                      <p class="output_description">Descripción de la vacante...</p>
-                     <div class="mb-2">
-                        <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
-                        <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
-                        <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
-                        <span class="output_max_salary">$0</span>
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="mb-2">
+                              <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
+                              <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
+                              <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
+                              <span class="output_max_salary">$0</span>
+                           </div>
+                           <div class="mb-2">
+                              <i class="fa-solid fa-briefcase"></i>&nbsp;
+                              <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
+                              <span class="output_job_type">...</span>
+                           </div>
+                           <div class="mb-2">
+                              <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
+                              <span class="fw-bolder">Horario:&nbsp;</span>
+                              <span class="output_schedules">...</span>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="mb-2">
+                              <i class="fa-brands fa-accessible-icon"></i>&nbsp;
+                              <span class="fw-bolder">Inclusiva:&nbsp;</span>
+                              <span class="output_inclusive">...</span>
+                           </div>
+                           <div class="mb-2">
+                              <i class="fa-solid fa-laptop-file"></i>&nbsp;
+                              <span class="fw-bolder">Modalidad:&nbsp;</span>
+                              <span class="output_mode">...</span>
+                           </div>
+                        </div>
                      </div>
-                     <div class="mb-2">
-                        <i class="fa-solid fa-briefcase"></i>&nbsp;
-                        <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
-                        <span class="output_job_type">...</span>
-                     </div>
-                     <div class="mb-2">
-                        <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
-                        <span class="fw-bolder">Horario:&nbsp;</span>
-                        <span class="output_schedules">...</span>
-                     </div>
+
 
                      <hr>
 
@@ -356,22 +373,39 @@ $pagina_acutal = "Bolsa de Trabajo";
                   <p class="h6 fw-bolder">Detalles del empleo</p>
                   <p class="output_area">Área</p>
                   <p class="output_description">Descripción de la vacante...</p>
-                  <div class="mb-2">
-                     <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
-                     <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
-                     <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
-                     <span class="output_max_salary">$0</span>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="mb-2">
+                           <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
+                           <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
+                           <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
+                           <span class="output_max_salary">$0</span>
+                        </div>
+                        <div class="mb-2">
+                           <i class="fa-solid fa-briefcase"></i>&nbsp;
+                           <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
+                           <span class="output_job_type">...</span>
+                        </div>
+                        <div class="mb-2">
+                           <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
+                           <span class="fw-bolder">Horario:&nbsp;</span>
+                           <span class="output_schedules">...</span>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="mb-2">
+                           <i class="fa-brands fa-accessible-icon"></i>&nbsp;
+                           <span class="fw-bolder">Inclusiva:&nbsp;</span>
+                           <span class="output_inclusive">...</span>
+                        </div>
+                        <div class="mb-2">
+                           <i class="fa-solid fa-laptop-file"></i>&nbsp;
+                           <span class="fw-bolder">Modalidad:&nbsp;</span>
+                           <span class="output_mode">...</span>
+                        </div>
+                     </div>
                   </div>
-                  <div class="mb-2">
-                     <i class="fa-solid fa-briefcase"></i>&nbsp;
-                     <span class="fw-bolder">Tipo de empleo:&nbsp;</span>
-                     <span class="output_job_type">...</span>
-                  </div>
-                  <div class="mb-2">
-                     <i class="fa-sharp fa-regular fa-timer"></i>&nbsp;
-                     <span class="fw-bolder">Horario:&nbsp;</span>
-                     <span class="output_schedules">...</span>
-                  </div>
+
 
                   <hr>
 
@@ -399,8 +433,7 @@ $pagina_acutal = "Bolsa de Trabajo";
 
 
 <template id="template_card_vacancy">
-   <div class="card card-dark card-outline direct-chat direct-chat-dark shadow-sm pointer-sm card_vacancy"
-      data-id="id">
+   <div class="card card-dark card-outline direct-chat direct-chat-dark shadow-sm pointer-sm card_vacancy" data-id="id">
       <div class="ribbon-wrapper ribbon-lg d-none">
          <div class="ribbon bg-info fw-bolder">POSTULADO</div>
       </div>
@@ -436,6 +469,15 @@ $pagina_acutal = "Bolsa de Trabajo";
                <i class="fa-sharp fa-regular fa-timer"></i>&nbsp; <span class="schedules">8 horas - Lunes a
                   vienres</span>
             </span>
+            <span class="badge bg-orange text-light" title="Modalidad de trabajo">
+               <i class="fa-sharp fa-regular text-light fa-laptop-file"></i>&nbsp; <span
+                  class="mode text-light">PRESENCIAL</span>
+            </span>
+            <span class="badge bg-purple text-light"
+               title="Vacante inclusiva: ¿acepta personal con alguna discapacidad?">
+               <i class="text-light fa-brands fa-accessible-icon"></i>&nbsp; <span
+                  class="inclusive text-light">NO</span>
+            </span>
          </div>
       </div>
    </div>
@@ -449,21 +491,21 @@ include "../templates/footer.php";
 ?>
 <script src="<?php echo ($SCRIPTS_PATH) ?>/index.js"></script>
 <script>
-   // $(function () {
-   //    /* BOOTSTRAP SLIDER */
-   //    // $('.slider').bootstrapSlider();
+// $(function () {
+//    /* BOOTSTRAP SLIDER */
+//    // $('.slider').bootstrapSlider();
 
-   //    /* ION SLIDER */
-   //    $('#range_1').ionRangeSlider({
-   //    min     : 0,
-   //    max     : 5000,
-   //    from    : 1000,
-   //    to      : 4000,
-   //    type    : 'double',
-   //    step    : 1,
-   //    prefix  : '$',
-   //    prettify: false,
-   //    hasGrid : true
-   //    })
-   // })
+//    /* ION SLIDER */
+//    $('#range_1').ionRangeSlider({
+//    min     : 0,
+//    max     : 5000,
+//    from    : 1000,
+//    to      : 4000,
+//    type    : 'double',
+//    step    : 1,
+//    prefix  : '$',
+//    prettify: false,
+//    hasGrid : true
+//    })
+// })
 </script>

@@ -72,8 +72,9 @@ btn_reset.click(async (e) => {
 });
 
 // SWITCH HABILITADO/DESAHBILITADO
-function switchEnabled(status, input) {
+function switchEnabledModules(status, input) {
    // console.log("status",status);
+   // console.log("input",input);
    if (status) input.is(":checked") ? null : input.click();
    else input.is(":checked") ? input.click() : null;
 }
@@ -261,8 +262,8 @@ async function editObj(btn_edit) {
    input_file_path.val(obj.file_path);
    input_icon.val(obj.icon);
    await fillSelect2(URL_MENU_APP, obj.belongs_to, input_belongs_to, true);
-   switchEnabled(Boolean(Number(obj.active)), input_active);
-   switchEnabled(Boolean(Number(obj.show_counter)), input_show_counter);
+   switchEnabledModules(Boolean(Number(obj.active)), input_active);
+   switchEnabledModules(Boolean(Number(obj.show_counter)), input_show_counter);
    label_module_enable.text(obj.active == 1 ? "Activo" : "No Activo");
    label_module_counter.text(obj.show_counter == 1 ? "Mostrar Contador" : "No Mostrar Contador");
 

@@ -368,33 +368,25 @@ validateNeedCookies();
                                     data-input-name="CORREO"> -->
                               </div>
                            </div>
-                           <!-- NIVEL Y DISCAPACIDAD -->
+                           <!-- DISCAPACIDAD Y GÉNERO -->
                            <div class="row">
-                              <div class="mb-3 col-md-6">
-                                 <label for="input_level_id" class="form-label">Nivel de Estudio Máximo: <span
-                                       class="obligatory"></span></label>
-                                 <select class="select2 form-control not_validate" style="width:100%"
-                                    id="input_level_id" name="input_level_id" data-input-name="NIVEL DE ESTUDIO MÁXIMO">
-                                 </select>
-                              </div>
                               <div class="mb-3 col-md-6">
                                  <label for="input_disability_id" class="form-label">¿Cuenta con alguna
                                     Discapacidad?</label>
                                  <select class="select2 form-control not_validate" style="width:100%"
-                                    id="input_disability_id" name="input_disability_id"
-                                    data-input-name="NIVEL DE ESTUDIO MÁXIMO">
+                                    id="input_disability_id" name="input_disability_id" data-input-name="DISCAPACIDAD">
                                  </select>
                               </div>
-                           </div>
-                           <div class="mb-3 col-md-6">
-                              <label for="input_gender" class="form-label">Género: <span
-                                    class="obligatory"></span></label>
-                              <select class="select2 form-control not_validate" style="width:100%" id="input_gender"
-                                 name="input_gender" data-input-name="GÉNERO">
-                                 <option value="">Selecciona una opción...</option>
-                                 <option value="MASCULINO">MASCULINO</option>
-                                 <option value="FEMENINO">FEMENINO</option>
-                              </select>
+                              <div class="mb-3 col-md-6">
+                                 <label for="input_gender" class="form-label">Género: <span
+                                       class="obligatory"></span></label>
+                                 <select class="select2 form-control not_validate" style="width:100%" id="input_gender"
+                                    name="input_gender" data-input-name="GÉNERO">
+                                    <option value="">Selecciona una opción...</option>
+                                    <option value="MASCULINO">MASCULINO</option>
+                                    <option value="FEMENINO">FEMENINO</option>
+                                 </select>
+                              </div>
                            </div>
                         </div>
                      </div>
@@ -466,6 +458,13 @@ validateNeedCookies();
                            </div> -->
                         <!-- PROFESION -->
                         <div class="row">
+                           <div class="mb-3 col-md-6">
+                              <label for="input_level_id" class="form-label">Nivel de Estudio Máximo: <span
+                                    class="obligatory"></span></label>
+                              <select class="select2 form-control not_validate" style="width:100%" id="input_level_id"
+                                 name="input_level_id" data-input-name="NIVEL DE ESTUDIO MÁXIMO">
+                              </select>
+                           </div>
                            <div class="mb-3 col">
                               <label for="input_profession_id" class="form-label">Profesión/Oficio: <span
                                     class="obligatory"></span></label>
