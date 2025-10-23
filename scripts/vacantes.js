@@ -278,12 +278,9 @@ async function fillTable(show_toas = true) {
       let column_company = `${obj.company}`;
       let column_salary = `${formatCurrency(obj.min_salary)} &nbsp;-&nbsp; ${formatCurrency(obj.max_salary)}`;
       let column_job_type = `${obj.job_type}`;
-      let column_inclusive =
-         obj.inclusive == null
-            ? "NO"
-            : `<p class="badge badge-${obj.inclusive ? "success" : "danger"}" title="${obj.inclusive ? "aceptamos personal con alguna discapacidad" : ""}"><b>${
-                 obj.inclusive ? "SI" : "NO"
-              }</b></p>`;
+      let column_inclusive = `<p class="badge badge-${obj.inclusive ? "success" : "danger"}" title="${
+         obj.inclusive ? "aceptamos personal con alguna discapacidad" : ""
+      }"><b>${obj.inclusive ? "SI" : "NO"}</b></p>`;
       let column_mode = `${obj.mode ?? "PRESENCIAL"}`;
 
       let column_active = `
