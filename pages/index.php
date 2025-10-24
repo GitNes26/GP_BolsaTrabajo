@@ -374,7 +374,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                   <p class="output_area">Área</p>
                   <p class="output_description">Descripción de la vacante...</p>
                   <div class="row">
-                     <div class="col-md-6">
+                     <div class="col-md-8">
                         <div class="mb-2">
                            <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
                            <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
@@ -392,7 +392,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                            <span class="output_schedules">...</span>
                         </div>
                      </div>
-                     <div class="col-md-6">
+                     <div class="col-md-4">
                         <div class="mb-2">
                            <i class="fa-brands fa-accessible-icon"></i>&nbsp;
                            <span class="fw-bolder">Inclusiva:&nbsp;</span>
@@ -491,21 +491,21 @@ include "../templates/footer.php";
 ?>
 <script src="<?php echo ($SCRIPTS_PATH) ?>/index.js"></script>
 <script>
-// $(function () {
-//    /* BOOTSTRAP SLIDER */
-//    // $('.slider').bootstrapSlider();
+   // $(function () {
+   //    /* BOOTSTRAP SLIDER */
+   //    // $('.slider').bootstrapSlider();
 
-//    /* ION SLIDER */
-//    $('#range_1').ionRangeSlider({
-//    min     : 0,
-//    max     : 5000,
-//    from    : 1000,
-//    to      : 4000,
-//    type    : 'double',
-//    step    : 1,
-//    prefix  : '$',
-//    prettify: false,
-//    hasGrid : true
-//    })
-// })
+   //    /* ION SLIDER */
+   //    $('#range_1').ionRangeSlider({
+   //    min     : 0,
+   //    max     : 5000,
+   //    from    : 1000,
+   //    to      : 4000,
+   //    type    : 'double',
+   //    step    : 1,
+   //    prefix  : '$',
+   //    prettify: false,
+   //    hasGrid : true
+   //    })
+   // })
 </script>
