@@ -353,7 +353,7 @@ async function changeStatus(status, vacancy_id) {
       updated_at: current_date
    };
 
-   if (status === "Rechazada")
+   if (["Rechazada", "Cancelada"].includes(status))
       ajaxRequestQuestionAsync(
          title,
          text,
@@ -364,7 +364,7 @@ async function changeStatus(status, vacancy_id) {
          "#0c7827",
          "warning",
          true,
-         `Escribe la razon del ${status}`,
+         `${status} por: `,
          "Describe la razón"
       );
    else ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable(false)", "De acuerdo", "#0c7827");

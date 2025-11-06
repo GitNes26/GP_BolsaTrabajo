@@ -276,7 +276,7 @@ const ajaxRequestQuestionAsync = async (
             // Agregar la razón al data si existe
             let requestData = { ...data };
             if (showReasonField && result.value) {
-               requestData.input_reason_rejection = result.value;
+               requestData.input_reason_rejection = `${reasonPlaceholder} ${result.value}`;
             }
 
             let response = await $.ajax({
