@@ -48,6 +48,7 @@ $current_page = "Solicitudes";
                               <th scope="col">Vacante</th>
                               <th scope="col">Info</th>
                               <th scope="col">Flujo</th>
+                              <th scope="col">F. Postulación</th>
                               <th scope="col">Acciones</th>
                            </tr>
                         </thead>
@@ -58,6 +59,7 @@ $current_page = "Solicitudes";
                               <th scope="col">Vacante</th>
                               <th scope="col">Info</th>
                               <th scope="col">Flujo</th>
+                              <th scope="col">F. Postulación</th>
                               <th scope="col">Acciones</th>
                            </tr>
                         </tfoot>
@@ -74,7 +76,8 @@ $current_page = "Solicitudes";
    <!-- /.content -->
 
    <!-- Modal -->
-   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" data-bs-backdrop="static">
+   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"
+      data-bs-backdrop="static">
       <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
          <form class="modal-content" id="form" enctype="multipart/form-data">
             <div class="modal-header">
@@ -96,7 +99,8 @@ $current_page = "Solicitudes";
                <!-- DIV IMAGEN CARGADA -->
                <div class="text-center div_img d-none">
                   <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
-                  <img src="../assets/img/cargar_imagen.png" controls preview="true" class="rounded-lg img-fluid preview_img" height="250px"></img>
+                  <img src="../assets/img/cargar_imagen.png" controls preview="true"
+                     class="rounded-lg img-fluid preview_img" height="250px"></img>
                   <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
                </div>
 

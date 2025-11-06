@@ -180,6 +180,54 @@ const ajaxRequestAsync = async (url, data, close_modal = null, show_blockUI = tr
       $.unblockUI();
    }
 };
+// const ajaxRequestQuestionAsync = async (
+//    title,
+//    text,
+//    url,
+//    data,
+//    function_complete_string,
+//    text_btn_confirm = "Eliminar",
+//    color_btn_confirm = "#B04759",
+//    icon = "warning"
+// ) => {
+//    Swal.fire({
+//       title: title,
+//       html: text,
+//       icon: icon,
+//       showCancelButton: true,
+//       confirmButtonColor: color_btn_confirm,
+//       confirmButtonText: text_btn_confirm,
+//       cancelButtonColor: "#9BA4B5",
+//       cancelButtonText: "Cancelar"
+//    }).then(async (result) => {
+//       if (result.isConfirmed) {
+//          await showBlockUI();
+
+//          try {
+//             let response = await $.ajax({
+//                type: "POST",
+//                url: url,
+//                data: data,
+//                dataType: "json"
+//             });
+
+//             if (response.result) {
+//                if (response.alert_text != undefined) showToast(response.alert_icon, response.alert_text);
+//                deleted = true;
+//             } else {
+//                showAlert(response.alert_icon, response.alert_title, response.alert_text, true);
+//             }
+//             if (function_complete_string != null) eval(function_complete_string.toString());
+//             $.unblockUI();
+//             return response;
+//          } catch (error) {
+//             $.unblockUI();
+//             console.error(error);
+//             showAlert("error", "Oopss...!!", `Ocurrio un error inesperado. <br> ${error.responseText}`, true);
+//          }
+//       }
+//    });
+// };
 const ajaxRequestQuestionAsync = async (
    title,
    text,
@@ -188,26 +236,53 @@ const ajaxRequestQuestionAsync = async (
    function_complete_string,
    text_btn_confirm = "Eliminar",
    color_btn_confirm = "#B04759",
-   icon = "warning"
+   icon = "warning",
+   showReasonField = false,
+   reasonPlaceholder = "Ingrese la razón del cambio",
+   reasonLabel = "Razón del cambio:"
 ) => {
-   Swal.fire({
+   const swalConfig = {
       title: title,
-      html: text,
       icon: icon,
       showCancelButton: true,
       confirmButtonColor: color_btn_confirm,
       confirmButtonText: text_btn_confirm,
       cancelButtonColor: "#9BA4B5",
       cancelButtonText: "Cancelar"
-   }).then(async (result) => {
+   };
+
+   // Si se solicita mostrar el campo de razón, agregarlo a la configuración
+   if (showReasonField) {
+      swalConfig.html = `${text}<br>
+                        <label for="swal-reason" style="text-align: left; display: block; margin-bottom: 5px; font-weight: bold;">${reasonLabel}</label>
+                        <textarea id="swal-reason" class="swal2-textarea" placeholder="${reasonPlaceholder}" style="width: 80%; margin-top: 10px;"></textarea>`;
+      swalConfig.preConfirm = () => {
+         const reason = document.getElementById("swal-reason").value.trim();
+         if (!reason) {
+            Swal.showValidationMessage("Por favor, ingrese la razón del cambio");
+            return false;
+         }
+         return reason;
+      };
+   } else {
+      swalConfig.html = text;
+   }
+
+   Swal.fire(swalConfig).then(async (result) => {
       if (result.isConfirmed) {
          await showBlockUI();
 
          try {
+            // Agregar la razón al data si existe
+            let requestData = { ...data };
+            if (showReasonField && result.value) {
+               requestData.input_reason_rejection = result.value;
+            }
+
             let response = await $.ajax({
                type: "POST",
                url: url,
-               data: data,
+               data: requestData,
                dataType: "json"
             });
 

@@ -164,6 +164,7 @@ async function fillTable(show_toas = true) {
 				<!-- <i>Aqui ira una linea de flujo</i><br><br> -->
 				${status}
 			`;
+      column_created_at = `${formatDatetime(obj.created_at)}`;
 
       let column_buttons = `<td class='align-middle'>
             <div class='' role='group'>`;
@@ -188,7 +189,7 @@ async function fillTable(show_toas = true) {
       column_buttons += `</div>
 					</td>`;
 
-      list.push([column_candidate, column_vacancy, column_info, column_flow, column_buttons]);
+      list.push([column_candidate, column_vacancy, column_info, column_flow, column_created_at, column_buttons]);
    });
    //Dibujar Tabla
    await table.rows.add(list).draw();
@@ -352,7 +353,21 @@ async function changeStatus(status, vacancy_id) {
       updated_at: current_date
    };
 
-   ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable(false)", "De acuerdo", "#0c7827");
+   if (status === "Rechazada")
+      ajaxRequestQuestionAsync(
+         title,
+         text,
+         URL_APPLICATION_APP,
+         data,
+         "fillTable(false)",
+         "RECHAZAR",
+         "#0c7827",
+         "warning",
+         true,
+         `Escribe la razon del ${status}`,
+         "Describe la razón"
+      );
+   else ajaxRequestQuestionAsync(title, text, URL_APPLICATION_APP, data, "fillTable(false)", "De acuerdo", "#0c7827");
 }
 
 //ELIMINAR OBJETO

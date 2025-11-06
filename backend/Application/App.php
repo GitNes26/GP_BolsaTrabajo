@@ -19,6 +19,10 @@ if (isset($_POST['input_candidate_id'])) {
 if (isset($_POST['input_status'])) {
    $status = $_POST['input_status'];
 }
+if (isset($_POST['input_reason_rejection'])) {
+   $reason_rejection = $_POST['input_reason_rejection'];
+} else $reason_rejection = null;
+
 if (isset($_POST['input_active'])) {
    $active = $_POST['input_active'];
 }
@@ -52,6 +56,6 @@ elseif ($op == "checkAlreadyApplied") $Application->checkAlreadyApplied($vacancy
 elseif ($op == "getVacanciesAppliedByCandidate") $Application->getVacanciesAppliedByCandidate($user_id);  // solo para candidatos
 
 // elseif ($op == "edit") $Application->edit($vacancy_id, $id, $updated_at);
-elseif ($op == "changeStatus" || $op == "cancel") $Application->changeStatus($status, $updated_at, $id);
+elseif ($op == "changeStatus" || $op == "cancel") $Application->changeStatus($status, $reason_rejection, $updated_at, $id);
 
 // elseif ($op == "delete") $Application->delete($deleted_at, $id);

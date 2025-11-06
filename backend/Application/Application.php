@@ -179,15 +179,20 @@ class Application extends Connection
       die(json_encode($response));
    }
 
-   function changeStatus($status, $updated_at, $id)
+   function changeStatus($status, $reason_rejection, $updated_at, $id)
    {
       try {
          $response = $this->defaultResponse();
 
          // $this->validateAvailableData($id, $id);
 
-         $query = "UPDATE applications SET status=?, updated_at=? WHERE id=?";
-         $this->ExecuteQuery($query, array($status, $updated_at, $id));
+         if ($reason_rejection != null) {
+            $query = "UPDATE applications SET status=?, reason_rejection=?, updated_at=? WHERE id=?";
+            $this->ExecuteQuery($query, array($status, $reason_rejection, $updated_at, $id));
+         } else {
+            $query = "UPDATE applications SET status=?, updated_at=? WHERE id=?";
+            $this->ExecuteQuery($query, array($status, $updated_at, $id));
+         }
 
          $response = $this->CorrectResponse();
          $response["message"] = "Peticion satisfactoria | registro actualizado.";

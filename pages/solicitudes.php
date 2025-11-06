@@ -49,6 +49,7 @@ $current_page = "Solicitudes";
                               <th scope="col">Vacante</th>
                               <th scope="col">Info</th>
                               <th scope="col">Flujo</th>
+                              <th scope="col">F. Postulación</th>
                               <th scope="col">Acciones</th>
                            </tr>
                         </thead>
@@ -60,6 +61,7 @@ $current_page = "Solicitudes";
                               <th scope="col">Vacante</th>
                               <th scope="col">Info</th>
                               <th scope="col">Flujo</th>
+                              <th scope="col">F. Postulación</th>
                               <th scope="col">Acciones</th>
                            </tr>
                         </tfoot>
@@ -76,7 +78,8 @@ $current_page = "Solicitudes";
    <!-- /.content -->
 
    <!-- Modal -->
-   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" data-bs-backdrop="static">
+   <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"
+      data-bs-backdrop="static">
       <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
          <form class="modal-content" id="form" enctype="multipart/form-data">
             <div class="modal-header">
@@ -98,7 +101,8 @@ $current_page = "Solicitudes";
                <!-- DIV IMAGEN CARGADA -->
                <div class="text-center div_img d-none">
                   <!-- <label for="preview_img" class="form-label">Imagen cargada:</label><br> -->
-                  <img src="../assets/img/cargar_imagen.png" controls preview="true" class="rounded-lg img-fluid preview_img" height="250px"></img>
+                  <img src="../assets/img/cargar_imagen.png" controls preview="true"
+                     class="rounded-lg img-fluid preview_img" height="250px"></img>
                   <!-- <button type="button" id="btn_quit_file" class="btn btn-default btn-block fw-bolder">QUITAR IMAGEN</button> -->
                </div>
 
@@ -140,7 +144,8 @@ $current_page = "Solicitudes";
 
 
    <!-- Modal Ver Candidato -->
-   <div class="modal fade" id="candidate_modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" data-bs-backdrop="static">
+   <div class="modal fade" id="candidate_modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"
+      data-bs-backdrop="static">
       <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
          <form class="modal-content" id="form" enctype="multipart/form-data">
             <div class="modal-header">
@@ -155,7 +160,8 @@ $current_page = "Solicitudes";
 
                         <div class="widget-user-header bg-dark" id="d_div_header">
                            <h3 class="widget-user-username im_output">
-                              <span id="d_output_name">[Mi Nombre]</span> - <span class="h6 fst-italic" id="d_output_birthdate">[Mi edad]</span>
+                              <span id="d_output_name">[Mi Nombre]</span> - <span class="h6 fst-italic"
+                                 id="d_output_birthdate">[Mi edad]</span>
                            </h3>
                            <h5 class="widget-user-desc im_output" id="d_output_profession">[Mi Profesión]</h5>
                            <h1 class="text-end fw-bolder" id="d_output_enable">DISPONIBLE</h1>
@@ -163,7 +169,9 @@ $current_page = "Solicitudes";
                         <div class="widget-user-image">
                            <label>
                               <div id="d_preview_photo" class="d-flex justify-content-center">
-                                 <img class="img-circle elevation-2 bg-white pointer-sm opacity-100 d-none" id="d_output_photo" src="../assets/img/sin_perfil.webp" alt="Foto de perfil" title="Foto de perfil">
+                                 <img class="img-circle elevation-2 bg-white pointer-sm opacity-100 d-none"
+                                    id="d_output_photo" src="../assets/img/sin_perfil.webp" alt="Foto de perfil"
+                                    title="Foto de perfil">
                               </div>
                            </label>
                         </div>
@@ -204,7 +212,9 @@ $current_page = "Solicitudes";
                            <p class="text-muted text-center">Software Engineer</p> -->
                                  <label for="d_input_cv_path" class="">
                                     <div id="d_preview_cv" class="d-flex justify-content-center">
-                                       <img src="<?= $IMG_PATH ?>/cargar_archivo.png" alt="Cargar CV" id="d_output_cv" class="img-fluid p-5 rounded-lg" style="height: 250px !important;" for="d_input_cv_path" title="Curriculum Vitae">
+                                       <img src="<?= $IMG_PATH ?>/cargar_archivo.png" alt="Cargar CV" id="d_output_cv"
+                                          class="img-fluid p-5 rounded-lg" style="height: 250px !important;"
+                                          for="d_input_cv_path" title="Curriculum Vitae">
                                     </div>
                                  </label>
                               </div>
@@ -218,7 +228,8 @@ $current_page = "Solicitudes";
                                  <div class="text-center h2 fw-bolder">INFORMACIÓN PROFESIONAL</div>
                                  <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
                               <p class="text-muted text-center">Software Engineer</p> -->
-                                 <div id="d_output_professional_info" class="text-start scroll-y im_output" style="max-height: 81%;"></div>
+                                 <div id="d_output_professional_info" class="text-start scroll-y im_output"
+                                    style="max-height: 81%;"></div>
                               </div>
                            </div>
                         </div>
