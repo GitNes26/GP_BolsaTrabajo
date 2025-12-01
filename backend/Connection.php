@@ -12,7 +12,6 @@ class Connection
 		$ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
 		// Usar entorno para determinar configuración
 		$ENVIRONMENT = getenv('APP_ENV') ?: 'local';
-		echo "SADAS, $ENVIRONMENT";
 		
 		$URL_BASE = $ENVIRONMENT === "production" ? "/empleos" : ""; #/empleos
 
