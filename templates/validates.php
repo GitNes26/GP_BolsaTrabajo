@@ -64,7 +64,7 @@ if ($path != "perfil.php") {
       // echo "URL_SERVER: $URL_SERVER)<br>";
       // echo "ADMIN_PATH: ".print_r($ADMIN_PATH)."<br>";
    }
-   $URL_BASE = $ENVIRONMENT === "production" ? "/empleos" : ""; #/empleos
+   $URL_BASE = $ENVIRONMENT == "production" ? "/empleos" : ""; #/empleos
    if (!$access) {
       if ($URL_SERVER == "$URL_BASE/pages") return;
       elseif ($URL_SERVER == "$URL_BASE/pages/") return;

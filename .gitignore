@@ -3,6 +3,8 @@
 
 # Ignorar variables de configuracion
 /config.php
+.env
+.htaccess
 
 #no importar imagenes de usuarios
 /assets/img/banners

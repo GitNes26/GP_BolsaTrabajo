@@ -1,5 +1,8 @@
 <?php
 // Evitar acceso directo al archivo
+
+use function PHPSTORM_META\type;
+
 if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 	die('Acceso denegado');
 }
@@ -11,9 +14,19 @@ class Connection
 	{
 		$ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
 		// Usar entorno para determinar configuración
-		$ENVIRONMENT = getenv('APP_ENV') ?: 'local';
-		
-		$URL_BASE = $ENVIRONMENT === "production" ? "/empleos" : ""; #/empleos
+		$envFile = __DIR__ . '/.env';
+		if (file_exists($envFile)) {
+			$lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+			foreach ($lines as $line) {
+				if (strpos($line, '=') !== false && strpos($line, '#') !== 0) {
+					[$key, $value] = explode('=', $line, 2);
+					putenv(trim($key) . '=' . trim($value));
+				}
+			}
+		}
+		$ENVIRONMENT = getenv('APP_ENV') ?? 'local';
+
+		$URL_BASE = $ENVIRONMENT == "production" ? "/empleos" : ""; #/empleos
 
 		include "$ROOT$URL_BASE/config.php";
 		$CONN_OBJ = $CONN_DB;

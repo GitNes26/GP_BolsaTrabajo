@@ -4,8 +4,19 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
   die('Acceso denegado');
 }
 
+$envFile = __DIR__ . '/.env';
+if (file_exists($envFile)) {
+  $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  foreach ($lines as $line) {
+    if (strpos($line, '=') !== false && strpos($line, '#') !== 0) {
+      [$key, $value] = explode('=', $line, 2);
+      putenv(trim($key) . '=' . trim($value));
+    }
+  }
+}
 // Usar entorno para determinar configuración
-$ENVIRONMENT = getenv('APP_ENV') ?: 'local'; #/empleos
+$ENVIRONMENT = getenv('APP_ENV') ?? "local"; #/empleos
+// echo "config: getenv('APP_ENV') .->".getenv('APP_ENV');
 
 #region CONSTANTES DE CONFIGURACION
 $CONFIG = [
@@ -34,7 +45,7 @@ $VERSION = getenv('APP_VERSION');
 #region CONSTANTES RUTAS
 $ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
 
-$URL_BASE = $ENVIRONMENT === "production" ? "/empleos" : ""; #/empleos
+$URL_BASE = $ENVIRONMENT == "production" ? "/empleos" : ""; #/empleos
 $PROTOCOL = ($_SERVER["HTTPS"] ?? '') === "on" ? "https" : "http";
 $URL_MAIN = "$PROTOCOL://$_SERVER[HTTP_HOST]$URL_BASE";
 $URL_BASE = $URL_MAIN;
