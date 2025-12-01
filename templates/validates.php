@@ -1,4 +1,8 @@
 <?php
+// Evitar acceso directo al archivo
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+   die('Acceso denegado');
+}
 include_once "../config.php";
 
 
@@ -60,7 +64,7 @@ if ($path != "perfil.php") {
       // echo "URL_SERVER: $URL_SERVER)<br>";
       // echo "ADMIN_PATH: ".print_r($ADMIN_PATH)."<br>";
    }
-   $URL_BASE = "/empleos"; #/empleos
+   $URL_BASE = $ENVIRONMENT === "production" ? "/empleos" : ""; #/empleos
    if (!$access) {
       if ($URL_SERVER == "$URL_BASE/pages") return;
       elseif ($URL_SERVER == "$URL_BASE/pages/") return;

@@ -1,35 +1,40 @@
 <?php
-#region CONSTANTES DE CONFIGURACION
-$CONN_DB_LOCAL = array(
-  "HOST_NAME" => "127.0.0.1",
-  "DB_PORT" => "3306",
-  "DB_USER" => "root",
-  "DB_PWD" => "",
-  "DB_NAME" => "bd_bolsa_trabajo",
-);
-$CONN_DB_WEB_PLESK = array(
-  "HOST_NAME" => "132.148.76.141",
-  "DB_PORT" => "3306",
-  "DB_USER" => "usr_bolsatrabajo",
-  "DB_PWD" => "Sxm4r31~1",
-  "DB_NAME" => "bd_bolsa_trabajo",
-);
-$CONN_DB_WEB = array(
-  "HOST_NAME" => "127.0.0.1", #"186.96.142.8", #"127.0.0.1",
-  "DB_PORT" => "3306",
-  "DB_USER" => "pagprincipal_dbusr_bolsa_trabajo",
-  "DB_PWD" => "lybY~fUnIs}t",
-  "DB_NAME" => "pagprincipal_db_bolsa_trabajo",
-);
+// Evitar acceso directo al archivo
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+  die('Acceso denegado');
+}
 
-$CONN_DB = $CONN_DB_WEB; #/empleos CONN_DB_WEB
-$VERSION = "1.3.0.1";
+// Usar entorno para determinar configuración
+$ENVIRONMENT = getenv('APP_ENV') ?: 'local'; #/empleos
+
+#region CONSTANTES DE CONFIGURACION
+$CONFIG = [
+  'local' => [
+    'DB_HOST' => 'localhost',
+    'DB_PORT' => '3306',
+    'DB_USER' => 'root',
+    'DB_PWD'  => '',
+    'DB_NAME' => 'bd_bolsa_trabajo',
+    'DEBUG'   => true
+  ],
+  'production' => [
+    'DB_HOST' => getenv('DB_HOST') ?: 'localhost',
+    'DB_PORT' => getenv('DB_PORT') ?: '3306',
+    'DB_USER' => getenv('DB_USER'),
+    'DB_PWD'  => getenv('DB_PWD'),
+    'DB_NAME' => getenv('DB_NAME'),
+    'DEBUG'   => false
+  ]
+];
+
+$CONN_DB = $CONFIG[$ENVIRONMENT] ?? $CONFIG['local'];
+$VERSION = getenv('APP_VERSION');
 #endregion CONSTANTES DE CONFIGURACION
 
 #region CONSTANTES RUTAS
 $ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
 
-$URL_BASE = "/empleos"; #/empleos
+$URL_BASE = $ENVIRONMENT === "production" ? "/empleos" : ""; #/empleos
 $PROTOCOL = ($_SERVER["HTTPS"] ?? '') === "on" ? "https" : "http";
 $URL_MAIN = "$PROTOCOL://$_SERVER[HTTP_HOST]$URL_BASE";
 $URL_BASE = $URL_MAIN;

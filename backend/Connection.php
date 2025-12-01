@@ -1,5 +1,8 @@
 <?php
-
+// Evitar acceso directo al archivo
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+	die('Acceso denegado');
+}
 class Connection
 {
 	private $conn;
@@ -7,14 +10,18 @@ class Connection
 	function __construct()
 	{
 		$ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
-		$URL_BASE = "/empleos"; #/empleos
+		// Usar entorno para determinar configuración
+		$ENVIRONMENT = getenv('APP_ENV') ?: 'local';
+		echo "SADAS, $ENVIRONMENT";
+		
+		$URL_BASE = $ENVIRONMENT === "production" ? "/empleos" : ""; #/empleos
 
 		include "$ROOT$URL_BASE/config.php";
 		$CONN_OBJ = $CONN_DB;
 		$this->conn = null;
 
-		$connString = "mysql:host=$CONN_OBJ[HOST_NAME];dbname=$CONN_OBJ[DB_NAME];charset=utf8mb4";
-		// $connString = "sqlsrv:Server=$CONN_OBJ[HOST_NAME];Database=$CONN_OBJ[DB_NAME];";
+		$connString = "mysql:host=$CONN_OBJ[DB_HOST];dbname=$CONN_OBJ[DB_NAME];charset=utf8mb4";
+		// $connString = "sqlsrv:Server=$CONN_OBJ[DB_HOST];Database=$CONN_OBJ[DB_NAME];";
 		$options = [
 			PDO::ATTR_EMULATE_PREPARES   => false,
 			PDO::ATTR_EMULATE_PREPARES => true,

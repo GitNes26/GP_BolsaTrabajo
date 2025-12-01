@@ -1,6 +1,10 @@
 <?php
+// Evitar acceso directo al archivo
+if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
+  die('Acceso denegado');
+}
 include "../templates/validates.php";
-$URL_BASE = "/empleos"; #/empleos
+$URL_BASE = $ENVIRONMENT === "production" ? "/empleos" : ""; #/empleos
 
 $classBody = "hold-transition sidebar-mini layout-fixed ";
 if ($URL_SERVER == "$URL_BASE/pages") $classBody = "layout-top-nav ";
