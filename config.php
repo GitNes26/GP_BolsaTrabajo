@@ -15,7 +15,7 @@ if (file_exists($envFile)) {
   }
 }
 // Usar entorno para determinar configuración
-$ENVIRONMENT = getenv('APP_ENV') ?? "local"; #/empleos
+$ENVIRONMENT = strtolower(getenv('APP_ENV')) ?? "local"; #/empleos
 // echo "config: getenv('APP_ENV') .->".getenv('APP_ENV');
 
 #region CONSTANTES DE CONFIGURACION
@@ -29,8 +29,8 @@ $CONFIG = [
     'DEBUG'   => true
   ],
   'production' => [
-    'DB_HOST' => getenv('DB_HOST') ?: 'localhost',
-    'DB_PORT' => getenv('DB_PORT') ?: '3306',
+    'DB_HOST' => getenv('DB_HOST') ?? 'localhost',
+    'DB_PORT' => getenv('DB_PORT') ?? '3306',
     'DB_USER' => getenv('DB_USER'),
     'DB_PWD'  => getenv('DB_PWD'),
     'DB_NAME' => getenv('DB_NAME'),
@@ -39,7 +39,7 @@ $CONFIG = [
 ];
 
 $CONN_DB = $CONFIG[$ENVIRONMENT];
-$VERSION = getenv('APP_VERSION');
+$VERSION = getenv('APP_VERSION') ?? "0.0.0.0.";
 #endregion CONSTANTES DE CONFIGURACION
 
 #region CONSTANTES RUTAS

@@ -1,8 +1,5 @@
 <?php
 // Evitar acceso directo al archivo
-
-use function PHPSTORM_META\type;
-
 if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 	die('Acceso denegado');
 }
@@ -24,9 +21,12 @@ class Connection
 				}
 			}
 		}
-		$ENVIRONMENT = getenv('APP_ENV') ?? 'local';
+		$ENVIRONMENT = strtolower(getenv('APP_ENV')) ?? "local"; #/empleos
+		// echo "HAHAA->" . $ENVIRONMENT;
 
-		$URL_BASE = $ENVIRONMENT == "production" ? "/empleos" : ""; #/empleos
+		$URL_BASE = $ENVIRONMENT == "production" ? "/empleos" : "";
+		// echo "HEEEE->" . $URL_BASE;
+		// echo "HEyyyy->" ."$ROOT$URL_BASE/config.php";
 
 		include "$ROOT$URL_BASE/config.php";
 		$CONN_OBJ = $CONN_DB;
