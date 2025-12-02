@@ -16,13 +16,13 @@ class Connection
 		$this->conn = null;
 
 		// DEBUG: Mostrar información (TEMPORAL - eliminar después)
-		echo "<pre style='background:#f0f0f0; padding:10px;'>";
-		echo "DEBUG - Credenciales BD:\n";
-		echo "Host: " . $CONN_DB['DB_NAME'] . "\n";
-		echo "Usuario: " . $CONN_DB['DB_USER'] . "\n";
-		echo "Base de datos: " . $CONN_DB['DB_NAME'] . "\n";
-		echo "Contraseña establecida: " . (empty($CONN_DB['DB_PWD']) ? 'VACÍA' : 'CON VALOR') . "\n";
-		echo "</pre>";
+		// echo "<pre style='background:#f0f0f0; padding:10px;'>";
+		// echo "DEBUG - Credenciales BD:\n";
+		// echo "Host: " . $CONN_DB['DB_HOST'] . "\n";
+		// echo "Usuario: " . $CONN_DB['DB_USER'] . "\n";
+		// echo "Base de datos: " . $CONN_DB['DB_NAME'] . "\n";
+		// echo "Contraseña establecida: " . (empty($CONN_DB['DB_PWD']) ? 'VACÍA' : 'CON VALOR') . "\n";
+		// echo "</pre>";
 
 		$connString = "mysql:host=$CONN_OBJ[DB_HOST];dbname=$CONN_OBJ[DB_NAME];charset=utf8mb4";
 		// $connString = "sqlsrv:Server=$CONN_OBJ[DB_HOST];Database=$CONN_OBJ[DB_NAME];";
