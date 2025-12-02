@@ -28,7 +28,19 @@ class Connection
 		// echo "HEEEE->" . $URL_BASE;
 		// echo "HEyyyy->" ."$ROOT$URL_BASE/config.php";
 
+		// include "$ROOT$URL_BASE/config.php";
+		// $configFile = __DIR__ . '/.config.php';
 		include "$ROOT$URL_BASE/config.php";
+		// O MEJOR AÚN, usa realpath:
+		// $configPath = realpath(__DIR__) .  '/config.php'; #realpath(__DIR__ . '/../../config.php');
+		// echo "asdasd" . $configFile;
+		// echo "asdasd". $configPath;
+		// echo "confgig:" . realpath(__DIR__) .  '\config.php';
+		// if ($configPath && file_exists($configPath)) {
+		// 	include $configPath;
+		// } else {
+		// 	die('Error: Archivo de configuración no encontrado');
+		// }
 		$CONN_OBJ = $CONN_DB;
 		$this->conn = null;
 
