@@ -9,38 +9,9 @@ class Connection
 	// private $database;
 	function __construct()
 	{
-		$ROOT = realpath($_SERVER["DOCUMENT_ROOT"]);
-		// Usar entorno para determinar configuración
-		$envFile = __DIR__ . '/.env';
-		if (file_exists($envFile)) {
-			$lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-			foreach ($lines as $line) {
-				if (strpos($line, '=') !== false && strpos($line, '#') !== 0) {
-					[$key, $value] = explode('=', $line, 2);
-					putenv(trim($key) . '=' . trim($value));
-				}
-			}
-		}
-		$ENVIRONMENT = strtolower(getenv('APP_ENV')) ?? "local"; #/empleos
-		// echo "HAHAA->" . $ENVIRONMENT;
+		$configFile = dirname(__DIR__) . '/config.php';
+		include $configFile;
 
-		$URL_BASE = $ENVIRONMENT == "production" ? "/empleos" : "";
-		// echo "HEEEE->" . $URL_BASE;
-		// echo "HEyyyy->" ."$ROOT$URL_BASE/config.php";
-
-		// include "$ROOT$URL_BASE/config.php";
-		// $configFile = __DIR__ . '/.config.php';
-		include "$ROOT$URL_BASE/config.php";
-		// O MEJOR AÚN, usa realpath:
-		// $configPath = realpath(__DIR__) .  '/config.php'; #realpath(__DIR__ . '/../../config.php');
-		// echo "asdasd" . $configFile;
-		// echo "asdasd". $configPath;
-		// echo "confgig:" . realpath(__DIR__) .  '\config.php';
-		// if ($configPath && file_exists($configPath)) {
-		// 	include $configPath;
-		// } else {
-		// 	die('Error: Archivo de configuración no encontrado');
-		// }
 		$CONN_OBJ = $CONN_DB;
 		$this->conn = null;
 
