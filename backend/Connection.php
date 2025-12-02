@@ -32,7 +32,12 @@ class Connection
 			PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
 			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 		];
-		$this->conn = new PDO($connString, $CONN_OBJ["DB_USER"], $CONN_OBJ["DB_PWD"], $options);
+		$this->conn = new PDO(
+			$connString,
+			$CONN_OBJ["DB_USER"],
+			$CONN_OBJ["DB_PWD"],
+			$options
+		);
 		// $this->conn = new PDO($connString, $CONN_OBJ["DB_USER"], $CONN_OBJ["DB_PWD"], $options);
 	}
 
