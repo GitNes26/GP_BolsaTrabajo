@@ -73,13 +73,13 @@ $current_page = "Vacantes";
                               </div>
                               <!-- EMPRESA -->
                               <?php if ($_COOKIE["role_id"] <= 2) : ?>
-                              <div class="mb-3">
-                                 <label for="input_company_id" class="form-label">Empresa: <span
-                                       class="obligatory"></span></label>
-                                 <select class="select2 form-control" style="width:100%" id="input_company_id"
-                                    name="input_company_id" data-input-name="EMPRESA" data-output="output_info_company">
-                                 </select>
-                              </div>
+                                 <div class="mb-3">
+                                    <label for="input_company_id" class="form-label">Empresa: <span
+                                          class="obligatory"></span></label>
+                                    <select class="select2 form-control" style="width:100%" id="input_company_id"
+                                       name="input_company_id" data-input-name="EMPRESA" data-output="output_info_company">
+                                    </select>
+                                 </div>
                               <?php endif ?>
 
                               <!-- PREGUNTAR SI AGREGARAN IMAGEN -->
@@ -133,7 +133,7 @@ $current_page = "Vacantes";
                                           title="Si deseas dejar sin descripción las responsabilidades de la vacante, escribe un espacio en blanco [tecla escape]."></i>
                                        <span class="obligatory"></span></label>
                                     <textarea type="text" class="form-control counter" id="input_description"
-                                       name="input_description" data-input-name="DESCRIPCIÓN" rows="5" data-limit="150"
+                                       name="input_description" data-input-name="DESCRIPCIÓN" rows="5" data-limit="500"
                                        data-counter="counter_description" data-output="output_description"></textarea>
                                     <div class="text-sm text-end text-muted" id="counter_description"></div>
                                  </div>
@@ -269,8 +269,8 @@ $current_page = "Vacantes";
                               <button type="reset" id="btn_reset"
                                  class="btn btn-secondary float-end ml-2 d-none">LIMPIAR</button>
                               <?php if ($permission_write ?? false) : ?>
-                              <button type="submit" id="btn_submit"
-                                 class="btn btn-dark fw-bold float-end">AGREGAR</button>
+                                 <button type="submit" id="btn_submit"
+                                    class="btn btn-dark fw-bold float-end">AGREGAR</button>
                               <?php endif ?>
                            </div>
                         </form>
