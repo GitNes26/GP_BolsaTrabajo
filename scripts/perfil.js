@@ -28,6 +28,12 @@ const input_user_id = $("#input_user_id"),
    input_name = $("#input_name"),
    output_name = $("#output_name"),
    input_last_name = $("#input_last_name"),
+   input_candidate_community_id = $("#input_candidate_community_id"),
+   input_candidate_zip = $("#input_candidate_zip"),
+   input_candidate_state = $("#input_candidate_state"),
+   input_candidate_municipality = $("#input_candidate_municipality"),
+   input_candidate_colony = $("#input_candidate_colony"),
+   output_candidate_location = $("#output_candidate_location"),
    input_email = $("#input_email"),
    output_email = $("#output_email"),
    input_cellphone = $("#input_cellphone"),
@@ -296,6 +302,16 @@ input_colony.on("change", async (e) => {
    const community_id = $(e.target).val();
    input_community_id.val(community_id);
 });
+input_candidate_zip.on("input", async (e) => {
+   const zip = $(e.target).val();
+   if (zip.length < 5) return;
+   await showStates(zip, null, "input_candidate");
+});
+input_candidate_colony.on("change", async (e) => {
+   const community_id = $(e.target).val();
+   input_candidate_community_id.val(community_id);
+});
+
 //CLICK EN BTN EDITAR PARA MODIFICAR INFORMACION
 btn_edit.click(function () {
    $(this).addClass("d-none");
@@ -402,6 +418,20 @@ async function fillInfo(show_toas = true) {
       input_name.val(obj.name);
       input_last_name.val(obj.last_name);
       output_name.text(`${obj.name} ${obj.last_name}`);
+
+      const communityRequest = await $.ajax({
+         url: `${URL_API_COUNTRIES}/colonia/${obj.community_id}`,
+         method: "GET",
+         headers: {
+            Accept: "application/json"
+         }
+      });
+      const community = communityRequest.data.result;
+      if (community) {
+         output_candidate_location.text(`${community.CodigoPostal}, ${community.Municipio}, ${community.Estado}`);
+         await showStates(null, obj.community_id, "input_candidate");
+      }
+
       input_email.val(obj.email);
       output_email.text(obj.email);
       input_cellphone.val(obj.cellphone);

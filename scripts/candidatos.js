@@ -3,7 +3,7 @@ var table;
 table = $("#table").DataTable({
    ...DT_CONFIG,
    columnDefs: [
-      { targets: [2, 3, 5, 6], visible: false } // ocultar columnas contacto (Candidato(solo nombre), Ubicacion, name, phone, email)
+      { targets: [2, 3, 5, 7, 8], visible: false } // ocultar columnas contacto (Candidato(solo nombre), Ubicacion, name, phone, email)
    ],
    buttons: [
       {
@@ -15,7 +15,7 @@ table = $("#table").DataTable({
          exportOptions: {
             // omitimos las columna [0,1,4] (Logo, InfoCandidato, InfoContacto)
             // Exportar columnas visibles + las ocultas [2,3,5,6,7]
-            columns: [2, 3, 5, 6, 7, 8, 9, 10, 11, 12]
+            columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
          }
       }
    ]
@@ -23,7 +23,7 @@ table = $("#table").DataTable({
 
 $(document).ready(function () {
    SUMMERNOTE_CONFIG.placeholder = "Escribir Habilidades, competencias, experiencias, observaciones, etc.";
-   SUMMERNOTE_CONFIG.toolbar.push(["templates", ["template_candidate"]]), $(".summernote").summernote(SUMMERNOTE_CONFIG);
+   (SUMMERNOTE_CONFIG.toolbar.push(["templates", ["template_candidate"]]), $(".summernote").summernote(SUMMERNOTE_CONFIG));
 });
 
 const btn_modal_form = $("#btn_modal_form"),
@@ -47,6 +47,11 @@ const btn_modal_form = $("#btn_modal_form"),
    input_gender = $("#input_gender"),
    input_profession_id = $("#input_profession_id"),
    input_interest_tags_ids = $("#input_interest_tags_ids"),
+   input_candidate_community_id = $("#input_candidate_community_id"),
+   input_candidate_zip = $("#input_candidate_zip"),
+   input_candidate_state = $("#input_candidate_state"),
+   input_candidate_municipality = $("#input_candidate_municipality"),
+   input_candidate_colony = $("#input_candidate_colony"),
    input_languages_b = $("#input_languages_b"),
    input_languages_i = $("#input_languages_i"),
    input_languages_a = $("#input_languages_a"),
@@ -57,6 +62,7 @@ const btn_modal_form = $("#btn_modal_form"),
    btn_reset = $("#btn_reset"),
    d_output_photo = $("#d_output_photo"),
    d_div_header = $("#d_div_header"),
+   d_output_location = $("#d_output_location"),
    d_output_enable = $("#d_output_enable"),
    d_preview_photo = $("#d_preview_photo"),
    d_output_name = $("#d_output_name"),
@@ -103,6 +109,16 @@ async function init() {
    input_name.focus();
 }
 
+input_candidate_zip.on("input", async (e) => {
+   const zip = $(e.target).val();
+   if (zip.length < 5) return;
+   await showStates(zip, null, "input_candidate");
+});
+input_candidate_colony.on("change", async (e) => {
+   const community_id = $(e.target).val();
+   input_candidate_community_id.val(community_id);
+});
+
 //CLICK EN BTN ABRIR MODAL
 btn_modal_form.click((e) => {
    e.preventDefault();
@@ -135,9 +151,15 @@ btn_reset.click(async (e) => {
    await resetSelect2(input_disability_id);
    await resetSelect2(input_level_id);
    await resetSelect2(input_gender);
-   // await resetSelect2(input_state);
-   // await resetSelect2(input_municipality);
-   // input_municipality.attr("disabled",true);
+   await resetSelect2(input_candidate_state);
+   input_candidate_state.attr("disabled", true);
+   await resetSelect2(input_candidate_municipality);
+   input_candidate_municipality.attr("disabled", true);
+   await resetSelect2(input_candidate_colony);
+   input_candidate_colony.attr("disabled", true);
+
+   input_candidate_zip.val("");
+   input_candidate_community_id.val("");
 
    $(".note-editing-area .note-editable").html(null);
    $(".note-editing-area .note-placeholder").css("display", "block");
@@ -265,7 +287,7 @@ async function fillTable() {
 
    const list = [];
    let objResponse = ajaxResponse.data;
-   console.log(objResponse);
+   // console.log(objResponse);
 
    objResponse.map((obj) => {
       let enable = {
@@ -293,6 +315,7 @@ async function fillTable() {
 			`,
          column_candidate_name = `<b>${obj.name} ${obj.last_name}</b><br>`,
          column_candidate_age = `<i>(${age})</i>`,
+         column_candidate_ubication = `${obj.municipality}, ${obj.state}<br><br>`,
          column_contact = `
 				<p><i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.cellphone)}</p>
 				<p><i class="fa-solid fa-at"></i>&nbsp; ${obj.email}</p>
@@ -335,6 +358,7 @@ async function fillTable() {
             column_candidate,
             column_candidate_name,
             column_candidate_age,
+            column_candidate_ubication,
             column_contact,
             column_contact_phone,
             column_contact_email,
@@ -352,6 +376,7 @@ async function fillTable() {
             column_candidate,
             column_candidate_name,
             column_candidate_age,
+            column_candidate_ubication,
             column_contact,
             column_contact_phone,
             column_contact_email,
@@ -421,7 +446,7 @@ async function editObj(btn_edit) {
    const ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
 
    const obj = ajaxResponse.data;
-   console.log(obj);
+   // console.log(obj);
 
    //form
    id_modal.val(Number(obj.id));
@@ -476,6 +501,7 @@ async function editObj(btn_edit) {
       vCvPath = obj.cv_path;
       // input_cv_path.val(obj.cv_path);
    }
+   /* await */ showStates(null, obj.community_id, "input_candidate");
 
    setTimeout(() => {
       // btn_submit.attr("disabled",false);
@@ -553,7 +579,7 @@ async function showObj(id) {
    let data = { id, op: "show" };
    const ajaxResponse = await ajaxRequestAsync(URL_CANDIDATE_APP, data);
    const obj = ajaxResponse.data;
-   console.log(obj);
+   // console.log(obj);
 
    d_div_header.removeClass("bg-primary");
    d_div_header.addClass("bg-dark");
@@ -576,6 +602,7 @@ async function showObj(id) {
    }
    d_output_name.text(`${obj.name} ${obj.last_name}`);
    d_output_email.text(obj.email);
+   d_output_location.text(`${obj.municipality}, ${obj.state}`);
    d_output_cellphone.text(formatPhone(obj.cellphone));
    // input_age.val(obj.age);
    let age = moment(obj.birthdate, "YYYYMMDD").fromNow();

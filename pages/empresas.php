@@ -14,7 +14,7 @@ $current_page = "Empresas";
          <div class="row mb-2">
             <div class="col-sm-6">
                <h1 class="fw-bolder text-uppercase">
-                  <i class="fa-solid fa-buildings"></i>&nbsp; <?php echo $current_page ?>
+                  <i class="fa-solid fa-building-columns"></i>&nbsp; <?php echo $current_page ?>
                   <em class="fw-ligth text-muted lead text-sm">| Gestión de empresas</em>
                </h1>
             </div>
@@ -254,7 +254,8 @@ $current_page = "Empresas";
    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
       <form class="modal-content" id="form" enctype="multipart/form-data">
          <div class="modal-header">
-            <h5 class="modal-title fw-bold" id="modalLabel"><i class="fa-solid fa-buildings"></i>&nbsp; INFORMACIÓN DE
+            <h5 class="modal-title fw-bold" id="modalLabel"><i class="fa-solid fa-building-columns"></i>&nbsp;
+               INFORMACIÓN DE
                LA
                EMPRESA</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

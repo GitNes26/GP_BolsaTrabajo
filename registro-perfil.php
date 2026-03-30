@@ -75,7 +75,10 @@ validateNeedCookies();
 
    <!-- FontAwesome 6 -->
    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"/> -->
-   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.0/css/all.css">
+   <!-- <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.0/css/all.css"> -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
 
    <!-- Moment JS -->
    <script src="<?= $PLUGINS_PATH ?>/moment-js/moment.min.js"></script>
@@ -97,9 +100,9 @@ validateNeedCookies();
    <link rel="stylesheet" href="<?= $STYLES_PATH ?>/styles.css" />
 
    <style>
-   .select2-container--default .select2-selection--single .select2-selection__rendered {
-      margin-top: -9px !important;
-   }
+      .select2-container--default .select2-selection--single .select2-selection__rendered {
+         margin-top: -9px !important;
+      }
    </style>
 
 </head>
@@ -151,10 +154,10 @@ validateNeedCookies();
                   <!-- Btn Logout -->
                   <?php if (isset($_COOKIE["user_id"])) :
                      if ($_COOKIE["user_id"] > 0) : ?>
-                  <li class='nav-item ml-3'>
-                     <a href='#' id="btn_logout" class='btn btn-outline-light btn_logout' title='Cerrar sesión'><i
-                           class="fas fa-door-closed"></i></a>
-                  </li>
+                        <li class='nav-item ml-3'>
+                           <a href='#' id="btn_logout" class='btn btn-outline-light btn_logout' title='Cerrar sesión'><i
+                                 class="fas fa-door-closed"></i></a>
+                        </li>
                   <?php endif;
                   endif; ?>
                </ul>
@@ -258,8 +261,8 @@ validateNeedCookies();
                            </select>
                         </div>
                      </div>
+                     <!-- UBICACION -->
                      <div class="row border rounded mb-3">
-                        <!-- UBICACION -->
                         <label class="text-center">UBICACIÓN</label>
                         <div class="mb-3 col-2">
                            <label for="input_zip" class="form-label">C.P.: <span class="obligatory"></span></label>
@@ -321,7 +324,7 @@ validateNeedCookies();
 
                   <div id="div_candidate" class="">
                      <!-- LOGO Y NOMBRE -->
-                     <div class="row">
+                     <div class="row border rounded mb-3">
                         <!-- LOGO -->
                         <div class="col-3 rounded-lg text-center border rounded-lg">
                            <input type="file" id="input_photo_path" name="input_photo_path" class="d-none"
@@ -391,13 +394,55 @@ validateNeedCookies();
                         </div>
                      </div>
                      <!-- INTERESES -->
-                     <div class="row">
+                     <!-- <div class="row">
                         <div class="form-group">
                            <label for="input_interest_tags_ids">Intereses de búsqueda:</label>
                            <select class="select2 select2-hidden-accessible not_validate" multiple=""
                               data-placeholder="Selecciona etiquetas relacionadas a tús intereses" style="width: 100%;"
                               tabindex="-1" aria-hidden="true" id="input_interest_tags_ids"
                               name="input_interest_tags_ids" data-input-name="INTERESES">
+                           </select>
+                        </div>
+                     </div> -->
+                     <!-- UBICACION -->
+                     <div class="row border rounded mb-3">
+                        <label class="text-center">UBICACIÓN</label>
+                        <div class="mb-3 col-2">
+                           <label for="input_candidate_zip" class="form-label">C.P.: <span
+                                 class="obligatory"></span></label>
+                           <input type="hidden" class="form-control form-control-sm numeric"
+                              id="input_candidate_community_id" name="input_candidate_community_id"
+                              data-input-name="COMUNIDAD">
+                           <input type="text" maxlength="5" class="form-control form-control-sm numeric"
+                              id="input_candidate_zip" name="input_candidate_zip" data-input-name="CÓDIGO POSTAL">
+                        </div>
+                        <div class="mb-3 col-3">
+                           <label for="input_candidate_state" class="form-label">Estado: <span
+                                 class="obligatory"></span></label>
+                           <!-- <span title="dar click aqui si no se cargan los datos." data-input="input_candidate_state"
+                           class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span> -->
+                           <select class="select2 form-control" style="width:100%; line-height:10px"
+                              id="input_candidate_state" name="input_candidate_state" data-input-name="ESTADO" disabled>
+                           </select>
+                        </div>
+                        <div class="mb-3 col-3">
+                           <label for="input_candidate_municipality" class="form-label">Municipio: <span
+                                 class="obligatory"></span></label>
+                           <!-- <span title="dar click aqui si no se cargan los datos." data-input="input_candidate_municipality"
+                           class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span> -->
+                           <select class="select2 form-control" style="width:100%; line-height:20px"
+                              id="input_candidate_municipality" name="input_candidate_municipality"
+                              data-input-name="MUNICIPIO" disabled>
+                           </select>
+                        </div>
+                        <div class="mb-3 col-4">
+                           <label for="input_candidate_colony" class="form-label">Colonia: <span
+                                 class="obligatory"></span></label>
+                           <!-- <span title="dar click aqui si no se cargan los datos." data-input="input_candidate_colony"
+                           class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span> -->
+                           <select class="select2 form-control" style="width:100%; line-height:20px"
+                              id="input_candidate_colony" name="input_candidate_colony" data-input-name="COLONIA"
+                              disabled>
                            </select>
                         </div>
                      </div>

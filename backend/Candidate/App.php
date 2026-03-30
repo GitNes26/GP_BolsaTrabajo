@@ -2,6 +2,17 @@
 include('Candidate.php');
 $Candidate = new Candidate();
 
+function getPostValue($keys)
+{
+   foreach ($keys as $key) {
+      if (isset($_POST[$key])) {
+         print_r("$key:$_POST[$key]");
+         return $_POST[$key];
+      }
+   }
+   return null;
+}
+
 
 if (isset($_POST['op'])) {
    $op = $_POST['op'];
@@ -29,6 +40,20 @@ if (isset($_POST['input_disability_id'])) {
 if (isset($_POST['input_gender'])) {
    $gender = $_POST['input_gender'];
 }
+
+if (isset($_POST['input_candidate_community_id'])) {
+   $community_id = $_POST['input_candidate_community_id'];
+}
+if (isset($_POST['input_candidate_state'])) {
+   $state = $_POST['input_candidate_state'];
+}
+if (isset($_POST['input_candidate_municipality'])) {
+   $municipality = $_POST['input_candidate_municipality'];
+}
+// $community_id = getPostValue(['input_community_id', 'input_candidate_community_id']);
+// $state = getPostValue(['input_state', 'input_candidate_state']);
+// $municipality = getPostValue(['input_municipality', 'input_candidate_municipality']);
+
 if (isset($_POST['input_professional_info'])) {
    $professional_info = $_POST['input_professional_info'];
 }
@@ -39,9 +64,11 @@ if (isset($_POST['input_languages'])) {
 if (isset($_POST['input_profession_id'])) {
    $profession_id = $_POST['input_profession_id'];
 } else $profession_id = '0';
+
 if (isset($_POST['input_interest_tags_ids'])) {
    $interest_tags_ids = $_POST['input_interest_tags_ids'];
 } else $interest_tags_ids = '';
+
 if (isset($_POST['input_user_id'])) {
    $user_id = $_POST['input_user_id'];
 }
@@ -189,10 +216,64 @@ if ($op == "index") $Candidate->index();
 elseif ($op == "show") $Candidate->show($id);
 elseif ($op == 'showSelect') $Candidate->showSelect();
 
-elseif ($op == "create") $Candidate->create($name, $last_name, $cellphone, $birthdate, $level_id, $disability_id, $gender, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id);
+elseif ($op == "create") $Candidate->create(
+   $name,
+   $last_name,
+   $cellphone,
+   $birthdate,
+   $level_id,
+   $disability_id,
+   $gender,
+   $community_id,
+   $state,
+   $municipality,
+   $professional_info,
+   $photo_path,
+   $cv_path,
+   $languages,
+   $profession_id,
+   $interest_tags_ids,
+   $user_id
+);
 
-elseif ($op == "edit") $Candidate->edit($name, $last_name, $cellphone, $birthdate, $level_id, $disability_id, $gender, $professional_info, $photo_path, $cv_path, $languages, $profession_id, $interest_tags_ids, $user_id, $updated_at, $id);
-elseif ($op == "editInfo") $Candidate->editInfo($user_id, $name, $last_name, $cellphone, $level_id, $disability_id, $gender,  $professional_info, $languages, $profession_id, $email, $updated_at);
+elseif ($op == "edit") $Candidate->edit(
+   $name,
+   $last_name,
+   $cellphone,
+   $birthdate,
+   $level_id,
+   $disability_id,
+   $gender,
+   $community_id,
+   $state,
+   $municipality,
+   $professional_info,
+   $photo_path,
+   $cv_path,
+   $languages,
+   $profession_id,
+   $interest_tags_ids,
+   $user_id,
+   $updated_at,
+   $id
+);
+elseif ($op == "editInfo") $Candidate->editInfo(
+   $user_id,
+   $name,
+   $last_name,
+   $cellphone,
+   $level_id,
+   $disability_id,
+   $gender,
+   $community_id,
+   $state,
+   $municipality,
+   $professional_info,
+   $languages,
+   $profession_id,
+   $email,
+   $updated_at
+);
 elseif ($op == "editPhoto") $Candidate->editPhoto($user_id, $photo_path, $updated_at);
 elseif ($op == "editCv") $Candidate->editCv($user_id, $cv_path, $updated_at);
 elseif ($op == "editName") $Candidate->editName($user_id, $name, $last_name, $updated_at);

@@ -48,6 +48,11 @@ const div_candidate = $("#div_candidate"),
    input_birthdate = $("#input_birthdate"),
    input_profession_id = $("#input_profession_id"),
    input_interest_tags_ids = $("#input_interest_tags_ids"),
+   input_candidate_community_id = $("#input_candidate_community_id"),
+   input_candidate_zip = $("#input_candidate_zip"),
+   input_candidate_state = $("#input_candidate_state"),
+   input_candidate_municipality = $("#input_candidate_municipality"),
+   input_candidate_colony = $("#input_candidate_colony"),
    input_languages_b = $("#input_languages_b"),
    input_languages_i = $("#input_languages_i"),
    input_languages_a = $("#input_languages_a"),
@@ -93,6 +98,15 @@ input_zip.on("input", async (e) => {
 input_colony.on("change", async (e) => {
    const community_id = $(e.target).val();
    input_community_id.val(community_id);
+});
+input_candidate_zip.on("input", async (e) => {
+   const zip = $(e.target).val();
+   if (zip.length < 5) return;
+   await showStates(zip, null, "input_candidate");
+});
+input_candidate_colony.on("change", async (e) => {
+   const community_id = $(e.target).val();
+   input_candidate_community_id.val(community_id);
 });
 
 //RESETEAR FORMULARIOS
@@ -284,7 +298,7 @@ form_role.on("submit", async function (e) {
       addToArray("input_user_id", id_cookie, data, true);
    }
 
-   // return console.log(url_app, data);
+   // return console.log(url_app, ...data);
    const ajaxResponse = await ajaxRequestFileAsync(url_app, data);
    if (ajaxResponse.message == "duplicado") return;
    setTimeout(() => {

@@ -130,8 +130,8 @@ async function fillTable(show_toas = true) {
       //Campos
       let column_candidate = `
 				<button class='btn btn-outline-dark' type='button' data-id='${obj.ca_id}' onclick="showCandidate(${
-         obj.ca_id
-      })" title='Ver Candidato' data-bs-toggle="modal" data-bs-target="#candidate_modal"><i class='fa-solid fa-eye'></i></button><br><br>
+               obj.ca_id
+            })" title='Ver Candidato' data-bs-toggle="modal" data-bs-target="#candidate_modal"><i class='fa-solid fa-eye'></i></button><br><br>
 				<b>${obj.name} ${obj.last_name}</b><br>
 				<i class="fa-solid fa-at"></i>&nbsp; ${obj.email}<br>
 				<i class="fa-solid fa-phone"></i>&nbsp; ${formatPhone(obj.cellphone)}<br>
@@ -144,7 +144,7 @@ async function fillTable(show_toas = true) {
       column_info = `
 				${obj.description}<b>
 				<div class="mb-2">
-                  <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; 
+                  <i class="fa-solid fa-money-bill-1-wave"></i>&nbsp; 
                   <span class="fw-bolder">&nbsp;</span> 
                   <span class="">${formatCurrency(obj.min_salary)}</span> &nbsp;a&nbsp; 
                   <span class="">${formatCurrency(obj.max_salary)}</span>

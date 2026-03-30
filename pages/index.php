@@ -15,7 +15,7 @@ $pagina_acutal = "Bolsa de Trabajo";
          <div class="row mb-2 mt-3">
             <div class="col text-center">
                <h1 class="fw-bolder text-uppercase">
-                  <i class="fa-regular fa-sack-dollar"></i>&nbsp;
+                  <i class="fa-solid fa-sack-dollar"></i>&nbsp;
                   <!-- <?= $pagina_acutal ?> -->
                   <em class="fw-ligth text-muted lead text-sm">Actualmente contamos con <b id="vacancies_enabled"
                         class="">0</b> vacantes disponibles para ti</em>
@@ -228,7 +228,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                      <div class="row">
                         <div class="col-md-6">
                            <div class="mb-2">
-                              <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
+                              <i class="fa-solid fa-money-bill-1-wave"></i>&nbsp;
                               <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
                               <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
                               <span class="output_max_salary">$0</span>
@@ -376,7 +376,7 @@ $pagina_acutal = "Bolsa de Trabajo";
                   <div class="row">
                      <div class="col-md-8">
                         <div class="mb-2">
-                           <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
+                           <i class="fa-solid fa-money-bill-1-wave"></i>&nbsp;
                            <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
                            <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
                            <span class="output_max_salary">$0</span>
@@ -459,7 +459,7 @@ $pagina_acutal = "Bolsa de Trabajo";
          <div class="div_info_vacancy">
             <p>Area de aplicacion: <span class="area">Informatica</span></p>
             <span class="badge bg-success">
-               <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; <span class="min_salary">$0</span> a <span
+               <i class="fa-solid fa-money-bill-1-wave"></i>&nbsp; <span class="min_salary">$0</span> a <span
                   class="max_salary">$0</span>
             </span>
             <span class="badge bg-dark">

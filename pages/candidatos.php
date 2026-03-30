@@ -14,7 +14,7 @@ $current_page = "Candidatos";
          <div class="row mb-2">
             <div class="col-sm-6">
                <h1 class="fw-bolder text-uppercase">
-                  <i class="fa-solid fa-buildings"></i>&nbsp; <?php echo $current_page ?>
+                  <i class="fa-solid fa-building-columns"></i>&nbsp; <?php echo $current_page ?>
                   <em class="fw-ligth text-muted lead text-sm">| Gestión de candidatos</em>
                </h1>
             </div>
@@ -36,10 +36,10 @@ $current_page = "Candidatos";
       <!-- card -->
       <div class="card card-outline card-dark shadow">
          <?php if ($permission_write ?? false): ?>
-         <div class="container-fluid mt-2">
-            <button id="btn_modal_form" class="float-end btn btn-dark fw-bold" data-bs-toggle="modal"
-               data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR CANDIDATO</button>
-         </div>
+            <div class="container-fluid mt-2">
+               <button id="btn_modal_form" class="float-end btn btn-dark fw-bold" data-bs-toggle="modal"
+                  data-bs-target="#modal"><i class="fa-solid fa-circle-plus"></i>&nbsp; AGREGAR CANDIDATO</button>
+            </div>
          <?php endif ?>
          <div class="card-body">
             <!-- tabla -->
@@ -51,6 +51,7 @@ $current_page = "Candidatos";
                         <th scope="col">Candidato</th>
                         <th scope="col">Candidato</th>
                         <th scope="col">Edad</th>
+                        <th scope="col">Ubicación</th>
                         <th scope="col">Contacto</th>
                         <th scope="col">Teléfono</th>
                         <th scope="col">Correo</th>
@@ -70,6 +71,7 @@ $current_page = "Candidatos";
                         <th scope="col">Foto</th>
                         <th scope="col">Candidato</th>
                         <th scope="col">Candidato</th>
+                        <th scope="col">Ubicación</th>
                         <th scope="col">Edad</th>
                         <th scope="col">Contacto</th>
                         <th scope="col">Teléfono</th>
@@ -118,7 +120,7 @@ $current_page = "Candidatos";
                   </div>
                </div>
                <!-- LOGO Y NOMBRE -->
-               <div class="row">
+               <div class="row border rounded mb-3">
                   <!-- LOGO -->
                   <div class="col-3 rounded-lg text-center border rounded-lg">
                      <input type="file" id="input_photo_path" name="input_photo_path" class="d-none" accept="image/*"
@@ -184,13 +186,52 @@ $current_page = "Candidatos";
                   </div>
                </div>
                <!-- INTERESES -->
-               <div class="row">
+               <!-- <div class="row">
                   <div class="form-group">
                      <label for="input_interest_tags_ids">Intereses de búsqueda:</label>
                      <select class="select2 select2-hidden-accessible not_validate" multiple=""
                         data-placeholder="Selecciona etiquetas relacionadas a tús intereses" style="width: 100%;"
                         tabindex="-1" aria-hidden="true" id="input_interest_tags_ids" name="input_interest_tags_ids"
                         data-input-name="INTERESES">
+                     </select>
+                  </div>
+               </div> -->
+               <!-- UBICACION -->
+               <div class="row border rounded mb-3">
+                  <label class="text-center">UBICACIÓN</label>
+                  <div class="mb-3 col-2">
+                     <label for="input_candidate_zip" class="form-label">C.P.: <span class="obligatory"></span></label>
+                     <input type="hidden" class="form-control form-control-sm numeric" id="input_candidate_community_id"
+                        name="input_candidate_community_id" data-input-name="COMUNIDAD">
+                     <input type="text" maxlength="5" class="form-control form-control-sm numeric"
+                        id="input_candidate_zip" name="input_candidate_zip" data-input-name="CÓDIGO POSTAL">
+                  </div>
+                  <div class="mb-3 col-3">
+                     <label for="input_candidate_state" class="form-label">Estado: <span
+                           class="obligatory"></span></label>
+                     <!-- <span title="dar click aqui si no se cargan los datos." data-input="input_candidate_state"
+                           class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span> -->
+                     <select class="select2 form-control" style="width:100%; line-height:10px"
+                        id="input_candidate_state" name="input_candidate_state" data-input-name="ESTADO" disabled>
+                     </select>
+                  </div>
+                  <div class="mb-3 col-3">
+                     <label for="input_candidate_municipality" class="form-label">Municipio: <span
+                           class="obligatory"></span></label>
+                     <!-- <span title="dar click aqui si no se cargan los datos." data-input="input_candidate_municipality"
+                           class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span> -->
+                     <select class="select2 form-control" style="width:100%; line-height:20px"
+                        id="input_candidate_municipality" name="input_candidate_municipality"
+                        data-input-name="MUNICIPIO" disabled>
+                     </select>
+                  </div>
+                  <div class="mb-3 col-4">
+                     <label for="input_candidate_colony" class="form-label">Colonia: <span
+                           class="obligatory"></span></label>
+                     <!-- <span title="dar click aqui si no se cargan los datos." data-input="input_candidate_colony"
+                           class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span> -->
+                     <select class="select2 form-control" style="width:100%; line-height:20px"
+                        id="input_candidate_colony" name="input_candidate_colony" data-input-name="COLONIA" disabled>
                      </select>
                   </div>
                </div>
@@ -328,7 +369,11 @@ $current_page = "Candidatos";
                               <span id="d_output_name">[Mi Nombre]</span> - <span class="h6 fst-italic"
                                  id="d_output_birthdate">[Mi edad]</span>
                            </h3>
-                           <h5 class="widget-user-desc im_output" id="d_output_profession">[Mi Profesión]</h5>
+                           <h5>
+                              <span class="widget-user-desc im_output" id="d_output_profession">[Mi Profesión]</span> -
+                              <span class="lead im_output" id="d_output_location">[Ciudad, Estado]</span>
+
+                           </h5>
                            <h1 class="text-end fw-bolder" id="d_output_enable">DISPONIBLE</h1>
                         </div>
                         <div class="widget-user-image">
@@ -361,7 +406,7 @@ $current_page = "Candidatos";
                                  <div class="description-block">
                                     <p class="description-header im_output" id="d_output_languages">[Mi nivel de ingles]
                                     </p>
-                                    <span class="description-text"><i class="fa-regular fa-language"></i></span>
+                                    <span class="description-text"><i class="fa-solid fa-language"></i></span>
                                  </div>
                               </div>
                            </div>

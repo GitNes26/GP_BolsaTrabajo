@@ -810,6 +810,7 @@ function focusSelect2(select2) {
 focusSelect2($(".select2"));
 
 function resetSelect2(selector) {
+   // console.log("🚀 ~ resetSelect2 ~ selector:", selector);
    // function resetearSelect2(selector, url, data) {
    selector.attr("disabled", true);
 
@@ -1002,16 +1003,16 @@ const removeDuplicates = (array) => {
 };
 
 //#region SELECTORES DE PAISES / CIUDADES
-async function showStates(zip = 35000, community_id = null) {
+async function showStates(zip = 35000, community_id = null, pre_input_name = "input") {
    // console.log("🚀 ~ showStates ~ zip:", zip);
    // console.log("🚀 ~ showStates ~ community_id:", community_id);
 
-   $("#input_state").attr("disabled", true);
-   $("#input_state").html("<option value=''>Cargando...</option>");
-   $("#input_municipality").attr("disabled", true);
-   $("#input_municipality").html("<option value=''>Cargando...</option>");
-   $("#input_colony").attr("disabled", true);
-   $("#input_colony").html("<option value=''>Cargando...</option>");
+   $(`#${pre_input_name}_state`).attr("disabled", true);
+   $(`#${pre_input_name}_state`).html("<option value=''>Cargando...</option>");
+   $(`#${pre_input_name}_municipality`).attr("disabled", true);
+   $(`#${pre_input_name}_municipality`).html("<option value=''>Cargando...</option>");
+   $(`#${pre_input_name}_colony`).attr("disabled", true);
+   $(`#${pre_input_name}_colony`).html("<option value=''>Cargando...</option>");
 
    // console.log("ESTADOS_CIUDADES");
    let url = `${URL_API_COUNTRIES}/${zip}`;
@@ -1058,7 +1059,7 @@ async function showStates(zip = 35000, community_id = null) {
          }
       } else selected_state = "selected";
       // console.log(state);
-      // $("#input_state").click()
+      // $(`#${pre_input_name}_state`).click()
       comboStates += '<option value="' + element + '" ' + selected_state + ">" + element + "</option>";
    });
 
@@ -1073,7 +1074,7 @@ async function showStates(zip = 35000, community_id = null) {
          }
       } else selected_city = "selected";
       // console.log(city);
-      // $("#input_city").click()
+      // $(`#${pre_input_name}_city`).click()
       comboCities += '<option value="' + element + '" ' + selected_city + ">" + element + "</option>";
    });
 
@@ -1084,31 +1085,31 @@ async function showStates(zip = 35000, community_id = null) {
          if (community.colony != null) {
             if (community.colony == element.label) {
                selected_colony = "selected";
-               $("#input_community_id").val(element.id);
+               $(`#${pre_input_name}_community_id`).val(element.id);
             }
          }
       } else {
          selected_colony = "selected";
-         $("#input_community_id").val(element.id);
+         $(`#${pre_input_name}_community_id`).val(element.id);
       }
       // console.log(colony);
-      // $("#input_colony").click()
+      // $(`#${pre_input_name}_colony`).click()
       comboColonies += '<option value="' + element.id + '" ' + selected_colony + ">" + element.label + "</option>";
    });
 
-   if (community_id) $("#input_zip").val(community.zip);
-   $("#input_state").html(comboStates);
-   $("#input_state").attr("disabled", false);
-   $("#input_municipality").html(comboCities);
-   $("#input_municipality").attr("disabled", false);
-   $("#input_colony").html(comboColonies);
-   $("#input_colony").attr("disabled", false);
+   if (community_id) $(`#${pre_input_name}_zip`).val(community.zip);
+   $(`#${pre_input_name}_state`).html(comboStates);
+   $(`#${pre_input_name}_state`).attr("disabled", false);
+   $(`#${pre_input_name}_municipality`).html(comboCities);
+   $(`#${pre_input_name}_municipality`).attr("disabled", false);
+   $(`#${pre_input_name}_colony`).html(comboColonies);
+   $(`#${pre_input_name}_colony`).attr("disabled", false);
 }
 
 $(".reload_input").click(function () {
-   const zip = $(`#input_zip`).val();
+   const zip = $(`#${pre_input_name}_zip`).val();
    if (zip == "") return showToast("info", "El Código Postal esta vacío");
-   showStates(zip);
+   showStates(zip, null, pre_input_name);
 });
 
 /** OPCION 1 */

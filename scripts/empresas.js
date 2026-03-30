@@ -414,7 +414,7 @@ async function showObj(id) {
    let data = { id, op: "show" };
    const ajaxResponse = await ajaxRequestAsync(URL_COMPANY_APP, data);
    const obj = ajaxResponse.data;
-   console.log(obj);
+   // console.log(obj);
 
    d_div_header.removeClass("bg-primary");
    d_div_header.addClass("bg-dark");
@@ -435,7 +435,7 @@ async function showObj(id) {
       // input_logo_path.val(obj.logo_path);
    }
    d_output_company.text(obj.company);
-   d_output_location.text(`${obj.state} ${obj.municipality}`);
+   d_output_location.text(`${obj.municipality}, ${obj.state}`);
 
    d_output_contact_name.text(obj.contact_name);
    d_output_contact_phone.text(formatPhone(obj.contact_phone));

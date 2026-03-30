@@ -121,7 +121,7 @@ async function fillTable(show_toas = true) {
       column_info = `
 				${obj.description}<b>
 				<div class="mb-2">
-                  <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp; 
+                  <i class="fa-solid fa-money-bill-1-wave"></i>&nbsp; 
                   <span class="fw-bolder">&nbsp;</span> 
                   <span class="">${formatCurrency(obj.min_salary)}</span> &nbsp;a&nbsp; 
                   <span class="">${formatCurrency(obj.max_salary)}</span>

@@ -145,4 +145,4 @@ elseif ($op == "delete") $Company->delete($deleted_at, $user_id);
 
 elseif ($op == "getIdByUserId") $Company->getIdByUserId($user_id);
 
-elseif ($op == "editInfo") $Candidate->editInfo($name, $last_name, $cellphone, $professional_info, $languages, $profession_id, $user_id, $email, $updated_at);
+// elseif ($op == "editInfo") $Candidate->editInfo($name, $last_name, $cellphone, $leve_id, $professional_info, $languages, $profession_id, $user_id, $email, $updated_at);

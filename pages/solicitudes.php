@@ -112,7 +112,7 @@ $current_page = "Solicitudes";
                   <p class="output_area">Área</p>
                   <p class="output_description">Descripción de la vacante...</p>
                   <div class="mb-2">
-                     <i class="fa-regular fa-money-bill-1-wave"></i>&nbsp;
+                     <i class="fa-solid fa-money-bill-1-wave"></i>&nbsp;
                      <span class="fw-bolder">Sueldo <i>(menusal)</i>:&nbsp;</span>
                      <span class="output_min_salary">$0</span> &nbsp;a&nbsp;
                      <span class="output_max_salary">$0</span>
@@ -196,7 +196,7 @@ $current_page = "Solicitudes";
                                  <div class="description-block">
                                     <p class="description-header im_output" id="d_output_languages">[Mi nivel de ingles]
                                     </p>
-                                    <span class="description-text"><i class="fa-regular fa-language"></i></span>
+                                    <span class="description-text"><i class="fa-solid fa-language"></i></span>
                                  </div>
                               </div>
                            </div>

@@ -46,7 +46,10 @@ if (strpos($classBody, 'layout-top-nav') !== 0) $classBody .= "layout-navbar-fix
    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
    <!-- FontAwesome 6 -->
-   <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.0/css/all.css">
+   <!-- <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.0/css/all.css"> -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
 
    <!-- SweetAlert2 -->
    <link rel="stylesheet" href="<?= $PLUGINS_PATH ?>/sweetAlert2/css/sweetalert2.min.css" />
