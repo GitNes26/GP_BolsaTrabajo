@@ -410,10 +410,10 @@ validateNeedCookies();
                         <div class="mb-3 col-2">
                            <label for="input_candidate_zip" class="form-label">C.P.: <span
                                  class="obligatory"></span></label>
-                           <input type="hidden" class="form-control form-control-sm numeric"
+                           <input type="hidden" class="form-control form-control-sm numeric not_validate"
                               id="input_candidate_community_id" name="input_candidate_community_id"
                               data-input-name="COMUNIDAD">
-                           <input type="text" maxlength="5" class="form-control form-control-sm numeric"
+                           <input type="text" maxlength="5" class="form-control form-control-sm numeric not_validate"
                               id="input_candidate_zip" name="input_candidate_zip" data-input-name="CÓDIGO POSTAL">
                         </div>
                         <div class="mb-3 col-3">
@@ -421,7 +421,7 @@ validateNeedCookies();
                                  class="obligatory"></span></label>
                            <!-- <span title="dar click aqui si no se cargan los datos." data-input="input_candidate_state"
                            class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span> -->
-                           <select class="select2 form-control" style="width:100%; line-height:10px"
+                           <select class="select2 form-control not_validate" style="width:100%; line-height:10px"
                               id="input_candidate_state" name="input_candidate_state" data-input-name="ESTADO" disabled>
                            </select>
                         </div>
@@ -430,7 +430,7 @@ validateNeedCookies();
                                  class="obligatory"></span></label>
                            <!-- <span title="dar click aqui si no se cargan los datos." data-input="input_candidate_municipality"
                            class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span> -->
-                           <select class="select2 form-control" style="width:100%; line-height:20px"
+                           <select class="select2 form-control not_validate" style="width:100%; line-height:20px"
                               id="input_candidate_municipality" name="input_candidate_municipality"
                               data-input-name="MUNICIPIO" disabled>
                            </select>
@@ -440,7 +440,7 @@ validateNeedCookies();
                                  class="obligatory"></span></label>
                            <!-- <span title="dar click aqui si no se cargan los datos." data-input="input_candidate_colony"
                            class="reload_input">&nbsp;&nbsp;<i class="fa-light fa-arrows-rotate pointer"></i></span> -->
-                           <select class="select2 form-control" style="width:100%; line-height:20px"
+                           <select class="select2 form-control not_validate" style="width:100%; line-height:20px"
                               id="input_candidate_colony" name="input_candidate_colony" data-input-name="COLONIA"
                               disabled>
                            </select>
