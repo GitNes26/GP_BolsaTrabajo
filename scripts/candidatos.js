@@ -3,7 +3,7 @@ var table;
 table = $("#table").DataTable({
    ...DT_CONFIG,
    columnDefs: [
-      { targets: [2, 3, 5, 7, 8], visible: false } // ocultar columnas contacto (Candidato(solo nombre), Ubicacion, name, phone, email)
+      { targets: [2, 3, 6, 7, 8], visible: false } // ocultar columnas contacto (Candidato(solo nombre), Ubicacion, name, phone, email)
    ],
    buttons: [
       {

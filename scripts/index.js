@@ -486,7 +486,7 @@ async function fillBanners() {
       if (obj.link != null) {
          if (obj.link.length > 1) {
             template_banner.querySelector("a").target = "_blank";
-            template_banner.querySelector("a").href = obj.link;
+            template_banner.querySelector("a").href = `../assets/img/${obj.file_path}`; //obj.link;
          }
       }
 
